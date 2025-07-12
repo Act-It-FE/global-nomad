@@ -22,6 +22,88 @@
   /** red **/
   --color-red-500: #ff2727;
 }
+
+@layer components {
+  .text-11_M {
+    @apply text-[10px] leading-none font-medium;
+  }
+  .text-11_B {
+    @apply text-[10px] leading-none font-bold;
+  }
+
+  .text-12_M {
+    @apply text-[12px] leading-none font-medium;
+  }
+  .text-12_B {
+    @apply text-[12px] leading-none font-bold;
+  }
+
+  .text-13_M {
+    @apply text-[13px] leading-none font-medium;
+  }
+  .text-13_B {
+    @apply text-[13px] leading-none font-bold;
+  }
+
+  .text-14_M {
+    @apply text-[14px] leading-none font-medium;
+  }
+  .text-14_B {
+    @apply text-[14px] leading-none font-bold;
+  }
+
+  .text-16_M {
+    @apply text-[16px] leading-none font-medium;
+  }
+  .text-16_B {
+    @apply text-[16px] leading-none font-bold;
+  }
+
+  .text-18_M {
+    @apply text-[18px] leading-none font-medium;
+  }
+  .text-18_B {
+    @apply text-[18px] leading-none font-bold;
+  }
+
+  .text-20_M {
+    @apply text-[20px] leading-none font-medium;
+  }
+  .text-20_B {
+    @apply text-[20px] leading-none font-bold;
+  }
+
+  .text-24_M {
+    @apply text-[24px] leading-none font-medium;
+  }
+  .text-24_B {
+    @apply text-[24px] leading-none font-bold;
+  }
+
+  .text-32_M {
+    @apply text-[32px] leading-none font-medium;
+  }
+  .text-32_B {
+    @apply text-[32px] leading-none font-bold;
+  }
+
+  .text-14_body_M {
+    @apply text-[14px] leading-[180%] font-medium;
+  }
+
+  .text-16_body_M {
+    @apply text-[16px] leading-[180%] font-medium;
+  }
+
+  .text-18_body_B {
+    @apply text-[18px] leading-[140%] font-bold;
+  }
+
+  .text-20_body_B {
+    @apply text-[20px] leading-[160%] font-bold;
+  }
+}
+
 body {
   font-family: 'Pretendard', 'sans-serif';
 }

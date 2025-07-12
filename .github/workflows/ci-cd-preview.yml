@@ -64,6 +64,8 @@ jobs:
       - name: Deploy to Vercel (Preview)
         id: deploy-vercel
         run: |
+          vercel build --token=${{ env.VERCEL_TOKEN }}
+
           DEPLOY_URL=$(vercel deploy --prebuilt --token=${{ env.VERCEL_TOKEN }})
           echo "preview_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 

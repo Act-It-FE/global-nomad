@@ -13,9 +13,15 @@ env:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./global-nomad
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          path: global-nomad
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -27,6 +33,7 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
+          cache-dependency-path: global-nomad/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install
@@ -38,12 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact
-          path: |
-            .next
-            pnpm-lock.yaml
-            package.json
-            next.config.js
-            public
+          path: global-nomad/
 
   deploy-preview:
     runs-on: ubuntu-latest

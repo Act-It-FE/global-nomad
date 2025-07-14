@@ -19,6 +19,10 @@ export default function Icon({ icon, className }: IconProps) {
     return lazy(importFn);
   }, [icon]);
 
+  if (!IconComponent) {
+    return null;
+  }
+
   return (
     <Suspense fallback={<span className={className} />}>
       <IconComponent className={className} />

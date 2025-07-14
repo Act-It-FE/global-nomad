@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 
 const ICON_MAP = {
   AlarmActive: () => import('@/assets/icons/alarm_active.svg'),
@@ -46,10 +46,10 @@ type IconProps = {
 };
 
 export default function Icon({ icon, className }: IconProps) {
-  const IconComponent = lazy(ICON_MAP[icon]);
+  const IconComponent = useMemo(() => lazy(ICON_MAP[icon]), [icon]);
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<span className={className} />}>
       <IconComponent className={className} />
     </Suspense>
   );

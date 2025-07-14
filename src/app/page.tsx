@@ -7,7 +7,7 @@ export default function Home() {
     <div className='grid grid-cols-5 gap-4'>
       {iconKeys.map((iconKey) => (
         <div key={iconKey} className='flex flex-col items-center'>
-          <Icon icon={iconKey} className='text-primary-500 size-20' />
+          <Icon className='text-primary-500 size-20' icon={iconKey} />
           <span className='mt-1 text-xs'>{iconKey}</span>
         </div>
       ))}

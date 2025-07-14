@@ -1,1 +1,107 @@
 @import 'tailwindcss';
+
+@theme {
+  /** gray **/
+  --color-gray-25: #f8f8f8;
+  --color-gray-50: #edeef2;
+  --color-gray-100: #e0e0e5;
+  --color-gray-200: #c6c8cf;
+  --color-gray-300: #b3b4bc;
+  --color-gray-400: #9fa0a7;
+  --color-gray-500: #84858c;
+  --color-gray-600: #707177;
+  --color-gray-700: #5d5d61;
+  --color-gray-800: #49494c;
+  --color-gray-900: #323236;
+  --color-gray-950: #1f1f22;
+  /** brand **/
+  --color-primary-100: #e5f3ff;
+  --color-primary-500: #3d9ef2;
+  /** red **/
+  --color-red-500: #ff2727;
+}
+
+@layer components {
+  .text-11_M {
+    @apply text-[10px] font-medium;
+  }
+  .text-11_B {
+    @apply text-[10px] font-bold;
+  }
+
+  .text-12_M {
+    @apply text-[12px] font-medium;
+  }
+  .text-12_B {
+    @apply text-[12px] font-bold;
+  }
+
+  .text-13_M {
+    @apply text-[13px] font-medium;
+  }
+  .text-13_B {
+    @apply text-[13px] font-bold;
+  }
+
+  .text-14_M {
+    @apply text-[14px] font-medium;
+  }
+  .text-14_B {
+    @apply text-[14px] font-bold;
+  }
+
+  .text-16_M {
+    @apply text-[16px] font-medium;
+  }
+  .text-16_B {
+    @apply text-[16px] font-bold;
+  }
+
+  .text-18_M {
+    @apply text-[18px] font-medium;
+  }
+  .text-18_B {
+    @apply text-[18px] font-bold;
+  }
+
+  .text-20_M {
+    @apply text-[20px] font-medium;
+  }
+  .text-20_B {
+    @apply text-[20px] font-bold;
+  }
+
+  .text-24_M {
+    @apply text-[24px] font-medium;
+  }
+  .text-24_B {
+    @apply text-[24px] font-bold;
+  }
+
+  .text-32_M {
+    @apply text-[32px] font-medium;
+  }
+  .text-32_B {
+    @apply text-[32px] font-bold;
+  }
+
+  .text-14_body_M {
+    @apply text-[14px]/[180%] font-medium;
+  }
+
+  .text-16_body_M {
+    @apply text-[16px]/[180%] font-medium;
+  }
+
+  .text-18_body_B {
+    @apply text-[18px]/[140%] font-bold;
+  }
+
+  .text-20_body_B {
+    @apply text-[20px]/[160%] font-bold;
+  }
+}
+
+body {
+  font-family: 'Pretendard', 'sans-serif';
+}

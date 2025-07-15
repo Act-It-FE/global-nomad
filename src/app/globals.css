@@ -20,6 +20,11 @@
   /** red **/
   --color-red-500: #ff2727;
   --spacing: 0.0625rem;
+  /* breakpoint */
+  --breakpoint-base: initial;
+  --breakpoint-pc: 120rem;
+  --breakpoint-tb: 46.5rem;
+  --breakpoint-mb: 26.5625rem;
 }
 
 @layer components {

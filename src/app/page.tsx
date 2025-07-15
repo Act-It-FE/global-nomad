@@ -27,18 +27,10 @@ export default function Home() {
       >
         예약하기
       </Button>
-      <Button
-        variant='editButton'
-        className='text-14_M h-[29px] max-w-[68px]'
-        rounded='8'
-      >
+      <Button variant='editButton' size='xs' rounded='8'>
         수정하기
       </Button>
-      <Button
-        variant='deleteButton'
-        className='text-14_M h-[29px] max-w-[68px]'
-        rounded='8'
-      >
+      <Button variant='deleteButton' size='xs' rounded='8'>
         예약취소
       </Button>
       <Button

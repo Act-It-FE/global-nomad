@@ -45,9 +45,9 @@ export const BUTTON_ROUNDED: Record<buttonRoundedPixel, string> = {
 
 /* 버튼 사이즈와 텍스트 */
 export const BUTTON_SIZE: Record<buttonSize, string> = {
-  xs: 'w-[68px] h-[29px] text-14_B',
-  sm: 'w-[120px] h-[41px]',
-  md: 'w-[135px] h-[47px]',
-  lg: 'w-[200px] h-[47px]',
-  xl: 'max-w-[640px] h-[54px]',
-};
+  xs: 'w-full max-w-[68px] h-[29px] text-14_M',
+  sm: 'w-full max-w-[120px] h-[41px]',
+  md: 'w-full max-w-[135px] h-[47px]',
+  lg: 'w-full max-w-[200px] h-[47px]',
+  xl: 'w-full max-w-[640px] h-[54px]',
+} as const;

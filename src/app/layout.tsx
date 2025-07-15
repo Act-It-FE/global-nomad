@@ -1,7 +1,8 @@
 import './globals.css';
-import Footer from '@/components/common/footer';
 
 import localFont from 'next/font/local';
+
+import Footer from '@/components/common/footer';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -16,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='ko' className={pretendard.variable}>
+    <html className={pretendard.variable} lang='ko'>
       <body className={pretendard.className}>
         {children}
         <Footer />

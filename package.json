@@ -19,11 +19,15 @@
     ]
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.83.0",
+    "axios": "^1.10.0",
+    "clsx": "^2.1.1",
     "husky": "^9.1.7",
     "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

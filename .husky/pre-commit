@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+pnpm exec next lint --fix --dir src

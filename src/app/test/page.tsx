@@ -1,4 +1,4 @@
-import SideMenu from '@/components/common/SideMenu';
+import SideMenu from '@/components/common/side-menu/SideMenu';
 export default function Page() {
   return (
     <div>

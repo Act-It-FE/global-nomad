@@ -1,4 +1,5 @@
 import './globals.css';
+import Footer from '@/components/common/footer';
 
 import localFont from 'next/font/local';
 
@@ -15,8 +16,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html className={pretendard.variable} lang='ko'>
-      <body className={pretendard.className}>{children}</body>
+    <html lang='ko' className={pretendard.variable}>
+      <body className={pretendard.className}>
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -8,7 +8,7 @@ export type buttonVariants =
   | 'deleteButton'
   | 'kakaoButton';
 
-export type buttonSize = 'sm' | 'md' | 'lg' | 'xl';
+export type buttonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 /* 버튼 배경색, 텍스트색상, 테두리 색상
   primary: 대표색 : 하늘색 배경, 텍스트 흰색
@@ -45,8 +45,9 @@ export const BUTTON_ROUNDED: Record<buttonRoundedPixel, string> = {
 
 /* 버튼 사이즈와 텍스트 */
 export const BUTTON_SIZE: Record<buttonSize, string> = {
+  xs: 'w-[68px] h-[29px] text-14_B',
   sm: 'w-[120px] h-[41px]',
   md: 'w-[135px] h-[47px]',
   lg: 'w-[200px] h-[47px]',
-  xl: 'w-[640px] h-[54px]',
+  xl: 'max-w-[640px] h-[54px]',
 };

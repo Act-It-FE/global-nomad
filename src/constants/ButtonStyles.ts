@@ -3,7 +3,7 @@ export type buttonRoundedPixel = '16' | '14' | '12' | '8';
 export type buttonVariants =
   | 'primary'
   | 'secondary'
-  | 'disable'
+  | 'disabled'
   | 'editButton'
   | 'deleteButton'
   | 'kakaoButton';
@@ -22,8 +22,8 @@ export const BUTTON_VARIANTS: Record<buttonVariants, string> = {
     'bg-[var(--color-primary-500)] text-white hover:bg-[var(--color-primary-100)] cursor-pointer',
   secondary:
     'bg-white text-[var(--color-gray-600)] border border-[var(--color-gray-200)] hover:bg-[var(--color-gray-200)] cursor-pointer',
-  disable:
-    'bg-[var(--color-gray-200)] text-[var(--color-gray-50)] cursor-pointer',
+  disabled:
+    'bg-[var(--color-gray-200)] text-[var(--color-gray-50)] cursor-not-allowed',
   editButton:
     'bg-white text-[var(--color-gray-600)] border border-[var(--color-gray-50)] cursor-pointer  hover:bg-[var(--color-gray-200)]',
   deleteButton:

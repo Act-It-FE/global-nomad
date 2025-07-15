@@ -19,6 +19,7 @@ export default function Button({
   return (
     <button
       type={type}
+      disabled={variant === 'disabled'}
       onClick={onClick}
       className={` ${BUTTON_VARIANTS[variant]} ${BUTTON_ROUNDED[rounded]} ${sizeStyle} transition ${className} `}
     >

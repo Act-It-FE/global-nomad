@@ -57,7 +57,8 @@ export default function Input({
       case 'textarea':
         return <textarea id={id} {...props} />;
       case 'password':
-        return;
+        const { type, ...rest } = props;
+        return <PasswordInput id={id} {...rest} />;
       default:
         return <input id={id} {...props} />;
     }
@@ -80,4 +81,8 @@ export default function Input({
       </div>
     </div>
   );
+}
+
+function PasswordInput({}: InputHTMLAttributes<HTMLInputElement>) {
+  return <></>;
 }

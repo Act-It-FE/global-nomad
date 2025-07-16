@@ -55,6 +55,7 @@ export default function Input({
           {label}
         </label>
       )}
+      <div className='relative flex flex-col gap-6' />
     </div>
   );
 }

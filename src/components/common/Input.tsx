@@ -43,6 +43,8 @@ type DropdownProps = CommonProps & {
   items: string[];
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
-export default function Input({}: InputProps | TextareaProps | DropdownProps) {
-  return;
+export default function Input({
+  className = '',
+}: InputProps | TextareaProps | DropdownProps) {
+  return <div className={'flex flex-col gap-10' + className} />;
 }

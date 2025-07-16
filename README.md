@@ -70,7 +70,7 @@ project-root/
 │   ├── utils/                # 유틸 함수
 │   ├── hooks/                # 커스텀 훅
 │   └── stores/               # zustand 상태 관리 폴더 
-├── .coderabit.yaml           # 코드래빗 설정            
+├── .coderabbit.yaml           # 코드래빗 설정            
 ├── .gitignore
 ├── .prettierrc   
 ├── .prettierignore                            

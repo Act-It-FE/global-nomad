@@ -1,6 +1,8 @@
 import Link from 'next/link';
 
 import ICON_MAP from '@/constants/iconMap';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { cn } from '@/utils/cn';
 
 import Icon from '../Icon';
 
@@ -16,22 +18,29 @@ const menuItems: {
 ];
 
 export default function Menu({ activePath }: { activePath: string }) {
+  const isTablet = useMediaQuery('(min-width: 744px) and (max-width: 1023px)');
+
   return (
     <>
       {menuItems.map((item) => {
         const isActive = activePath === item.href;
         return (
-          <Link key={item.label} className='block w-full' href={item.href}>
+          <Link
+            key={item.label}
+            className={`block w-full ${isTablet ? 'w-150' : ''}`}
+            href={item.href}
+          >
             <div
-              className={`flex h-54 w-full items-center gap-8 self-stretch rounded-2xl py-12 pr-40 pl-20 text-gray-600 ${
-                isActive ? 'bg-primary-100 text-gray-950' : ''
-              }`}
+              className={cn(
+                'pr-auto flex items-center gap-8 self-stretch rounded-2xl pl-20 text-gray-600',
+                `${isActive ? 'bg-primary-100 text-gray-950' : ''} ${isTablet ? 'h-auto py-14' : 'h-54 py-12'}`,
+              )}
             >
               <Icon
-                className={`size-24 ${isActive ? 'text-primary-500' : ''}`}
+                className={` ${isActive ? 'text-primary-500' : ''} ${isTablet ? 'size-20' : 'size-24'}`}
                 icon={item.icon}
               />
-              <span className='text-center leading-normal tracking-tight'>
+              <span className='text-16_M text-center leading-normal tracking-tight'>
                 {item.label}
               </span>
             </div>

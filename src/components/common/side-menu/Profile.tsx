@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { uploadProfileImage } from '@/libs/upload'; // 업로드 함수 임포트
 
 import Icon from '../Icon';
 
 export default function Profile() {
+  const isTablet = useMediaQuery('(min-width: 744px) and (max-width: 1023px)');
   const [profileImage, setProfileImage] = useState<string>('');
+  const size = isTablet ? 70 : 120; // 프로필 이미지 크기 설정
 
   // 이미지 선택 시 실행
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,16 +38,19 @@ export default function Profile() {
         unoptimized
         alt='프로필 이미지'
         className='aspect-square rounded-full object-cover'
-        height={120}
+        height={size}
         quality={100}
         src={profileImage || '/images/profile-default.svg'}
-        width={120}
+        width={size}
       />
       <label
         className='absolute right-0 bottom-4 cursor-pointer rounded-full bg-gray-300 p-3 shadow-[0px_4px_24px_0px_rgba(156,180,202,0.2)]'
         htmlFor='profile-upload'
       >
-        <Icon className='size-16 text-white' icon='Edit' />
+        <Icon
+          className={`${isTablet ? 'size-12.5' : 'size-16'} text-white`}
+          icon='Edit'
+        />
       </label>
       <input
         accept='image/*'

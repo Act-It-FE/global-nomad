@@ -55,7 +55,7 @@ export default function Input({
       case 'dropdown':
         return;
       case 'textarea':
-        return;
+        return <textarea id={id} {...props} />;
       case 'password':
         return;
       default:

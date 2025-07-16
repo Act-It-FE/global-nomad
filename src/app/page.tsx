@@ -1,6 +1,5 @@
 import Icon from '@/components/common/Icon';
 import ICON_MAP from '@/constants/iconMap';
-
 export default function Home() {
   const iconKeys = Object.keys(ICON_MAP) as (keyof typeof ICON_MAP)[];
   return (

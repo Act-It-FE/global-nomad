@@ -2,6 +2,8 @@ import './globals.css';
 
 import localFont from 'next/font/local';
 
+import Footer from '@/components/common/footer';
+
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
   display: 'swap',
@@ -16,7 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html className={pretendard.variable} lang='ko'>
-      <body className={pretendard.className}>{children}</body>
+      <body className={pretendard.className}>
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

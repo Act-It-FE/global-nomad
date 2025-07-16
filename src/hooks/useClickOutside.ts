@@ -1,7 +1,9 @@
 import { RefObject, useEffect } from 'react';
 
 export function useClickOutside<T extends HTMLElement = HTMLElement>(
+  /** HTMLElement가 아니라 ref 객체 */
   ref: RefObject<T>,
+  /** react의 MouseEvent가 아니라 DOM 기본 MouseEvent */
   handler: (e: MouseEvent) => void,
 ) {
   useEffect(() => {

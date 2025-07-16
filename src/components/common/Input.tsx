@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
 
 type InputType =
   | 'button'
@@ -34,6 +34,10 @@ type InputProps = CommonProps & {
   type?: InputType;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export default function Input({}: InputProps) {
+type TextareaProps = CommonProps & {
+  type: 'textarea';
+} & TextareaHTMLAttributes<HTMLTextAreaElement>;
+
+export default function Input({}: InputProps | TextareaProps) {
   return;
 }

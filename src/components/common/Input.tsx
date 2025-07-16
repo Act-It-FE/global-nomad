@@ -47,6 +47,7 @@ export default function Input({
   id,
   className = '',
   label,
+  errorMessage,
 }: InputProps | TextareaProps | DropdownProps) {
   return (
     <div className={'flex flex-col gap-10' + className}>
@@ -55,7 +56,13 @@ export default function Input({
           {label}
         </label>
       )}
-      <div className='relative flex flex-col gap-6' />
+      <div className='relative flex flex-col gap-6'>
+        {errorMessage && (
+          <div className='text-12_M mx-8 leading-14 text-red-500'>
+            {errorMessage}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

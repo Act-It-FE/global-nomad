@@ -38,6 +38,11 @@ type TextareaProps = CommonProps & {
   type: 'textarea';
 } & TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-export default function Input({}: InputProps | TextareaProps) {
+type DropdownProps = CommonProps & {
+  type: 'dropdown';
+  items: string[];
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
+
+export default function Input({}: InputProps | TextareaProps | DropdownProps) {
   return;
 }

@@ -5,6 +5,8 @@ import {
   useState,
 } from 'react';
 
+import Icon from './Icon';
+
 type InputType =
   | 'button'
   | 'checkbox'
@@ -111,5 +113,10 @@ function DropdownInput({ items, type, onClick, ...props }: DropdownProps) {
 }
 
 function PasswordInput({}: InputHTMLAttributes<HTMLInputElement>) {
-  return <></>;
+  return (
+    <>
+      <input />
+      <Icon icon='EyeOn' />
+    </>
+  );
 }

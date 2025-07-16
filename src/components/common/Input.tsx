@@ -50,6 +50,19 @@ export default function Input({
   errorMessage,
   ...props
 }: InputProps | TextareaProps | DropdownProps) {
+  const insideInput = () => {
+    switch (props.type) {
+      case 'dropdown':
+        return;
+      case 'textarea':
+        return;
+      case 'password':
+        return;
+      default:
+        return <input id={id} {...props} />;
+    }
+  };
+
   return (
     <div className={'flex flex-col gap-10' + className}>
       {label && (
@@ -58,15 +71,7 @@ export default function Input({
         </label>
       )}
       <div className='relative flex flex-col gap-6'>
-        {props.type === 'dropdown' ? (
-          <></>
-        ) : props.type === 'textarea' ? (
-          <></>
-        ) : props.type === 'password' ? (
-          <></>
-        ) : (
-          <input id={id} {...props} />
-        )}
+        {insideInput()}
         {errorMessage && (
           <div className='text-12_M mx-8 leading-14 text-red-500'>
             {errorMessage}

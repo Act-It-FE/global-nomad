@@ -1,4 +1,9 @@
-import { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import {
+  InputHTMLAttributes,
+  MouseEvent,
+  TextareaHTMLAttributes,
+  useState,
+} from 'react';
 
 type InputType =
   | 'button'
@@ -83,15 +88,24 @@ export default function Input({
   );
 }
 
-function DropdownInput({ items, type, ...props }: DropdownProps) {
+function DropdownInput({ items, type, onClick, ...props }: DropdownProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = (e: MouseEvent<HTMLInputElement>) => {
+    if (onClick) onClick(e);
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <>
-      <input type='button' {...props} />
-      <div>
-        {items.map((item) => (
-          <button key={item}>{item}</button>
-        ))}
-      </div>
+      <input type='button' onClick={handleClick} {...props} />
+      {isOpen && (
+        <div>
+          {items.map((item) => (
+            <button key={item}>{item}</button>
+          ))}
+        </div>
+      )}
     </>
   );
 }

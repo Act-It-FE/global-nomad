@@ -53,12 +53,13 @@ export default function Input({
   const insideInput = () => {
     switch (props.type) {
       case 'dropdown':
-        return;
+        const { type: t1, ...rest1 } = props;
+        return <DropdownInput id={id} {...rest1} />;
       case 'textarea':
         return <textarea id={id} {...props} />;
       case 'password':
-        const { type, ...rest } = props;
-        return <PasswordInput id={id} {...rest} />;
+        const { type: t2, ...rest2 } = props;
+        return <PasswordInput id={id} {...rest2} />;
       default:
         return <input id={id} {...props} />;
     }
@@ -81,6 +82,10 @@ export default function Input({
       </div>
     </div>
   );
+}
+
+function DropdownInput({}: InputHTMLAttributes<HTMLInputElement>) {
+  return <></>;
 }
 
 function PasswordInput({}: InputHTMLAttributes<HTMLInputElement>) {

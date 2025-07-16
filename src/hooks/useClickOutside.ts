@@ -13,7 +13,7 @@ export function useClickOutside<T extends HTMLElement = HTMLElement>(
     return () => {
       document.removeEventListener('click', handleOutsideClick);
     };
-  });
+  }, [ref, handler]);
 
   return;
 }

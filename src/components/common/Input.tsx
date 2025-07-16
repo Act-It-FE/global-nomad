@@ -112,12 +112,12 @@ function DropdownInput({ items, type, onClick, ...props }: DropdownProps) {
   );
 }
 
-function PasswordInput({}: InputHTMLAttributes<HTMLInputElement>) {
+function PasswordInput(props: InputHTMLAttributes<HTMLInputElement>) {
   const [isPassword, setIsPassword] = useState(true);
 
   return (
     <>
-      <input type={isPassword ? 'password' : 'text'} />
+      <input type={isPassword ? 'password' : 'text'} {...props} />
       <button onClick={() => setIsPassword((prev) => !prev)}>
         {isPassword ? <Icon icon='EyeOff' /> : <Icon icon='EyeOn' />}
       </button>

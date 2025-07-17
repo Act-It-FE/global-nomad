@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
-import Icon from '@/components/common/Icon';
+import Icon from './Icon';
 
 export default function Footer() {
   return (
-    <footer className='fixed bottom-0 grid h-116 w-full grid-cols-2 items-center border-1 border-gray-100 bg-white py-10 md:flex md:justify-between md:px-40 lg:px-200'>
+    <footer className='bottom-0 grid h-116 w-full grid-cols-2 items-center border-1 border-gray-100 bg-white py-10 md:flex md:justify-between md:px-40 lg:px-200'>
       <p className='col-start-1 row-start-2 justify-self-center text-gray-400 md:col-auto md:row-auto'>
         @act-it-2025
       </p>

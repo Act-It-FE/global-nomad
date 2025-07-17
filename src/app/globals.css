@@ -20,6 +20,8 @@
   /** red **/
   --color-red-500: #ff2727;
 
+  --color-yellow: #ffcb02;
+
   --spacing: 0.0625rem;
 
   --breakpoint-md: 744px;

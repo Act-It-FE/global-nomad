@@ -152,8 +152,14 @@ function PasswordInput({
   return (
     <>
       <input type={isPassword ? 'password' : 'text'} {...props} />
-      <button onClick={() => setIsPassword((prev) => !prev)}>
-        <Icon icon={isPassword ? 'EyeOff' : 'EyeOn'} />
+      <button
+        className='absolute top-15 right-20'
+        onClick={() => setIsPassword((prev) => !prev)}
+      >
+        <Icon
+          className='size-24 text-gray-400'
+          icon={isPassword ? 'EyeOff' : 'EyeOn'}
+        />
       </button>
     </>
   );

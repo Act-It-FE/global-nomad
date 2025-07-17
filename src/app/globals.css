@@ -21,6 +21,8 @@
   --color-red-500: #ff2727;
 
   --spacing: 0.0625rem;
+
+  --breakpoint-md: 744px;
 }
 
 @layer components {

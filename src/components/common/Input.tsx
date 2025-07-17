@@ -7,6 +7,8 @@ import {
   useState,
 } from 'react';
 
+import { cn } from '@/utils/cn';
+
 import Icon from './Icon';
 
 type InputType =
@@ -141,7 +143,13 @@ function DropdownInput({
         <Icon className='size-24 text-gray-950' icon='TriangleDown' />
       </label>
       {isOpen && (
-        <div>
+        <div
+          className={cn(
+            'flex flex-col gap-4',
+            'absolute top-64 w-full rounded-2xl border border-gray-100 bg-white p-12',
+            'shadow-[0_2px_6px_rgba(0,0,0,0.02)]',
+          )}
+        >
           {items.map((item) => (
             <button key={item} onClick={() => setValue(item)}>
               {item}

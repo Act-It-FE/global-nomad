@@ -64,8 +64,7 @@ export default function Input({
       case 'textarea':
         return <textarea id={id} {...props} />;
       case 'password':
-        const { type: t2, ...rest2 } = props;
-        return <PasswordInput id={id} {...rest2} />;
+        return <PasswordInput id={id} {...props} />;
       default:
         return <input id={id} {...props} />;
     }
@@ -112,7 +111,10 @@ function DropdownInput({ items, type, onClick, ...props }: DropdownProps) {
   );
 }
 
-function PasswordInput(props: InputHTMLAttributes<HTMLInputElement>) {
+function PasswordInput({
+  type,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement>) {
   const [isPassword, setIsPassword] = useState(true);
 
   return (

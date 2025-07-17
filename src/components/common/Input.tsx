@@ -91,7 +91,15 @@ export default function Input({
   );
 }
 
-function DropdownInput({ items, type, onClick, ...props }: DropdownProps) {
+function DropdownInput({
+  items,
+  type,
+  onClick,
+  defaultValue,
+  placeholder,
+  ...props
+}: DropdownProps) {
+  const [value, setValue] = useState(defaultValue);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = (e: MouseEvent<HTMLInputElement>) => {
@@ -101,12 +109,19 @@ function DropdownInput({ items, type, onClick, ...props }: DropdownProps) {
 
   return (
     <>
-      <input type='button' onClick={handleClick} {...props} />
+      <input
+        type='button'
+        value={value ?? placeholder ?? ''}
+        onClick={handleClick}
+        {...props}
+      />
       <Icon icon='TriangleDown' />
       {isOpen && (
         <div>
           {items.map((item) => (
-            <button key={item}>{item}</button>
+            <button key={item} onClick={() => setValue(item)}>
+              {item}
+            </button>
           ))}
         </div>
       )}

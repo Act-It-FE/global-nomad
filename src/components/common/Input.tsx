@@ -110,6 +110,7 @@ export default function Input({
 }
 
 function DropdownInput({
+  id,
   className,
   type,
   onClick,
@@ -130,12 +131,15 @@ function DropdownInput({
     <>
       <input
         className={`${className} ${value ? 'text-gray-950' : 'text-gray-400'} text-start`}
+        id={id}
         type='button'
         value={value ?? placeholder ?? ''}
         onClick={handleClick}
         {...props}
       />
-      <Icon icon='TriangleDown' />
+      <label className='absolute top-15 right-20' htmlFor={id}>
+        <Icon className='size-24 text-gray-950' icon='TriangleDown' />
+      </label>
       {isOpen && (
         <div>
           {items.map((item) => (

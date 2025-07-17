@@ -100,6 +100,7 @@ function DropdownInput({ items, type, onClick, ...props }: DropdownProps) {
   return (
     <>
       <input type='button' onClick={handleClick} {...props} />
+      <Icon icon='TriangleDown' />
       {isOpen && (
         <div>
           {items.map((item) => (

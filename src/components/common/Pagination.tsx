@@ -1,4 +1,5 @@
 import { cn } from '@/utils/cn';
+
 import Icon from './Icon';
 
 export default function Pagination({
@@ -34,7 +35,7 @@ export default function Pagination({
         disabled={currentGroup === 0}
         onClick={handlePrevGroup}
       >
-        <Icon icon='ChevronLeft' className='size-20' />
+        <Icon className='size-20' icon='ChevronLeft' />
       </button>
 
       {pageNumbers.map((page) => (
@@ -57,7 +58,7 @@ export default function Pagination({
         disabled={lastPage === totalPages}
         onClick={handleNextGroup}
       >
-        <Icon icon='ChevronRight' className='size-20' />
+        <Icon className='size-20' icon='ChevronRight' />
       </button>
     </div>
   );

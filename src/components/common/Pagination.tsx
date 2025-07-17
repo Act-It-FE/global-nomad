@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Icon from './Icon';
 
 export default function Pagination({
@@ -16,7 +17,7 @@ export default function Pagination({
 
   const handlePrevGroup = () => {
     if (firstPage > 1) {
-      onPageChange(firstPage - 1);
+      onPageChange(firstPage - 5);
     }
   };
 
@@ -27,19 +28,36 @@ export default function Pagination({
   };
 
   return (
-    <div>
-      <button onClick={handlePrevGroup}>
-        <Icon icon='ChevronLeft' />
+    <div className='flex gap-4'>
+      <button
+        className='flex size-40 items-center justify-center p-8 text-gray-950 disabled:text-gray-300'
+        disabled={currentGroup === 0}
+        onClick={handlePrevGroup}
+      >
+        <Icon icon='ChevronLeft' className='size-20' />
       </button>
 
       {pageNumbers.map((page) => (
-        <button key={page} onClick={() => onPageChange(page)}>
+        <button
+          key={page}
+          className={cn(
+            'txt-14_M size-40 p-8 leading-24 transition-colors duration-150',
+            page === currentPage
+              ? 'border-primary-500 border-b-2 text-gray-950'
+              : 'text-gray-300 hover:text-gray-500',
+          )}
+          onClick={() => onPageChange(page)}
+        >
           {page}
         </button>
       ))}
 
-      <button onClick={handleNextGroup}>
-        <Icon icon='ChevronRight' />
+      <button
+        className='flex size-40 items-center justify-center p-8 text-gray-950 disabled:text-gray-300'
+        disabled={lastPage === totalPages}
+        onClick={handleNextGroup}
+      >
+        <Icon icon='ChevronRight' className='size-20' />
       </button>
     </div>
   );

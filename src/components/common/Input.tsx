@@ -124,7 +124,7 @@ function PasswordInput({
     <>
       <input type={isPassword ? 'password' : 'text'} {...props} />
       <button onClick={() => setIsPassword((prev) => !prev)}>
-        {isPassword ? <Icon icon='EyeOff' /> : <Icon icon='EyeOn' />}
+        <Icon icon={isPassword ? 'EyeOff' : 'EyeOn'} />
       </button>
     </>
   );

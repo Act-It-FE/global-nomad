@@ -53,7 +53,7 @@ type DropdownProps = CommonProps & {
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
 const COMMON_STYLE =
-  'text-16_M h-54 w-full rounded-2xl border border-gray-100 px-19 py-15 leading-19 text-gray-950 outline-none placeholder:text-gray-400';
+  'text-16_M h-54 w-full rounded-2xl border border-gray-100 px-19 py-15 leading-19 outline-none placeholder:text-gray-400';
 
 const FOCUS_STYLE =
   'focus:border-primary-500 focus:border-[1.5px] focus:px-18.5 focus:py-14.5';
@@ -66,7 +66,7 @@ export default function Input({
   ...props
 }: InputProps | TextareaProps | DropdownProps) {
   const insideInput = () => {
-    const className = `${COMMON_STYLE} ${FOCUS_STYLE} ${errorMessage ? 'border-red-500' : ''}`;
+    const className = `text-gray-950 ${COMMON_STYLE} ${FOCUS_STYLE} ${errorMessage ? 'border-red-500' : ''}`;
 
     switch (props.type) {
       case 'dropdown':
@@ -104,11 +104,12 @@ export default function Input({
 }
 
 function DropdownInput({
-  items,
+  className,
   type,
   onClick,
   defaultValue,
   placeholder,
+  items,
   ...props
 }: DropdownProps) {
   const [value, setValue] = useState(defaultValue);
@@ -122,6 +123,7 @@ function DropdownInput({
   return (
     <>
       <input
+        className={`${className} ${value ? 'text-gray-950' : 'text-gray-400'} text-start`}
         type='button'
         value={value ?? placeholder ?? ''}
         onClick={handleClick}

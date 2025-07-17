@@ -26,82 +26,82 @@
 }
 
 @layer components {
-  .text-11_M {
+  .txt-11_M {
     @apply text-[10px] font-medium;
   }
-  .text-11_B {
+  .txt-11_B {
     @apply text-[10px] font-bold;
   }
 
-  .text-12_M {
+  .txt-12_M {
     @apply text-[12px] font-medium;
   }
-  .text-12_B {
+  .txt-12_B {
     @apply text-[12px] font-bold;
   }
 
-  .text-13_M {
+  .txt-13_M {
     @apply text-[13px] font-medium;
   }
-  .text-13_B {
+  .txt-13_B {
     @apply text-[13px] font-bold;
   }
 
-  .text-14_M {
+  .txt-14_M {
     @apply text-[14px] font-medium;
   }
-  .text-14_B {
+  .txt-14_B {
     @apply text-[14px] font-bold;
   }
 
-  .text-16_M {
+  .txt-16_M {
     @apply text-[16px] font-medium;
   }
-  .text-16_B {
+  .txt-16_B {
     @apply text-[16px] font-bold;
   }
 
-  .text-18_M {
+  .txt-18_M {
     @apply text-[18px] font-medium;
   }
-  .text-18_B {
+  .txt-18_B {
     @apply text-[18px] font-bold;
   }
 
-  .text-20_M {
+  .txt-20_M {
     @apply text-[20px] font-medium;
   }
-  .text-20_B {
+  .txt-20_B {
     @apply text-[20px] font-bold;
   }
 
-  .text-24_M {
+  .txt-24_M {
     @apply text-[24px] font-medium;
   }
-  .text-24_B {
+  .txt-24_B {
     @apply text-[24px] font-bold;
   }
 
-  .text-32_M {
+  .txt-32_M {
     @apply text-[32px] font-medium;
   }
-  .text-32_B {
+  .txt-32_B {
     @apply text-[32px] font-bold;
   }
 
-  .text-14_body_M {
+  .txt-14_body_M {
     @apply text-[14px]/[180%] font-medium;
   }
 
-  .text-16_body_M {
+  .txt-16_body_M {
     @apply text-[16px]/[180%] font-medium;
   }
 
-  .text-18_body_B {
+  .txt-18_body_B {
     @apply text-[18px]/[140%] font-bold;
   }
 
-  .text-20_body_B {
+  .txt-20_body_B {
     @apply text-[20px]/[160%] font-bold;
   }
 }

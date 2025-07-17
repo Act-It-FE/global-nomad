@@ -101,7 +101,7 @@ export default function Input({
       )}
       <div className='relative flex flex-col gap-6'>
         {insideInput()}
-        {errorMessage && (
+        {props.type !== 'dropdown' && errorMessage && (
           <div className='text-12_M mx-8 leading-14 text-red-500'>
             {errorMessage}
           </div>

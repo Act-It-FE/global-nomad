@@ -52,6 +52,12 @@ type DropdownProps = CommonProps & {
   items: string[];
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
+const COMMON_STYLE =
+  'text-16_M h-54 w-full rounded-2xl border border-gray-100 px-19 py-15 leading-19 text-gray-950 outline-none placeholder:text-gray-400';
+
+const FOCUS_STYLE =
+  'focus:border-primary-500 focus:border-[1.5px] focus:px-18.5 focus:py-14.5';
+
 export default function Input({
   id,
   className = '',
@@ -60,20 +66,26 @@ export default function Input({
   ...props
 }: InputProps | TextareaProps | DropdownProps) {
   const insideInput = () => {
+    const className = `${COMMON_STYLE} ${FOCUS_STYLE} ${errorMessage ? 'border-red-500' : ''}`;
+
     switch (props.type) {
       case 'dropdown':
-        return <DropdownInput id={id} {...props} />;
+        return (
+          <DropdownInput className={`${COMMON_STYLE}`} id={id} {...props} />
+        );
       case 'textarea':
-        return <textarea id={id} {...props} />;
+        return (
+          <textarea className={`${className} resize-none`} id={id} {...props} />
+        );
       case 'password':
-        return <PasswordInput id={id} {...props} />;
+        return <PasswordInput className={className} id={id} {...props} />;
       default:
-        return <input id={id} {...props} />;
+        return <input className={className} id={id} {...props} />;
     }
   };
 
   return (
-    <div className={'flex flex-col gap-10' + className}>
+    <div className={'flex flex-col gap-10 ' + className}>
       {label && (
         <label className='text-16_M leading-19 text-gray-950' htmlFor={id}>
           {label}

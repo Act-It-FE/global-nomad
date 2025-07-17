@@ -151,7 +151,14 @@ function DropdownInput({
           )}
         >
           {items.map((item) => (
-            <button key={item} onClick={() => setValue(item)}>
+            <button
+              key={item}
+              className={
+                'text-16_M h-48 rounded-xl px-20 text-start text-gray-900 ' +
+                (item === value ? 'bg-primary-100' : '')
+              }
+              onClick={() => setValue(item)}
+            >
               {item}
             </button>
           ))}

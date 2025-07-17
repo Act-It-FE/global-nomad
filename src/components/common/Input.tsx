@@ -56,7 +56,7 @@ type DropdownProps = CommonProps & {
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
 const COMMON_STYLE =
-  'text-16_M h-54 w-full rounded-2xl border border-gray-100 px-19 py-15 leading-19 outline-none placeholder:text-gray-400';
+  'txt-16_M h-54 w-full rounded-2xl border border-gray-100 px-19 py-15 leading-19 outline-none placeholder:text-gray-400';
 
 const FOCUS_STYLE =
   'focus:border-primary-500 focus:border-[1.5px] focus:px-18.5 focus:py-14.5';
@@ -95,14 +95,14 @@ export default function Input({
   return (
     <div className={'flex flex-col gap-10 ' + className}>
       {label && (
-        <label className='text-16_M leading-19 text-gray-950' htmlFor={id}>
+        <label className='txt-16_M leading-19 text-gray-950' htmlFor={id}>
           {label}
         </label>
       )}
       <div className='relative flex flex-col gap-6'>
         {insideInput()}
         {props.type !== 'dropdown' && errorMessage && (
-          <div className='text-12_M mx-8 leading-14 text-red-500'>
+          <div className='txt-12_M mx-8 leading-14 text-red-500'>
             {errorMessage}
           </div>
         )}
@@ -154,7 +154,7 @@ function DropdownInput({
             <button
               key={item}
               className={
-                'text-16_M h-48 rounded-xl px-20 text-start text-gray-900 ' +
+                'txt-16_M h-48 rounded-xl px-20 text-start text-gray-900 ' +
                 (item === value ? 'bg-primary-100' : '')
               }
               onClick={() => setValue(item)}

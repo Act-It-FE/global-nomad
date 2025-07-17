@@ -16,6 +16,4 @@ export function useClickOutside<T extends HTMLElement = HTMLElement>(
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [ref, handler]);
-
-  return;
 }

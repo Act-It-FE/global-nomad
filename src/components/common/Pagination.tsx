@@ -2,12 +2,19 @@ import { cn } from '@/utils/cn';
 
 import Icon from './Icon';
 
+interface PaginationProps {
+  currentPage: number; // 현재 보고있는 페이지
+  totalCount: number; // 총 게시글 수
+  pageSize: number; // 한 페이지에 보여줄 게시글 수
+  onPageChange: (page: number) => void; // 페이지 변경 시 실행될 함수
+}
+
 export default function Pagination({
   currentPage,
   totalCount,
   pageSize,
   onPageChange,
-}) {
+}: PaginationProps) {
   const totalPages = Math.ceil(totalCount / pageSize);
   const currentGroup = Math.floor((currentPage - 1) / 5);
   const firstPage = currentGroup * 5 + 1;

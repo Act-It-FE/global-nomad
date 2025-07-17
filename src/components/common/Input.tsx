@@ -45,6 +45,7 @@ type InputProps = CommonProps & {
 
 type TextareaProps = CommonProps & {
   type: 'textarea';
+  height?: string;
 } & TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 type DropdownProps = CommonProps & {
@@ -75,7 +76,12 @@ export default function Input({
         );
       case 'textarea':
         return (
-          <textarea className={`${className} resize-none`} id={id} {...props} />
+          <textarea
+            className={`${className} resize-none`}
+            id={id}
+            style={{ height: props.height }}
+            {...props}
+          />
         );
       case 'password':
         return <PasswordInput className={className} id={id} {...props} />;

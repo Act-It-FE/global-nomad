@@ -11,7 +11,7 @@ export type buttonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export const BUTTON_VARIANTS: Record<buttonVariants, string> = {
   primary: 'bg-primary-500 text-white hover:bg-primary-100 cursor-pointer',
   secondary:
-    'bg-white text-gray-600) border border-gray-200 hover:bg-gray-200 cursor-pointer',
+    'bg-white text-gray-600 border border-gray-200 hover:bg-gray-200 cursor-pointer',
   kakao:
     'flex flex-row gap-2 items-center justify-center bg-white text-gray-600 border border-gray-200 cursor-pointer hover:bg-[rgb(250,227,0)]',
 } as const;

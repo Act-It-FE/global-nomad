@@ -1,15 +1,18 @@
-import Icon from '@/components/common/Icon';
-import ICON_MAP from '@/constants/iconMap';
+'use client';
+
+import { useState } from 'react';
+
+import Pagination from '@/components/common/Pagination';
 export default function Home() {
-  const iconKeys = Object.keys(ICON_MAP) as (keyof typeof ICON_MAP)[];
+  const [page, setPage] = useState(1);
   return (
-    <div className='grid grid-cols-5 gap-4'>
-      {iconKeys.map((iconKey) => (
-        <div key={iconKey} className='flex flex-col items-center'>
-          <Icon className='text-primary-500 size-20' icon={iconKey} />
-          <span className='mt-1 text-xs'>{iconKey}</span>
-        </div>
-      ))}
+    <div className='flex h-500 items-center justify-center'>
+      <Pagination
+        currentPage={page}
+        pageSize={10}
+        totalCount={215}
+        onPageChange={setPage}
+      />
     </div>
   );
 }

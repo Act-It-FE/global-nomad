@@ -4,9 +4,11 @@ import {
   InputHTMLAttributes,
   MouseEvent,
   TextareaHTMLAttributes,
+  useRef,
   useState,
 } from 'react';
 
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/utils/cn';
 
 import Icon from './Icon';
@@ -123,15 +125,19 @@ function DropdownInput({
 }: DropdownProps) {
   const [value, setValue] = useState(defaultValue);
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleClick = (e: MouseEvent<HTMLInputElement>) => {
     if (onClick) onClick(e);
     setIsOpen((prev) => !prev);
   };
 
+  useClickOutside(ref, () => setIsOpen(false));
+
   return (
     <>
       <input
+        ref={ref}
         className={`${className} ${value ? 'text-gray-950' : 'text-gray-400'} text-start`}
         id={id}
         type='button'
@@ -157,7 +163,10 @@ function DropdownInput({
                 'txt-16_M h-48 rounded-xl px-20 text-start text-gray-900 ' +
                 (item === value ? 'bg-primary-100' : '')
               }
-              onClick={() => setValue(item)}
+              onClick={() => {
+                setValue(item);
+                setIsOpen(false);
+              }}
             >
               {item}
             </button>

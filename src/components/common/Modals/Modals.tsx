@@ -1,6 +1,7 @@
 'use client';
 
 import ReactDOM from 'react-dom';
+
 import { ContentMap } from '@/constants/Modals';
 import type { ModalProps } from '@/types/Modals';
 

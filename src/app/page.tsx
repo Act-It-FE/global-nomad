@@ -51,7 +51,6 @@ export default function Home() {
         경고 모달 열기
       </Button>
 
-      {/* input 모달 */}
       <Button
         variant='primary'
         onClick={() =>

@@ -1,3 +1,4 @@
+import Button from '@/components/common/Button';
 import Icon from '@/components/common/Icon';
 import ICON_MAP from '@/constants/iconMap';
 export default function Home() {
@@ -10,6 +11,9 @@ export default function Home() {
           <span className='mt-1 text-xs'>{iconKey}</span>
         </div>
       ))}
+      <Button size='xl' variant='secondary'>
+        회원가입
+      </Button>
     </div>
   );
 }

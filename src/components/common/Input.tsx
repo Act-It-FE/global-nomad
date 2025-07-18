@@ -163,6 +163,7 @@ function DropdownInput({
                 'txt-16_M h-48 rounded-xl px-20 text-start text-gray-900 ' +
                 (item === value ? 'bg-primary-100' : '')
               }
+              type='button'
               onClick={() => {
                 setValue(item);
                 setIsOpen(false);
@@ -188,6 +189,7 @@ function PasswordInput({
       <input type={isPassword ? 'password' : 'text'} {...props} />
       <button
         className='absolute top-15 right-20'
+        type='button'
         onClick={() => setIsPassword((prev) => !prev)}
       >
         <Icon

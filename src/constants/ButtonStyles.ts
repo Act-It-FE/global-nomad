@@ -4,9 +4,9 @@ export type buttonVariants =
   | 'primary'
   | 'secondary'
   | 'disabled'
-  | 'editButton'
-  | 'deleteButton'
-  | 'kakaoButton';
+  | 'edit'
+  | 'delete'
+  | 'kakao';
 
 export type buttonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -24,11 +24,10 @@ export const BUTTON_VARIANTS: Record<buttonVariants, string> = {
     'bg-white text-[var(--color-gray-600)] border border-[var(--color-gray-200)] hover:bg-[var(--color-gray-200)] cursor-pointer',
   disabled:
     'bg-[var(--color-gray-200)] text-[var(--color-gray-50)] cursor-not-allowed',
-  editButton:
-    'bg-white text-[var(--color-gray-600)] border border-[var(--color-gray-50)] cursor-pointer  hover:bg-[var(--color-gray-200)]',
-  deleteButton:
+  edit: 'bg-white text-[var(--color-gray-600)] border border-[var(--color-gray-50)] cursor-pointer  hover:bg-[var(--color-gray-200)]',
+  delete:
     'bg-[var(--color-gray-50)] text-[var(--color-gray-600)] cursor-pointer  hover:bg-[var(--color-gray-200)]',
-  kakaoButton:
+  kakao:
     'flex flex-row gap-2 items-center justify-center bg-white text-[var(--color-gray-600)] border border-[var(--color-gray-200)] cursor-pointer hover:bg-[rgb(250,227,0)]',
 } as const;
 
@@ -45,7 +44,7 @@ export const BUTTON_ROUNDED: Record<buttonRoundedPixel, string> = {
 
 /* 버튼 사이즈와 텍스트 */
 export const BUTTON_SIZE: Record<buttonSize, string> = {
-  xs: 'w-full max-w-68 h-29 text-14_M',
+  xs: 'w-full max-w-68 h-29',
   sm: 'w-full max-w-120 h-41',
   md: 'w-full max-w-135 h-47',
   lg: 'w-full max-w-200 h-47',

@@ -25,7 +25,7 @@ export default function Pagination({
 
   const handlePrevGroup = () => {
     if (firstPage > 1) {
-      onPageChange(firstPage - 5);
+      onPageChange(firstPage - 1);
     }
   };
 

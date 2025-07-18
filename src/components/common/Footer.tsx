@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import Icon from './Icon';
+import Icon from '@/components/common/Icon';
 
 export default function Footer() {
   return (

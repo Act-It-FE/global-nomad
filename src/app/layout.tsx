@@ -2,7 +2,7 @@ import './globals.css';
 
 import localFont from 'next/font/local';
 
-import Footer from '@/components/common/Footer';
+import Footer from '@/components/common/footer';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',

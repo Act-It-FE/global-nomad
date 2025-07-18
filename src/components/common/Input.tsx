@@ -56,7 +56,7 @@ type DropdownProps = CommonProps & {
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
 const COMMON_STYLE =
-  'txt-16_M h-54 w-full rounded-2xl border border-gray-100 px-19 py-15 leading-19 outline-none placeholder:text-gray-400';
+  'txt-16_M h-54 w-full rounded-2xl bg-white border border-gray-100 px-19 py-15 leading-19 outline-none placeholder:text-gray-400';
 
 const FOCUS_STYLE =
   'focus:border-primary-500 focus:border-[1.5px] focus:px-18.5 focus:py-14.5';
@@ -145,7 +145,7 @@ function DropdownInput({
       {isOpen && (
         <div
           className={cn(
-            'flex flex-col gap-4',
+            'z-10 flex flex-col gap-4',
             'absolute top-64 w-full rounded-2xl border border-gray-100 bg-white p-12',
             'shadow-[0_2px_6px_rgba(0,0,0,0.02)]',
           )}

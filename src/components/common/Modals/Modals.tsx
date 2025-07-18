@@ -1,5 +1,4 @@
 'use client';
-
 import ReactDOM from 'react-dom';
 
 import { ContentMap } from '@/constants/Modals';

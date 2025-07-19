@@ -5,12 +5,12 @@ import { ReactNode, useState } from 'react';
 import { cn } from '@/utils/cn';
 
 type DropDownProps = {
-  trigger: ReactNode;
+  trigger: ReactNode; // 이미지 컴포넌트 사용 가능
   firstText: string;
   secondText: string;
   onClickFirst: () => void;
   onClickSecond: () => void;
-  position?: 'bottom' | 'left';
+  position?: 'bottom' | 'left'; //기본값은 bottom 입니다
 };
 
 export default function DropDown({

@@ -14,6 +14,7 @@ export interface ButtonProps {
   size?: keyof typeof BUTTON_SIZE;
   variant?: buttonVariants;
   rounded?: buttonRoundedPixel;
+  disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
   icon?: ReactNode;
@@ -25,6 +26,7 @@ export default function Button({
   rounded = '12',
   size,
   className = '',
+  disabled = true,
   onClick,
   type = 'button',
   icon,
@@ -33,6 +35,7 @@ export default function Button({
   return (
     <button
       className={`${BUTTON_VARIANTS[variant]} ${BUTTON_ROUNDED[rounded]} ${sizeStyle} transition ${className} `}
+      disabled={disabled}
       type={type}
       onClick={onClick}
     >

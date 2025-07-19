@@ -1,51 +1,23 @@
 'use client';
 
-import { useState } from 'react';
-
+import { useImageUpload } from '@/hooks/useImageUpload';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { uploadProfileImage } from '@/libs/upload';
-import { validateImageFile } from '@/utils/validateImageFile';
 
 import Icon from '../Icon';
 import ImageUploader from '../ImageUploader';
 
 export default function Profile() {
   const isTablet = useMediaQuery('(min-width: 744px) and (max-width: 1023px)');
-  const [profileImage, setProfileImage] = useState<string>('');
-  const [isUploading, setIsUploading] = useState(false);
-
+  const { previewUrl, isUploading, handleChange } = useImageUpload({
+    defaultImage: '/images/profile-default.svg',
+    uploadFn: async (file: File) => {
+      const result = await uploadProfileImage(file);
+      return result.profileImageUrl;
+    },
+  });
   const size = isTablet ? 70 : 120;
   const iconSize = isTablet ? 'size-12.8' : 'size-16';
-
-  const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    if (!validateImageFile(file)) {
-      alert('유효하지 않은 이미지 파일입니다.');
-      return;
-    }
-
-    const tempUrl = URL.createObjectURL(file);
-    setProfileImage(tempUrl);
-    setIsUploading(true);
-
-    try {
-      const result = await uploadProfileImage(file);
-      URL.revokeObjectURL(tempUrl);
-
-      const uploadedUrl = result.profileImageUrl;
-      setProfileImage(uploadedUrl);
-    } catch (error) {
-      console.error(error);
-      URL.revokeObjectURL(tempUrl);
-      setProfileImage('/images/profile-default.svg');
-    } finally {
-      setIsUploading(false);
-    }
-  };
 
   return (
     <div className='relative'>
@@ -53,7 +25,7 @@ export default function Profile() {
         alt='프로필 이미지'
         className='aspect-square rounded-full object-cover'
         height={size}
-        src={profileImage || '/images/profile-default.svg'}
+        src={previewUrl}
         width={size}
       />
 
@@ -70,7 +42,7 @@ export default function Profile() {
         <Icon className={`${iconSize} text-white`} icon='Edit' />
       </label>
 
-      <ImageUploader id='image-upload' onChange={handleImageChange} />
+      <ImageUploader id='image-upload' onChange={handleChange} />
     </div>
   );
 }

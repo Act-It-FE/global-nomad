@@ -6,13 +6,13 @@ import { cn } from '@/utils/cn';
 
 import Icon from '../Icon';
 
-const menuItems: {
+const MENU_ITEMS: {
   href: string;
   icon: keyof typeof ICON_MAP;
   label: string;
 }[] = [
   { href: '/mypage/info', icon: 'User', label: '내 정보' },
-  { href: '/mypage/reserves', icon: 'List', label: '예약 내역' },
+  { href: '/mypage/reserves', icon: 'List', label: '예약내역' },
   { href: '/mypage/activities', icon: 'Setting', label: '내 체험 관리' },
   { href: '/mypage/reserve-status', icon: 'Calender', label: '예약 현황' },
 ];
@@ -22,7 +22,7 @@ export default function Menu({ activePath }: { activePath: string }) {
 
   return (
     <>
-      {menuItems.map((item) => {
+      {MENU_ITEMS.map((item) => {
         const isActive = activePath === item.href;
         return (
           <Link
@@ -32,7 +32,7 @@ export default function Menu({ activePath }: { activePath: string }) {
           >
             <div
               className={cn(
-                'pr-auto flex items-center gap-8 self-stretch rounded-2xl pl-20 text-gray-600',
+                'flex items-center gap-8 rounded-2xl pl-20 text-gray-600',
                 `${isActive ? 'bg-primary-100 text-gray-950' : ''} ${isTablet ? 'h-auto py-14' : 'h-54 py-12'}`,
               )}
             >
@@ -40,7 +40,7 @@ export default function Menu({ activePath }: { activePath: string }) {
                 className={` ${isActive ? 'text-primary-500' : ''} ${isTablet ? 'size-20' : 'size-24'}`}
                 icon={item.icon}
               />
-              <span className='text-16_M text-center leading-normal tracking-tight'>
+              <span className='text-16_M leading-normal tracking-tight'>
                 {item.label}
               </span>
             </div>

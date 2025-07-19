@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Notification from '@/components/common/notification';
+import Notification from '@/components/common/Notification';
 
 import Pagination from '@/components/common/Pagination';
 export default function Home() {

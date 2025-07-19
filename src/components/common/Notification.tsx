@@ -1,7 +1,7 @@
 // components/NotificationPanel.tsx
 'use client';
-
-import { useState, useEffect, useRef } from 'react';
+import Icon from '@/components/common/Icon';
+import { useState, useRef } from 'react';
 
 // 알림 타입 정의
 interface Notification {
@@ -27,7 +27,6 @@ const mockNotifications: Notification[] = [
 예약이 거절되었어요.`,
     createdAt: '2025-07-19T14:14:00.000Z',
   },
-  // 필요하다면 더 추가…
 ];
 
 export default function NotificationPanel() {
@@ -36,18 +35,6 @@ export default function NotificationPanel() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // 바깥 클릭 시 패널 닫기
-  useEffect(() => {
-    function onClickOutside(e: MouseEvent) {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    }
-    if (open) document.addEventListener('mousedown', onClickOutside);
-    return () => document.removeEventListener('mousedown', onClickOutside);
-  }, [open]);
-
-  // ISO → “n분 전” 변환
   const timeAgo = (iso: string) => {
     const diff = (Date.now() - new Date(iso).getTime()) / 1000;
     if (diff < 60) return '방금 전';
@@ -68,32 +55,34 @@ export default function NotificationPanel() {
       {open && (
         <div
           ref={panelRef}
-          className='/* 너비 20rem(320px) */ /* 높이 20rem(320px) */ absolute right-0 mt-2 flex h-80 w-80 flex-col rounded-lg border bg-white shadow-lg'
+          className='absolute right-0 mt-2 flex h-80 h-326 w-80 w-231 flex-col rounded-[10px] bg-white shadow-lg'
         >
-          {/* 헤더 */}
-          <div className='flex flex-none items-center justify-between border-b px-4 py-2'>
-            <span className='font-medium'>알림 {totalCount}개</span>
+          <div className='flex items-center justify-between border-b-[1px] border-gray-100 px-20 py-16'>
+            <span className='txt-16_B'>알림 {totalCount}개</span>
             <button
               onClick={() => setOpen(false)}
-              className='text-xl hover:text-gray-600'
+              className='hover:text-gray-600'
             >
-              ×
+              <Icon className='size-20' icon='Delete' />
             </button>
           </div>
 
-          <ul className='flex-1 divide-y overflow-y-auto'>
+          <ul className='scrollbar-width:none overflow-y-auto'>
             {list.map((n) => {
               const [title, ...rest] = n.content.split('\n');
               return (
-                <li key={n.id} className='px-4 py-3'>
-                  <div className='flex justify-between'>
-                    <span className='font-semibold text-gray-800'>{title}</span>
-                    <span className='text-sm text-gray-400'>
+                <li
+                  key={n.id}
+                  className='hover:bg-blue flex flex-col gap-[8px] px-4 px-20 py-3 py-16'
+                >
+                  <div className='flex items-center justify-between'>
+                    <span className='txt-14_B'>{title}</span>
+                    <span className='txt-12_M text-gray-400'>
                       {timeAgo(n.createdAt)}
                     </span>
                   </div>
                   {rest.length > 0 && (
-                    <p className='mt-1 text-sm text-gray-600'>
+                    <p className='txt-14_body_M text-gray-800'>
                       {rest.join(' ')}
                     </p>
                   )}

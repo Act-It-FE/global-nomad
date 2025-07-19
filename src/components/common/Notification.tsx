@@ -11,22 +11,22 @@ interface Notification {
 }
 
 const mockNotifications: Notification[] = [
-  {
-    id: 1,
-    content: `예약 승인
-함께하면 즐거운 스트릿 댄스
-(2023-01-14 15:00~18:00)
-예약이 승인되었어요.`,
-    createdAt: '2025-07-19T14:20:00.000Z',
-  },
-  {
-    id: 2,
-    content: `예약 거절
-함께하면 즐거운 스트릿 댄스
-(2023-01-14 15:00~18:00)
-예약이 거절되었어요.`,
-    createdAt: '2025-07-19T14:14:00.000Z',
-  },
+  //   {
+  //     id: 1,
+  //     content: `예약 승인
+  // 함께하면 즐거운 스트릿 댄스
+  // (2023-01-14 15:00~18:00)
+  // 예약이 승인되었어요.`,
+  //     createdAt: '2025-07-19T14:20:00.000Z',
+  //   },
+  //   {
+  //     id: 2,
+  //     content: `예약 거절
+  // 함께하면 즐거운 스트릿 댄스
+  // (2023-01-14 15:00~18:00)
+  // 예약이 거절되었어요.`,
+  //     createdAt: '2025-07-19T14:14:00.000Z',
+  //   },
 ];
 
 export default function NotificationPanel() {
@@ -55,7 +55,7 @@ export default function NotificationPanel() {
       {open && (
         <div
           ref={panelRef}
-          className='absolute right-0 mt-2 flex h-80 h-326 w-80 w-231 flex-col rounded-[10px] bg-white shadow-lg'
+          className='absolute right-0 mt-2 flex h-326 w-231 flex-col rounded-[10px] bg-white shadow-lg'
         >
           <div className='flex items-center justify-between border-b-[1px] border-gray-100 px-20 py-16'>
             <span className='txt-16_B'>알림 {totalCount}개</span>
@@ -67,7 +67,7 @@ export default function NotificationPanel() {
             </button>
           </div>
 
-          <ul className='scrollbar-width:none overflow-y-auto'>
+          <ul className='flex-1 overflow-y-auto [scrollbar-width:none]'>
             {list.map((n) => {
               const [title, ...rest] = n.content.split('\n');
               return (
@@ -91,9 +91,9 @@ export default function NotificationPanel() {
             })}
 
             {list.length === 0 && (
-              <li className='p-4 text-center text-gray-500'>
+              <p className='flex h-full w-full items-center justify-center text-gray-500'>
                 새 알림이 없습니다.
-              </li>
+              </p>
             )}
           </ul>
         </div>

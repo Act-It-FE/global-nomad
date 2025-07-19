@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/common/Button';
 import Icon from '@/components/common/Icon';
 import type { ReviewModalProps } from '@/types/Modals';
 

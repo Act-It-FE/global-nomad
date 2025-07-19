@@ -10,5 +10,5 @@ type ContentMapType = {
 export const ContentMap: ContentMapType = {
   onlyText: OnlyTextContent,
   warning: WarningContent,
-  input: ReviewContent,
+  review: ReviewContent,
 } as const;

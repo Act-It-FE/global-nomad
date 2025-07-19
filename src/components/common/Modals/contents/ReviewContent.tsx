@@ -7,16 +7,16 @@ import type { ReviewModalProps } from '@/types/Modals';
 export function ReviewContent({
   activityName,
   activitySchedule,
-  defaultRating,
-  defaultComment,
+  defaultRating = 0,
+  defaultComment = '',
   onSubmit,
   onClose,
 }: ReviewModalProps) {
-  const [rating, setRating] = useState(defaultRating);
+  const [rating, setRating] = useState<number>(defaultRating);
   const [comment, setComment] = useState(defaultComment);
   const MAX_LENGTH = 100;
   return (
-    <div className='flex h-493 w-321 flex-col items-center justify-center rounded-[30px] bg-white pt-10 md:h-549 md:w-385'>
+    <div className='flex h-493 w-321 flex-col items-center justify-center rounded-[30px] bg-white md:h-549 md:w-385'>
       <button className='flex w-273 justify-end md:w-325' onClick={onClose}>
         <Icon
           className='size-24 text-black hover:cursor-pointer'
@@ -46,15 +46,16 @@ export function ReviewContent({
           소중한 경험을 들려주세요
         </p>
         <textarea
-          className='mt-12 mb-8 h-179 w-full resize-none rounded-xl border border-gray-100 p-20 focus:outline-none md:mt-16'
+          className='mt-12 mb-8 h-179 w-full resize-none rounded-xl border border-gray-100 p-20 shadow-lg focus:outline-none md:mt-16'
           maxLength={MAX_LENGTH}
           placeholder='체험에서 느낀 경험을 자유롭게 남겨주세요'
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
         <div className='txt-13_M flex justify-end text-gray-600'>
-          <span className='txt-13_M text-gray-600'>{comment.length}/</span>
-          <span className='txt-13_M text-gray-600'>{MAX_LENGTH}</span>
+          <span className='txt-13_M text-gray-600'>
+            {comment.length}/{MAX_LENGTH}
+          </span>
         </div>
       </div>
       <Button

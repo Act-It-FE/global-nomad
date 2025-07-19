@@ -55,11 +55,9 @@ export default function Home() {
         variant='primary'
         onClick={() =>
           setModalProps({
-            variant: 'input',
+            variant: 'review',
             activityName: '체험 제목',
             activitySchedule: '체험 스케줄',
-            defaultRating: 0,
-            defaultComment: '',
             onSubmit: (rating, comment) => {
               console.log(rating, comment);
               setModalProps(null);

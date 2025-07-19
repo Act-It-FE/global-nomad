@@ -1,4 +1,4 @@
-export type ModalVariant = 'onlyText' | 'warning' | 'input';
+export type ModalVariant = 'onlyText' | 'warning' | 'review';
 
 export interface OnlyTextModalProps {
   variant: 'onlyText';
@@ -14,11 +14,11 @@ export interface WarningModalProps {
 }
 
 export interface ReviewModalProps {
-  variant: 'input';
+  variant: 'review';
   activityName: string;
   activitySchedule: string;
-  defaultRating: number;
-  defaultComment: string;
+  defaultRating?: number;
+  defaultComment?: string;
   onSubmit: (rating: number, comment: string) => void;
   onClose: () => void;
 }

@@ -13,6 +13,7 @@ export default function Home() {
         trigger={<Icon className='h-28 w-28' icon='More' />}
         onClickFirst={() => console.log('마이페이지')}
         onClickSecond={() => console.log('로그아웃')}
+      />
     </div>
   );
 }

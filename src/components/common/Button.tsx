@@ -26,7 +26,7 @@ export default function Button({
   rounded = '12',
   size,
   className = '',
-  disabled = true,
+  disabled = false,
   onClick,
   type = 'button',
   icon,

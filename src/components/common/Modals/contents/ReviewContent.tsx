@@ -17,7 +17,10 @@ export function ReviewContent({
   const MAX_LENGTH = 100;
   return (
     <div className='flex h-493 w-321 flex-col items-center justify-center rounded-[30px] bg-white md:h-549 md:w-385'>
-      <button className='flex w-273 justify-end md:w-325' onClick={onClose}>
+      <button
+        className='background:none self-end px-24 md:px-30'
+        onClick={onClose}
+      >
         <Icon
           className='size-24 text-black hover:cursor-pointer'
           icon='Delete'

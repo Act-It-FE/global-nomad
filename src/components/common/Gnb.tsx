@@ -1,3 +1,3 @@
 export default function Gnb() {
-  return;
+  return <nav className='h-48 md:h-80' />;
 }

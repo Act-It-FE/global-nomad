@@ -13,7 +13,7 @@ export interface WarningModalProps {
   onConfirm: () => void;
 }
 
-export interface InputModalProps {
+export interface ReviewModalProps {
   variant: 'input';
   activityName: string;
   activitySchedule: string;
@@ -26,4 +26,4 @@ export interface InputModalProps {
 export type ModalProps =
   | OnlyTextModalProps
   | WarningModalProps
-  | InputModalProps;
+  | ReviewModalProps;

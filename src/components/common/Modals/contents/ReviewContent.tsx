@@ -49,7 +49,7 @@ export function ReviewContent({
           소중한 경험을 들려주세요
         </p>
         <textarea
-          className='mt-12 mb-8 h-179 w-full resize-none rounded-xl border border-gray-100 p-20 shadow-lg focus:outline-none md:mt-16'
+          className='card-shadow mt-12 mb-8 h-179 w-full resize-none rounded-xl border border-gray-100 p-20 focus:outline-none md:mt-16'
           maxLength={MAX_LENGTH}
           placeholder='체험에서 느낀 경험을 자유롭게 남겨주세요'
           value={comment}

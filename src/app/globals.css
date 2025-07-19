@@ -106,6 +106,10 @@
   .txt-20_body_B {
     @apply text-[20px]/[160%] font-bold;
   }
+
+  .card-shadow {
+    box-shadow: 0 4px 24px 0 #9cb4ca33;
+  }
 }
 
 @layer base {

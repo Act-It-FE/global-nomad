@@ -20,6 +20,7 @@ export default function Gnb() {
           width={28}
         />
       </Link>
+      <div className='flex items-center' />
     </nav>
   );
 }

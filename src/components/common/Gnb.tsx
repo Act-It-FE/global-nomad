@@ -32,7 +32,7 @@ export default function Gnb({ user }: TemporaryProps) {
         />
       </Link>
       <div
-        className={`flex items-center ${user ? 'gap-20' : 'gap-10 md:gap-12'}`}
+        className={`txt-14_M flex items-center text-gray-950 ${user ? 'gap-20' : 'gap-10 md:gap-12'}`}
       >
         {user ? <></> : <></>}
       </div>

@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Icon from './Icon';
+
 interface TemporaryProps {
   user?: {
     id: number;
@@ -35,7 +37,22 @@ export default function Gnb({ user }: TemporaryProps) {
         className={`txt-14_M flex items-center text-gray-950 ${user ? 'gap-20' : 'gap-10 md:gap-12'}`}
       >
         {user ? (
-          <></>
+          <>
+            <button type='button'>
+              <Icon className='size-24 text-gray-600' icon='AlarmActive' />
+            </button>
+            <div className='h-14 w-1 bg-gray-100' />
+            <div className='flex items-center gap-10'>
+              <Image
+                alt='profile image'
+                className='size-30 rounded-full object-cover'
+                height={30}
+                src={user.profileImageUrl ?? '/images/profile-default.svg'}
+                width={30}
+              />
+              <button type='button'>{user.nickname}</button>
+            </div>
+          </>
         ) : (
           <>
             <div className='w-60 text-center md:w-70'>

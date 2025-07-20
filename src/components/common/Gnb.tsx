@@ -33,7 +33,9 @@ export default function Gnb({ user }: TemporaryProps) {
       </Link>
       <div
         className={`flex items-center ${user ? 'gap-20' : 'gap-10 md:gap-12'}`}
-      />
+      >
+        {user ? <></> : <></>}
+      </div>
     </nav>
   );
 }

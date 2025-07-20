@@ -12,7 +12,7 @@ interface TemporaryProps {
   };
 }
 
-export default function Gnb({}: TemporaryProps) {
+export default function Gnb({ user }: TemporaryProps) {
   return (
     <nav className='mx-auto flex h-48 max-w-1580 items-center justify-between px-24 md:h-80 md:px-30'>
       <Link href='/'>
@@ -31,7 +31,9 @@ export default function Gnb({}: TemporaryProps) {
           width={28}
         />
       </Link>
-      <div className='flex items-center' />
+      <div
+        className={`flex items-center ${user ? 'gap-20' : 'gap-10 md:gap-12'}`}
+      />
     </nav>
   );
 }

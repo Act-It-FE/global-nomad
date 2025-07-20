@@ -1,7 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Gnb() {
+interface TemporaryProps {
+  user?: {
+    id: number;
+    email?: string;
+    nickname: string;
+    profileImageUrl: string;
+    createdAt?: string;
+    updatedAt?: string;
+  };
+}
+
+export default function Gnb({}: TemporaryProps) {
   return (
     <nav className='mx-auto flex h-48 max-w-1580 items-center justify-between px-24 md:h-80 md:px-30'>
       <Link href='/'>

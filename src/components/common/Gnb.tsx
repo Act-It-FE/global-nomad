@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { cn } from '@/utils/cn';
+
 import Icon from './Icon';
 
 interface TemporaryProps {
@@ -16,7 +18,13 @@ interface TemporaryProps {
 
 export default function Gnb({ user }: TemporaryProps) {
   return (
-    <nav className='mx-auto flex h-48 max-w-1580 items-center justify-between px-24 md:h-80 md:px-30'>
+    <nav
+      className={cn(
+        'sticky top-0 right-0 left-0',
+        'flex items-center justify-between',
+        'mx-auto h-48 max-w-1580 px-24 md:h-80 md:px-30',
+      )}
+    >
       <Link href='/'>
         <Image
           alt='logo'

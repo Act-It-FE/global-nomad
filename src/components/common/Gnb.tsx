@@ -34,7 +34,18 @@ export default function Gnb({ user }: TemporaryProps) {
       <div
         className={`txt-14_M flex items-center text-gray-950 ${user ? 'gap-20' : 'gap-10 md:gap-12'}`}
       >
-        {user ? <></> : <></>}
+        {user ? (
+          <></>
+        ) : (
+          <>
+            <div className='w-60 text-center md:w-70'>
+              <Link href='/login'>로그인</Link>
+            </div>
+            <div className='w-60 text-center md:w-70'>
+              <Link href='/signup'>회원가입</Link>
+            </div>
+          </>
+        )}
       </div>
     </nav>
   );

@@ -20,8 +20,10 @@
   /** red **/
   --color-red-500: #ff2727;
 
-  --spacing: 0.0625rem;
+  /** spacing **/
+  --spacing: 1px;
 
+  /* breakpoint */
   --breakpoint-md: 744px;
 }
 

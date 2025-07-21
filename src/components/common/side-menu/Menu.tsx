@@ -33,11 +33,11 @@ export default function Menu({ activePath }: { activePath: string }) {
             <div
               className={cn(
                 'flex items-center gap-8 rounded-2xl pl-20 text-gray-600',
-                `${isActive ? 'bg-primary-100 text-gray-950' : ''} ${isTablet ? 'h-auto py-14' : 'h-54 py-12'}`,
+                `h-54 py-12 min-md:max-[1023px]:h-auto min-md:max-[1023px]:py-14 ${isActive ? 'bg-primary-100 text-gray-950' : ''}`,
               )}
             >
               <Icon
-                className={` ${isActive ? 'text-primary-500' : ''} ${isTablet ? 'size-20' : 'size-24'}`}
+                className={`size-24 min-md:max-[1023px]:size-20 ${isActive ? 'text-primary-500' : ''} `}
                 icon={item.icon}
               />
               <span className='text-16_M leading-normal tracking-tight'>

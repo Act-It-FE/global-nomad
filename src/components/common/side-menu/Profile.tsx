@@ -3,6 +3,7 @@
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { uploadProfileImage } from '@/libs/upload';
+import { cn } from '@/utils/cn';
 
 import Icon from '../Icon';
 import ImageUploader from '../ImageUploader';
@@ -26,10 +27,8 @@ export default function Profile() {
   });
   const size = isTablet ? 70 : 120;
 
-  const iconSize = isTablet ? 'size-12.8' : 'size-16';
-
   return (
-    <div className={`relative ${isTablet ? 'h-70 w-70' : 'h-120 w-120'}`}>
+    <div className='relative h-120 w-120 min-md:max-[1023px]:h-70 min-md:max-[1023px]:w-70'>
       <img
         alt='프로필 이미지'
         className='aspect-square rounded-full object-cover'
@@ -45,10 +44,17 @@ export default function Profile() {
       )}
 
       <label
-        className={`absolute flex cursor-pointer items-center justify-center rounded-full bg-gray-300 ${isTablet ? 'p-5.6 -right-2.5 bottom-2 h-24 w-24' : 'right-0 bottom-4 h-30 w-30 p-7'}`}
+        className={cn(
+          'absolute flex cursor-pointer items-center justify-center rounded-full bg-gray-300',
+          'right-0 bottom-4 h-30 w-30 p-7',
+          'min-md:max-[1023px]:p-5.6 min-md:max-[1023px]:-right-2.5 min-md:max-[1023px]:bottom-2 min-md:max-[1023px]:h-24 min-md:max-[1023px]:w-24',
+        )}
         htmlFor='image-upload'
       >
-        <Icon className={`${iconSize} text-white`} icon='Edit' />
+        <Icon
+          className='min-md:max-[1023px]:size-12.8 size-16 text-white'
+          icon='Edit'
+        />
       </label>
 
       <ImageUploader id='image-upload' onChange={handleChange} />

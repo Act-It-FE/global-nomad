@@ -25,85 +25,109 @@
   --breakpoint-md: 744px;
 }
 
-@layer components {
-  .txt-11_M {
-    @apply text-[10px] font-medium;
-  }
-  .txt-11_B {
-    @apply text-[10px] font-bold;
-  }
+@utility txt-11_M {
+  font-size: 10px;
+  font-weight: 500;
+}
+@utility txt-11_B {
+  font-size: 10px;
+  font-weight: 700;
+}
 
-  .txt-12_M {
-    @apply text-[12px] font-medium;
-  }
-  .txt-12_B {
-    @apply text-[12px] font-bold;
-  }
+@utility txt-12_M {
+  font-size: 12px;
+  font-weight: 500;
+}
+@utility txt-12_B {
+  font-size: 12px;
+  font-weight: 700;
+}
 
-  .txt-13_M {
-    @apply text-[13px] font-medium;
-  }
-  .txt-13_B {
-    @apply text-[13px] font-bold;
-  }
+@utility txt-13_M {
+  font-size: 13px;
+  font-weight: 500;
+}
+@utility txt-13_B {
+  font-size: 13px;
+  font-weight: 700;
+}
 
-  .txt-14_M {
-    @apply text-[14px] font-medium;
-  }
-  .txt-14_B {
-    @apply text-[14px] font-bold;
-  }
+@utility txt-14_M {
+  font-size: 14px;
+  font-weight: 500;
+}
+@utility txt-14_B {
+  font-size: 14px;
+  font-weight: 700;
+}
 
-  .txt-16_M {
-    @apply text-[16px] font-medium;
-  }
-  .txt-16_B {
-    @apply text-[16px] font-bold;
-  }
+@utility txt-16_M {
+  font-size: 16px;
+  font-weight: 500;
+}
+@utility txt-16_B {
+  font-size: 16px;
+  font-weight: 700;
+}
 
-  .txt-18_M {
-    @apply text-[18px] font-medium;
-  }
-  .txt-18_B {
-    @apply text-[18px] font-bold;
-  }
+@utility txt-18_M {
+  font-size: 18px;
+  font-weight: 500;
+}
+@utility txt-18_B {
+  font-size: 18px;
+  font-weight: 700;
+}
 
-  .txt-20_M {
-    @apply text-[20px] font-medium;
-  }
-  .txt-20_B {
-    @apply text-[20px] font-bold;
-  }
+@utility txt-20_M {
+  font-size: 20px;
+  font-weight: 500;
+}
+@utility txt-20_B {
+  font-size: 20px;
+  font-weight: 700;
+}
 
-  .txt-24_M {
-    @apply text-[24px] font-medium;
-  }
-  .txt-24_B {
-    @apply text-[24px] font-bold;
-  }
+@utility txt-24_M {
+  font-size: 24px;
+  font-weight: 500;
+}
+@utility txt-24_B {
+  font-size: 24px;
+  font-weight: 700;
+}
 
-  .txt-32_M {
-    @apply text-[32px] font-medium;
-  }
-  .txt-32_B {
-    @apply text-[32px] font-bold;
-  }
+@utility txt-32_M {
+  font-size: 32px;
+  font-weight: 500;
+}
+@utility txt-32_B {
+  font-size: 32px;
+  font-weight: 700;
+}
 
-  .txt-14_body_M {
-    @apply text-[14px]/[180%] font-medium;
-  }
+@utility txt-14_body_M {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 180%;
+}
 
-  .txt-16_body_M {
-    @apply text-[16px]/[180%] font-medium;
-  }
+@utility txt-16_body_M {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 180%;
+}
 
-  .txt-18_body_B {
-    @apply text-[18px]/[140%] font-bold;
-  }
+@utility txt-18_body_B {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 140%;
+}
 
-  .txt-20_body_B {
-    @apply text-[20px]/[160%] font-bold;
-  }
+@utility txt-20_body_B {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 160%;
 }
 
 @layer base {

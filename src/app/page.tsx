@@ -1,3 +1,4 @@
+'use client';
 import DropDown from '@/components/common/DropDown';
 import Icon from '@/components/common/Icon';
 

@@ -10,7 +10,7 @@ export default function ResponsiveLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const isMobile = useMediaQuery('(max-width: 743px)');
+  const isMobile = useMediaQuery('mobile');
   const pathname = usePathname();
 
   // 모바일 + /mypage 루트일 때만 SideMenu만 보여줌

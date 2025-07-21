@@ -9,7 +9,7 @@ import Menu from './Menu';
 import Profile from './Profile';
 
 export default function SideMenu() {
-  const isTablet = useMediaQuery('(min-width: 744px) and (max-width: 1023px)');
+  const isTablet = useMediaQuery('tablet');
   const pathname = usePathname();
 
   return (

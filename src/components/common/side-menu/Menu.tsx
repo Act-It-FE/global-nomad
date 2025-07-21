@@ -18,7 +18,7 @@ const MENU_ITEMS: {
 ];
 
 export default function Menu({ activePath }: { activePath: string }) {
-  const isTablet = useMediaQuery('(min-width: 744px) and (max-width: 1023px)');
+  const isTablet = useMediaQuery('tablet');
 
   return (
     <>

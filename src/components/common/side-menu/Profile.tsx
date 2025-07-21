@@ -8,12 +8,20 @@ import Icon from '../Icon';
 import ImageUploader from '../ImageUploader';
 
 export default function Profile() {
-  const isTablet = useMediaQuery('(min-width: 744px) and (max-width: 1023px)');
+  const isTablet = useMediaQuery('tablet');
   const { previewUrl, isUploading, handleChange } = useImageUpload({
     defaultImage: '/images/profile-default.svg',
     uploadFn: async (file: File) => {
-      const result = await uploadProfileImage(file);
-      return result.profileImageUrl;
+      try {
+        const result = await uploadProfileImage(file);
+        if (!result?.profileImageUrl) {
+          throw new Error('업로드된 이미지 URL을 받을 수 없습니다');
+        }
+        return result.profileImageUrl;
+      } catch (error) {
+        console.error('프로필 이미지 업로드 실패:', error);
+        throw error;
+      }
     },
   });
   const size = isTablet ? 70 : 120;

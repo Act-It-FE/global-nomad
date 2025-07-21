@@ -8,6 +8,8 @@ import {
   useState,
 } from 'react';
 
+import EyeOff from '@/assets/icons/eye_off.svg';
+import EyeOn from '@/assets/icons/eye_on.svg';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/utils/cn';
 
@@ -192,10 +194,11 @@ function PasswordInput({
         type='button'
         onClick={() => setIsPassword((prev) => !prev)}
       >
-        <Icon
-          className='size-24 text-gray-400'
-          icon={isPassword ? 'EyeOff' : 'EyeOn'}
-        />
+        {isPassword ? (
+          <EyeOff className='size-24 text-gray-400' />
+        ) : (
+          <EyeOn className='size-24 text-gray-400' />
+        )}
       </button>
     </>
   );

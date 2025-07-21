@@ -1,44 +1,48 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/utils/cn';
 
+type DropDownItem = {
+  text: string;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  danger?: boolean; // 로그아웃 버튼에 텍스트컬러 적용을 위한 Prop
+};
+
 type DropDownProps = {
-  trigger: ReactNode; // 이미지 컴포넌트 사용 가능
-  firstText: string;
-  secondText: string;
-  onClickFirst: () => void;
-  onClickSecond: () => void;
-  position?: 'bottom' | 'left'; //기본값은 bottom 입니다
+  trigger: ReactNode;
+  items: DropDownItem[]; // 드롭다운에 들어갈 텍스트들 ex) 수정하기, 삭제하기 등등
+  position?: 'bottom' | 'left';
 };
 
 export default function DropDown({
   trigger,
-  firstText,
-  secondText,
-  onClickFirst,
-  onClickSecond,
+  items,
   position = 'bottom',
 }: DropDownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
   const buttonClass = cn(
-    'cursor-pointer py-[18px] hover:bg-primary-100 w-full max-h-55 txt-16_M',
+    'cursor-pointer hover:bg-primary-100 w-full min-h-55 txt-16_M',
   );
 
-  const textClass = (text: string) => {
-    return cn('text-gray-950', text === '로그아웃' && 'text-red-500');
-  };
-
-  const dropdownPosition = cn(
-    'absolute z-50',
-    position === 'left'
-      ? 'right-full mr-2 top-1/2 -translate-y-1/5'
-      : 'top-full mt-2 left-1/2 -translate-x-1/2',
-  );
   return (
-    <div className='relative'>
+    <div ref={dropdownRef} className='relative'>
       <div
         className='cursor-pointer'
         onClick={() => setIsOpen((prev) => !prev)}
@@ -48,16 +52,27 @@ export default function DropDown({
       {isOpen && (
         <div
           className={cn(
-            dropdownPosition,
-            'flex w-95 flex-col justify-center rounded-[8px] border border-gray-50 bg-white text-gray-950 md:h-106 md:w-103 lg:h-auto lg:w-95',
+            'absolute z-50',
+            position === 'left'
+              ? 'top-1/2 right-full mr-2 -translate-y-1/5'
+              : 'top-full left-1/2 mt-2 -translate-x-1/2',
+            'flex w-95 flex-col justify-center rounded-[8px] border border-gray-50 bg-white text-gray-950 md:h-auto md:w-103 lg:w-95',
           )}
         >
-          <button className={buttonClass} onClick={onClickFirst}>
-            <span>{firstText}</span>
-          </button>
-          <button className={buttonClass} onClick={onClickSecond}>
-            <span className={textClass(secondText)}>{secondText}</span>
-          </button>
+          {items.map(({ text, onClick, danger }, idx) => (
+            <button
+              key={idx}
+              className={buttonClass}
+              onClick={(e) => {
+                onClick(e);
+                setIsOpen(false); // 클릭 후 드롭다운 닫기
+              }}
+            >
+              <span className={cn('text-gray-950', danger && 'text-red-500')}>
+                {text}
+              </span>
+            </button>
+          ))}
         </div>
       )}
     </div>

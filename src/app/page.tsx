@@ -36,7 +36,7 @@ export default function Home() {
     },
   ];
   return (
-    <div className='flex h-500 items-center justify-center'>
+    <div className='flex h-500 items-center justify-center bg-gray-300'>
       <Pagination
         currentPage={page}
         pageSize={10}
@@ -46,12 +46,13 @@ export default function Home() {
       <button onClick={() => setIsOpen((prev) => !prev)}>
         알림 {mockNotifications.length}개
       </button>
-
-      <NotificationPanel
-        list={mockNotifications}
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
+      <div className='relative inline-block'>
+        <NotificationPanel
+          list={mockNotifications}
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+        />
+      </div>
     </div>
   );
 }

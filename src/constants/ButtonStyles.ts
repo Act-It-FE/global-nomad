@@ -63,3 +63,12 @@ export const BUTTON_SIZE: Record<buttonSize, string> = {
   lg: 'w-full max-w-200 h-47',
   xl: 'w-full max-w-640 h-54',
 } as const;
+
+// button 사이즈에 사용되는 rounded 기본값
+export const DEFAULT_BUTTON_ROUNDED: Record<buttonSize, buttonRoundedPixel> = {
+  xl: '16',
+  lg: '14',
+  md: '12',
+  sm: '12',
+  xs: '8',
+} as const;

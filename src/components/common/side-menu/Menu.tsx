@@ -27,7 +27,7 @@ export default function Menu({ activePath }: { activePath: string }) {
         return (
           <Link
             key={item.label}
-            className={`block w-full ${isTablet ? 'w-150' : ''}`}
+            className={`block ${isTablet ? 'w-150' : 'w-262'}`}
             href={item.href}
           >
             <div

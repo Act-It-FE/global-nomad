@@ -25,10 +25,11 @@ export default function Profile() {
     },
   });
   const size = isTablet ? 70 : 120;
+
   const iconSize = isTablet ? 'size-12.8' : 'size-16';
 
   return (
-    <div className='relative'>
+    <div className={`relative ${isTablet ? 'h-70 w-70' : 'h-120 w-120'}`}>
       <img
         alt='프로필 이미지'
         className='aspect-square rounded-full object-cover'

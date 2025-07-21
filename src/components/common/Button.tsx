@@ -1,3 +1,4 @@
+'use client';
 import { ReactNode } from 'react';
 
 import {
@@ -5,13 +6,16 @@ import {
   BUTTON_SIZE,
   BUTTON_VARIANTS,
   buttonRoundedPixel,
+  buttonSize,
   buttonVariants,
+  DEFAULT_BUTTON_ROUNDED,
 } from '@/constants/ButtonStyles';
+import { cn } from '@/utils/cn';
 
 export interface ButtonProps {
   children: ReactNode;
   className?: string;
-  size?: keyof typeof BUTTON_SIZE;
+  size?: buttonSize;
   variant?: buttonVariants;
   rounded?: buttonRoundedPixel;
   disabled?: boolean;
@@ -23,18 +27,27 @@ export interface ButtonProps {
 export default function Button({
   children,
   variant = 'primary',
-  rounded = '12',
   size,
+  rounded,
   className = '',
   disabled = false,
   onClick,
   type = 'button',
   icon,
 }: ButtonProps) {
-  const sizeStyle = size ? BUTTON_SIZE[size] : ''; //사이즈 Prop 을 사용하지 않으면 className 으로 스타일 지정 가능
+  // size에 따라 기본 rounded 적용
+  const resolvedRounded =
+    rounded ?? (size ? DEFAULT_BUTTON_ROUNDED[size] : '12');
+
   return (
     <button
-      className={`${BUTTON_VARIANTS[variant]} ${BUTTON_ROUNDED[rounded]} ${sizeStyle} transition ${className} `}
+      className={cn(
+        BUTTON_VARIANTS[variant],
+        BUTTON_ROUNDED[resolvedRounded],
+        size && BUTTON_SIZE[size],
+        'transition',
+        className,
+      )}
       disabled={disabled}
       type={type}
       onClick={onClick}

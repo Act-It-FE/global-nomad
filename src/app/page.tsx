@@ -69,6 +69,15 @@ export default function Home() {
         입력 모달 열기
       </Button>
       {modalProps && <Modal {...modalProps} />}
+      <Button size='lg' variant='primary'>
+        테스트
+      </Button>
+      <Button size='md' variant='secondary'>
+        테스트2
+      </Button>
+      <Button disabled className='rounded-[20px]' size='xl'>
+        테스트3
+      </Button>
     </>
   );
 }

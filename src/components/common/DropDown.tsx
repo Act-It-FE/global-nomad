@@ -1,7 +1,8 @@
 'use client';
 
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/utils/cn';
 
 type DropDownItem = {
@@ -24,18 +25,7 @@ export default function DropDown({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    if (isOpen) document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen]);
+  useClickOutside(dropdownRef, () => setIsOpen(false));
 
   const buttonClass = cn(
     'cursor-pointer hover:bg-primary-100 w-full min-h-55 txt-16_M',
@@ -65,7 +55,7 @@ export default function DropDown({
               className={buttonClass}
               onClick={(e) => {
                 onClick(e);
-                setIsOpen(false); // 클릭 후 드롭다운 닫기
+                setIsOpen(false);
               }}
             >
               <span className={cn('text-gray-950', danger && 'text-red-500')}>

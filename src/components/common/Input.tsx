@@ -159,10 +159,10 @@ function DropdownInput({
           {items.map((item) => (
             <button
               key={item}
-              className={
-                'txt-16_M h-48 rounded-xl px-20 text-start text-gray-900 ' +
-                (item === value ? 'bg-primary-100' : '')
-              }
+              className={cn(
+                'txt-16_M h-48 rounded-xl px-20 text-start text-gray-900',
+                item === value && 'bg-primary-100',
+              )}
               type='button'
               onClick={() => {
                 setValue(item);

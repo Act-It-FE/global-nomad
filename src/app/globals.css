@@ -20,6 +20,8 @@
   /** red **/
   --color-red-500: #ff2727;
 
+  --color-yellow: #ffcb02;
+
   /** spacing **/
   --spacing: 1px;
 
@@ -144,4 +146,9 @@
 
 body {
   font-family: 'Pretendard', 'sans-serif';
+}
+@layer utilities {
+  .card-shadow {
+    box-shadow: 0 4px 24px 0 #9cb4ca33;
+  }
 }

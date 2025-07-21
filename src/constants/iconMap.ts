@@ -1,6 +1,4 @@
 const ICON_MAP = {
-  AlarmActive: () => import('@/assets/icons/alarm_active.svg'),
-  AlarmInActive: () => import('@/assets/icons/alarm_inactive.svg'),
   ArrowLeft: () => import('@/assets/icons/arrow_left.svg'),
   ArrowRight: () => import('@/assets/icons/arrow_right.svg'),
   Art: () => import('@/assets/icons/art.svg'),

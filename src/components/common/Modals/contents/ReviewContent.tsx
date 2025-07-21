@@ -18,7 +18,7 @@ export function ReviewContent({
   return (
     <div className='flex h-493 w-321 flex-col items-center justify-center rounded-[30px] bg-white md:h-549 md:w-385'>
       <button
-        className='background:none self-end px-24 md:px-30'
+        className='self-end px-24 md:px-30'
         onClick={onClose}
       >
         <Icon

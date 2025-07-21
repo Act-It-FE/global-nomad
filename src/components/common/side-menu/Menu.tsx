@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 import ICON_MAP from '@/constants/iconMap';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 
 import Icon from '../Icon';
@@ -18,8 +17,6 @@ const MENU_ITEMS: {
 ];
 
 export default function Menu({ activePath }: { activePath: string }) {
-  const isTablet = useMediaQuery('tablet');
-
   return (
     <>
       {MENU_ITEMS.map((item) => {
@@ -27,17 +24,17 @@ export default function Menu({ activePath }: { activePath: string }) {
         return (
           <Link
             key={item.label}
-            className={`block ${isTablet ? 'w-150' : 'w-262'}`}
+            className='block w-262 md:max-lg:w-150'
             href={item.href}
           >
             <div
               className={cn(
                 'flex items-center gap-8 rounded-2xl pl-20 text-gray-600',
-                `h-54 py-12 min-md:max-[1023px]:h-auto min-md:max-[1023px]:py-14 ${isActive ? 'bg-primary-100 text-gray-950' : ''}`,
+                `h-54 py-12 md:max-lg:h-auto md:max-lg:py-14 ${isActive ? 'bg-primary-100 text-gray-950' : ''}`,
               )}
             >
               <Icon
-                className={`size-24 min-md:max-[1023px]:size-20 ${isActive ? 'text-primary-500' : ''} `}
+                className={`size-24 md:max-lg:size-20 ${isActive ? 'text-primary-500' : ''} `}
                 icon={item.icon}
               />
               <span className='text-16_M leading-normal tracking-tight'>

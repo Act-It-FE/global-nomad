@@ -47,14 +47,11 @@ export default function Profile() {
         className={cn(
           'absolute flex cursor-pointer items-center justify-center rounded-full bg-gray-300',
           'right-0 bottom-4 h-30 w-30 p-7',
-          'min-md:max-[1023px]:p-5.6 min-md:max-[1023px]:-right-2.5 min-md:max-[1023px]:bottom-2 min-md:max-[1023px]:h-24 min-md:max-[1023px]:w-24',
+          'md:max-lg:p-5.6 md:max-lg:-right-2.5 md:max-lg:bottom-2 md:max-lg:h-24 md:max-lg:w-24',
         )}
         htmlFor='image-upload'
       >
-        <Icon
-          className='min-md:max-[1023px]:size-12.8 size-16 text-white'
-          icon='Edit'
-        />
+        <Icon className='md:max-lg:size-12.8 size-16 text-white' icon='Edit' />
       </label>
 
       <ImageUploader id='image-upload' onChange={handleChange} />

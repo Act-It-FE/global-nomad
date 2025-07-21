@@ -3,7 +3,23 @@ import Link from 'next/link';
 
 import Icon from './common/Icon';
 
-export default function Card({ image, title, rating, reviewCount, price, id }) {
+type CardProps = {
+  image: string;
+  title: string;
+  rating: number;
+  reviewCount: number;
+  price: number;
+  id: number;
+};
+
+export default function Card({
+  image,
+  title,
+  rating,
+  reviewCount,
+  price,
+  id,
+}: CardProps) {
   const formatted = price.toLocaleString();
   return (
     <Link className='flex w-full flex-col lg:w-262' href={`/${id}`}>

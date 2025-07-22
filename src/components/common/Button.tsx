@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 import {
   BUTTON_ROUNDED,
   BUTTON_SIZE,
+  BUTTON_TEXT_SIZE,
   BUTTON_VARIANTS,
   buttonRoundedPixel,
   buttonSize,
@@ -45,6 +46,7 @@ export default function Button({
         BUTTON_VARIANTS[variant],
         BUTTON_ROUNDED[resolvedRounded],
         size && BUTTON_SIZE[size],
+        BUTTON_TEXT_SIZE(variant, size),
         'transition',
         className,
       )}

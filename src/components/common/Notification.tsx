@@ -1,5 +1,4 @@
 'use client';
-import { useRef } from 'react';
 
 import Icon from '@/components/common/Icon';
 
@@ -15,12 +14,7 @@ interface NotificationPanelProps {
   list: Notification[];
 }
 
-const NotificationPanel: React.FC<NotificationPanelProps> = ({
-  open,
-  onClose,
-  list,
-}) => {
-  const panelRef = useRef<HTMLDivElement>(null);
+function NotificationPanel({ open, onClose, list }: NotificationPanelProps) {
   const totalCount = list.length;
 
   const timeAgo = (iso: string) => {
@@ -34,14 +28,14 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
   if (!open) return null;
 
   return (
-    <div
-      ref={panelRef}
-      className='absolute top-[27px] right-116 right-[-116px] z-50 flex h-326 w-327 flex-col rounded-[10px] bg-white shadow-lg sm:right-0 sm:w-231'
-    >
-      <div className='flex items-center justify-between border-b-[1px] border-gray-100 px-20 py-16'>
+    <div className='absolute top-[27px] right-[-116px] z-50 flex h-326 w-327 flex-col rounded-[10px] bg-white shadow-lg sm:right-0 sm:w-231'>
+      <div className='flex items-center justify-between border-b border-gray-100 px-20 py-16'>
         <span className='txt-16_B'>알림 {totalCount}개</span>
-        <button className='hover:text-gray-600' onClick={onClose}>
-          <Icon className='size-20' icon='Delete' />
+        <button onClick={onClose}>
+          <Icon
+            className='size-20 text-black hover:text-gray-600'
+            icon='Delete'
+          />
         </button>
       </div>
 
@@ -51,7 +45,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
           return (
             <li
               key={n.id}
-              className='hover:bg-blue flex flex-col gap-[8px] px-4 px-20 py-3 py-16'
+              className='hover:bg-primary-100 flex flex-col gap-8 px-20 py-16'
             >
               <div className='flex items-center justify-between'>
                 <span className='txt-14_B'>{title}</span>
@@ -74,6 +68,6 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
       </ul>
     </div>
   );
-};
+}
 
 export default NotificationPanel;

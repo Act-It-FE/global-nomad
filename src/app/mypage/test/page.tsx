@@ -4,11 +4,14 @@ import { useState } from 'react';
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
+import Modal from '@/components/common/Modals/Modals';
 import Pagination from '@/components/common/Pagination';
+import { ModalVariant } from '@/types/Modals';
 
 export default function Page() {
   const [page1, setPage1] = useState(1);
   const [page2, setPage2] = useState(1);
+  const [modal, setModal] = useState<ModalVariant | null>(null);
 
   return (
     <div className='flex w-full flex-col gap-40 p-40'>
@@ -111,6 +114,57 @@ export default function Page() {
           totalCount={15}
           onPageChange={(p) => setPage2(p)}
         />
+      </article>
+      <h2 className='txt-20_B'>Modal</h2>
+      <article className='flex gap-10'>
+        <Button size='xl' onClick={() => setModal('onlyText')}>
+          onlyText
+        </Button>
+        <Button size='xl' onClick={() => setModal('warning')}>
+          warning
+        </Button>
+        <Button size='xl' onClick={() => setModal('review')}>
+          review
+        </Button>
+        {(() => {
+          switch (modal) {
+            case 'onlyText':
+              return (
+                <Modal
+                  message='확인 모달입니다.'
+                  variant={modal}
+                  onClose={() => setModal(null)}
+                />
+              );
+            case 'warning':
+              return (
+                <Modal
+                  message='취소 모달입니다.'
+                  variant={modal}
+                  onCancel={() => {
+                    alert('취소했습니다.');
+                    setModal(null);
+                  }}
+                  onConfirm={() => setModal(null)}
+                />
+              );
+            case 'review':
+              return (
+                <Modal
+                  activityName='체험'
+                  activitySchedule='0000.00.00 / 99:99 - 99:99 (0명)'
+                  variant={modal}
+                  onClose={() => setModal(null)}
+                  onSubmit={() => {
+                    alert('리뷰가 작성되었습니다.');
+                    setModal(null);
+                  }}
+                />
+              );
+            default:
+              return null;
+          }
+        })()}
       </article>
     </div>
   );

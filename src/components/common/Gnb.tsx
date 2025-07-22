@@ -26,7 +26,7 @@ export default function Gnb({ user }: TemporaryProps) {
   return (
     <nav
       className={cn(
-        'sticky top-0 right-0 left-0',
+        'sticky top-0 right-0 left-0 z-50',
         'flex items-center justify-between',
         'mx-auto h-48 max-w-1580 px-24 md:h-80 md:px-30',
       )}

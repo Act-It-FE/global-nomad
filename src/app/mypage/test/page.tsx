@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import Pagination from '@/components/common/Pagination';
 
@@ -11,6 +12,59 @@ export default function Page() {
 
   return (
     <div className='flex w-full flex-col gap-40 p-40'>
+      <h2 className='txt-20_B'>Button</h2>
+      <article className='flex flex-col gap-5'>
+        <Button size='xl'>primary xl</Button>
+        <Button disabled size='xl'>
+          primary xl
+        </Button>
+        <Button size='lg'>primary lg</Button>
+        <Button disabled size='lg'>
+          primary lg
+        </Button>
+        <Button size='md'>primary md</Button>
+        <Button disabled size='md'>
+          primary md
+        </Button>
+        <Button size='sm'>primary sm</Button>
+        <Button disabled size='sm'>
+          primary sm
+        </Button>
+        <Button size='xs'>primary xs</Button>
+        <Button disabled size='xs'>
+          primary xs
+        </Button>
+        <Button size='xl' variant='secondary'>
+          secondary xl
+        </Button>
+        <Button disabled size='xl' variant='secondary'>
+          secondary xl
+        </Button>
+        <Button size='lg' variant='secondary'>
+          secondary lg
+        </Button>
+        <Button disabled size='lg' variant='secondary'>
+          secondary lg
+        </Button>
+        <Button size='md' variant='secondary'>
+          secondary md
+        </Button>
+        <Button disabled size='md' variant='secondary'>
+          secondary md
+        </Button>
+        <Button size='sm' variant='secondary'>
+          secondary sm
+        </Button>
+        <Button disabled size='sm' variant='secondary'>
+          secondary sm
+        </Button>
+        <Button size='xs' variant='secondary'>
+          secondary xs
+        </Button>
+        <Button disabled size='xs' variant='secondary'>
+          secondary xs
+        </Button>
+      </article>
       <h2 className='txt-20_B'>Input</h2>
       <article className='flex flex-col gap-20'>
         <Input id='text1' label='text' placeholder='placeholder' />

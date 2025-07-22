@@ -32,11 +32,7 @@ export default function NotificationPanel({
     stringReplace(text, /(승인|거절)/g, (match, i) => (
       <strong
         key={i}
-        className={
-          match === '승인'
-            ? 'text-primary-500 txt-14_M'
-            : 'txt-14_M text-red-500'
-        }
+        className={match === '승인' ? 'text-primary-500' : 'text-red-500'}
       >
         {match}
       </strong>

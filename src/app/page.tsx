@@ -2,6 +2,7 @@
 import { useState } from 'react';
 
 import Button from '@/components/common/Button';
+import DropDown from '@/components/common/DropDown';
 import Icon from '@/components/common/Icon';
 import Modal from '@/components/common/Modals/Modals';
 import ICON_MAP from '@/constants/iconMap';
@@ -12,7 +13,22 @@ export default function Home() {
 
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
   return (
-    <>
+    <div className='m-20 flex flex-col items-center justify-center'>
+      <DropDown
+        items={[
+          {
+            text: '마이페이지',
+            onClick: (e) => console.log('마이페이지', e),
+          },
+          {
+            text: '로그아웃',
+            danger: true,
+            onClick: (e) => console.log('로그아웃', e),
+          },
+        ]}
+        position='left'
+        trigger={<Icon className='h-28 w-28' icon='More' />}
+      />
       <div className='grid grid-cols-5 gap-4'>
         {iconKeys.map((iconKey) => (
           <div key={iconKey} className='flex flex-col items-center'>
@@ -69,6 +85,6 @@ export default function Home() {
         입력 모달 열기
       </Button>
       {modalProps && <Modal {...modalProps} />}
-    </>
+    </div>
   );
 }

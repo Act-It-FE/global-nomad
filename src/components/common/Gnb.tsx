@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 
 import DropDown from './DropDown';
@@ -18,6 +20,9 @@ interface TemporaryProps {
 }
 
 export default function Gnb({ user }: TemporaryProps) {
+  const router = useRouter();
+  const isMobile = useMediaQuery('mobile');
+
   return (
     <nav
       className={cn(
@@ -66,7 +71,8 @@ export default function Gnb({ user }: TemporaryProps) {
                 items={[
                   {
                     text: '마이페이지',
-                    onClick: () => {},
+                    onClick: () =>
+                      router.push(isMobile ? '/mypage' : '/mypage/info'),
                   },
                   {
                     text: '로그아웃',

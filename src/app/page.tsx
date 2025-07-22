@@ -1,13 +1,19 @@
 'use client';
-
 import { useState } from 'react';
 
 import NotificationPanel, {
   Notification,
 } from '@/components/common/Notification';
-import Pagination from '@/components/common/Pagination';
+import Button from '@/components/common/Button';
+import Icon from '@/components/common/Icon';
+import Modal from '@/components/common/Modals/Modals';
+import ICON_MAP from '@/constants/iconMap';
+import type { ModalProps } from '@/types/Modals';
+
 export default function Home() {
-  const [page, setPage] = useState(1);
+  const iconKeys = Object.keys(ICON_MAP) as (keyof typeof ICON_MAP)[];
+
+  const [modalProps, setModalProps] = useState<ModalProps | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const mockNotifications: Notification[] = [
     {
@@ -36,23 +42,71 @@ export default function Home() {
     },
   ];
   return (
-    <div className='flex h-500 items-center justify-center bg-gray-300'>
-      <Pagination
-        currentPage={page}
-        pageSize={10}
-        totalCount={215}
-        onPageChange={setPage}
-      />
-      <button onClick={() => setIsOpen((prev) => !prev)}>
-        알림 {mockNotifications.length}개
-      </button>
-      <div className='relative inline-block'>
-        <NotificationPanel
-          list={mockNotifications}
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-        />
+    <>
+      <div className='grid grid-cols-5 gap-4 bg-gray-300'>
+        {iconKeys.map((iconKey) => (
+          <div key={iconKey} className='flex flex-col items-center'>
+            <Icon className='text-primary-500 size-20' icon={iconKey} />
+            <span className='mt-1 text-xs'>{iconKey}</span>
+          </div>
+        ))}
+        <button onClick={() => setIsOpen((prev) => !prev)}>
+          알림 {mockNotifications.length}개
+        </button>
+        <div className='relative inline-block'>
+          <NotificationPanel
+            list={mockNotifications}
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+          />
+        </div>
       </div>
-    </div>
+      <Button
+        rounded='14'
+        variant='primary'
+        onClick={() =>
+          setModalProps({
+            variant: 'onlyText',
+            message: '등록이 완료되었습니다.',
+            onClose: () => setModalProps(null),
+          })
+        }
+      >
+        텍스트 모달 열기
+      </Button>
+      <Button
+        variant='primary'
+        onClick={() =>
+          setModalProps({
+            variant: 'warning',
+            message: '정말 이 페이지를 나가시겠습니까?',
+            onCancel: () => setModalProps(null),
+            onConfirm: () => {
+              setModalProps(null);
+            },
+          })
+        }
+      >
+        경고 모달 열기
+      </Button>
+      <Button
+        variant='primary'
+        onClick={() =>
+          setModalProps({
+            variant: 'review',
+            activityName: '체험 제목',
+            activitySchedule: '체험 스케줄',
+            onSubmit: (rating, comment) => {
+              console.log(rating, comment);
+              setModalProps(null);
+            },
+            onClose: () => setModalProps(null),
+          })
+        }
+      >
+        입력 모달 열기
+      </Button>
+      {modalProps && <Modal {...modalProps} />}
+    </>
   );
 }

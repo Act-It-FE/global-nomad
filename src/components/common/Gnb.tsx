@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { cn } from '@/utils/cn';
 
+import DropDown from './DropDown';
 import Icon from './Icon';
 
 interface TemporaryProps {
@@ -61,7 +62,21 @@ export default function Gnb({ user }: TemporaryProps) {
                 src={user.profileImageUrl ?? '/images/profile-default.svg'}
                 width={30}
               />
-              <button type='button'>{user.nickname}</button>
+              <DropDown
+                items={[
+                  {
+                    text: '마이페이지',
+                    onClick: () => {},
+                  },
+                  {
+                    text: '로그아웃',
+                    danger: true,
+                    onClick: () => {},
+                  },
+                ]}
+                position='bottom'
+                trigger={user.nickname}
+              />
             </div>
           </>
         ) : (

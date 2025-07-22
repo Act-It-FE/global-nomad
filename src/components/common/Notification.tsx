@@ -16,7 +16,11 @@ interface NotificationPanelProps {
   list: Notification[];
 }
 
-function NotificationPanel({ open, onClose, list }: NotificationPanelProps) {
+export default function NotificationPanel({
+  open,
+  onClose,
+  list,
+}: NotificationPanelProps) {
   const timeAgo = (iso: string) => {
     const diff = (Date.now() - new Date(iso).getTime()) / 1000;
     if (diff < 60) return '방금 전';
@@ -41,7 +45,7 @@ function NotificationPanel({ open, onClose, list }: NotificationPanelProps) {
   if (!open) return null;
 
   return (
-    <div className='absolute top-[27px] right-[-116px] z-50 flex h-[326px] w-[327px] flex-col rounded-[10px] bg-white shadow-lg sm:right-0 sm:w-[231px]'>
+    <div className='absolute top-[27px] right-[-116px] z-50 flex h-[326px] w-[327px] flex-col rounded-[10px] bg-white shadow-lg md:right-0 md:w-[231px]'>
       <div className='flex items-center justify-between border-b border-gray-100 px-20 py-16'>
         <span className='txt-16_B'>알림 {list.length}개</span>
         <button onClick={onClose}>
@@ -89,5 +93,3 @@ function NotificationPanel({ open, onClose, list }: NotificationPanelProps) {
     </div>
   );
 }
-
-export default NotificationPanel;

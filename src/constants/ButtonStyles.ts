@@ -78,12 +78,12 @@ export const BUTTON_TEXT_SIZE = (
   size?: buttonSize,
 ): string => {
   if (variant === 'primary') {
-    if (size === 'lg' || size === 'md') return 'text-16_B';
-    if (size === 'sm') return 'text-14_B';
+    if (size === 'lg' || size === 'md') return 'txt-16_B';
+    if (size === 'sm') return 'txt-14_B';
   }
   if (variant === 'secondary') {
-    if (size === 'lg' || size === 'md') return 'text-16_M';
-    if (size === 'sm') return 'text-14_M';
+    if (size === 'lg' || size === 'md') return 'txt-16_M';
+    if (size === 'sm') return 'txt-14_M';
   }
   return ''; // 나머지는 직접 className으로 설정
 };

@@ -72,11 +72,17 @@ export default function Home() {
       <Button size='lg' variant='primary'>
         테스트
       </Button>
-      <Button size='md' variant='secondary'>
+      <Button className='text-black' size='md' variant='secondary'>
         테스트2
       </Button>
-      <Button disabled className='rounded-[20px]' size='xl'>
+      <Button disabled size='xl'>
         테스트3
+      </Button>
+      <Button size='sm' variant='secondary'>
+        테스트4
+      </Button>
+      <Button className='rounded-[20px]' size='xl' variant='primary'>
+        테스트5
       </Button>
     </>
   );

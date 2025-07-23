@@ -83,3 +83,11 @@ export interface ReservationWithUserResponse {
 export interface ErrorResponse {
   message: string;
 }
+
+// refactoring 필요
+// GET /my-activities, /activities 에서 사용
+export interface ActivitiesResponse {
+  cursorId: number;
+  totalCount: number;
+  activities: ActivityBasic[];
+}

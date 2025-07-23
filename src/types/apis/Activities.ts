@@ -59,3 +59,54 @@ export interface ScheduleTime {
   startTime: string;
   endTime: string;
 }
+
+//체험 리뷰 조회
+export interface ReviewUser {
+  id: number;
+  profileImageUrl: string;
+  nickname: string;
+}
+
+export interface Review {
+  id: number;
+  user: ReviewUser;
+  activityId: number;
+  rating: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ActivityReviewResponse {
+  averageRating: number;
+  totalCount: number;
+  reviews: Review[];
+}
+
+export interface ReservationRequest {
+  scheduleId: number;
+  headCount: number;
+}
+
+// 체험 예약 신청
+export interface ReservationResponse {
+  id: number;
+  teamId: string;
+  userId: string;
+  activityId: number;
+  scheduleId: number;
+  status: 'pending' | 'approved' | 'rejected';
+  reviewSubmitted: boolean;
+  totalPrice: number;
+  headCount: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// 체험 이미지 URL 생성 응답
+export interface ActivityImageUploadResponse {
+  activityImageUrl: string;
+}

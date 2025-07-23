@@ -39,6 +39,15 @@ export interface ActivityBasic {
   updatedAt: string;
 }
 
+export interface FindReservationsByMonthResponse {
+  date: string;
+  reservations: {
+    completed: number;
+    confirmed: number;
+    pending: number;
+  };
+}
+
 // refactoring 필요
 // 공통 사용
 export interface ErrorResponse {

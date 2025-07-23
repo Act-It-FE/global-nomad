@@ -7,7 +7,7 @@ import Button from '@/components/common/Button';
 import DropDown from '@/components/common/DropDown';
 import Icon from '@/components/common/Icon';
 import Input from '@/components/common/Input';
-import Modal from '@/components/common/Modals/Modals';
+import Modal from '@/components/common/Modals/Modal';
 import Pagination from '@/components/common/Pagination';
 import { ModalVariant } from '@/types/Modals';
 

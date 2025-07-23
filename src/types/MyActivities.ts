@@ -94,3 +94,6 @@ export interface ActivitiesResponse {
 
 // GET /my-activities/{activityId}/reservation-dashboard
 export type ReservationDashboardResponse = FindReservationsByMonthResponse[];
+
+// GET /my-activities/{activityId}/reserved-schedule
+export type ActivitiesReservedScheduleResponse = ReservedScheduleResponse[];

@@ -24,6 +24,22 @@ export interface CreateScheduleBody {
 }
 
 // refactoring 필요
+export interface ActivityBasic {
+  id: number;
+  userId: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  address: string;
+  bannerImageUrl: string;
+  rating: number;
+  reviewCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// refactoring 필요
 // 공통 사용
 export interface ErrorResponse {
   message: string;

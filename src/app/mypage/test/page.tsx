@@ -1,8 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import Button from '@/components/common/Button';
+import DropDown from '@/components/common/DropDown';
+import Icon from '@/components/common/Icon';
 import Input from '@/components/common/Input';
 import Modal from '@/components/common/Modals/Modals';
 import Pagination from '@/components/common/Pagination';
@@ -12,6 +15,7 @@ export default function Page() {
   const [page1, setPage1] = useState(1);
   const [page2, setPage2] = useState(1);
   const [modal, setModal] = useState<ModalVariant | null>(null);
+  const router = useRouter();
 
   return (
     <div className='flex w-full flex-col gap-40 p-40'>
@@ -67,6 +71,24 @@ export default function Page() {
         <Button disabled size='xs' variant='secondary'>
           secondary xs
         </Button>
+      </article>
+      <h2 className='txt-20_B'>Dropdown</h2>
+      <article className='flex'>
+        <DropDown
+          items={[
+            {
+              text: '마이페이지',
+              onClick: () => router.push('/mypage'),
+            },
+            {
+              text: '로그아웃',
+              danger: true,
+              onClick: () => alert('로그아웃 되었습니다.'),
+            },
+          ]}
+          position='bottom'
+          trigger={<Icon className='h-28 w-28' icon='More' />}
+        />
       </article>
       <h2 className='txt-20_B'>Input</h2>
       <article className='flex flex-col gap-20'>

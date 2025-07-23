@@ -1,13 +1,13 @@
 'use client';
 import { useState } from 'react';
 
-import NotificationPanel, {
-  Notification,
-} from '@/components/common/Notification';
 import Button from '@/components/common/Button';
 import DropDown from '@/components/common/DropDown';
 import Icon from '@/components/common/Icon';
 import Modal from '@/components/common/Modals/Modals';
+import NotificationPanel, {
+  Notification,
+} from '@/components/common/Notification';
 import ICON_MAP from '@/constants/iconMap';
 import type { ModalProps } from '@/types/Modals';
 

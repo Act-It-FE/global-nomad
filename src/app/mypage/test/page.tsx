@@ -7,9 +7,9 @@ import Button from '@/components/common/Button';
 import DropDown from '@/components/common/DropDown';
 import Icon from '@/components/common/Icon';
 import Input from '@/components/common/Input';
-import Modal from '@/components/common/Modals/Modal';
+import Modal from '@/components/common/Modal/Modal';
 import Pagination from '@/components/common/Pagination';
-import { ModalVariant } from '@/types/Modals';
+import { ModalVariant } from '@/types/Modal';
 
 export default function Page() {
   const [page1, setPage1] = useState(1);

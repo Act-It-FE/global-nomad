@@ -60,7 +60,13 @@ export default function Gnb({ user }: TemporaryProps) {
           <>
             <div className='relative'>
               <button type='button' onClick={() => setIsOpen((prev) => !prev)}>
-                <Icon className='size-24 text-gray-600' icon='AlarmActive' />
+                <Icon
+                  className={cn(
+                    'size-24',
+                    isOpen ? 'text-primary-500' : 'text-gray-600',
+                  )}
+                  icon='AlarmActive'
+                />
               </button>
               <NotificationPanel
                 list={[]}

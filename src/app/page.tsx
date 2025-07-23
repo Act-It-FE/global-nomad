@@ -5,7 +5,7 @@ import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/common/Button';
 import DropDown from '@/components/common/DropDown';
 import Icon from '@/components/common/Icon';
-import Modal from '@/components/common/Modals/Modal';
+import Modal from '@/components/common/Modal/Modal';
 import NotificationPanel, {
   Notification,
 } from '@/components/common/Notification';

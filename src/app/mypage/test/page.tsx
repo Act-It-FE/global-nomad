@@ -73,7 +73,7 @@ export default function Page() {
         </Button>
       </article>
       <h2 className='txt-20_B'>Dropdown</h2>
-      <article className='flex'>
+      <article className='flex gap-10'>
         <DropDown
           items={[
             {
@@ -87,6 +87,21 @@ export default function Page() {
             },
           ]}
           position='bottom'
+          trigger={<Icon className='h-28 w-28' icon='More' />}
+        />
+        <DropDown
+          items={[
+            {
+              text: '마이페이지',
+              onClick: () => router.push('/mypage'),
+            },
+            {
+              text: '로그아웃',
+              danger: true,
+              onClick: () => alert('로그아웃 되었습니다.'),
+            },
+          ]}
+          position='left'
           trigger={<Icon className='h-28 w-28' icon='More' />}
         />
       </article>

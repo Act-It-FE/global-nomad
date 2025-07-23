@@ -10,7 +10,7 @@ import NotificationPanel, {
   Notification,
 } from '@/components/common/Notification';
 import ICON_MAP from '@/constants/iconMap';
-import type { ModalProps } from '@/types/Modals';
+import type { ModalProps } from '@/types/components-types/Modals';
 
 export default function Home() {
   const iconKeys = Object.keys(ICON_MAP) as (keyof typeof ICON_MAP)[];

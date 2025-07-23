@@ -1,3 +1,4 @@
+// Activities 타입
 export interface Activity {
   id: number;
   userId: number;

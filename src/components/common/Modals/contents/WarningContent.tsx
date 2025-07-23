@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import Button from '@/components/common/Button';
-import type { WarningModalProps } from '@/types/Modals';
+import type { WarningModalProps } from '@/types/components-types/Modals';
 
 import warning from '../../../../../public/images/warning.png';
 

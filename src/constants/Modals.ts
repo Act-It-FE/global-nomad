@@ -1,7 +1,7 @@
 import { OnlyTextContent } from '@/components/common/Modals/contents/OnlyTextContent';
 import { ReviewContent } from '@/components/common/Modals/contents/ReviewContent';
 import { WarningContent } from '@/components/common/Modals/contents/WarningContent';
-import type { ModalProps, ModalVariant } from '@/types/Modals';
+import type { ModalProps, ModalVariant } from '@/types/components-types/Modals';
 
 type ContentMapType = {
   [V in ModalVariant]: React.FC<Extract<ModalProps, { variant: V }>>;

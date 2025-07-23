@@ -2,7 +2,7 @@
 import ReactDOM from 'react-dom';
 
 import { ContentMap } from '@/constants/Modals';
-import type { ModalProps } from '@/types/Modals';
+import type { ModalProps } from '@/types/components-types/Modals';
 
 export default function Modal<P extends ModalProps>(props: P) {
   const Content = ContentMap[props.variant] as React.FC<P>;

@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 
+import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/common/Button';
 import Icon from '@/components/common/Icon';
 import Modal from '@/components/common/Modals/Modals';
@@ -78,11 +79,29 @@ export default function Home() {
       <Button disabled size='xl'>
         테스트3
       </Button>
-      <Button size='sm' variant='secondary'>
+      <Button
+        disabled
+        className='disabled:active:bg-white'
+        size='sm'
+        variant='secondary'
+      >
         테스트4
       </Button>
-      <Button className='rounded-[20px]' size='xl' variant='primary'>
+      <Button
+        disabled
+        className='rounded-[20px] disabled:active:bg-white'
+        icon={<KakaoIcon className='h-24 w-24' />}
+        size='xl'
+        variant='kakao'
+      >
         테스트5
+      </Button>
+      <Button
+        icon={<KakaoIcon className='h-24 w-24' />}
+        size='xl'
+        variant='kakao'
+      >
+        테스트6
       </Button>
     </>
   );

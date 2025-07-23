@@ -7,3 +7,5 @@ const instance: AxiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+export { instance };

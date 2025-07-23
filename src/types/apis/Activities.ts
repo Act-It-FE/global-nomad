@@ -47,3 +47,15 @@ export interface ActivitiesDetail extends BaseActivity {
   subImages: SubImage[];
   schedules: Schedule[];
 }
+
+// 체험 예약 가능일 조회
+export interface AvailableSchedule {
+  date: string;
+  times: ScheduleTime[];
+}
+
+export interface ScheduleTime {
+  id: number;
+  startTime: string;
+  endTime: string;
+}

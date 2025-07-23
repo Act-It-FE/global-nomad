@@ -1,12 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 
 import DropDown from './DropDown';
 import Icon from './Icon';
+import NotificationPanel from './Notification';
 
 interface TemporaryProps {
   user?: {
@@ -22,6 +24,7 @@ interface TemporaryProps {
 export default function Gnb({ user }: TemporaryProps) {
   const router = useRouter();
   const isMobile = useMediaQuery('mobile');
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav
@@ -55,9 +58,16 @@ export default function Gnb({ user }: TemporaryProps) {
       >
         {user ? (
           <>
-            <button type='button'>
-              <Icon className='size-24 text-gray-600' icon='AlarmActive' />
-            </button>
+            <div className='relative'>
+              <button type='button' onClick={() => setIsOpen((prev) => !prev)}>
+                <Icon className='size-24 text-gray-600' icon='AlarmActive' />
+              </button>
+              <NotificationPanel
+                list={[]}
+                open={isOpen}
+                onClose={() => setIsOpen(false)}
+              />
+            </div>
             <div className='h-14 w-1 bg-gray-100' />
             <div className='flex items-center gap-10'>
               <Image

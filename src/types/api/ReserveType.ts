@@ -2,7 +2,7 @@ export type ReservationStatus =
   | 'pending'
   | 'confirmed'
   | 'declined'
-  | 'cancelled'
+  | 'canceled'
   | 'completed';
 
 export interface MyReserves {
@@ -13,7 +13,7 @@ export interface MyReserves {
 
 export interface Reservation {
   id: number;
-  teamId: number;
+  teamId: string;
   userId: number;
   scheduleId: number;
   status: ReservationStatus;
@@ -25,7 +25,8 @@ export interface Reservation {
   endTime: string; // hh:mm
   createdAt: string; // ISO 8601
   updatedAt: string; // ISO 8601
-  activity: Activity;
+  activity?: Activity;
+  activityId?: number;
 }
 
 export interface Activity {

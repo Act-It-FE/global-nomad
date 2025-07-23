@@ -60,6 +60,25 @@ export interface ReservedScheduleResponse {
 }
 
 // refactoring 필요
+export interface ReservationWithUserResponse {
+  id: number;
+  nickname: string;
+  userId: number;
+  teamId: string;
+  activityId: number;
+  scheduleId: number;
+  status: ReservationStatus; // 확인 필요
+  reviewSubmitted: boolean;
+  totalPrice: number;
+  headCount: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// refactoring 필요
 // 공통 사용
 export interface ErrorResponse {
   message: string;

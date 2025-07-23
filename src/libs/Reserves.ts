@@ -1,7 +1,8 @@
+import axios from 'axios';
+
 import { MyReserves } from '@/types/api/ReserveType';
 
 import api from './textAxios';
-
 const reservationStatusList = [
   'pending',
   'confirmed',
@@ -50,6 +51,9 @@ export const getMyReservations = async (
     const response = await api.get('/my-reservations', { params });
     return response.data;
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      throw new Error('unauthorized');
+    }
     console.error('예약 정보 조회 실패:', error);
     throw new Error('예약 정보를 가져오는 데 실패했습니다');
   }

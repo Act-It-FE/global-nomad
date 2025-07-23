@@ -97,3 +97,10 @@ export type ReservationDashboardResponse = FindReservationsByMonthResponse[];
 
 // GET /my-activities/{activityId}/reserved-schedule
 export type ActivitiesReservedScheduleResponse = ReservedScheduleResponse[];
+
+// GET /my-activities/{activityId}/reservations
+export interface ReservationsListResponse {
+  cursorId: number | null;
+  totalCount: number;
+  reservations: ReservationWithUserResponse[];
+}

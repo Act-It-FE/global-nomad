@@ -17,6 +17,13 @@ export type ReservationStatus =
   | 'completed';
 
 // refactoring 필요
+export interface CreateScheduleBody {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
+// refactoring 필요
 // 공통 사용
 export interface ErrorResponse {
   message: string;

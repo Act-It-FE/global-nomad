@@ -23,6 +23,10 @@ interface TemporaryProps {
   };
 }
 
+const imgDefaultProfile = '/images/profile-default.svg';
+const imgLogoText = '/images/logo-sm-text.png';
+const imgLogo = '/images/logo-sm.png';
+
 export default function Gnb({ user }: TemporaryProps) {
   const router = useRouter();
   const isMobile = useMediaQuery('mobile');
@@ -42,14 +46,14 @@ export default function Gnb({ user }: TemporaryProps) {
           alt='logo'
           className='max-md:hidden'
           height={28}
-          src='/images/logo-sm-text.png'
+          src={imgLogoText}
           width={174}
         />
         <Image
           alt='logo'
           className='md:hidden'
           height={28}
-          src='/images/logo-sm.png'
+          src={imgLogo}
           width={28}
         />
       </Link>
@@ -83,7 +87,7 @@ export default function Gnb({ user }: TemporaryProps) {
                 alt='profile image'
                 className='size-30 rounded-full object-cover'
                 height={30}
-                src={user.profileImageUrl ?? '/images/profile-default.svg'}
+                src={user.profileImageUrl ?? imgDefaultProfile}
                 width={30}
               />
               <DropDown

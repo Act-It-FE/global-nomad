@@ -1,6 +1,9 @@
 'use client';
 import { useState } from 'react';
 
+import NotificationPanel, {
+  Notification,
+} from '@/components/common/Notification';
 import Button from '@/components/common/Button';
 import DropDown from '@/components/common/DropDown';
 import Icon from '@/components/common/Icon';
@@ -12,6 +15,33 @@ export default function Home() {
   const iconKeys = Object.keys(ICON_MAP) as (keyof typeof ICON_MAP)[];
 
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const mockNotifications: Notification[] = [
+    {
+      id: 1,
+      content: `예약 승인
+함께하면 즐거운 스트릿 댄스
+(2023-01-14 15:00~18:00)
+예약이 승인되었어요.`,
+      createdAt: '2025-07-19T14:20:00.000Z',
+    },
+    {
+      id: 2,
+      content: `예약 거절
+함께하면 즐거운 스트릿 댄스
+(2023-01-14 15:00~18:00)
+예약이 거절되었어요.`,
+      createdAt: '2025-07-19T14:14:00.000Z',
+    },
+    {
+      id: 3,
+      content: `예약 승인
+함께하면 즐거운 스트릿 댄스
+(2023-01-14 15:00~18:00)
+예약이 승인되었어요.`,
+      createdAt: '2025-07-19T14:20:00.000Z',
+    },
+  ];
   return (
     <div className='m-20 flex flex-col items-center justify-center'>
       <DropDown
@@ -29,15 +59,24 @@ export default function Home() {
         position='left'
         trigger={<Icon className='h-28 w-28' icon='More' />}
       />
-      <div className='grid grid-cols-5 gap-4'>
+      <div className='grid grid-cols-5 gap-4 bg-gray-300'>
         {iconKeys.map((iconKey) => (
           <div key={iconKey} className='flex flex-col items-center'>
             <Icon className='text-primary-500 size-20' icon={iconKey} />
             <span className='mt-1 text-xs'>{iconKey}</span>
           </div>
         ))}
+        <button onClick={() => setIsOpen((prev) => !prev)}>
+          알림 {mockNotifications.length}개
+        </button>
+        <div className='relative inline-block'>
+          <NotificationPanel
+            list={mockNotifications}
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+          />
+        </div>
       </div>
-
       <Button
         rounded='14'
         variant='primary'
@@ -66,7 +105,6 @@ export default function Home() {
       >
         경고 모달 열기
       </Button>
-
       <Button
         variant='primary'
         onClick={() =>

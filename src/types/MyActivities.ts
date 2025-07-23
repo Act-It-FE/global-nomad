@@ -85,9 +85,12 @@ export interface ErrorResponse {
 }
 
 // refactoring 필요
-// GET /my-activities, /activities 에서 사용
+// GET /my-activities, /activities 등
 export interface ActivitiesResponse {
   cursorId: number;
   totalCount: number;
   activities: ActivityBasic[];
 }
+
+// GET /my-activities/{activityId}/reservation-dashboard
+export type ReservationDashboardResponse = FindReservationsByMonthResponse[];

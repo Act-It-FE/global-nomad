@@ -1,17 +1,19 @@
 import axios from 'axios';
 
-import { MyReserves, Reservation } from '@/types/api/ReserveType';
+import {
+  MyReserves,
+  Reservation,
+  ReservationStatus,
+} from '@/types/api/ReserveType';
 
 import api from './textAxios';
 const reservationStatusList = [
   'pending',
   'confirmed',
   'declined',
-  'cancelled',
+  'canceled',
   'completed',
 ] as const;
-
-type ReservationStatus = (typeof reservationStatusList)[number];
 
 function isReservationStatus(value: unknown): value is ReservationStatus {
   return (
@@ -31,7 +33,7 @@ export const getMyReservations = async (
     params.cursor = cursorId;
   }
   if (size !== undefined) {
-    if (size < 1) {
+    if (!Number.isInteger(size) || size < 1) {
       throw new Error('size는 1 이상의 정수여야 합니다.');
     }
     params.size = size;
@@ -39,7 +41,7 @@ export const getMyReservations = async (
   if (status !== undefined) {
     if (!isReservationStatus(status)) {
       throw new Error(
-        'status는 pending, confirmed, completed, declined, cancelled 중 하나로 입력해주세요.',
+        'status는 pending, confirmed, completed, declined, canceled 중 하나로 입력해주세요.',
       );
     }
 

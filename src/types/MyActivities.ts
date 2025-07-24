@@ -39,17 +39,6 @@ export interface ActivityBasic {
   updatedAt: string;
 }
 
-export interface ReservedScheduleResponse {
-  scheduleId: number;
-  startTime: string;
-  endTime: string;
-  count: {
-    declined: number;
-    confirmed: number;
-    pending: number;
-  };
-}
-
 // refactoring 필요
 // 공통 사용
 export interface ErrorResponse {
@@ -75,7 +64,16 @@ export type FindReservationsByMonthResponse = {
 }[];
 
 // GET /my-activities/{activityId}/reserved-schedule
-export type ActivitiesReservedScheduleResponse = ReservedScheduleResponse[];
+export type ReservedScheduleResponse = {
+  scheduleId: number;
+  startTime: string;
+  endTime: string;
+  count: {
+    declined: number;
+    confirmed: number;
+    pending: number;
+  };
+}[];
 
 // refactoring 필요
 export interface ReservationWithUserResponse extends ReservationResponse {

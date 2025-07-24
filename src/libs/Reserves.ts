@@ -51,9 +51,8 @@ export const getMyReservations = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      if (error.response?.status === 401) {
-        throw new Error('unauthorized');
-      }
+      const message = error.response?.data.message ?? '알 수 없는 오류';
+      throw new Error(message);
     }
     console.error('예약 정보 조회 실패:', error);
     throw new Error('예약 정보를 가져오는 데 실패했습니다');
@@ -81,11 +80,42 @@ export const patchReservationStatus = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      if (error.response?.status === 401) {
-        throw new Error('unauthorized');
-      }
+      const message = error.response?.data.message ?? '알 수 없는 오류';
+      throw new Error(message);
     }
-    console.error('예약 취소 실패:', error);
+
     throw new Error('예약을 취소하는 것을 실패했습니다');
+  }
+};
+
+export const postReservationReview = async (
+  reservationId: number,
+  rating: number,
+  content: string,
+): Promise<Reservation> => {
+  // rating 유효성 검사
+  const isInteger = Number.isInteger(rating);
+  const inRange = rating >= 1 && rating <= 5;
+
+  if (!isInteger || !inRange) {
+    throw new Error('rating은 1~5 사이 정수로 입력해주세요.');
+  }
+
+  try {
+    const response = await api.post(
+      `/my-reservations/${reservationId}/reviews`,
+      {
+        rating,
+        content,
+      },
+    );
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data.message ?? '알 수 없는 오류';
+      throw new Error(message);
+    }
+
+    throw new Error('리뷰 작성을 실패 했습니다');
   }
 };

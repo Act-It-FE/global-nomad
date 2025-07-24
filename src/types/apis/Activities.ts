@@ -24,11 +24,6 @@ export interface ActivityResponse {
 }
 
 // 체험 상세 조회
-export interface ActivitiesDetail extends BaseActivity {
-  subImages: SubImage[];
-  schedules: Schedule[];
-}
-
 export interface SubImage {
   id: number;
   imageUrl: string;

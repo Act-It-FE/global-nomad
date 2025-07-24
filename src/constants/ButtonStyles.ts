@@ -13,6 +13,19 @@ const DISABLED_CLASSES = [
   'disabled:font-bold',
 ];
 
+const SECONDARY_DISABLED_CLASSES = [
+  'disabled:text-gray-200',
+  'disabled:cursor-not-allowed',
+];
+
+const SECONDARY_BASE_CLASSEES = [
+  'bg-white',
+  'text-gray-600',
+  'border border-gray-200',
+  'cursor-pointer',
+  ...SECONDARY_DISABLED_CLASSES,
+];
+
 /* 버튼 배경색, 텍스트색상, 테두리 색상
   primary: 대표색 : 하늘색 배경, 텍스트 흰색
   secondary : 흰색 배경, 회색 테두리, 텍스트 검정색
@@ -21,26 +34,15 @@ export const BUTTON_VARIANTS: Record<buttonVariants, string> = {
   primary: cn(
     'bg-primary-500',
     'text-white',
-    'hover:bg-primary-100',
     'cursor-pointer',
+    'active:bg-blue-500',
     ...DISABLED_CLASSES,
   ),
-  secondary: cn(
-    'bg-white',
-    'text-gray-600',
-    'border border-gray-200',
-    'hover:bg-gray-200',
-    'cursor-pointer',
-    ...DISABLED_CLASSES,
-  ),
+  secondary: cn('active:bg-gray-100', ...SECONDARY_BASE_CLASSEES),
   kakao: cn(
     'flex flex-row gap-2 items-center justify-center',
-    'bg-white',
-    'text-gray-600',
-    'border border-gray-200',
-    'hover:bg-[rgb(250,227,0)]',
-    'cursor-pointer',
-    ...DISABLED_CLASSES,
+    'active:bg-[rgb(250,227,0)]',
+    ...SECONDARY_BASE_CLASSEES,
   ),
 } as const;
 
@@ -63,3 +65,27 @@ export const BUTTON_SIZE: Record<buttonSize, string> = {
   lg: 'w-full max-w-200 h-47',
   xl: 'w-full max-w-640 h-54',
 } as const;
+
+// button 사이즈에 사용되는 rounded 기본값
+export const DEFAULT_BUTTON_ROUNDED: Record<buttonSize, buttonRoundedPixel> = {
+  xl: '16',
+  lg: '14',
+  md: '12',
+  sm: '12',
+  xs: '8',
+} as const;
+
+export const BUTTON_TEXT_SIZE = (
+  variant: buttonVariants,
+  size?: buttonSize,
+): string => {
+  if (variant === 'primary') {
+    if (size === 'lg' || size === 'md') return 'txt-16_B';
+    if (size === 'sm') return 'txt-14_B';
+  }
+  if (variant === 'secondary') {
+    if (size === 'lg' || size === 'md') return 'txt-16_M';
+    if (size === 'sm') return 'txt-14_M';
+  }
+  return ''; // 나머지는 직접 className으로 설정
+};

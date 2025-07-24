@@ -110,3 +110,21 @@ export interface ReservationResponse {
 export interface ActivityImageUploadResponse {
   activityImageUrl: string;
 }
+
+// 체험 등록
+export interface ActivityRegisterPayload {
+  title: string;
+  category: string;
+  description: string;
+  address: string;
+  price: number;
+  bannerImageUrl: string;
+  subImageUrls: string[];
+  schedule: ActivityRegisterSchedule[];
+}
+
+export interface ActivityRegisterSchedule {
+  date: string;
+  startTime: string;
+  endTime: string;
+}

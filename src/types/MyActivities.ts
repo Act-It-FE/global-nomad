@@ -80,6 +80,18 @@ export type ReservationDashboardResponse = FindReservationsByMonthResponse[];
 export type ActivitiesReservedScheduleResponse = ReservedScheduleResponse[];
 
 // refactoring 필요
+export interface ReservationWithUserResponse extends ReservationResponse {
+  nickname: string;
+}
+
+// GET /my-activities/{activityId}/reservations
+export interface ReservationsListResponse {
+  cursorId: number | null;
+  totalCount: number;
+  reservations: ReservationWithUserResponse[];
+}
+
+// refactoring 필요
 // PATCH /my-activities/{activityId}/reservations/{reservationId}
 export interface ReservationResponse {
   id: number;
@@ -96,18 +108,6 @@ export interface ReservationResponse {
   endTime: string;
   createdAt: string;
   updatedAt: string;
-}
-
-// refactoring 필요
-export interface ReservationWithUserResponse extends ReservationResponse {
-  nickname: string;
-}
-
-// GET /my-activities/{activityId}/reservations
-export interface ReservationsListResponse {
-  cursorId: number | null;
-  totalCount: number;
-  reservations: ReservationWithUserResponse[];
 }
 
 // PATCH /my-activities/{activityId}/reservations/{reservationId}

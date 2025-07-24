@@ -13,6 +13,12 @@ const reservationStatusList = [
 
 type ReservationStatus = (typeof reservationStatusList)[number];
 
+/**
+ * Determines whether a given value is a valid reservation status.
+ *
+ * @param value - The value to check for reservation status validity
+ * @returns `true` if the value is a recognized reservation status; otherwise, `false`
+ */
 function isReservationStatus(value: unknown): value is ReservationStatus {
   return (
     typeof value === 'string' &&

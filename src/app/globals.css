@@ -23,7 +23,7 @@
   --color-yellow: #ffcb02;
 
   /** spacing **/
-  --spacing: 1px;
+  --spacing: 0.0625rem;
 
   /* breakpoint */
   --breakpoint-md: 744px;

@@ -1,15 +1,16 @@
 'use client';
 import { useState } from 'react';
 
-import NotificationPanel, {
-  Notification,
-} from '@/components/common/Notification';
+import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/common/Button';
 import DropDown from '@/components/common/DropDown';
 import Icon from '@/components/common/Icon';
-import Modal from '@/components/common/Modals/Modals';
+import Modal from '@/components/common/Modal/Modal';
+import NotificationPanel, {
+  Notification,
+} from '@/components/common/NotificationPanel';
 import ICON_MAP from '@/constants/iconMap';
-import type { ModalProps } from '@/types/Modals';
+import type { ModalProps } from '@/types/Modal';
 
 export default function Home() {
   const iconKeys = Object.keys(ICON_MAP) as (keyof typeof ICON_MAP)[];
@@ -123,6 +124,39 @@ export default function Home() {
         입력 모달 열기
       </Button>
       {modalProps && <Modal {...modalProps} />}
+      <Button size='lg' variant='primary'>
+        테스트
+      </Button>
+      <Button className='text-black' size='md' variant='secondary'>
+        테스트2
+      </Button>
+      <Button disabled size='xl'>
+        테스트3
+      </Button>
+      <Button
+        disabled
+        className='disabled:active:bg-white'
+        size='sm'
+        variant='secondary'
+      >
+        테스트4
+      </Button>
+      <Button
+        disabled
+        className='rounded-[20px] disabled:active:bg-white'
+        icon={<KakaoIcon className='h-24 w-24' />}
+        size='xl'
+        variant='kakao'
+      >
+        테스트5
+      </Button>
+      <Button
+        icon={<KakaoIcon className='h-24 w-24' />}
+        size='xl'
+        variant='kakao'
+      >
+        테스트6
+      </Button>
     </div>
   );
 }

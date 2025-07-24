@@ -10,7 +10,7 @@ import { cn } from '@/utils/cn';
 
 import DropDown from './DropDown';
 import Icon from './Icon';
-import NotificationPanel from './Notification';
+import NotificationPanel from './NotificationPanel';
 
 interface TemporaryProps {
   user?: {

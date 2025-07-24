@@ -39,15 +39,6 @@ export interface ActivityBasic {
   updatedAt: string;
 }
 
-export interface FindReservationsByMonthResponse {
-  date: string;
-  reservations: {
-    completed: number;
-    confirmed: number;
-    pending: number;
-  };
-}
-
 export interface ReservedScheduleResponse {
   scheduleId: number;
   startTime: string;
@@ -74,7 +65,14 @@ export interface ActivitiesResponse {
 }
 
 // GET /my-activities/{activityId}/reservation-dashboard
-export type ReservationDashboardResponse = FindReservationsByMonthResponse[];
+export type FindReservationsByMonthResponse = {
+  date: string;
+  reservations: {
+    completed: number;
+    confirmed: number;
+    pending: number;
+  };
+}[];
 
 // GET /my-activities/{activityId}/reserved-schedule
 export type ActivitiesReservedScheduleResponse = ReservedScheduleResponse[];

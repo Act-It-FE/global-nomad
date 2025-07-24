@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-const instance: AxiosInstance = axios.create({
+const fetcher: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 3000,
   headers: {
@@ -8,4 +8,4 @@ const instance: AxiosInstance = axios.create({
   },
 });
 
-export { instance };
+export { fetcher };

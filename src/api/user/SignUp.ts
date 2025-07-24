@@ -1,4 +1,4 @@
-import { instance } from '../api';
+import { fetcher } from '../api';
 
 export interface SignUpRequest {
   email: string;
@@ -16,6 +16,6 @@ export async function signUpUser(
   teamId: string,
   data: SignUpRequest,
 ): Promise<SignUpResponse> {
-  const res = await instance.post(`/${teamId}/users`, data);
+  const res = await fetcher.post(`/${teamId}/users`, data);
   return res.data;
 }

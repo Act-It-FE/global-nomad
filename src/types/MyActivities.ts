@@ -110,6 +110,22 @@ export interface ReservationResponse {
   updatedAt: string;
 }
 
+// PATCH /my-activities/{activityId}
+export interface ActivityWithSchedulesResponse extends ActivityBasic {
+  subImages: {
+    imageUrl: string;
+    id: number;
+  }[];
+  schedules: {
+    times: {
+      endTime: string;
+      startTime: string;
+      id: number;
+    }[];
+    date: string;
+  }[];
+}
+
 // PATCH /my-activities/{activityId}/reservations/{reservationId}
 export interface UpdateMyActivityReservationBody {
   status: Extract<'declined' | 'confirmed', ReservationStatus>;

@@ -109,3 +109,8 @@ export interface ReservationsListResponse {
   totalCount: number;
   reservations: ReservationWithUserResponse[];
 }
+
+// PATCH /my-activities/{activityId}/reservations/{reservationId}
+export interface UpdateMyActivityReservationBody {
+  status: Extract<'declined' | 'confirmed', ReservationStatus>;
+}

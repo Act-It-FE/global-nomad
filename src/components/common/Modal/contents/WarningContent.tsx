@@ -1,9 +1,7 @@
 import Image from 'next/image';
 
 import Button from '@/components/common/Button';
-import type { WarningModalProps } from '@/types/components-types/Modals';
-
-import warning from '../../../../../public/images/warning.png';
+import type { WarningModalProps } from '@/types/components-types/Modal';
 
 export function WarningContent({
   message,
@@ -13,7 +11,7 @@ export function WarningContent({
   return (
     <div className='flex w-320 flex-col items-center justify-center rounded-[30px] bg-white p-24 md:w-400 md:p-30'>
       <div className='relative h-49 w-49 md:h-88 md:w-88'>
-        <Image fill alt='경고' src={warning} />
+        <Image fill alt='경고' src='/images/warning.png' />
       </div>
       <p className='txt-16_B md:txt-18_B mb-20 md:mb-24'>{message}</p>
       <div className='flex gap-8 md:gap-12'>

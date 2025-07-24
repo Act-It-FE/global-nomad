@@ -24,6 +24,16 @@ export interface CreateScheduleBody {
 }
 
 // refactoring 필요
+export interface ScheduleResponse {
+  times: {
+    endTime: string;
+    startTime: string;
+    id: number;
+  }[];
+  date: string;
+}
+
+// refactoring 필요
 export interface ActivityBasic {
   id: number;
   userId: number;
@@ -112,14 +122,7 @@ export interface ActivityWithSchedulesResponse extends ActivityBasic {
     imageUrl: string;
     id: number;
   }[];
-  schedules: {
-    times: {
-      endTime: string;
-      startTime: string;
-      id: number;
-    }[];
-    date: string;
-  }[];
+  schedules: ScheduleResponse[];
 }
 
 // PATCH /my-activities/{activityId}/reservations/{reservationId}

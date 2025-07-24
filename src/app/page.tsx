@@ -8,7 +8,7 @@ import Icon from '@/components/common/Icon';
 import Modal from '@/components/common/Modal/Modal';
 import NotificationPanel, {
   Notification,
-} from '@/components/common/Notification';
+} from '@/components/common/NotificationPanel';
 import ICON_MAP from '@/constants/iconMap';
 import type { ModalProps } from '@/types/components-types/Modal';
 

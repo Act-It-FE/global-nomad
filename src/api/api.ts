@@ -8,12 +8,32 @@ const fetcher: AxiosInstance = axios.create({
   },
 });
 
+function isPublicRequest(method?: string, url?: string): boolean {
+  if (!method || !url) return false;
+  if (url.startsWith('/oauth')) {
+    return true;
+  }
+  if (url === '/auth/login') {
+    return true;
+  }
+  if (url === '/users') {
+    return true;
+  }
+  if (method === 'get' && url.startsWith('/my-activities')) {
+    return true;
+  }
+  return false;
+}
+
 fetcher.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      config.headers = config.headers ?? {};
-      config.headers.Authorization = `Bearer ${token}`;
+    const { method, url } = config;
+    if (!isPublicRequest(method, url)) {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        config.headers = config.headers ?? {};
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },

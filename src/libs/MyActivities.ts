@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import {
   ActivitiesResponse,
+  ActivityWithSchedulesResponse,
   FindReservationsByMonthResponse,
   ReservationResponse,
   ReservationsListResponse,
@@ -136,7 +137,7 @@ export const patchMyActivities = async (
   body: UpdateMyActivityBody,
 ) => {
   try {
-    const response = await fetcher.patch<ReservationResponse>(
+    const response = await fetcher.patch<ActivityWithSchedulesResponse>(
       `/my-activities/${activityId}`,
       body,
     );

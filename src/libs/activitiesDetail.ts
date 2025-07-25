@@ -89,32 +89,45 @@ export const getActivityReviews = async (
 };
 
 //체험 예약 가능일 조회
+// 예약가능 월 은 두자리여야 해서 두자리를 입력받을 수 있게했습니다. ex) 1월 -> 01
 export const getAvailableSchedule = async (
   activityId: number,
   year: string,
   month: string,
 ): Promise<AvailableSchedule[]> => {
   try {
-    // 예약가능 월 은 두자리여야 해서 두자리를 입력받을 수 있게했습니다. ex) 1월 -> 01
     const formattedMonth = month.padStart(2, '0');
 
     const response = await fetcher.get(
       `/activities/${activityId}/available-schedule`,
       {
-        params: {
-          year,
-          month: formattedMonth,
-        },
+        params: { year, month: formattedMonth },
       },
     );
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      console.error('체험 예약 가능일 조회에 실패했습니다.', error.message);
-    } else {
-      console.error('알 수 없는 네트워크 오류가 발생했습니다.', error);
+      const status = error.response?.status;
+      const message = error.response?.data?.message;
+
+      if (status === 400) {
+        console.error('예약 가능일 조회 실패:', message);
+        throw new Error('연도는 YYYY, 월은 MM 형식으로 작성해주세요.');
+      }
+
+      if (status === 404) {
+        console.error('예약 가능일 조회 실패:', message);
+        throw new Error('해당 체험은 존재하지 않습니다.');
+      }
+
+      console.error('예약 가능일 조회 실패:', message);
+      throw new Error(
+        message || '체험 예약 가능일 조회 중 오류가 발생했습니다.',
+      );
     }
-    throw new Error('체험 예약 가능일 조회 중 오류가 발생했습니다.');
+
+    console.error('네트워크 오류:', error);
+    throw new Error('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
 };
 

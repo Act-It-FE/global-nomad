@@ -41,20 +41,17 @@ export const getActivityDetail = async (
     if (isAxiosError(error)) {
       const status = error.response?.status;
       const serverMessage = error.response?.data?.message;
-
       if (status === 404) {
         const message =
           serverMessage || '요청하신 체험 정보를 찾을 수 없습니다.';
         console.error('체험 상세 조회 실패:', message);
         throw new Error(message);
       }
-
       console.error('체험 상세 조회 실패:', serverMessage);
       throw new Error(
         serverMessage || '체험 상세 조회 중 오류가 발생했습니다.',
       );
     }
-
     console.error('네트워크 오류:', error);
     throw new Error('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
@@ -71,18 +68,15 @@ export const getActivityReviews = async (
     if (isAxiosError(error)) {
       const status = error.response?.status;
       const message = error.response?.data?.message;
-
       if (status === 400 || status === 404) {
         console.error('체험 리뷰 조회 실패:', message);
         throw new Error(
           message || '리뷰 정보를 불러오는 중 문제가 발생했습니다.',
         );
       }
-
       console.error('체험 리뷰 조회 실패:', message);
       throw new Error(message || '체험 리뷰 조회 중 오류가 발생했습니다.');
     }
-
     console.error('네트워크 오류:', error);
     throw new Error('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
@@ -109,23 +103,19 @@ export const getAvailableSchedule = async (
     if (isAxiosError(error)) {
       const status = error.response?.status;
       const message = error.response?.data?.message;
-
       if (status === 400) {
         console.error('예약 가능일 조회 실패:', message);
         throw new Error('연도는 YYYY, 월은 MM 형식으로 작성해주세요.');
       }
-
       if (status === 404) {
         console.error('예약 가능일 조회 실패:', message);
         throw new Error('해당 체험은 존재하지 않습니다.');
       }
-
       console.error('예약 가능일 조회 실패:', message);
       throw new Error(
         message || '체험 예약 가능일 조회 중 오류가 발생했습니다.',
       );
     }
-
     console.error('네트워크 오류:', error);
     throw new Error('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
@@ -159,7 +149,6 @@ export const createActivity = async (
       }
       throw new Error(message || '체험 등록 중 오류가 발생했습니다.');
     }
-
     console.error('네트워크 오류:', error);
     throw new Error('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
@@ -178,15 +167,36 @@ export const postReservation = async (
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      console.error('체험 예약 신청에 실패했습니다.', {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data,
+      const status = error.response?.status;
+      const message = error.response?.data?.message;
+
+      console.error('체험 예약 신청 실패:', {
+        status,
+        message,
+        error,
       });
-      throw new Error('체험 예약 신청 중 오류가 발생했습니다.');
+
+      if (status === 400) {
+        throw new Error(message || '입력값을 다시 확인해주세요.');
+      }
+      if (status === 401) {
+        throw new Error('로그인이 필요한 서비스입니다.');
+      }
+      if (status === 404) {
+        throw new Error('존재하지 않는 체험입니다.');
+      }
+      if (status === 409) {
+        throw new Error(
+          message ||
+            '이미 확정된 예약이 있는 시간대입니다. 다른 시간을 선택해주세요.',
+        );
+      }
+      throw new Error(
+        message || '체험 예약 신청 중 알 수 없는 오류가 발생했습니다.',
+      );
     }
-    console.error('네트워크 오류입니다.', error);
-    throw new Error('네트워크 오류가 발생했습니다.');
+    console.error('네트워크 오류입니다:', error);
+    throw new Error('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
 };
 

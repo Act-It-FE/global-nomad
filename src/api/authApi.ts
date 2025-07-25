@@ -1,6 +1,6 @@
 import apiClient from '@/libs/apiClient';
 
-import { LoginRequest, LoginResponse, Token } from './types/Auth';
+import { LoginRequest, LoginResponse, Token } from './types/auth';
 
 export const authApi = {
   login: (data: LoginRequest) => {

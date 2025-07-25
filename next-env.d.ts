@@ -1,7 +1,5 @@
-interface ImportMetaEnv {
-  readonly NEXT_PUBLIC_API_BASE_URL: string;
-}
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
 
-interface ImportMeta {
-  readonly env: ImportMetaEnv;
-}
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.

@@ -21,12 +21,17 @@ function isReservationStatus(value: unknown): value is ReservationStatus {
   );
 }
 
+export interface GetMyReservationsQuery {
+  cursorId?: number;
+  size?: number;
+  status?: string;
+}
+
 export const getMyReservations = async (
-  cursorId?: number,
-  size?: number,
-  status?: string,
+  query?: GetMyReservationsQuery,
 ): Promise<MyReserves> => {
   const params: Record<string, string | number> = {};
+  const { cursorId, size, status } = query || {};
 
   if (cursorId !== undefined) {
     params.cursor = cursorId;

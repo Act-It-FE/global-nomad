@@ -13,7 +13,7 @@ export interface User {
   updatedAt: string;
 }
 
-// post /{teamId}/users : 회원가입
+// POST /{teamId}/users : 회원가입
 export interface SignUpRequest {
   email: string;
   nickname: string;

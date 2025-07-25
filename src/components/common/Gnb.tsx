@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import AlarmActive from '@/assets/icons/alarm_active.svg';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 
 import DropDown from './DropDown';
-import Icon from './Icon';
 import NotificationPanel from './NotificationPanel';
 
 interface TemporaryProps {
@@ -67,12 +67,11 @@ export default function Gnb({ user }: TemporaryProps) {
           <>
             <div className='relative'>
               <button type='button' onClick={() => setIsOpen((prev) => !prev)}>
-                <Icon
+                <AlarmActive
                   className={cn(
                     'size-24',
                     isOpen ? 'text-primary-500' : 'text-gray-600',
                   )}
-                  icon='AlarmActive'
                 />
               </button>
               <NotificationPanel

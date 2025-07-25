@@ -1,12 +1,11 @@
 import axios from 'axios';
 
+import { fetcher } from '@/libs/api';
 import {
   MyReservation,
   MyReserves,
   ReservationStatus,
 } from '@/types/api/ReserveType';
-
-import api from './textAxios';
 const reservationStatusList = [
   'pending',
   'confirmed',
@@ -22,12 +21,17 @@ function isReservationStatus(value: unknown): value is ReservationStatus {
   );
 }
 
+export interface GetMyReservationsQuery {
+  cursorId?: number;
+  size?: number;
+  status?: string;
+}
+
 export const getMyReservations = async (
-  cursorId?: number,
-  size?: number,
-  status?: string,
+  query?: GetMyReservationsQuery,
 ): Promise<MyReserves> => {
-  const params: Record<string, string | number | boolean> = {};
+  const params: Record<string, string | number> = {};
+  const { cursorId, size, status } = query || {};
 
   if (cursorId !== undefined) {
     params.cursor = cursorId;
@@ -49,7 +53,7 @@ export const getMyReservations = async (
   }
 
   try {
-    const response = await api.get('/my-reservations', { params });
+    const response = await fetcher.get('/my-reservations', { params });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -75,7 +79,7 @@ export const patchReservationStatus = async (
     throw new Error('예약 취소는 예약 신청 상태에서만 가능합니다.');
   }
   try {
-    const response = await api.patch(`/my-reservations/${reservationId}`, {
+    const response = await fetcher.patch(`/my-reservations/${reservationId}`, {
       status: 'canceled',
     });
 
@@ -114,7 +118,7 @@ export const postReservationReview = async (
   }
 
   try {
-    const response = await api.post(
+    const response = await fetcher.post(
       `/my-reservations/${reservationId}/reviews`,
       { body },
     );

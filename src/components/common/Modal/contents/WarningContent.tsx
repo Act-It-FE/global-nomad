@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import Button from '@/components/common/Button';
-import type { WarningModalProps } from '@/types/components-types/Modal';
+import type { WarningModalProps } from '@/types/components/Modal';
 
 export function WarningContent({
   message,

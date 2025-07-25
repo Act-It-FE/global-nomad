@@ -1,5 +1,5 @@
 import Button from '@/components/common/Button';
-import type { OnlyTextModalProps } from '@/types/components-types/Modal';
+import type { OnlyTextModalProps } from '@/types/components/Modal';
 
 export function OnlyTextContent({ message, onClose }: OnlyTextModalProps) {
   return (

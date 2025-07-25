@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Button from '@/components/common/Button';
 import Icon from '@/components/common/Icon';
-import type { ReviewModalProps } from '@/types/components-types/Modal';
+import type { ReviewModalProps } from '@/types/components/Modal';
 
 export function ReviewContent({
   activityName,

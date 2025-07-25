@@ -3,6 +3,7 @@ import { isAxiosError } from 'axios';
 import { fetcher } from '@/api/api';
 import {
   ActivitiesDetail,
+  ActivityImageUploadResponse,
   ActivityRegisterPayload,
   ActivityResponse,
   ActivityReviewResponse,
@@ -143,5 +144,25 @@ export const postReservation = async (
     }
     console.error('네트워크 오류입니다.', error);
     throw new Error('네트워크 오류가 발생했습니다.');
+  }
+};
+
+//체험 이미지 URL 생성
+export const uploadActivityImage = async (
+  file: File,
+): Promise<ActivityImageUploadResponse> => {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  try {
+    const response = await fetcher.post(`/activities/image`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('이미지 업로드 실패', error);
+    throw new Error('이미지 업로드에 실패했습니다.');
   }
 };

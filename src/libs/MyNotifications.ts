@@ -1,0 +1,31 @@
+import axios from 'axios';
+
+import { MyNotify } from '@/types/api/NotificationType';
+
+import api from './textAxios';
+
+export const getMyNotifications = async (
+  cursorId?: number,
+  size?: number,
+): Promise<MyNotify> => {
+  const params: Record<string, number> = {};
+
+  if (cursorId !== undefined) {
+    params.cursor = cursorId;
+  }
+  if (size !== undefined) {
+    params.size = size;
+  }
+
+  try {
+    const response = await api.get('/my-notifications', { params });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const message =
+        error.response?.data.message ?? '알림 정보를 가져오는 데 실패했습니다';
+      throw new Error(message);
+    }
+    throw new Error('알림 정보를 가져오는 데 실패했습니다');
+  }
+};

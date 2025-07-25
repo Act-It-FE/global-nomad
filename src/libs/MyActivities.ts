@@ -8,6 +8,7 @@ import {
   ReservationStatus,
   ReservedScheduleResponse,
   UpdateMyActivityBody,
+  UpdateMyActivityReservationBody,
 } from '@/types/MyActivities';
 
 import { fetcher } from './api';
@@ -102,9 +103,7 @@ export const getMyActivitiesReservations = async (
 export const patchMyActivitiesReservations = async (
   activityId: number,
   reservationId: number,
-  body: {
-    status: Extract<'declined' | 'confirmed', ReservationStatus>;
-  },
+  body: UpdateMyActivityReservationBody,
 ) => {
   try {
     const response = await fetcher.patch<ReservationResponse>(

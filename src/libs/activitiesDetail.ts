@@ -9,6 +9,7 @@ import {
   ActivityReviewResponse,
   AvailableSchedule,
   GetActivitiesParams,
+  GetAvailableSchduleParams,
   ReservationRequest,
   ReservationResponse,
 } from '@/types/apis/Activities';
@@ -88,18 +89,23 @@ export const getActivityReviews = async (
 
 //체험 예약 가능일 조회
 // 예약가능 월 은 두자리여야 해서 두자리를 입력받을 수 있게했습니다. ex) 1월 -> 01
-export const getAvailableSchedule = async (
-  activityId: number,
-  year: string,
-  month: string,
-): Promise<AvailableSchedule[]> => {
+export const getAvailableSchedule = async ({
+  activityId,
+  query,
+}: {
+  activityId: number;
+  query: GetAvailableSchduleParams;
+}): Promise<AvailableSchedule[]> => {
   try {
-    const formattedMonth = month.padStart(2, '0');
+    const formattedQuery = {
+      ...query,
+      month: query.month.padStart(2, '0'),
+    };
 
     const response = await fetcher.get(
       `/activities/${activityId}/available-schedule`,
       {
-        params: { year, month: formattedMonth },
+        params: formattedQuery,
       },
     );
     return response.data;

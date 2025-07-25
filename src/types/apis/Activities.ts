@@ -73,6 +73,11 @@ export interface ScheduleTime {
   endTime: string;
 }
 
+export interface GetAvailableSchduleParams {
+  year: string;
+  month: string;
+}
+
 //체험 리뷰 조회
 export interface ReviewUser {
   id: number;

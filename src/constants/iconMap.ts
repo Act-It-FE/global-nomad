@@ -1,6 +1,4 @@
 const ICON_MAP = {
-  AlarmActive: () => import('@/assets/icons/alarm_active.svg'),
-  AlarmInActive: () => import('@/assets/icons/alarm_inactive.svg'),
   ArrowLeft: () => import('@/assets/icons/arrow_left.svg'),
   ArrowRight: () => import('@/assets/icons/arrow_right.svg'),
   Art: () => import('@/assets/icons/art.svg'),
@@ -10,8 +8,6 @@ const ICON_MAP = {
   ChevronRight: () => import('@/assets/icons/chevron-right.svg'),
   Delete: () => import('@/assets/icons/delete.svg'),
   Edit: () => import('@/assets/icons/edit.svg'),
-  EyeOff: () => import('@/assets/icons/eye_off.svg'),
-  EyeOn: () => import('@/assets/icons/eye_on.svg'),
   Facebook: () => import('@/assets/icons/facebook.svg'),
   Food: () => import('@/assets/icons/food.svg'),
   Instagram: () => import('@/assets/icons/instagram.svg'),

@@ -1,9 +1,16 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 
+import DropDown from './DropDown';
 import Icon from './Icon';
+import NotificationPanel from './NotificationPanel';
 
 interface TemporaryProps {
   user?: {
@@ -16,13 +23,22 @@ interface TemporaryProps {
   };
 }
 
+const imgDefaultProfile = '/images/profile-default.svg';
+const imgLogoText = '/images/logo-sm-text.png';
+const imgLogo = '/images/logo-sm.png';
+
 export default function Gnb({ user }: TemporaryProps) {
+  const router = useRouter();
+  const isMobile = useMediaQuery('mobile');
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <nav
       className={cn(
-        'sticky top-0 right-0 left-0',
+        'sticky top-0 right-0 left-0 z-50',
         'flex items-center justify-between',
         'mx-auto h-48 max-w-1580 px-24 md:h-80 md:px-30',
+        'bg-white',
       )}
     >
       <Link href='/'>
@@ -30,14 +46,14 @@ export default function Gnb({ user }: TemporaryProps) {
           alt='logo'
           className='max-md:hidden'
           height={28}
-          src='/images/logo-sm-text.png'
+          src={imgLogoText}
           width={174}
         />
         <Image
           alt='logo'
           className='md:hidden'
           height={28}
-          src='/images/logo-sm.png'
+          src={imgLogo}
           width={28}
         />
       </Link>
@@ -49,19 +65,47 @@ export default function Gnb({ user }: TemporaryProps) {
       >
         {user ? (
           <>
-            <button type='button'>
-              <Icon className='size-24 text-gray-600' icon='AlarmActive' />
-            </button>
+            <div className='relative'>
+              <button type='button' onClick={() => setIsOpen((prev) => !prev)}>
+                <Icon
+                  className={cn(
+                    'size-24',
+                    isOpen ? 'text-primary-500' : 'text-gray-600',
+                  )}
+                  icon='AlarmActive'
+                />
+              </button>
+              <NotificationPanel
+                list={[]}
+                open={isOpen}
+                onClose={() => setIsOpen(false)}
+              />
+            </div>
             <div className='h-14 w-1 bg-gray-100' />
             <div className='flex items-center gap-10'>
               <Image
                 alt='profile image'
                 className='size-30 rounded-full object-cover'
                 height={30}
-                src={user.profileImageUrl ?? '/images/profile-default.svg'}
+                src={user.profileImageUrl ?? imgDefaultProfile}
                 width={30}
               />
-              <button type='button'>{user.nickname}</button>
+              <DropDown
+                items={[
+                  {
+                    text: '마이페이지',
+                    onClick: () =>
+                      router.push(isMobile ? '/mypage' : '/mypage/info'),
+                  },
+                  {
+                    text: '로그아웃',
+                    danger: true,
+                    onClick: () => {},
+                  },
+                ]}
+                position='bottom'
+                trigger={user.nickname}
+              />
             </div>
           </>
         ) : (

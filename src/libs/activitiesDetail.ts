@@ -4,6 +4,7 @@ import { fetcher } from '@/api/api';
 import {
   ActivitiesDetail,
   ActivityReviewResponse,
+  AvailableSchedule,
 } from '@/types/apis/Activities';
 
 // 체험 상세 조회
@@ -45,5 +46,35 @@ export const getActivityReviews = async (
       console.error('알 수 없는 오류가 발생했습니다.', error);
     }
     throw new Error('체험 리뷰 조회 중 오류가 발생했습니다.');
+  }
+};
+
+//체험 예약 가능일 조회
+export const getAvailableSchedule = async (
+  activityId: number,
+  year: string,
+  month: string,
+): Promise<AvailableSchedule[]> => {
+  try {
+    // 예약가능 월은 두자리여야 해서 강제로 두자리를 입력하게 정했습니다. ex) 1월 -> 01
+    const formattedMonth = month.padStart(2, '0');
+
+    const response = await fetcher.get(
+      `/activities/${activityId}/available-schedule`,
+      {
+        params: {
+          year,
+          month: formattedMonth,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      console.error('체험 예약 가능일 조회에 실패했습니다.', error.message);
+    } else {
+      console.error('알 수 없는 네트워크 오류가 발생했습니다.', error);
+    }
+    throw new Error('체험 예약 가능일 조회 중 오류가 발생했습니다.');
   }
 };

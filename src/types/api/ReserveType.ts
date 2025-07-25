@@ -26,7 +26,7 @@ export interface MyReservation {
   endTime?: string; // hh:mm
   createdAt: string; // ISO 8601
   updatedAt: string; // ISO 8601
-  deletedAt?: string; // ISO 8601
+  deletedAt?: string | null; // ISO 8601
   activity?: Activity;
   rating?: number;
   content?: string;

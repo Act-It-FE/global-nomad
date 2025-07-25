@@ -27,7 +27,7 @@ export const getMyReservations = async (
   size?: number,
   status?: string,
 ): Promise<MyReserves> => {
-  const params: Record<string, string | number | boolean> = {};
+  const params: Record<string, string | number> = {};
 
   if (cursorId !== undefined) {
     params.cursor = cursorId;

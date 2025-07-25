@@ -7,6 +7,7 @@ import {
   ReservationsListResponse,
   ReservationStatus,
   ReservedScheduleResponse,
+  UpdateMyActivityBody,
 } from '@/types/MyActivities';
 
 import { fetcher } from './api';
@@ -116,5 +117,23 @@ export const patchMyActivitiesReservations = async (
       throw new Error(error.status + ' ' + error.response?.data.message);
     }
     throw new Error('예약 상태를 수정하는 데 실패했습니다');
+  }
+};
+
+export const patchMyActivities = async (
+  activityId: number,
+  body: UpdateMyActivityBody,
+) => {
+  try {
+    const response = await fetcher.patch<ReservationResponse>(
+      `/my-activities/${activityId}`,
+      body,
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.status + ' ' + error.response?.data.message);
+    }
+    throw new Error('내 체험을 수정하는 데 실패했습니다');
   }
 };

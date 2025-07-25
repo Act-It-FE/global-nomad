@@ -54,9 +54,9 @@ export interface SignUp extends LoginRequest {
 }
 //내 정보 수정
 export interface EditUserProfile extends ImageUrl {
-  nickname: string;
+  nickname?: string;
   newPassword: string;
 }
 export interface ImageUrl {
-  profileImageUrl: string | null;
+  profileImageUrl?: string | null;
 }

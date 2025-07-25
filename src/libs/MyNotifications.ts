@@ -4,11 +4,16 @@ import { MyNotify } from '@/types/api/NotificationType';
 
 import { fetcher } from './api';
 
+export interface GetMyNotifications {
+  cursorId?: number;
+  size?: number;
+}
+
 export const getMyNotifications = async (
-  cursorId?: number,
-  size?: number,
+  query?: GetMyNotifications,
 ): Promise<MyNotify> => {
   const params: Record<string, number> = {};
+  const { cursorId, size } = query || {};
 
   if (cursorId !== undefined) {
     params.cursor = cursorId;

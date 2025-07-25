@@ -40,18 +40,23 @@ export const getActivityDetail = async (
   } catch (error) {
     if (isAxiosError(error)) {
       const status = error.response?.status;
+      const serverMessage = error.response?.data?.message;
 
       if (status === 404) {
-        console.error('요청하신 체험 정보를 찾을 수 없습니다.');
-        throw new Error('요청하신 체험 정보를 찾을 수 없습니다.');
+        const message =
+          serverMessage || '요청하신 체험 정보를 찾을 수 없습니다.';
+        console.error('체험 상세 조회 실패:', message);
+        throw new Error(message);
       }
 
-      console.error('알 수 없는 오류가 발생했습니다.');
-      throw new Error('알 수 없는 오류가 발생했습니다.');
+      console.error('체험 상세 조회 실패:', serverMessage);
+      throw new Error(
+        serverMessage || '체험 상세 조회 중 오류가 발생했습니다.',
+      );
     }
 
-    console.error('네트워크 에러 발생:', error);
-    throw new Error('네트워크 에러가 발생했습니다.');
+    console.error('네트워크 오류:', error);
+    throw new Error('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
 };
 

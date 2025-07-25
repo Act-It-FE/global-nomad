@@ -19,18 +19,21 @@ function isPublicRequest(method?: string, url?: string): boolean {
   if (url === '/users') {
     return true;
   }
-  if (method === 'get' && url.startsWith('/my-activities')) {
+  if (method === 'get' && url.startsWith('/activities')) {
     return true;
   }
   return false;
 }
-
+const getAccessToken = (): string | null => {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('accessToken');
+};
 fetcher.interceptors.request.use(
   (config) => {
     const { method, url } = config;
     if (!isPublicRequest(method, url)) {
-      const token = localStorage.getItem('accessToken');
-      if (token) {
+      const token = getAccessToken();
+      if (token && token.trim()) {
         config.headers = config.headers ?? {};
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -38,6 +41,15 @@ fetcher.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error),
+);
+fetcher.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      console.warn('토큰이 만료되었습니다. 재로그인이 필요합니다.');
+    }
+    return Promise.reject(error);
+  },
 );
 
 export { fetcher };

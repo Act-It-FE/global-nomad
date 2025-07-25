@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   ActivitiesResponse,
   FindReservationsByMonthResponse,
+  ReservationResponse,
   ReservationsListResponse,
   ReservationStatus,
   ReservedScheduleResponse,
@@ -94,5 +95,26 @@ export const getMyActivitiesReservations = async (
       throw new Error(error.status + ' ' + error.response?.data.message);
     }
     throw new Error('예약 시간대별 예약 내역을 가져오는 데 실패했습니다');
+  }
+};
+
+export const patchMyActivitiesReservations = async (
+  activityId: number,
+  reservationId: number,
+  body: {
+    status: Extract<'declined' | 'confirmed', ReservationStatus>;
+  },
+) => {
+  try {
+    const response = await fetcher.patch<ReservationResponse>(
+      `/my-activities/${activityId}/reservations/${reservationId}`,
+      body,
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.status + ' ' + error.response?.data.message);
+    }
+    throw new Error('예약 상태를 수정하는 데 실패했습니다');
   }
 };

@@ -3,6 +3,8 @@ import axios from 'axios';
 import {
   ActivitiesResponse,
   FindReservationsByMonthResponse,
+  ReservationsListResponse,
+  ReservationStatus,
   ReservedScheduleResponse,
 } from '@/types/MyActivities';
 
@@ -67,5 +69,30 @@ export const getMyActivitiesReservedSchedule = async (
       throw new Error(error.status + ' ' + error.response?.data.message);
     }
     throw new Error('날짜별 예약 정보를 가져오는 데 실패했습니다');
+  }
+};
+
+export const getMyActivitiesReservations = async (
+  activityId: number,
+  query?: {
+    cursorId?: number;
+    size?: number;
+    scheduleId: number;
+    status: Extract<'declined' | 'pending' | 'confirmed', ReservationStatus>;
+  },
+) => {
+  try {
+    const response = await fetcher.get<ReservationsListResponse>(
+      `/my-activities/${activityId}/reservations`,
+      {
+        params: query,
+      },
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.status + ' ' + error.response?.data.message);
+    }
+    throw new Error('예약 시간대별 예약 내역을 가져오는 데 실패했습니다');
   }
 };

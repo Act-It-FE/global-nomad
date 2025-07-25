@@ -132,14 +132,14 @@ export interface UpdateMyActivityReservationBody {
 
 // PATCH /my-activities/{activityId}
 export interface UpdateMyActivityBody {
-  title: string;
-  category: Category;
-  description: string;
-  price: number;
-  address: string;
-  bannerImageUrl: string;
-  subImageIdsToRemove: number[];
-  subImageUrlsToAdd: string[];
-  scheduleIdsToRemove: number[];
-  schedulesToAdd: CreateScheduleBody[];
+  title?: string;
+  category?: Category;
+  description?: string;
+  price?: number;
+  address?: string;
+  bannerImageUrl?: string;
+  subImageIdsToRemove?: number[];
+  subImageUrlsToAdd?: string[];
+  scheduleIdsToRemove?: number[];
+  schedulesToAdd?: CreateScheduleBody[];
 }

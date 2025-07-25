@@ -8,10 +8,10 @@ export type ReservationStatus =
 export interface MyReserves {
   cursorId: number | null;
   totalCount: number;
-  reservations: Reservation[];
+  reservations: MyReservation[];
 }
 
-export interface Reservation {
+export interface MyReservation {
   id: number;
   teamId: string;
   userId: number;

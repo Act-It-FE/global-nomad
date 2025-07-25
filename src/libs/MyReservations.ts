@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 import {
+  MyReservation,
   MyReserves,
-  Reservation,
   ReservationStatus,
 } from '@/types/api/ReserveType';
 
@@ -53,10 +53,10 @@ export const getMyReservations = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const message = error.response?.data.message ?? '알 수 없는 오류';
+      const message =
+        error.response?.data.message ?? '예약 정보를 가져오는 데 실패했습니다';
       throw new Error(message);
     }
-    console.error('예약 정보 조회 실패:', error);
     throw new Error('예약 정보를 가져오는 데 실패했습니다');
   }
 };
@@ -66,7 +66,7 @@ export const patchReservationStatus = async (
   reservationUserId?: number,
   currentStatus?: string,
   currentUserId?: number,
-): Promise<Reservation> => {
+): Promise<MyReservation> => {
   if (currentUserId !== reservationUserId) {
     throw new Error('본인의 예약만 취소할 수 있습니다.');
   }
@@ -82,7 +82,8 @@ export const patchReservationStatus = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const message = error.response?.data.message ?? '알 수 없는 오류';
+      const message =
+        error.response?.data.message ?? '예약을 취소하는 것을 실패했습니다';
       throw new Error(message);
     }
 
@@ -90,11 +91,17 @@ export const patchReservationStatus = async (
   }
 };
 
+export interface ReviewBody {
+  rating: number;
+  content: string;
+}
+
 export const postReservationReview = async (
   reservationId: number,
-  rating: number,
-  content: string,
-): Promise<Reservation> => {
+  body: ReviewBody,
+): Promise<MyReservation> => {
+  const { rating, content } = body;
+
   // rating 유효성 검사
   const isInteger = Number.isInteger(rating);
   const inRange = rating >= 1 && rating <= 5;
@@ -103,18 +110,20 @@ export const postReservationReview = async (
     throw new Error('rating은 1~5 사이 정수로 입력해주세요.');
   }
 
+  if (typeof content !== 'string') {
+    throw new Error('content는 문자열로 입력해주세요.');
+  }
+
   try {
     const response = await api.post(
       `/my-reservations/${reservationId}/reviews`,
-      {
-        rating,
-        content,
-      },
+      body,
     );
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      const message = error.response?.data.message ?? '알 수 없는 오류';
+      const message =
+        error.response?.data.message ?? '리뷰 작성을 실패 했습니다';
       throw new Error(message);
     }
 

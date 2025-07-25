@@ -26,7 +26,9 @@ export const getMyActivities = async (query?: {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.status + ' ' + error.response?.data.message);
+      throw new Error(
+        error.response?.status + ': ' + error.response?.data.message,
+      );
     }
     throw new Error('내 체험을 가져오는 데 실패했습니다');
   }
@@ -52,7 +54,9 @@ export const getMyActivitiesReservationDashboard = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.status + ' ' + error.response?.data.message);
+      throw new Error(
+        error.response?.status + ': ' + error.response?.data.message,
+      );
     }
     throw new Error('월별 예약 현황을 가져오는 데 실패했습니다');
   }
@@ -76,7 +80,9 @@ export const getMyActivitiesReservedSchedule = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.status + ' ' + error.response?.data.message);
+      throw new Error(
+        error.response?.status + ': ' + error.response?.data.message,
+      );
     }
     throw new Error('날짜별 예약 정보를 가져오는 데 실패했습니다');
   }
@@ -102,7 +108,9 @@ export const getMyActivitiesReservations = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.status + ' ' + error.response?.data.message);
+      throw new Error(
+        error.response?.status + ': ' + error.response?.data.message,
+      );
     }
     throw new Error('예약 시간대별 예약 내역을 가져오는 데 실패했습니다');
   }
@@ -122,7 +130,9 @@ export const patchMyActivitiesReservations = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.status + ' ' + error.response?.data.message);
+      throw new Error(
+        error.response?.status + ': ' + error.response?.data.message,
+      );
     }
     throw new Error('예약 상태를 수정하는 데 실패했습니다');
   }
@@ -135,7 +145,9 @@ export const deleteMyActivities = async (activityId: number) => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.status + ' ' + error.response?.data.message);
+      throw new Error(
+        error.response?.status + ': ' + error.response?.data.message,
+      );
     }
     throw new Error('내 체험을 삭제하는 데 실패했습니다');
   }
@@ -154,7 +166,9 @@ export const patchMyActivities = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.status + ' ' + error.response?.data.message);
+      throw new Error(
+        error.response?.status + ': ' + error.response?.data.message,
+      );
     }
     throw new Error('내 체험을 수정하는 데 실패했습니다');
   }

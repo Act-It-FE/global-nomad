@@ -3,6 +3,7 @@ import { isAxiosError } from 'axios';
 import { fetcher } from '@/api/api';
 import {
   ActivitiesDetail,
+  ActivityRegisterPayload,
   ActivityResponse,
   ActivityReviewResponse,
   AvailableSchedule,
@@ -75,7 +76,7 @@ export const getAvailableSchedule = async (
   month: string,
 ): Promise<AvailableSchedule[]> => {
   try {
-    // 예약가능 월은 두자리여야 해서 강제로 두자리를 입력하게 정했습니다. ex) 1월 -> 01
+    // 예약가능 월 은 두자리여야 해서 두자리를 입력받을 수 있게했습니다. ex) 1월 -> 01
     const formattedMonth = month.padStart(2, '0');
 
     const response = await fetcher.get(
@@ -95,5 +96,25 @@ export const getAvailableSchedule = async (
       console.error('알 수 없는 네트워크 오류가 발생했습니다.', error);
     }
     throw new Error('체험 예약 가능일 조회 중 오류가 발생했습니다.');
+  }
+};
+
+// 체험 등록
+export const createActivity = async (
+  payload: ActivityRegisterPayload,
+): Promise<void> => {
+  try {
+    await fetcher.post(`/activities`, payload);
+  } catch (error) {
+    if (isAxiosError(error)) {
+      console.error('체험 등록에 실패했습니다.', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+      throw new Error('체험 등록 중 오류가 발생했습니다.');
+    }
+    console.error('네트워크 오류입니다.', error);
+    throw new Error('네트워크 오류가 발생했습니다.');
   }
 };

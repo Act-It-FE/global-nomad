@@ -98,9 +98,10 @@ export interface ReviewBody {
 
 export const postReservationReview = async (
   reservationId: number,
-  { rating, content }: ReviewBody,
+  body: ReviewBody,
 ): Promise<MyReservation> => {
   // rating 유효성 검사
+  const { rating, content } = body;
   const isInteger = Number.isInteger(rating);
   const inRange = rating >= 1 && rating <= 5;
 
@@ -115,7 +116,7 @@ export const postReservationReview = async (
   try {
     const response = await api.post(
       `/my-reservations/${reservationId}/reviews`,
-      { rating, content },
+      { body },
     );
     return response.data;
   } catch (error: unknown) {

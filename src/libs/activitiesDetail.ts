@@ -8,6 +8,8 @@ import {
   ActivityReviewResponse,
   AvailableSchedule,
   GetActivitiesParams,
+  ReservationRequest,
+  ReservationResponse,
 } from '@/types/apis/Activities';
 
 //체험 리스트 조회
@@ -113,6 +115,31 @@ export const createActivity = async (
         data: error.response?.data,
       });
       throw new Error('체험 등록 중 오류가 발생했습니다.');
+    }
+    console.error('네트워크 오류입니다.', error);
+    throw new Error('네트워크 오류가 발생했습니다.');
+  }
+};
+
+// 체험 예약 신청
+export const postReservation = async (
+  activityId: number,
+  payload: ReservationRequest,
+): Promise<ReservationResponse> => {
+  try {
+    const response = await fetcher.post(
+      `/activities/${activityId}/reservations`,
+      payload,
+    );
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      console.error('체험 예약 신청에 실패했습니다.', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+      throw new Error('체험 예약 신청 중 오류가 발생했습니다.');
     }
     console.error('네트워크 오류입니다.', error);
     throw new Error('네트워크 오류가 발생했습니다.');

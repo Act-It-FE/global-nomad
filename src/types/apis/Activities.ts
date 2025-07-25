@@ -105,7 +105,7 @@ export interface ReservationRequest {
 export interface ReservationResponse {
   id: number;
   teamId: string;
-  userId: string;
+  userId: number;
   activityId: number;
   scheduleId: number;
   status: 'pending' | 'approved' | 'rejected';

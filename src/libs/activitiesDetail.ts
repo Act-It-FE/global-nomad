@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 
-import { fetcher } from '@/api/api';
+import { fetcher } from '@/libs/api';
 import {
   ActivitiesDetail,
   ActivityImageUploadResponse,

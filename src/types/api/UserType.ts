@@ -13,6 +13,7 @@ export interface User {
   updatedAt: string;
 }
 
+// post /{teamId}/users : 회원가입
 export interface SignUpRequest {
   email: string;
   nickname: string;
@@ -21,8 +22,10 @@ export interface SignUpRequest {
 
 export type SignUpResponse = User;
 
+// GET /{teamId}/users/me : 내 정보 조회
 export type GetMyInfoResponse = User;
 
+// PATCH /{teamId}/users/me : 내 정보 수정
 export interface UpdateMyInfoRequest {
   nickname?: string;
   profileImageUrl?: string;
@@ -31,6 +34,7 @@ export interface UpdateMyInfoRequest {
 
 export type UpdateMyInfoResponse = User;
 
+// POST /{teamId}/users/me/image : 프로필 이미지 url 생성
 export interface UploadProfileImageRequest {
   image: File;
 }

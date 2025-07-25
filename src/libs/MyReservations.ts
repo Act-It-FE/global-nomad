@@ -63,9 +63,9 @@ export const getMyReservations = async (
 
 export const patchReservationStatus = async (
   reservationId: number,
-  reservationUserId?: number,
-  currentStatus?: string,
-  currentUserId?: number,
+  reservationUserId: number,
+  currentStatus: string,
+  currentUserId: number,
 ): Promise<MyReservation> => {
   if (currentUserId !== reservationUserId) {
     throw new Error('본인의 예약만 취소할 수 있습니다.');

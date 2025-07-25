@@ -1,6 +1,5 @@
 import Image from 'next/image';
 
-import warning from '@/../public/images/warning.png';
 import Button from '@/components/common/Button';
 import type { WarningModalProps } from '@/types/Modal';
 

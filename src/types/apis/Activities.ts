@@ -106,6 +106,11 @@ export interface ReservationRequest {
   headCount: number;
 }
 
+export interface GetActivityReviewsParams {
+  page?: number;
+  size?: number;
+}
+
 // 체험 예약 신청
 export interface ReservationResponse {
   id: number;

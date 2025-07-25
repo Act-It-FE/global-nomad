@@ -9,6 +9,7 @@ import {
   ActivityReviewResponse,
   AvailableSchedule,
   GetActivitiesParams,
+  GetActivityReviewsParams,
   GetAvailableSchduleParams,
   ReservationRequest,
   ReservationResponse,
@@ -63,11 +64,17 @@ export const getActivityDetail = async (
 };
 
 // 체험 리뷰 조회
-export const getActivityReviews = async (
-  activityId: number,
-): Promise<ActivityReviewResponse> => {
+export const getActivityReviews = async ({
+  activityId,
+  query,
+}: {
+  activityId: number;
+  query?: GetActivityReviewsParams;
+}): Promise<ActivityReviewResponse> => {
   try {
-    const response = await fetcher.get(`/activities/${activityId}/reviews`);
+    const response = await fetcher.get(`/activities/${activityId}/reviews`, {
+      params: query,
+    });
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {

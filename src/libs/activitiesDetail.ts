@@ -14,11 +14,15 @@ import {
 } from '@/types/apis/Activities';
 
 //체험 리스트 조회
-export const getActivities = async (
-  params: GetActivitiesParams,
-): Promise<ActivityResponse> => {
+export const getActivities = async ({
+  query,
+}: {
+  query?: GetActivitiesParams;
+}): Promise<ActivityResponse> => {
   try {
-    const response = await fetcher.get(`/activities`, { params });
+    const response = await fetcher.get(`/activities`, {
+      params: query,
+    });
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {

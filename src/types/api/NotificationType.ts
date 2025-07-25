@@ -1,7 +1,7 @@
 export interface MyNotify {
   cursorId: number | null;
   totalCount: number;
-  reservations: MyNotification[];
+  notifications: MyNotification[];
 }
 
 export interface MyNotification {
@@ -9,7 +9,7 @@ export interface MyNotification {
   teamId: string;
   userId: number;
   content: string;
-  cratedAt: string; // ISO 8601
+  createdAt: string; // ISO 8601
   updatedAt: string; // ISO 8601
   deletedAt: string | null; // ISO 8601
 }

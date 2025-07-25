@@ -1,6 +1,6 @@
 // api/upload.ts
 
-import api from './textAxios';
+import { fetcher } from './api';
 
 type UploadResponse = {
   profileImageUrl: string;
@@ -20,7 +20,7 @@ export async function uploadProfileImage(file: File): Promise<UploadResponse> {
   formData.append('image', file);
 
   try {
-    const response = await api.post('/users/me/image', formData);
+    const response = await fetcher.post('/users/me/image', formData);
     return response.data;
   } catch (error) {
     console.error('프로필 이미지 업로드 실패:', error);

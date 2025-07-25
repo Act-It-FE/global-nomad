@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { MyNotify } from '@/types/api/NotificationType';
 
-import api from './textAxios';
+import { fetcher } from './api';
 
 export const getMyNotifications = async (
   cursorId?: number,
@@ -18,7 +18,7 @@ export const getMyNotifications = async (
   }
 
   try {
-    const response = await api.get('/my-notifications', { params });
+    const response = await fetcher.get('/my-notifications', { params });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -34,7 +34,7 @@ export const deleteNotification = async (
   notificationId: number,
 ): Promise<void> => {
   try {
-    await api.delete(`/my-notifications/${notificationId}`);
+    await fetcher.delete(`/my-notifications/${notificationId}`);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message =

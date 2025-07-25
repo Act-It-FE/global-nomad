@@ -85,7 +85,7 @@ export const getMyActivitiesReservedSchedule = async (
 /** 내 체험 예약 시간대별 예약 내역 조회 */
 export const getMyActivitiesReservations = async (
   activityId: number,
-  query?: {
+  query: {
     cursorId?: number;
     size?: number;
     scheduleId: number;

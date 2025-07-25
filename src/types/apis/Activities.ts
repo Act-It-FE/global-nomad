@@ -23,6 +23,24 @@ export interface ActivityResponse {
   activities: Activity[];
 }
 
+export interface OffsetParams {
+  method: 'offset';
+  offset: number;
+  limit?: number;
+  category?: string;
+  keyword?: string;
+}
+
+export interface CursorParams {
+  method: 'cursor';
+  cursorId: number;
+  limit?: number;
+  category?: string;
+  keyword?: string;
+}
+
+export type GetActivitiesParams = OffsetParams | CursorParams;
+
 // 체험 상세 조회
 export interface SubImage {
   id: number;

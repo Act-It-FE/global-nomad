@@ -6,17 +6,12 @@ import {
   ActivityResponse,
   ActivityReviewResponse,
   AvailableSchedule,
+  GetActivitiesParams,
 } from '@/types/apis/Activities';
-
-interface getActivitiesParams {
-  method: 'offset' | 'cursor';
-  category?: string;
-  keyword?: string;
-}
 
 //체험 리스트 조회
 export const getActivities = async (
-  params: getActivitiesParams,
+  params: GetActivitiesParams,
 ): Promise<ActivityResponse> => {
   try {
     const response = await fetcher.get(`/activities`, { params });

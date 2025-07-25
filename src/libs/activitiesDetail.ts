@@ -215,7 +215,19 @@ export const uploadActivityImage = async (
     });
     return response.data;
   } catch (error) {
-    console.error('이미지 업로드 실패', error);
-    throw new Error('이미지 업로드에 실패했습니다.');
+    if (isAxiosError(error)) {
+      const status = error.response?.status;
+      const message = error.response?.data?.message;
+      console.error('이미지 업로드 실패:', {
+        status,
+        message,
+      });
+      if (status === 401) {
+        throw new Error('로그인이 필요한 기능입니다.');
+      }
+      throw new Error(message || '이미지 업로드에 실패했습니다.');
+    }
+    console.error('네트워크 오류:', error);
+    throw new Error('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
 };

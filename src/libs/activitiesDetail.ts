@@ -139,15 +139,29 @@ export const createActivity = async (
     await fetcher.post(`/activities`, payload);
   } catch (error) {
     if (isAxiosError(error)) {
-      console.error('체험 등록에 실패했습니다.', {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data,
+      const status = error.response?.status;
+      const message = error.response?.data?.message;
+
+      console.error('체험 등록 실패:', {
+        status,
+        message,
+        error,
       });
-      throw new Error('체험 등록 중 오류가 발생했습니다.');
+
+      if (status === 400) {
+        throw new Error(message || '입력값을 다시 확인해주세요.');
+      }
+      if (status === 401) {
+        throw new Error('체험 등록은 로그인이 필요합니다.');
+      }
+      if (status === 409) {
+        throw new Error(message || '이미 같은 시간대의 체험이 존재합니다.');
+      }
+      throw new Error(message || '체험 등록 중 오류가 발생했습니다.');
     }
-    console.error('네트워크 오류입니다.', error);
-    throw new Error('네트워크 오류가 발생했습니다.');
+
+    console.error('네트워크 오류:', error);
+    throw new Error('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
 };
 

@@ -119,6 +119,18 @@ export const patchMyActivitiesReservations = async (
   }
 };
 
+export const deleteMyActivities = async (activityId: number) => {
+  try {
+    const response = await fetcher.delete<void>(`/my-activities/${activityId}`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.status + ' ' + error.response?.data.message);
+    }
+    throw new Error('내 체험을 삭제하는 데 실패했습니다');
+  }
+};
+
 export const patchMyActivities = async (
   activityId: number,
   body: UpdateMyActivityBody,

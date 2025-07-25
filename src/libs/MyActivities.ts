@@ -14,9 +14,9 @@ export const getMyActivities = async (query?: {
     });
     return response.data;
   } catch (error) {
-    if (!axios.isAxiosError(error)) {
-      throw new Error('내 체험을 가져오는 데 실패했습니다');
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.status + ' ' + error.response?.data.message);
     }
-    throw error;
+    throw new Error('내 체험을 가져오는 데 실패했습니다');
   }
 };

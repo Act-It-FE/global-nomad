@@ -29,3 +29,18 @@ export const getMyNotifications = async (
     throw new Error('알림 정보를 가져오는 데 실패했습니다');
   }
 };
+
+export const deleteNotification = async (
+  notificationId: number,
+): Promise<void> => {
+  try {
+    await api.delete(`/my-notifications/${notificationId}`);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const message =
+        error.response?.data.message ?? '알림 삭제에 실패했습니다';
+      throw new Error(message);
+    }
+    throw new Error('알림 삭제에 실패했습니다');
+  }
+};

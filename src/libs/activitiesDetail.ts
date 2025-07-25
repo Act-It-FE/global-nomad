@@ -95,7 +95,6 @@ export const getActivityReviews = async ({
 };
 
 //체험 예약 가능일 조회
-// 예약가능 월 은 두자리여야 해서 두자리를 입력받을 수 있게했습니다. ex) 1월 -> 01
 export const getAvailableSchedule = async ({
   activityId,
   query,
@@ -106,7 +105,7 @@ export const getAvailableSchedule = async ({
   try {
     const formattedQuery = {
       ...query,
-      month: query.month.padStart(2, '0'),
+      month: query.month.length === 1 ? `0${query.month}` : query.month,
     };
 
     const response = await fetcher.get(
@@ -122,11 +121,13 @@ export const getAvailableSchedule = async ({
       const message = error.response?.data?.message;
       if (status === 400) {
         console.error('예약 가능일 조회 실패:', message);
-        throw new Error('연도는 YYYY, 월은 MM 형식으로 작성해주세요.');
+        throw new Error(
+          message || '연도는 YYYY, 월은 MM 형식으로 작성해주세요.',
+        );
       }
       if (status === 404) {
         console.error('예약 가능일 조회 실패:', message);
-        throw new Error('해당 체험은 존재하지 않습니다.');
+        throw new Error(message || '해당 체험은 존재하지 않습니다.');
       }
       console.error('예약 가능일 조회 실패:', message);
       throw new Error(

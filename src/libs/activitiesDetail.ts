@@ -3,9 +3,33 @@ import { isAxiosError } from 'axios';
 import { fetcher } from '@/api/api';
 import {
   ActivitiesDetail,
+  ActivityResponse,
   ActivityReviewResponse,
   AvailableSchedule,
 } from '@/types/apis/Activities';
+
+interface getActivitiesParams {
+  method: 'offset' | 'cursor';
+  category?: string;
+  keyword?: string;
+}
+
+//체험 리스트 조회
+export const getActivities = async (
+  params: getActivitiesParams,
+): Promise<ActivityResponse> => {
+  try {
+    const response = await fetcher.get(`/activities`, { params });
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      console.error('체험 리스트 조회에 실패했습니다.', error.message);
+    } else {
+      console.error('알 수 없는 오류가 발생했습니다.', error);
+    }
+    throw new Error('체험 리스트 조회 중 오류가 발생했습니다.');
+  }
+};
 
 // 체험 상세 조회
 export const getActivityDetail = async (

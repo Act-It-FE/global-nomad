@@ -36,7 +36,9 @@ export const getMyActivities = async (query?: {
 export const getMyActivitiesReservationDashboard = async (
   activityId: number,
   query: {
+    /** YYYY 형식 (예시: 2025) */
     year: string;
+    /** MM 형식 (예시: 07) */
     month: string;
   },
 ) => {
@@ -60,6 +62,7 @@ export const getMyActivitiesReservationDashboard = async (
 export const getMyActivitiesReservedSchedule = async (
   activityId: number,
   query: {
+    /** YYYY-MM-DD 형식 (예시: 2025-07-26) */
     date: string;
   },
 ) => {

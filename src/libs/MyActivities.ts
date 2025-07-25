@@ -14,6 +14,7 @@ import {
 
 import { fetcher } from './api';
 
+/** 내 체험 리스트 조회 */
 export const getMyActivities = async (query?: {
   cursorId?: number;
   size?: number;
@@ -31,6 +32,7 @@ export const getMyActivities = async (query?: {
   }
 };
 
+/** 내 체험 월별 예약 현황 조회 */
 export const getMyActivitiesReservationDashboard = async (
   activityId: number,
   query: {
@@ -54,6 +56,7 @@ export const getMyActivitiesReservationDashboard = async (
   }
 };
 
+/** 내 체험 날짜별 예약 정보(신청, 승인, 거절)가 있는 스케줄 조회 */
 export const getMyActivitiesReservedSchedule = async (
   activityId: number,
   query: {
@@ -76,6 +79,7 @@ export const getMyActivitiesReservedSchedule = async (
   }
 };
 
+/** 내 체험 예약 시간대별 예약 내역 조회 */
 export const getMyActivitiesReservations = async (
   activityId: number,
   query?: {
@@ -101,6 +105,7 @@ export const getMyActivitiesReservations = async (
   }
 };
 
+/** 내 체험 예약 상태(승인, 거절) 업데이트 */
 export const patchMyActivitiesReservations = async (
   activityId: number,
   reservationId: number,
@@ -120,6 +125,7 @@ export const patchMyActivitiesReservations = async (
   }
 };
 
+/** 내 체험 삭제 */
 export const deleteMyActivities = async (activityId: number) => {
   try {
     const response = await fetcher.delete<void>(`/my-activities/${activityId}`);
@@ -132,6 +138,7 @@ export const deleteMyActivities = async (activityId: number) => {
   }
 };
 
+/** 내 체험 수정 */
 export const patchMyActivities = async (
   activityId: number,
   body: UpdateMyActivityBody,

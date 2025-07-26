@@ -14,6 +14,7 @@ export default function Search() {
       <h1 className='txt-16_B md:txt-32_B'>무엇을 체험하고 싶으신가요?</h1>
       <div
         className={cn(
+          'transition-all duration-200 ease-out',
           'flex w-full items-center justify-center gap-8 rounded-[16px] bg-white py-6 pr-8 pl-20 shadow-[0_6px_10px_0_rgba(13,153,255,0.05)] md:justify-between md:rounded-[24px] md:py-10 md:pr-12 md:pl-32',
           isFocused && 'ring-primary-500 ring-[1.5px]',
         )}

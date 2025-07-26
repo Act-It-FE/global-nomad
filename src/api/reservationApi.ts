@@ -8,7 +8,7 @@ import {
   PostReviewBody,
 } from './types/reservations';
 
-export const reservationsApi = {
+const reservationsApi = {
   getMyReservations: (params?: GetReservationsParams) => {
     return apiClient.get<MyReservationsResponse>('/my-reservations', {
       params,
@@ -31,3 +31,5 @@ export const reservationsApi = {
     );
   },
 };
+
+export default reservationsApi;

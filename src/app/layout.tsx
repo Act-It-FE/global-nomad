@@ -2,7 +2,8 @@ import './globals.css';
 
 import localFont from 'next/font/local';
 
-import Footer from '@/components/common/Footer';
+import QueryProvider from '@/app/provider/QueryProvider';
+import Footer from '@/components/Footer';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html className={pretendard.variable} lang='ko'>
       <body className={pretendard.className}>
-        {children}
-        <Footer />
+        <QueryProvider>
+          {children}
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );

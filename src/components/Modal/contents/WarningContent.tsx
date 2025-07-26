@@ -1,7 +1,6 @@
 import Image from 'next/image';
 
-import warning from '@/../public/images/warning.png';
-import Button from '@/components/common/Button';
+import Button from '@/components/Button';
 import type { WarningModalProps } from '@/types/Modal';
 
 export function WarningContent({
@@ -9,6 +8,7 @@ export function WarningContent({
   onConfirm,
   onCancel,
 }: WarningModalProps) {
+  const warning = '/images/warning.png';
   return (
     <div className='flex w-320 flex-col items-center justify-center rounded-[30px] bg-white p-24 md:w-400 md:p-30'>
       <div className='relative h-49 w-49 md:h-88 md:w-88'>

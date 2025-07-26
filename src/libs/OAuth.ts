@@ -7,7 +7,7 @@ import {
   OAuthSignUpRequest,
 } from '@/types/Auth';
 
-import { fetcher } from '../api/api';
+import { fetcher } from './api';
 
 export const postApp = async (
   body: OAuthAppRequest,

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Icon from './common/Icon';
+import Icon from './Icon';
 
 type CardProps = {
   image: string;

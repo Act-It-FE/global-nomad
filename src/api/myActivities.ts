@@ -10,9 +10,9 @@ import {
   ReservedScheduleResponse,
   UpdateMyActivityBody,
   UpdateMyActivityReservationBody,
-} from '@/types/MyActivities';
+} from '@/api/types/myActivities';
 
-import { fetcher } from './api';
+import { fetcher } from '../libs/api';
 
 /** 내 체험 리스트 조회 */
 export const getMyActivities = async (query?: {

@@ -30,7 +30,7 @@ export const postSignUp = async (
     );
     return response.data;
   } catch {
-    throw new Error('간편 회원 가입에 실패하였습니다.');
+    throw new Error('간편 회원 가입에 실패하였습니다..');
   }
 };
 export const postLogin = async (

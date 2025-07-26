@@ -2,7 +2,7 @@ import apiClient from '@/libs/apiClient';
 
 import { LoginRequest, LoginResponse, Token } from './types/auth';
 
-export const authApi = {
+const authApi = {
   login: (data: LoginRequest) => {
     return apiClient.post<LoginRequest, LoginResponse>('/auth/login', data);
   },
@@ -10,3 +10,5 @@ export const authApi = {
     return apiClient.postOnlyToken<Token>('/auth/tokens');
   },
 };
+
+export default authApi;

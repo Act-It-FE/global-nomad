@@ -2,13 +2,13 @@
 import { useState } from 'react';
 
 import KakaoIcon from '@/assets/icons/kakao.svg';
-import Button from '@/components/common/Button';
-import DropDown from '@/components/common/DropDown';
-import Icon from '@/components/common/Icon';
-import Modal from '@/components/common/Modal/Modal';
+import Button from '@/components/Button';
+import DropDown from '@/components/DropDown';
+import Icon from '@/components/Icon';
+import Modal from '@/components/Modal/Modal';
 import NotificationPanel, {
   Notification,
-} from '@/components/common/NotificationPanel';
+} from '@/components/NotificationPanel';
 import ICON_MAP from '@/constants/iconMap';
 import type { ModalProps } from '@/types/Modal';
 

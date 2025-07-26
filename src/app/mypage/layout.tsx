@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 
-import SideMenu from '@/components/common/side-menu/SideMenu';
+import SideMenu from '@/components/side-menu/SideMenu';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 export default function Layout({ children }: { children: React.ReactNode }) {

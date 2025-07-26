@@ -15,6 +15,13 @@ const apiClient = {
     const response = await fetcher.post<R>(url, data, config);
     return response.data;
   },
+  postOnlyToken: async <R>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<R> => {
+    const response = await fetcher.post<R>(url, config);
+    return response.data;
+  },
   put: async <T, R>(
     url: string,
     data?: T,

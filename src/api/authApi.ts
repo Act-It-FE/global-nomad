@@ -6,7 +6,7 @@ export const authApi = {
   login: (data: LoginRequest) => {
     return apiClient.post<LoginRequest, LoginResponse>('/auth/login', data);
   },
-  getTokens: (data: Token) => {
-    return apiClient.post<Token, Token>('/auth/tokens', data);
+  refreshTokens: () => {
+    return apiClient.postOnlyToken<Token>('/auth/tokens');
   },
 };

@@ -14,14 +14,14 @@ import {
 
 const myActivitiesApi = {
   /** 내 체험 리스트 조회 */
-  getMyActivities: (query?: { cursorId?: number; size?: number }) => {
+  get: (query?: { cursorId?: number; size?: number }) => {
     return apiClient.get<ActivitiesResponse>('/my-activities', {
       params: query,
     });
   },
 
   /** 내 체험 월별 예약 현황 조회 */
-  getMyActivitiesReservationDashboard: (
+  getReservationDashboard: (
     activityId: number,
     query: {
       /** YYYY 형식 (예시: 2025) */
@@ -39,7 +39,7 @@ const myActivitiesApi = {
   },
 
   /** 내 체험 날짜별 예약 정보(신청, 승인, 거절)가 있는 스케줄 조회 */
-  getMyActivitiesReservedSchedule: (
+  getReservedSchedule: (
     activityId: number,
     query: {
       /** YYYY-MM-DD 형식 (예시: 2025-07-26) */
@@ -55,7 +55,7 @@ const myActivitiesApi = {
   },
 
   /** 내 체험 예약 시간대별 예약 내역 조회 */
-  getMyActivitiesReservations: (
+  getReservations: (
     activityId: number,
     query: {
       cursorId?: number;
@@ -73,7 +73,7 @@ const myActivitiesApi = {
   },
 
   /** 내 체험 예약 상태(승인, 거절) 업데이트 */
-  patchMyActivitiesReservations: (
+  patchReservations: (
     activityId: number,
     reservationId: number,
     body: UpdateMyActivityReservationBody,
@@ -85,12 +85,12 @@ const myActivitiesApi = {
   },
 
   /** 내 체험 삭제 */
-  deleteMyActivities: (activityId: number) => {
+  delete: (activityId: number) => {
     return apiClient.delete<void>(`/my-activities/${activityId}`);
   },
 
   /** 내 체험 수정 */
-  patchMyActivities: (activityId: number, body: UpdateMyActivityBody) => {
+  patch: (activityId: number, body: UpdateMyActivityBody) => {
     return apiClient.patch<UpdateMyActivityBody, ActivityWithSchedulesResponse>(
       `/my-activities/${activityId}`,
       body,

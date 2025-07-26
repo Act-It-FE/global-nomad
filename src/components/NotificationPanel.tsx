@@ -2,7 +2,7 @@
 
 import stringReplace from 'react-string-replace';
 
-import Icon from '@/components/common/Icon';
+import Icon from '@/components/Icon';
 
 export interface Notification {
   id: number;

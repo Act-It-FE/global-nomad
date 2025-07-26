@@ -12,7 +12,7 @@ type CardProps = {
   id: number;
 };
 
-export default function Card({
+export default function CardColumn({
   image,
   title,
   rating,

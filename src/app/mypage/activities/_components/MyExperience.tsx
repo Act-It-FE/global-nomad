@@ -10,7 +10,11 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
         'card-shadow bg-white',
       )}
     >
-      <div />
+      <div>
+        <div className='txt-16_B lg:txt-18_B leading-19 lg:leading-21'>
+          {data.title}
+        </div>
+      </div>
       <img //Image로 변경 필요
         alt='banner image'
         className='size-82 rounded-[20px] object-cover lg:size-142 lg:rounded-[30px]'

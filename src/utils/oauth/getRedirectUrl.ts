@@ -1,4 +1,5 @@
-export function getKakaoAuthUrl(): string {
+//카카오로 로그인 버튼을 눌렀을 때 리다이렉트 될 URL
+export function getRedirectUrl(): string {
   const REST_API_KEY = process.env.NEXT_PUBLIC_OAUTH_APP_KEY!;
   const REDIRECT_URI = `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback/kakao`;
 

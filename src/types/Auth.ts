@@ -30,14 +30,11 @@ export interface OAuthResponse extends Token {
   user: UserProfile;
 }
 
-//oauth login req
-export interface OAuthLoginRequest {
+//oauth login req, oauth signup req
+export interface OAuthRequest {
   redirectUri: string;
   token: string;
-}
-//oauth signup req
-export interface OAuthSignUpRequest extends OAuthLoginRequest {
-  nickname: string;
+  nickname?: string;
 }
 //auth login req
 export interface Login {

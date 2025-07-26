@@ -1,3 +1,12 @@
+import Link from 'next/link';
+
+import { getRedirectUrl } from '@/utils/oauth/getRedirectUrl';
+
 export default function SignUp() {
-  return <button>카카오로 로그인 </button>;
+  const redirectUrl = getRedirectUrl();
+  return (
+    <Link href={redirectUrl}>
+      <button>카카오로 시작하기</button>
+    </Link>
+  );
 }

@@ -24,7 +24,7 @@ export default function KakaoCallbackPage() {
       nickname: '',
     };
 
-    (async () => {
+    async function handleSignUp() {
       try {
         const data: OAuthResponse = await oAuthApi.postSignUp(
           body,
@@ -36,6 +36,8 @@ export default function KakaoCallbackPage() {
       } catch {
         throw new Error('로그인 중 오류가 발생했습니다.');
       }
-    })();
+    }
+
+    handleSignUp();
   }, [code, router]);
 }

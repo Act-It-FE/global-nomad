@@ -1,4 +1,5 @@
-import { fetcher } from '../libs/api';
+import apiClient from '@/libs/apiClient';
+
 import {
   ActivitiesResponse,
   ActivityWithSchedulesResponse,
@@ -14,7 +15,7 @@ import {
 const myActivitiesApi = {
   /** 내 체험 리스트 조회 */
   getMyActivities: (query?: { cursorId?: number; size?: number }) => {
-    return fetcher.get<ActivitiesResponse>('/my-activities', {
+    return apiClient.get<ActivitiesResponse>('/my-activities', {
       params: query,
     });
   },
@@ -29,7 +30,7 @@ const myActivitiesApi = {
       month: string;
     },
   ) => {
-    return fetcher.get<FindReservationsByMonthResponse>(
+    return apiClient.get<FindReservationsByMonthResponse>(
       `/my-activities/${activityId}/reservation-dashboard`,
       {
         params: query,
@@ -45,7 +46,7 @@ const myActivitiesApi = {
       date: string;
     },
   ) => {
-    return fetcher.get<ReservedScheduleResponse>(
+    return apiClient.get<ReservedScheduleResponse>(
       `/my-activities/${activityId}/reserved-schedule`,
       {
         params: query,
@@ -63,7 +64,7 @@ const myActivitiesApi = {
       status: Extract<'declined' | 'pending' | 'confirmed', ReservationStatus>;
     },
   ) => {
-    return fetcher.get<ReservationsListResponse>(
+    return apiClient.get<ReservationsListResponse>(
       `/my-activities/${activityId}/reservations`,
       {
         params: query,
@@ -77,20 +78,20 @@ const myActivitiesApi = {
     reservationId: number,
     body: UpdateMyActivityReservationBody,
   ) => {
-    return fetcher.patch<ReservationResponse>(
-      `/my-activities/${activityId}/reservations/${reservationId}`,
-      body,
-    );
+    return apiClient.patch<
+      UpdateMyActivityReservationBody,
+      ReservationResponse
+    >(`/my-activities/${activityId}/reservations/${reservationId}`, body);
   },
 
   /** 내 체험 삭제 */
   deleteMyActivities: (activityId: number) => {
-    return fetcher.delete<void>(`/my-activities/${activityId}`);
+    return apiClient.delete<void>(`/my-activities/${activityId}`);
   },
 
   /** 내 체험 수정 */
   patchMyActivities: (activityId: number, body: UpdateMyActivityBody) => {
-    return fetcher.patch<ActivityWithSchedulesResponse>(
+    return apiClient.patch<UpdateMyActivityBody, ActivityWithSchedulesResponse>(
       `/my-activities/${activityId}`,
       body,
     );

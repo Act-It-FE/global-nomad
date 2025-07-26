@@ -1,6 +1,7 @@
+import { ActivityBasic } from '@/types/MyActivities';
 import { cn } from '@/utils/cn';
 
-export default function MyExperience() {
+export default function MyExperience({}: { data: ActivityBasic }) {
   return (
     <article
       className={cn(

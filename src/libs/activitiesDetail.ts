@@ -13,7 +13,7 @@ import {
   GetAvailableSchduleParams,
   ReservationRequest,
   ReservationResponse,
-} from '@/types/apis/Activities';
+} from '@/types/api/Activities';
 
 //체험 리스트 조회
 export const getActivities = async (

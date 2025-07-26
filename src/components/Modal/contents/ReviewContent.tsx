@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import Button from '@/components/common/Button';
-import Icon from '@/components/common/Icon';
+import Button from '@/components/Button';
+import Icon from '@/components/Icon';
 import type { ReviewModalProps } from '@/types/Modal';
 
 export function ReviewContent({

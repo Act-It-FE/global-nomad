@@ -16,11 +16,9 @@ import {
 } from '@/types/apis/Activities';
 
 //체험 리스트 조회
-export const getActivities = async ({
-  query,
-}: {
-  query?: GetActivitiesParams;
-}): Promise<ActivityResponse> => {
+export const getActivities = async (
+  query?: GetActivitiesParams,
+): Promise<ActivityResponse> => {
   try {
     const response = await fetcher.get(`/activities`, {
       params: query,
@@ -64,13 +62,10 @@ export const getActivityDetail = async (
 };
 
 // 체험 리뷰 조회
-export const getActivityReviews = async ({
-  activityId,
-  query,
-}: {
-  activityId: number;
-  query?: GetActivityReviewsParams;
-}): Promise<ActivityReviewResponse> => {
+export const getActivityReviews = async (
+  activityId: number,
+  query?: GetActivityReviewsParams,
+): Promise<ActivityReviewResponse> => {
   try {
     const response = await fetcher.get(`/activities/${activityId}/reviews`, {
       params: query,
@@ -95,13 +90,10 @@ export const getActivityReviews = async ({
 };
 
 //체험 예약 가능일 조회
-export const getAvailableSchedule = async ({
-  activityId,
-  query,
-}: {
-  activityId: number;
-  query: GetAvailableSchduleParams;
-}): Promise<AvailableSchedule[]> => {
+export const getAvailableSchedule = async (
+  activityId: number,
+  query: GetAvailableSchduleParams,
+): Promise<AvailableSchedule[]> => {
   try {
     const formattedQuery = {
       ...query,

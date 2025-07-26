@@ -1,4 +1,4 @@
-import { fetcher } from '@/libs/api';
+import apiClient from '@/libs/apiClient';
 
 import {
   GetReservationsParams,
@@ -10,7 +10,7 @@ import {
 
 export const reservationsApi = {
   getMyReservations: (params?: GetReservationsParams) => {
-    return fetcher.get<MyReservationsResponse>('/my-reservations', {
+    return apiClient.get<MyReservationsResponse>('/my-reservations', {
       params,
     });
   },
@@ -19,13 +19,13 @@ export const reservationsApi = {
     reservationId: number,
     data: PatchReservationStatusBody,
   ) => {
-    return fetcher.patch<PatchReservationStatusBody, MyReservation>(
+    return apiClient.patch<PatchReservationStatusBody, MyReservation>(
       `/my-reservations/${reservationId}`,
       data,
     );
   },
   postReservationReview: (reservationId: number, data: PostReviewBody) => {
-    return fetcher.post<PostReviewBody, MyReservation>(
+    return apiClient.post<PostReviewBody, MyReservation>(
       `/my-reservations/${reservationId}/reviews`,
       data,
     );

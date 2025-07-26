@@ -1,4 +1,4 @@
-import { fetcher } from '@/libs/api';
+import apiClient from '@/libs/apiClient';
 
 import {
   GetNotificationsParams,
@@ -7,11 +7,11 @@ import {
 
 export const notificationsApi = {
   getMyNotifications: (params?: GetNotificationsParams) => {
-    return fetcher.get<MyNotificationsResponse>('/my-notifications', {
+    return apiClient.get<MyNotificationsResponse>('/my-notifications', {
       params,
     });
   },
   deleteNotification: (notificationId: number) => {
-    return fetcher.delete<void>(`/my-notifications/${notificationId}`);
+    return apiClient.delete<void>(`/my-notifications/${notificationId}`);
   },
 };

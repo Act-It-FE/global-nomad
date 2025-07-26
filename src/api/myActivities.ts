@@ -1,3 +1,4 @@
+import { fetcher } from '../libs/api';
 import {
   ActivitiesResponse,
   ActivityWithSchedulesResponse,
@@ -8,9 +9,7 @@ import {
   ReservedScheduleResponse,
   UpdateMyActivityBody,
   UpdateMyActivityReservationBody,
-} from '@/api/types/myActivities';
-
-import { fetcher } from '../libs/api';
+} from './types/myActivities';
 
 const myActivitiesApi = {
   /** 내 체험 리스트 조회 */

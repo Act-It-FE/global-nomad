@@ -5,7 +5,7 @@ import {
   MyNotificationsResponse,
 } from './types/notifications';
 
-export const notificationsApi = {
+const notificationsApi = {
   getMyNotifications: (params?: GetNotificationsParams) => {
     return apiClient.get<MyNotificationsResponse>('/my-notifications', {
       params,
@@ -15,3 +15,5 @@ export const notificationsApi = {
     return apiClient.delete<void>(`/my-notifications/${notificationId}`);
   },
 };
+
+export default notificationsApi;

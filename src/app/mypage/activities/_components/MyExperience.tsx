@@ -1,3 +1,4 @@
+import Icon from '@/components/Icon';
 import { ActivityBasic } from '@/types/MyActivities';
 import { cn } from '@/utils/cn';
 
@@ -13,6 +14,10 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
       <div>
         <div className='txt-16_B lg:txt-18_B leading-19 lg:leading-21'>
           {data.title}
+        </div>
+        <div className='mt-6 flex items-center gap-2 lg:mt-8'>
+          <Icon className='text-yellow size-14 lg:size-16' icon='Star' />
+          <div className='txt-13_M lg:txt-16_M leading-16 text-gray-500 lg:leading-19'>{`${data.rating} (${data.reviewCount})`}</div>
         </div>
       </div>
       <img //Image로 변경 필요

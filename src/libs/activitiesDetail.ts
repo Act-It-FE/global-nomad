@@ -41,14 +41,10 @@ const activitiesDetailApi = {
     activityId: number,
     query: GetAvailableSchduleParams,
   ) => {
-    const formattedQuery = {
-      ...query,
-      month: query.month.length === 1 ? `0${query.month}` : query.month,
-    };
     return apiClient.get<AvailableSchedule[]>(
       `/activities/${activityId}/available-schedule`,
       {
-        params: formattedQuery,
+        params: query,
       },
     );
   },

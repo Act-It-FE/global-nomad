@@ -1,7 +1,6 @@
-export interface MyNotify {
-  cursorId: number | null;
-  totalCount: number;
-  notifications: MyNotification[];
+export interface GetNotificationsParams {
+  cursorId?: number;
+  size?: number;
 }
 
 export interface MyNotification {
@@ -12,4 +11,10 @@ export interface MyNotification {
   createdAt: string; // ISO 8601
   updatedAt: string; // ISO 8601
   deletedAt: string | null; // ISO 8601
+}
+
+export interface MyNotificationsResponse {
+  cursorId: number | null;
+  totalCount: number;
+  notifications: MyNotification[];
 }

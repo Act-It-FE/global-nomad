@@ -11,7 +11,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
         'card-shadow bg-white',
       )}
     >
-      <div>
+      <div className='text-gray-950'>
         <div className='txt-16_B lg:txt-18_B leading-[calc(1em+3px)]'>
           {data.title}
         </div>

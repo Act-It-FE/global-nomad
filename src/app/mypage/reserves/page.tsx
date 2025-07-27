@@ -51,7 +51,7 @@ export default function Page() {
     return <div>에러:{errorMessage}</div>;
   }
   return (
-    <div className='p-32'>
+    <div className='w-full'>
       <h1>예약 목록 테스트</h1>
 
       {data?.pages.map((page, pageIndex) =>
@@ -64,7 +64,7 @@ export default function Page() {
             <div
               key={reservation.id}
               ref={isLastElement ? lastElementRef : undefined}
-              className='mb-8'
+              className='mb-24'
             >
               <ReservesCard reservesInfo={reservation}>
                 <ReservesCard.Content>

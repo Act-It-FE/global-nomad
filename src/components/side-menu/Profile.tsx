@@ -1,8 +1,8 @@
 'use client';
 
+import userApi from '@/api/userApi';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { uploadProfileImage } from '@/libs/upload';
 import { cn } from '@/utils/cn';
 
 import Icon from '../Icon';
@@ -14,7 +14,7 @@ export default function Profile() {
     defaultImage: '/images/profile-default.svg',
     uploadFn: async (file: File) => {
       try {
-        const result = await uploadProfileImage(file);
+        const result = await userApi.uploadProfileImage(file);
         if (!result?.profileImageUrl) {
           throw new Error('업로드된 이미지 URL을 받을 수 없습니다');
         }

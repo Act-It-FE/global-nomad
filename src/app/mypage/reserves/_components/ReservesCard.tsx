@@ -24,7 +24,7 @@ export default function ReservesCard({
 }) {
   return (
     <ReservesCardContext.Provider value={reservesInfo}>
-      <div className='flex items-start'>{children}</div>
+      <div className='relative flex items-start max-lg:mt-20'>{children}</div>
     </ReservesCardContext.Provider>
   );
 }
@@ -55,3 +55,13 @@ ReservesCard.Content = function Content({ children }: { children: ReactNode }) {
     </div>
   );
 };
+
+ReservesCard.Heading = function Heading({ children }: { children: ReactNode }) {
+  return <div className='flex flex-col items-start gap-12'>{children}</div>;
+};
+
+// Heading.StatusBadge = function StatusBadge() {
+//   const reservesInfo = useReservesCard();
+
+//   return <div>{reservesInfo.status}</div>;
+// };

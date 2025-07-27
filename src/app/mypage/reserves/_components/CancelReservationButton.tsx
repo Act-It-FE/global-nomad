@@ -1,18 +1,13 @@
 import { useState } from 'react';
 
-import { ReservationStatus } from '@/api/types/reservations';
 import Button from '@/components/Button';
 import Modal from '@/components/Modal/Modal';
 import { useMyReservationsCancel } from '@/hooks/reservations/useMyReservationsMutate';
 import type { ModalProps } from '@/types/Modal';
 
-export default function ReservesSubmitButton({
-  status,
-  isReviewSubmitted,
+export default function CancelReservationButton({
   reservationId,
 }: {
-  status?: ReservationStatus;
-  isReviewSubmitted?: boolean;
   reservationId: number;
 }) {
   const { mutate: cancelReservation } = useMyReservationsCancel();
@@ -37,22 +32,16 @@ export default function ReservesSubmitButton({
     });
   };
 
-  if (status === 'pending') {
-    return (
-      <>
-        <Button
-          className='txt-14_M bg-gray-50 px-10 py-6 text-gray-600 max-lg:w-full'
-          rounded='8'
-          onClick={handleCancelReservation}
-        >
-          예약 취소
-        </Button>
-        {modalProps && <Modal {...modalProps} />}
-      </>
-    );
-  }
-  if (status === 'completed' && !isReviewSubmitted) {
-    return <button>후기 작성</button>;
-  }
-  return null;
+  return (
+    <>
+      <Button
+        className='txt-14_M bg-gray-50 px-10 py-6 text-gray-600 max-lg:w-full'
+        rounded='8'
+        onClick={handleCancelReservation}
+      >
+        예약 취소
+      </Button>
+      {modalProps && <Modal {...modalProps} />}
+    </>
+  );
 }

@@ -5,10 +5,11 @@ import useMyReservationsQuery from '@/hooks/reservations/useMyReservationsQuery'
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import getErrorMessage from '@/utils/getErrorMessage';
 
+import CancelReservationButton from './_components/CancelReservationButton';
 import { ReservesBottom } from './_components/ReservesBottom';
 import ReservesCard from './_components/ReservesCard';
 import ReservesHeader from './_components/ReservesHeader';
-import ReservesSubmitButton from './_components/ReservesSubmitButton';
+import ReviewReservationButton from './_components/ReviewReservationButton';
 
 export default function Page() {
   const {
@@ -84,23 +85,29 @@ export default function Page() {
                       endTime: reservation.endTime,
                     }}
                   />
-                  <ReservesBottom
-                    reservesInfo={{
-                      price: reservation.totalPrice,
-                      headCount: reservation.headCount,
-                      status: reservation.status,
-                      isReviewSubmitted: reservation.reviewSubmitted,
-                      id: reservation.id,
-                    }}
-                  />
+                  <ReservesBottom reservesInfo={{ ...reservation }} />
                 </ReservesCard.Content>
                 <ReservesCard.Thumbnail />
               </ReservesCard>
               {!isPC && (
-                <ReservesSubmitButton
-                  {...reservation}
-                  reservationId={reservation.id}
-                />
+                <>
+                  {reservation.status === 'pending' && (
+                    <CancelReservationButton reservationId={reservation.id} />
+                  )}
+                  {reservation.status === 'completed' &&
+                    !reservation.reviewSubmitted && (
+                      <ReviewReservationButton
+                        date={reservation.date}
+                        endTime={reservation.endTime}
+                        headCount={reservation.headCount}
+                        isReviewSubmitted={reservation.reviewSubmitted}
+                        reservationId={reservation.id}
+                        startTime={reservation.startTime}
+                        status={reservation.status}
+                        title={reservation.activity?.title}
+                      />
+                    )}
+                </>
               )}
             </div>
           );

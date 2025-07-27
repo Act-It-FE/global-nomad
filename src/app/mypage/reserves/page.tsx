@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef } from 'react';
 import useMyReservationsQuery from '@/hooks/reservations/useMyReservationsQuery';
 import getErrorMessage from '@/utils/getErrorMessage';
 
+import ReservesCard from './_components/ReservesCard';
+
 export default function Page() {
   const {
     data,
@@ -62,11 +64,14 @@ export default function Page() {
             <div
               key={reservation.id}
               ref={isLastElement ? lastElementRef : undefined}
-              className='mb-8 border p-100'
+              className='mb-8'
             >
-              <h3>예약 ID: {reservation.activity?.title}</h3>
-              <p>상태: {reservation.status}</p>
-              {/* 다른 예약 정보들 */}
+              <ReservesCard reservesInfo={reservation}>
+                <ReservesCard.Content>
+                  <h3>{reservation.activity?.title}</h3>
+                </ReservesCard.Content>
+                <ReservesCard.Thumbnail />
+              </ReservesCard>
             </div>
           );
         }),

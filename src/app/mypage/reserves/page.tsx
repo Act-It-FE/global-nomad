@@ -1,8 +1,8 @@
 'use client';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import useMyReservationsQuery from '@/hooks/reservations/useMyReservationsQuery';
-import useErrorHandler from '@/hooks/useErrorHandler';
+import getErrorMessage from '@/utils/getErrorMessage';
 
 export default function Page() {
   const {
@@ -14,7 +14,7 @@ export default function Page() {
     isError,
     error,
   } = useMyReservationsQuery({});
-  const errorMessage = useErrorHandler(error, '예약 내역 조회에 실패했습니다');
+  const errorMessage = getErrorMessage(error, '예약 내역 조회에 실패했습니다');
 
   // 스크롤 감지
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -35,6 +35,14 @@ export default function Page() {
     },
     [isFetchingNextPage, hasNextPage, fetchNextPage],
   );
+
+  useEffect(() => {
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
 
   if (isLoading) return <div>로딩 중...</div>;
   if (isError) {

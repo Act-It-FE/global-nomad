@@ -24,7 +24,7 @@ export default function ReservesCard({
 }) {
   return (
     <ReservesCardContext.Provider value={reservesInfo}>
-      <div className='relative flex items-start max-lg:mt-20'>{children}</div>
+      <div className='relative flex items-start'>{children}</div>
     </ReservesCardContext.Provider>
   );
 }
@@ -34,7 +34,7 @@ ReservesCard.Thumbnail = function Thumbnail() {
   const reservesInfo = useReservesCard();
 
   return (
-    <div className='aspect-square rounded-[0_32px_32px_0] bg-gray-300 bg-cover bg-center bg-no-repeat'>
+    <div className='flex-shrink-0 rounded-[0_32px_32px_0] bg-gray-300 bg-cover bg-center bg-no-repeat'>
       <img
         alt='thumbnail'
         className='aspect-square w-181 rounded-[0_32px_32px_0] object-cover max-lg:w-136'
@@ -50,7 +50,7 @@ ReservesCard.Thumbnail = function Thumbnail() {
 //내부 컴포넌트
 ReservesCard.Content = function Content({ children }: { children: ReactNode }) {
   return (
-    <div className='z-10 -mr-26 flex h-181 flex-[1_0_0] flex-col items-start justify-between rounded-4xl bg-white px-40 py-30 shadow-[0_4px_24px_0_rgba(156,180,202,0.20)] max-lg:h-136'>
+    <div className='z-10 -mr-26 flex flex-[1_0_0] flex-col items-start justify-between rounded-4xl bg-white px-40 py-30 shadow-[0_4px_24px_0_rgba(156,180,202,0.20)] max-lg:p-20'>
       {children}
     </div>
   );

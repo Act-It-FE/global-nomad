@@ -1,4 +1,5 @@
 import { ReservationStatus } from '@/api/types/reservations';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 
 interface ReservesHeaderInfo {
@@ -15,18 +16,17 @@ export default function ReservesHeader({
   reservesHeaderInfo: ReservesHeaderInfo;
 }) {
   return (
-    <div className='flex flex-col items-start gap-12'>
+    <div className='flex w-full flex-col items-start gap-12 leading-normal max-lg:gap-8'>
       <StatusBadge status={reservesHeaderInfo.status} />
-      <div className='flex flex-col items-start gap-10'>
-        <div>{reservesHeaderInfo.title}</div>
-        <div className='flex'>
-          <div>{reservesHeaderInfo.date}</div>
-          <div className='flex items-center gap-10'>
-            <div>
-              {reservesHeaderInfo.startTime} - {reservesHeaderInfo.endTime}
-            </div>
-          </div>
+      <div className='flex flex-col items-start gap-10 max-lg:gap-4'>
+        <div className='txt-18_B max-lg:txt-14_B w-full tracking-[-0.45px] text-gray-950 max-lg:tracking-[-0.35px]'>
+          {reservesHeaderInfo.title}
         </div>
+        <Info
+          date={reservesHeaderInfo.date}
+          endTime={reservesHeaderInfo.endTime}
+          startTime={reservesHeaderInfo.startTime}
+        />
       </div>
     </div>
   );
@@ -59,11 +59,38 @@ function StatusBadge({ status }: { status?: ReservationStatus }) {
   return (
     <div
       className={cn(
-        'txt-13_B flex items-center justify-center rounded-[100px] px-8 py-4 leading-normal tracking-[-0.325px]',
+        'txt-13_B flex items-center justify-center rounded-[100px] px-8 py-4 tracking-[-0.325px]',
         `${statusColor[status || 'pending']} ${statusTextColor[status || 'pending']} `,
       )}
     >
       {statusText[status || 'pending']}
+    </div>
+  );
+}
+
+function Info({
+  date,
+  startTime,
+  endTime,
+}: {
+  date?: string;
+  startTime?: string;
+  endTime?: string;
+}) {
+  const isPC = useMediaQuery('pc');
+  return (
+    <div className='flex tracking-[-0.4px] lg:gap-8'>
+      {isPC ? (
+        <div className='lg:txt-16_M flex items-center lg:text-gray-500'>
+          <div className='txt-16_M mr-8'>{date}</div>
+          <div className='txt'>•</div>
+        </div>
+      ) : (
+        ''
+      )}
+      <div className='lg:txt-16_M txt-13_M text-gray-500'>
+        {startTime} - {endTime}
+      </div>
     </div>
   );
 }

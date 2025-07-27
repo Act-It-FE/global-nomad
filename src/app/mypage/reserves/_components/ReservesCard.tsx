@@ -24,7 +24,7 @@ export default function ReservesCard({
 }) {
   return (
     <ReservesCardContext.Provider value={reservesInfo}>
-      <div className='relative flex items-start'>{children}</div>
+      <div className='relative flex items-stretch'>{children}</div>
     </ReservesCardContext.Provider>
   );
 }
@@ -34,10 +34,11 @@ ReservesCard.Thumbnail = function Thumbnail() {
   const reservesInfo = useReservesCard();
 
   return (
-    <div className='flex-shrink-0 rounded-[0_32px_32px_0] bg-gray-300 bg-cover bg-center bg-no-repeat'>
+    <div className='flex-shrink-0 self-stretch rounded-[0_32px_32px_0] bg-gray-300 bg-cover bg-center bg-no-repeat'>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         alt='thumbnail'
-        className='aspect-square w-181 rounded-[0_32px_32px_0] object-cover max-lg:w-136'
+        className='h-full w-181 rounded-[0_32px_32px_0] object-cover max-lg:w-136'
         src={reservesInfo.activity?.bannerImageUrl || '/images/logo-lg.png'}
         onError={(e) => {
           e.currentTarget.src = '/images/logo-lg.png';
@@ -59,9 +60,3 @@ ReservesCard.Content = function Content({ children }: { children: ReactNode }) {
 ReservesCard.Heading = function Heading({ children }: { children: ReactNode }) {
   return <div className='flex flex-col items-start gap-12'>{children}</div>;
 };
-
-// Heading.StatusBadge = function StatusBadge() {
-//   const reservesInfo = useReservesCard();
-
-//   return <div>{reservesInfo.status}</div>;
-// };

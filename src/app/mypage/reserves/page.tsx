@@ -2,6 +2,7 @@
 import { useCallback, useRef } from 'react';
 
 import useMyReservationsQuery from '@/hooks/reservations/useMyReservationsQuery';
+import useErrorHandler from '@/hooks/useErrorHandler';
 
 export default function Page() {
   const {
@@ -12,7 +13,8 @@ export default function Page() {
     isLoading,
     isError,
     error,
-  } = useMyReservationsQuery({ size: 2 });
+  } = useMyReservationsQuery({});
+  const errorMessage = useErrorHandler(error, '예약 내역 조회에 실패했습니다');
 
   // 스크롤 감지
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -35,8 +37,9 @@ export default function Page() {
   );
 
   if (isLoading) return <div>로딩 중...</div>;
-  if (isError) return <div>에러: {error?.message}</div>;
-
+  if (isError) {
+    return <div>에러:{errorMessage}</div>;
+  }
   return (
     <div className='p-32'>
       <h1>예약 목록 테스트</h1>

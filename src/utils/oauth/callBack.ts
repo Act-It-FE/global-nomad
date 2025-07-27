@@ -2,19 +2,24 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import oAuthApi from '@/api/oAuth';
-import { OAuthAppProvider, OAuthRequest, OAuthResponse } from '@/types/Auth';
+import {
+  OAuthAppProvider,
+  OAuthRequest,
+  OAuthResponse,
+} from '@/api/types/auth';
 
 export default function KakaoCallbackPage() {
   const router = useRouter();
   const params = useSearchParams();
   const code = params.get('code');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!code) {
-      throw new Error('인가 코드가 없습니다.');
+      setError('인가 코드가 없습니다.');
       return;
     }
 
@@ -33,11 +38,15 @@ export default function KakaoCallbackPage() {
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
         router.replace('/'); //로그인 후 이동할 주소
-      } catch {
-        throw new Error('로그인 중 오류가 발생했습니다.');
+      } catch (error) {
+        console.error('OAuth 로그인 실패:', error);
+        setError('로그인 중 오류가 발생했습니다.');
       }
     }
 
     handleSignUp();
   }, [code, router]);
+  if (error) {
+    return error;
+  }
 }

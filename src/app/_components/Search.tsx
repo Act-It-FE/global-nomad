@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import Button from '@/components/Button';
@@ -8,6 +9,14 @@ import { cn } from '@/utils/cn';
 export default function Search() {
   const isMobile = useMediaQuery('mobile');
   const [isFocused, setIsFocused] = useState(false);
+  const [query, setQuery] = useState('');
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (!query.trim()) return;
+
+    router.push(`/search?query=${encodeURIComponent(query)}`);
+  };
 
   return (
     <div className='flex flex-col items-center gap-12 py-16 md:gap-36 md:px-40 md:py-32'>
@@ -25,11 +34,17 @@ export default function Search() {
             className='flex-1 caret-[#0094FF] outline-none'
             placeholder='내가 원하는 체험은'
             type='text'
+            value={query}
             onBlur={() => setIsFocused(false)}
+            onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setIsFocused(true)}
           />
         </div>
-        <Button rounded={isMobile ? '12' : '14'} size={isMobile ? 'sm' : 'md'}>
+        <Button
+          rounded={isMobile ? '12' : '14'}
+          size={isMobile ? 'sm' : 'md'}
+          onClick={handleClick}
+        >
           검색하기
         </Button>
       </div>

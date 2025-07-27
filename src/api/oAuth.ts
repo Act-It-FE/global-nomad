@@ -4,7 +4,7 @@ import {
   OAuthAppResponse,
   OAuthRequest,
   OAuthResponse,
-} from '@/types/Auth';
+} from '@/api/types/auth';
 
 import apiClient from '../libs/apiClient';
 

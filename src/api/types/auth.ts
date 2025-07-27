@@ -30,14 +30,10 @@ export interface OAuthResponse extends Token {
   user: UserProfile;
 }
 
-//oauth login req
-export interface OAuthLoginRequest {
+//oauth login req, oauth signup req
+export interface OAuthRequest {
   redirectUri: string;
   token: string;
-}
-//oauth signup req
-export interface OAuthSignUpRequest extends OAuthLoginRequest {
-  nickname: string;
 }
 //auth login req
 export interface LoginRequest {
@@ -50,7 +46,7 @@ export interface LoginResponse extends Token {
 }
 
 export interface SignUp extends LoginRequest {
-  nickname: string;
+  nickname?: string;
 }
 //내 정보 수정
 export interface EditUserProfile extends ImageUrl {

@@ -13,7 +13,7 @@ export default function ReservesSubmitButton({
 }: {
   status?: ReservationStatus;
   isReviewSubmitted?: boolean;
-  reservationId?: number;
+  reservationId: number;
 }) {
   const { mutate: cancelReservation } = useMyReservationsCancel();
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
@@ -23,15 +23,15 @@ export default function ReservesSubmitButton({
       variant: 'warning',
       message: '예약을 취소하시겠어요?',
       onConfirm: () => {
-        if (reservationId) {
-          cancelReservation({
-            reservationId: reservationId as number,
-            status: 'canceled',
-          });
-        }
         setModalProps(null);
       },
       onCancel: () => {
+        if (reservationId) {
+          cancelReservation({
+            reservationId: reservationId,
+            status: 'canceled',
+          });
+        }
         setModalProps(null);
       },
     });
@@ -41,7 +41,7 @@ export default function ReservesSubmitButton({
     return (
       <>
         <Button
-          className='txt-14_M bg-gray-50 px-10 py-6 text-gray-600'
+          className='txt-14_M bg-gray-50 px-10 py-6 text-gray-600 max-lg:w-full'
           rounded='8'
           onClick={handleCancelReservation}
         >

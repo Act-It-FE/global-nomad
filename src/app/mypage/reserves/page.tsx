@@ -8,6 +8,7 @@ import getErrorMessage from '@/utils/getErrorMessage';
 import { ReservesBottom } from './_components/ReservesBottom';
 import ReservesCard from './_components/ReservesCard';
 import ReservesHeader from './_components/ReservesHeader';
+import ReservesSubmitButton from './_components/ReservesSubmitButton';
 
 export default function Page() {
   const {
@@ -95,7 +96,12 @@ export default function Page() {
                 </ReservesCard.Content>
                 <ReservesCard.Thumbnail />
               </ReservesCard>
-              {!isPC && <div className='txt-16_B'>버튼 들어갈 자리</div>}
+              {!isPC && (
+                <ReservesSubmitButton
+                  {...reservation}
+                  reservationId={reservation.id}
+                />
+              )}
             </div>
           );
         }),

@@ -1,4 +1,5 @@
 import { ReservationStatus } from '@/api/types/reservations';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 import ReservesSubmitButton from './ReservesSubmitButton';
 
@@ -15,17 +16,23 @@ export function ReservesBottom({
 }: {
   reservesInfo: ReservesBottomInfo;
 }) {
+  const isPC = useMediaQuery('pc');
   return (
     <div className='flex w-full items-center justify-between'>
-      <div className='flex items-center gap-4'>
-        <div>₩{reservesInfo.price?.toLocaleString()}</div>
-        <div>{reservesInfo.headCount}명</div>
+      <div className='flex items-center gap-4 leading-normal'>
+        <div className='txt-16_B lg:txt-18_B tracking-[-0.4px] text-gray-950 lg:tracking-[-0.45px]'>
+          ₩{reservesInfo.price?.toLocaleString()}
+        </div>
+        <div className='txt-14_M lg:txt-16_M tracking-[-0.35px] text-gray-400 lg:tracking-[-0.4px]'>
+          {reservesInfo.headCount}명
+        </div>
       </div>
-      <ReservesSubmitButton
-        isReviewSubmitted={reservesInfo.isReviewSubmitted}
-        reservationId={reservesInfo.id}
-        status={reservesInfo.status}
-      />
+      {isPC && reservesInfo.id && (
+        <ReservesSubmitButton
+          {...reservesInfo}
+          reservationId={reservesInfo.id}
+        />
+      )}
     </div>
   );
 }

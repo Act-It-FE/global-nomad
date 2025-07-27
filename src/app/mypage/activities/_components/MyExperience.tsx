@@ -17,7 +17,9 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
         </div>
         <div className='mt-6 flex items-center gap-2 lg:mt-8'>
           <Icon className='text-yellow size-14 lg:size-16' icon='Star' />
-          <div className='txt-13_M lg:txt-16_M leading-16 text-gray-500 lg:leading-19'>{`${data.rating} (${data.reviewCount})`}</div>
+          <div className='txt-13_M lg:txt-16_M leading-16 text-gray-500 lg:leading-19'>
+            {data.rating} ({data.reviewCount})
+          </div>
         </div>
         <div className='mt-10 flex items-center gap-4 lg:mt-12'>
           <div className='txt-16_B lg:txt-18_B leading-19 lg:leading-21'>

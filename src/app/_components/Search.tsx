@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
@@ -11,11 +11,17 @@ export default function Search() {
   const [isFocused, setIsFocused] = useState(false);
   const [query, setQuery] = useState('');
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
     if (!query.trim()) return;
-
     router.push(`/search?query=${encodeURIComponent(query)}`);
+  };
+
+  const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const isButton = (e.target as HTMLElement).closest('button');
+    if (isButton) return;
+    inputRef.current?.focus();
   };
 
   return (
@@ -24,13 +30,15 @@ export default function Search() {
       <div
         className={cn(
           'transition-all duration-200 ease-out',
-          'flex w-full items-center justify-center gap-8 rounded-[16px] bg-white py-6 pr-8 pl-20 shadow-[0_6px_10px_0_rgba(13,153,255,0.05)] md:justify-between md:rounded-[24px] md:py-10 md:pr-12 md:pl-32',
+          'flex w-full cursor-text items-center justify-center gap-8 rounded-[16px] bg-white py-6 pr-8 pl-20 shadow-[0_6px_10px_0_rgba(13,153,255,0.05)] md:justify-between md:rounded-[24px] md:py-10 md:pr-12 md:pl-32',
           isFocused && 'ring-primary-500 ring-[1.5px]',
         )}
+        onClick={handleWrapperClick}
       >
         <div className='flex flex-1 gap-4 md:gap-10'>
           <Icon className='size-24 text-gray-950' icon='Search' />
           <input
+            ref={inputRef}
             className='flex-1 caret-[#0094FF] outline-none'
             placeholder='내가 원하는 체험은'
             type='text'

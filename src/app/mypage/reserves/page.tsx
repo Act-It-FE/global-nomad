@@ -5,6 +5,7 @@ import useMyReservationsQuery from '@/hooks/reservations/useMyReservationsQuery'
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import getErrorMessage from '@/utils/getErrorMessage';
 
+import { ReservesBottom } from './_components/ReservesBottom';
 import ReservesCard from './_components/ReservesCard';
 import ReservesHeader from './_components/ReservesHeader';
 
@@ -80,6 +81,15 @@ export default function Page() {
                       date: reservation.date,
                       startTime: reservation.startTime,
                       endTime: reservation.endTime,
+                    }}
+                  />
+                  <ReservesBottom
+                    reservesInfo={{
+                      price: reservation.totalPrice,
+                      headCount: reservation.headCount,
+                      status: reservation.status,
+                      isReviewSubmitted: reservation.reviewSubmitted,
+                      id: reservation.id,
                     }}
                   />
                 </ReservesCard.Content>

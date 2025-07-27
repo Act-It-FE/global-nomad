@@ -7,7 +7,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
     <article
       className={cn(
         'flex justify-between gap-22 lg:items-center',
-        'rounded-3xl p-24 lg:p-30',
+        'w-full rounded-3xl p-24 lg:p-30',
         'card-shadow bg-white',
       )}
     >

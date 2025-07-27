@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
+import { MouseEvent } from 'react';
 
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
@@ -20,7 +21,7 @@ export default function Search() {
     router.push(`/search?query=${encodeURIComponent(query)}`);
   };
 
-  const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleWrapperClick = (e: MouseEvent<HTMLDivElement>) => {
     const isButton = (e.target as HTMLElement).closest('button');
     if (isButton) return;
     inputRef.current?.focus();

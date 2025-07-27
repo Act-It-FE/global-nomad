@@ -2,6 +2,7 @@ import {
   ActivitiesDetail,
   ActivityImageUploadResponse,
   ActivityRegisterPayload,
+  ActivityRegisterResponse,
   ActivityResponse,
   ActivityReviewResponse,
   AvailableSchedule,
@@ -50,8 +51,13 @@ const activitiesDetailApi = {
   },
 
   /** 체험 등록 */
-  post: (payload: ActivityRegisterPayload) => {
-    return apiClient.post(`/activities`, payload);
+  post: (
+    payload: ActivityRegisterPayload,
+  ): Promise<ActivityRegisterResponse> => {
+    return apiClient.post<ActivityRegisterPayload, ActivityRegisterResponse>(
+      `/activities`,
+      payload,
+    );
   },
 
   /** 체험 예약 신청 */

@@ -29,6 +29,17 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
             / 인
           </div>
         </div>
+        <div className='txt-14_M mt-12 flex gap-8 leading-17 text-gray-600 lg:mt-20'>
+          <button
+            className='rounded-lg border border-gray-50 px-9 py-5'
+            type='button'
+          >
+            수정하기
+          </button>
+          <button className='rounded-lg bg-gray-50 px-10 py-6' type='button'>
+            삭제하기
+          </button>
+        </div>
       </div>
       <img //Image로 변경 필요
         alt='banner image'

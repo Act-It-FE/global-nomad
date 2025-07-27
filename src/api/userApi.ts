@@ -7,7 +7,7 @@ import {
   UpdateMyInfoRequest,
   UpdateMyInfoResponse,
   UploadProfileImageResponse,
-} from './types/user';
+} from './types/auth';
 
 const userApi = {
   // POST /{teamId}/users : 회원가입

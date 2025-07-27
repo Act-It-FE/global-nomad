@@ -38,6 +38,9 @@ export default function Search() {
             onBlur={() => setIsFocused(false)}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setIsFocused(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleClick();
+            }}
           />
         </div>
         <Button

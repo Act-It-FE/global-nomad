@@ -10,11 +10,13 @@ export default function Search() {
   const isMobile = useMediaQuery('mobile');
   const [isFocused, setIsFocused] = useState(false);
   const [query, setQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
     if (!query.trim()) return;
+    setIsLoading(true);
     router.push(`/search?query=${encodeURIComponent(query)}`);
   };
 
@@ -56,7 +58,15 @@ export default function Search() {
           size={isMobile ? 'sm' : 'md'}
           onClick={handleClick}
         >
-          검색하기
+          {!isLoading ? (
+            '검색하기'
+          ) : (
+            <div className='flex items-center justify-center space-x-5'>
+              <div className='h-8 w-8 animate-bounce rounded-full bg-white [animation-delay:-0.3s]' />
+              <div className='h-8 w-8 animate-bounce rounded-full bg-white [animation-delay:-0.15s]' />
+              <div className='h-8 w-8 animate-bounce rounded-full bg-white' />
+            </div>
+          )}
         </Button>
       </div>
     </div>

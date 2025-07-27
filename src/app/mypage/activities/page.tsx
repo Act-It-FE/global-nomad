@@ -4,6 +4,9 @@ export default function page() {
       <header className='flex items-center justify-between gap-12'>
         <div className='flex flex-col gap-10 py-10'>
           <div className='txt-18_B text-gray-950'>내 체험 관리</div>
+          <div className='txt-14_M text-gray-500'>
+            체험을 등록하거나 수정 및 삭제가 가능합니다.
+          </div>
         </div>
       </header>
     </div>

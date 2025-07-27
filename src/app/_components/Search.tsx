@@ -18,7 +18,7 @@ export default function Search() {
   const handleClick = () => {
     if (!query.trim()) return;
     setIsLoading(true);
-    router.push(`/search?query=${encodeURIComponent(query)}`);
+    router.push(`/?query=${encodeURIComponent(query)}`);
   };
 
   const handleWrapperClick = (e: MouseEvent<HTMLDivElement>) => {

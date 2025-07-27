@@ -1,3 +1,7 @@
+import Link from 'next/link';
+
+import Button from '@/components/Button';
+
 export default function page() {
   return (
     <div className='flex w-full flex-col gap-15 md:gap-30'>
@@ -8,6 +12,15 @@ export default function page() {
             체험을 등록하거나 수정 및 삭제가 가능합니다.
           </div>
         </div>
+        <Link
+          className='rounded-[14px]'
+          href='/mypage/add-activity'
+          tabIndex={-1}
+        >
+          <Button className='w-136' size='md'>
+            체험 등록하기
+          </Button>
+        </Link>
       </header>
     </div>
   );

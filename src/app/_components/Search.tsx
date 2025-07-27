@@ -55,6 +55,8 @@ export default function Search() {
           />
         </div>
         <Button
+          className='disabled:bg-primary-500'
+          disabled={isLoading}
           rounded={isMobile ? '12' : '14'}
           size={isMobile ? 'sm' : 'md'}
           onClick={handleClick}

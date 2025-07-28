@@ -8,6 +8,7 @@ import getErrorMessage from '@/utils/getErrorMessage';
 import CancelReservationButton from './_components/CancelReservationButton';
 import { ReservesBottom } from './_components/ReservesBottom';
 import ReservesCard from './_components/ReservesCard';
+import ReservesFilter from './_components/ReservesFilter';
 import ReservesHeader from './_components/ReservesHeader';
 import ReviewReservationButton from './_components/ReviewReservationButton';
 
@@ -35,66 +36,68 @@ export default function Page() {
     return <div>에러:{errorMessage}</div>;
   }
   return (
-    <div className='w-full'>
-      <h1>예약 목록 테스트</h1>
+    <div className='flex w-full flex-col gap-30 max-md:gap-13'>
+      <ReservesFilter />
 
-      {data?.pages.map((page, pageIndex) =>
-        page.reservations?.map((reservation, itemIndex) => {
-          const isLastElement =
-            pageIndex === data.pages.length - 1 &&
-            itemIndex === page.reservations.length - 1;
+      <div>
+        {data?.pages.map((page, pageIndex) =>
+          page.reservations?.map((reservation, itemIndex) => {
+            const isLastElement =
+              pageIndex === data.pages.length - 1 &&
+              itemIndex === page.reservations.length - 1;
 
-          return (
-            <div
-              key={reservation.id}
-              ref={isLastElement ? lastElementRef : undefined}
-              className='mb-24 flex flex-col max-lg:mb-30 max-lg:gap-12'
-            >
-              {!isPC && (
-                <div className='txt-16_B mt-20'>{reservation.date}</div>
-              )}
-              <ReservesCard reservesInfo={reservation}>
-                <ReservesCard.Content>
-                  <ReservesHeader
-                    reservesHeaderInfo={{
-                      status: reservation.status,
-                      title: reservation.activity?.title || '',
-                      date: reservation.date,
-                      startTime: reservation.startTime,
-                      endTime: reservation.endTime,
-                    }}
-                  />
-                  <ReservesBottom reservesInfo={{ ...reservation }} />
-                </ReservesCard.Content>
-                <ReservesCard.Thumbnail />
-              </ReservesCard>
-              {!isPC && (
-                <>
-                  {reservation.status === 'pending' && (
-                    <CancelReservationButton reservationId={reservation.id} />
-                  )}
-                  {reservation.status === 'completed' &&
-                    !reservation.reviewSubmitted && (
-                      <ReviewReservationButton
-                        date={reservation.date}
-                        endTime={reservation.endTime}
-                        headCount={reservation.headCount}
-                        isReviewSubmitted={reservation.reviewSubmitted}
-                        reservationId={reservation.id}
-                        startTime={reservation.startTime}
-                        status={reservation.status}
-                        title={reservation.activity?.title}
-                      />
+            return (
+              <div
+                key={reservation.id}
+                ref={isLastElement ? lastElementRef : undefined}
+                className='mb-24 flex flex-col border-gray-50 max-lg:mb-30 max-lg:gap-12 [&:not(:first-child)]:border-t'
+              >
+                {!isPC && (
+                  <div className='txt-16_B mt-20'>{reservation.date}</div>
+                )}
+                <ReservesCard reservesInfo={reservation}>
+                  <ReservesCard.Content>
+                    <ReservesHeader
+                      reservesHeaderInfo={{
+                        status: reservation.status,
+                        title: reservation.activity?.title || '',
+                        date: reservation.date,
+                        startTime: reservation.startTime,
+                        endTime: reservation.endTime,
+                      }}
+                    />
+                    <ReservesBottom reservesInfo={{ ...reservation }} />
+                  </ReservesCard.Content>
+                  <ReservesCard.Thumbnail />
+                </ReservesCard>
+                {!isPC && (
+                  <>
+                    {reservation.status === 'pending' && (
+                      <CancelReservationButton reservationId={reservation.id} />
                     )}
-                </>
-              )}
-            </div>
-          );
-        }),
-      )}
+                    {reservation.status === 'completed' &&
+                      !reservation.reviewSubmitted && (
+                        <ReviewReservationButton
+                          date={reservation.date}
+                          endTime={reservation.endTime}
+                          headCount={reservation.headCount}
+                          isReviewSubmitted={reservation.reviewSubmitted}
+                          reservationId={reservation.id}
+                          startTime={reservation.startTime}
+                          status={reservation.status}
+                          title={reservation.activity?.title}
+                        />
+                      )}
+                  </>
+                )}
+              </div>
+            );
+          }),
+        )}
 
-      {isFetchingNextPage && <div>다음 페이지 로딩 중...</div>}
-      {!hasNextPage && <div>모든 예약을 불러왔습니다.</div>}
+        {isFetchingNextPage && <div>다음 페이지 로딩 중...</div>}
+        {!hasNextPage && <div>모든 예약을 불러왔습니다.</div>}
+      </div>
     </div>
   );
 }

@@ -17,7 +17,7 @@ export function useMyActivitiesQuery(params?: GetMyActivitiesParams) {
   });
 }
 
-export function useMyActivitiesReservationDashboard(
+export function useMyActReservationDashboard(
   activityId: number,
   params: { year: string; month: string },
 ) {

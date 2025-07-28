@@ -6,7 +6,7 @@ import { UpdateMyActivityReservationBody } from '@/api/types/myActivities';
 
 import myActivitiesQueryKeys from './queryKey';
 
-export function useMyActivitiesMutate(
+export function useMyActReservationMutate(
   activityId: number,
   reservationId: number,
 ) {

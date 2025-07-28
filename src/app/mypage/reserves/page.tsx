@@ -1,7 +1,7 @@
 'use client';
-import { useCallback, useEffect, useRef } from 'react';
 
 import useMyReservationsQuery from '@/hooks/reservations/useMyReservationsQuery';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import getErrorMessage from '@/utils/getErrorMessage';
 
@@ -23,33 +23,12 @@ export default function Page() {
   } = useMyReservationsQuery({});
   const errorMessage = getErrorMessage(error, '예약 내역 조회에 실패했습니다');
   const isPC = useMediaQuery('pc');
-  // 스크롤 감지
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  const lastElementRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (isFetchingNextPage) return;
-
-      if (observerRef.current) observerRef.current.disconnect();
-
-      observerRef.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasNextPage) {
-          fetchNextPage();
-        }
-      });
-
-      if (node) observerRef.current.observe(node);
-    },
-    [isFetchingNextPage, hasNextPage, fetchNextPage],
-  );
-
-  useEffect(() => {
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, []);
+  const { lastElementRef } = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
 
   if (isLoading) return <div>로딩 중...</div>;
   if (isError) {

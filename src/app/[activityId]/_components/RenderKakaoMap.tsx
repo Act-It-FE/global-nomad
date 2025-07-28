@@ -71,7 +71,10 @@ export default function RenderKakaoMap({ address }: RenderKakaoMapProps) {
         {error ? (
           <p className='text-sm text-red-500'>{error}</p>
         ) : (
-          <div ref={mapRef} className='h-450 w-full rounded-[24px]' />
+          <div
+            ref={mapRef}
+            className='h-450 w-full rounded-[16px] md:rounded-[24px]'
+          />
         )}
       </div>
     </div>

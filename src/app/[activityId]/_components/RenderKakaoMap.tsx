@@ -73,7 +73,7 @@ export default function RenderKakaoMap({ address }: RenderKakaoMapProps) {
         ) : (
           <div
             ref={mapRef}
-            className='h-450 w-full rounded-[16px] md:rounded-[24px]'
+            className='h-180 w-full rounded-[16px] md:h-450 md:rounded-[24px]'
           />
         )}
       </div>

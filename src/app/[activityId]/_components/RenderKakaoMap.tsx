@@ -38,8 +38,12 @@ export default function RenderKakaoMap({ address }: RenderKakaoMapProps) {
   }, [address]);
 
   return (
-    <div className='flex justify-center'>
-      <div ref={mapRef} className='h-450 w-full max-w-670 rounded-[24px]' />
+    <div>
+      <p className='txt-18_B text-gray-950'>오시는 길</p>
+      <p className='text-[14px] font-semibold'>주소</p>
+      <div>
+        <div ref={mapRef} className='h-450 w-full max-w-670 rounded-[24px]' />
+      </div>
     </div>
   );
 }

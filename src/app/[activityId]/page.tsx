@@ -1,5 +1,16 @@
+import activitiesDetailApi from '@/libs/activitiesDetail';
+
 import LoadKakaoMap from './_components/LoadKakaoMap';
 
-export default function ActivityDetail() {
-  return <LoadKakaoMap address='서울특별시 도봉구 도봉1동 616-25' />;
+interface Props {
+  params: { activityId: string };
+}
+
+export default async function ActivityDetail(props: Props) {
+  const activityId = Number(props.params.activityId);
+
+  const activity = await activitiesDetailApi.getDetail(activityId);
+  const address = activity.address;
+
+  return <LoadKakaoMap address={address} />;
 }

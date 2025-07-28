@@ -33,6 +33,7 @@ export default function ReservesHeader({
 }
 
 function StatusBadge({ status }: { status?: ReservationStatus }) {
+  const currentStatus = status || 'pending';
   const statusText = {
     pending: '예약 완료',
     canceled: '예약 취소',
@@ -40,7 +41,6 @@ function StatusBadge({ status }: { status?: ReservationStatus }) {
     declined: '예약 거절',
     completed: '체험 완료',
   };
-
   const statusColor = {
     pending: 'bg-[#f3fbe4]',
     canceled: 'bg-gray-100',
@@ -48,7 +48,6 @@ function StatusBadge({ status }: { status?: ReservationStatus }) {
     declined: 'bg-[#FCECEA]',
     completed: 'bg-[#DAF0FF]',
   };
-
   const statusTextColor = {
     pending: 'text-[#2BA90D]',
     canceled: 'text-gray-600',
@@ -58,12 +57,14 @@ function StatusBadge({ status }: { status?: ReservationStatus }) {
   };
   return (
     <div
+      aria-label={`예약 상태: ${statusText[currentStatus]}`}
       className={cn(
         'txt-13_B flex items-center justify-center rounded-[100px] px-8 py-4 tracking-[-0.325px]',
-        `${statusColor[status || 'pending']} ${statusTextColor[status || 'pending']} `,
+        `${statusColor[currentStatus]} ${statusTextColor[currentStatus]}`,
       )}
+      role='status'
     >
-      {statusText[status || 'pending']}
+      {statusText[currentStatus]}
     </div>
   );
 }

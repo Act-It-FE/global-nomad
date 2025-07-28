@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 
+import { ReservationStatus } from '@/api/types/reservations';
 import { RESERVATION_STATUS_OPTIONS } from '@/constants/reservationStatus';
 import { cn } from '@/utils/cn';
 
@@ -11,12 +12,12 @@ export default function ReservesFilter({
   isEmpty = false,
   statusOptions = RESERVATION_STATUS_OPTIONS,
 }: {
-  selectedStatus: string | null;
-  onStatusChange: (status: string | null) => void;
+  selectedStatus: ReservationStatus | null;
+  onStatusChange: (status: ReservationStatus | null) => void;
   isEmpty?: boolean;
-  statusOptions?: Array<{ value: string; label: string }>;
+  statusOptions?: Array<{ value: ReservationStatus; label: string }>;
 }) {
-  const handleStatusClick = (value: string) => {
+  const handleStatusClick = (value: ReservationStatus) => {
     const newStatus = selectedStatus === value ? null : value;
     onStatusChange(newStatus);
   };
@@ -35,7 +36,7 @@ export default function ReservesFilter({
           <img
             alt='예약이 없어요'
             className='size-182 p-30'
-            src='/images/reserves-none.png'
+            src='/images/empty-image.png'
           />
           <div className='txt-18_M mb-30 leading-normal tracking-[-0.45px] text-gray-600'>
             아직 예약한 체험이 없어요
@@ -74,9 +75,9 @@ function FilterContent({
   selectedStatus,
   onStatusClick,
 }: {
-  statusOptions: Array<{ value: string; label: string }>;
-  selectedStatus: string | null;
-  onStatusClick: (value: string) => void;
+  statusOptions: Array<{ value: ReservationStatus; label: string }>;
+  selectedStatus: ReservationStatus | null;
+  onStatusClick: (value: ReservationStatus) => void;
 }) {
   return (
     <div className='flex w-full max-w-full items-start gap-8 overflow-x-auto'>

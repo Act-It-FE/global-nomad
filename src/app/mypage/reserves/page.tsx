@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { ReservationStatus } from '@/api/types/reservations';
 import useMyReservationsQuery from '@/hooks/reservations/useMyReservationsQuery';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -15,7 +16,8 @@ import ReservesHeader from './_components/ReservesHeader';
 import ReviewReservationButton from './_components/ReviewReservationButton';
 
 export default function Page() {
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [selectedStatus, setSelectedStatus] =
+    useState<ReservationStatus | null>(null);
 
   const {
     data,
@@ -29,7 +31,7 @@ export default function Page() {
   const errorMessage = getErrorMessage(error, '예약 내역 조회에 실패했습니다');
   const isPC = useMediaQuery('pc');
 
-  const { lastElementRef } = useInfiniteScroll({
+  const lastElement = useInfiniteScroll({
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
@@ -68,7 +70,7 @@ export default function Page() {
             return (
               <div
                 key={reservation.id}
-                ref={isLastElement ? lastElementRef : undefined}
+                ref={isLastElement ? lastElement : undefined}
                 className='mb-24 flex flex-col border-gray-50 max-lg:mb-30 max-lg:gap-12 [&:not(:first-child)]:border-t'
               >
                 {!isPC && (

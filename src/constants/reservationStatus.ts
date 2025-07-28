@@ -1,4 +1,9 @@
-export const RESERVATION_STATUS_OPTIONS = [
+import { ReservationStatus } from '@/api/types/reservations';
+
+export const RESERVATION_STATUS_OPTIONS: Array<{
+  value: ReservationStatus;
+  label: string;
+}> = [
   { value: 'pending', label: '예약 완료' },
   { value: 'canceled', label: '예약 취소' },
   { value: 'confirmed', label: '예약 승인' },

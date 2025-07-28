@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-interface UseInfiniteScrollProps {
+interface InfiniteScrollConfig {
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
   fetchNextPage: () => void;
@@ -10,10 +10,10 @@ export default function useInfiniteScroll({
   hasNextPage,
   isFetchingNextPage,
   fetchNextPage,
-}: UseInfiniteScrollProps) {
+}: InfiniteScrollConfig) {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
-  const lastElementRef = useCallback(
+  const lastElement = useCallback(
     (node: HTMLDivElement) => {
       if (isFetchingNextPage) return;
 
@@ -38,5 +38,5 @@ export default function useInfiniteScroll({
     };
   }, []);
 
-  return { lastElementRef };
+  return lastElement;
 }

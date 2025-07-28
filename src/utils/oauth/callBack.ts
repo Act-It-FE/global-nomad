@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import oAuthApi from '@/api/oAuth';
 import type {
   OAuthAppProvider,
-  OAuthRequest,
   OAuthResponse,
+  OAuthSignUpRequest,
 } from '@/api/types/auth';
 import { useUserStore } from '@/stores/userStore';
 
@@ -23,7 +23,7 @@ export default function KakaoCallbackPage() {
       return;
     }
 
-    const body: OAuthRequest = {
+    const body: OAuthSignUpRequest = {
       redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback/kakao`,
       token: code,
       nickname: '',

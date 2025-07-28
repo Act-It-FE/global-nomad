@@ -1,4 +1,3 @@
-import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { MouseEvent } from 'react';
 
@@ -7,18 +6,19 @@ import Icon from '@/components/Icon';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 
-export default function Search() {
+interface SearchProps {
+  isLoading: boolean;
+  onSearch: (query: string) => void;
+}
+
+export default function Search({ isLoading, onSearch }: SearchProps) {
   const isMobile = useMediaQuery('mobile');
   const [isFocused, setIsFocused] = useState(false);
   const [query, setQuery] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
-    if (!query.trim()) return;
-    setIsLoading(true);
-    router.push(`/?query=${encodeURIComponent(query)}`);
+    onSearch(query);
   };
 
   const handleWrapperClick = (e: MouseEvent<HTMLDivElement>) => {

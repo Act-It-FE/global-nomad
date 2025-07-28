@@ -4,11 +4,20 @@ import getErrorMessage from '@/utils/getErrorMessage';
 import LoadKakaoMap from './_components/LoadKakaoMap';
 
 interface Props {
-  params: { activityId: string };
+  params?: { activityId?: string };
 }
 
-export default async function ActivityDetail(props: Props) {
-  const activityId = Number(props.params.activityId);
+export default async function ActivityDetail({ params }: Props) {
+  const rawId = params?.activityId;
+  const activityId = rawId ? Number(rawId) : NaN;
+
+  if (!rawId || isNaN(activityId)) {
+    return (
+      <div className='flex h-200 items-center justify-center text-red-500'>
+        잘못된 체험 ID입니다.
+      </div>
+    );
+  }
 
   try {
     const activity = await activitiesDetailApi.getDetail(activityId);

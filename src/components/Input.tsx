@@ -66,7 +66,6 @@ const FOCUS_STYLE =
   'focus:border-primary-500 focus:border-[1.5px] focus:px-18.5 focus:py-14.5';
 
 export default function Input({
-  id,
   className = '',
   label,
   errorMessage,
@@ -77,22 +76,20 @@ export default function Input({
 
     switch (props.type) {
       case 'dropdown':
-        return (
-          <DropdownInput className={`${COMMON_STYLE}`} id={id} {...props} />
-        );
+        return <DropdownInput className={`${COMMON_STYLE}`} {...props} />;
       case 'textarea':
-        return <TextareaInput className={className} id={id} {...props} />;
+        return <TextareaInput className={className} {...props} />;
       case 'password':
-        return <PasswordInput className={className} id={id} {...props} />;
+        return <PasswordInput className={className} {...props} />;
       default:
-        return <input className={className} id={id} {...props} />;
+        return <input className={className} {...props} />;
     }
   };
 
   return (
     <div className={'flex flex-col gap-10 ' + className}>
       {label && (
-        <label className='txt-16_M leading-19 text-gray-950' htmlFor={id}>
+        <label className='txt-16_M leading-19 text-gray-950' htmlFor={props.id}>
           {label}
         </label>
       )}
@@ -109,7 +106,6 @@ export default function Input({
 }
 
 function DropdownInput({
-  id,
   className,
   type,
   onClick,
@@ -134,13 +130,12 @@ function DropdownInput({
       <input
         ref={ref}
         className={`${className} ${value ? 'text-gray-950' : 'text-gray-400'} text-start`}
-        id={id}
         type='button'
         value={value ?? placeholder ?? ''}
         onClick={handleClick}
         {...props}
       />
-      <label className='absolute top-15 right-20' htmlFor={id}>
+      <label className='absolute top-15 right-20' htmlFor={props.id}>
         <Icon className='size-24 text-gray-950' icon='TriangleDown' />
       </label>
       {isOpen && (

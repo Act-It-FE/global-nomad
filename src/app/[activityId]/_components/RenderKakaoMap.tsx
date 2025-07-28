@@ -62,7 +62,9 @@ export default function RenderKakaoMap({ address }: RenderKakaoMapProps) {
   return (
     <div className='flex- justify-center border-t border-b border-gray-200 py-40'>
       <p className='txt-18_B my-7 leading-[21px] text-gray-950'>오시는 길</p>
-      <p className='my-7 text-[14px] leading-[24px] font-semibold'>{address}</p>
+      <p className='txt-14_M my-7 leading-[24px] font-semibold opacity-75'>
+        {address}
+      </p>
       <div>
         {error ? (
           <p className='text-sm text-red-500'>{error}</p>

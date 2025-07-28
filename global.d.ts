@@ -53,13 +53,13 @@ declare global {
   }
 
   interface KakaoMap {
-    setCenter: (latlng: LatLng) => void;
-    setLevel: (level: number) => void;
-    // 필요시 더 추가
+    setCenter(latlng: LatLng): void;
+    setLevel(level: number): void;
+    getCenter(): LatLng;
   }
 
   interface KakaoMarker {
-    setMap: (map: KakaoMap | null) => void;
-    // 필요시 더 추가
+    setMap(map: KakaoMap | null): void;
+    setPosition(latlng: LatLng): void;
   }
 }

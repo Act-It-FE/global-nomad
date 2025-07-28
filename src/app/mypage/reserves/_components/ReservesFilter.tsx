@@ -2,25 +2,20 @@
 
 import Link from 'next/link';
 
+import { RESERVATION_STATUS_OPTIONS } from '@/constants/reservationStatus';
 import { cn } from '@/utils/cn';
 
 export default function ReservesFilter({
   selectedStatus,
   onStatusChange,
   isEmpty = false,
+  statusOptions = RESERVATION_STATUS_OPTIONS,
 }: {
   selectedStatus: string | null;
   onStatusChange: (status: string | null) => void;
   isEmpty?: boolean;
+  statusOptions?: Array<{ value: string; label: string }>;
 }) {
-  const statusOptions = [
-    { value: 'pending', label: '예약 완료' },
-    { value: 'canceled', label: '예약 취소' },
-    { value: 'confirmed', label: '예약 승인' },
-    { value: 'declined', label: '예약 거절' },
-    { value: 'completed', label: '체험 완료' },
-  ];
-
   const handleStatusClick = (value: string) => {
     const newStatus = selectedStatus === value ? null : value;
     onStatusChange(newStatus);
@@ -46,7 +41,7 @@ export default function ReservesFilter({
             아직 예약한 체험이 없어요
           </div>
           <Link
-            className='txt-16_B bg-primary-50 bg-primary-500 flex w-full items-center justify-center rounded-2xl px-40 py-13 tracking-[-0.4px] text-white'
+            className='txt-16_B bg-primary-500 flex w-full items-center justify-center rounded-2xl px-40 py-13 tracking-[-0.4px] text-white'
             href='/'
           >
             둘러보기

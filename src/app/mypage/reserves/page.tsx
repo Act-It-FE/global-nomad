@@ -115,7 +115,7 @@ export default function Page() {
         )}
 
         {isFetchingNextPage && <div>다음 페이지 로딩 중...</div>}
-        {!hasNextPage && filteredData?.length !== 0 && (
+        {!hasNextPage && filteredData && filteredData.length > 0 && (
           <div className='txt-15_M mb-10 flex items-center justify-center text-gray-500'>
             모든 예약을 불러왔습니다.
           </div>

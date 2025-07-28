@@ -70,7 +70,7 @@ export default function Page() {
               <div
                 key={reservation.id}
                 ref={isLastElement ? lastElement : undefined}
-                className='mb-24 flex flex-col border-gray-50 max-lg:mb-30 max-lg:gap-12 [&:not(:first-child)]:border-t'
+                className='mb-30 flex flex-col border-gray-50 max-lg:gap-12 lg:mb-24 [&:not(:first-child)]:border-t'
               >
                 {!isPC && (
                   <div className='txt-16_B mt-20'>{reservation.date}</div>

@@ -2,8 +2,10 @@ import { useState } from 'react';
 
 import Button from '@/components/Button';
 import Modal from '@/components/Modal/Modal';
+import Toast from '@/components/Toast';
 import { useMyReservationsCancel } from '@/hooks/reservations/useMyReservationsMutate';
 import type { ModalProps } from '@/types/Modal';
+import getErrorMessage from '@/utils/getErrorMessage';
 
 export default function CancelReservationButton({
   reservationId,
@@ -12,6 +14,10 @@ export default function CancelReservationButton({
 }) {
   const { mutate: cancelReservation } = useMyReservationsCancel();
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: 'success' | 'error';
+  } | null>(null);
 
   const handleCancelReservation = () => {
     setModalProps({
@@ -22,14 +28,39 @@ export default function CancelReservationButton({
       },
       onCancel: () => {
         if (reservationId) {
-          cancelReservation({
-            reservationId: reservationId,
-            status: 'canceled',
-          });
+          cancelReservation(
+            {
+              reservationId: reservationId,
+              status: 'canceled',
+            },
+            {
+              onSuccess: () => {
+                setToast({
+                  message: '예약이 취소되었습니다.',
+                  type: 'success',
+                });
+                setModalProps(null);
+              },
+              onError: (error) => {
+                const errorMessage = getErrorMessage(
+                  error,
+                  '예약 취소에 실패했습니다. 다시 시도해주세요.',
+                );
+                setToast({
+                  message: errorMessage,
+                  type: 'error',
+                });
+                setModalProps(null);
+              },
+            },
+          );
         }
-        setModalProps(null);
       },
     });
+  };
+
+  const handleToastClose = () => {
+    setToast(null);
   };
 
   return (
@@ -42,6 +73,13 @@ export default function CancelReservationButton({
         예약 취소
       </Button>
       {modalProps && <Modal {...modalProps} />}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={handleToastClose}
+        />
+      )}
     </>
   );
 }

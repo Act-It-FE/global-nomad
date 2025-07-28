@@ -58,7 +58,6 @@ export default function ReviewReservationButton({
           },
           {
             onSuccess: () => {
-              // 성공 토스트 메시지 표시
               setToast({
                 message: '리뷰가 성공적으로 제출되었습니다.',
                 type: 'success',
@@ -74,7 +73,6 @@ export default function ReviewReservationButton({
                 message: errorMessage,
                 type: 'error',
               });
-
               setModalProps(null);
             },
           },

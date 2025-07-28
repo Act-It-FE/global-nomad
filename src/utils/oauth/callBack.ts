@@ -9,11 +9,13 @@ import type {
   OAuthRequest,
   OAuthResponse,
 } from '@/api/types/auth';
+import { useUserStore } from '@/stores/userStore';
 
 export default function KakaoCallbackPage() {
   const router = useRouter();
   const code = useSearchParams().get('code');
   const [error, setError] = useState<string | null>(null);
+  const setUser = useUserStore((s) => s.setUser);
 
   useEffect(() => {
     if (!code) {
@@ -34,9 +36,10 @@ export default function KakaoCallbackPage() {
           body,
           'kakao' as OAuthAppProvider,
         );
+        setUser(data.user);
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
-        router.replace('/'); // 로그인 성공 후 이동
+        router.replace('/signUp'); // 로그인 성공 후 이동
         return;
       } catch (loginErr: unknown) {
         // 2) 등록된 사용자가 아니면 회원가입으로
@@ -49,9 +52,11 @@ export default function KakaoCallbackPage() {
               body,
               'kakao' as OAuthAppProvider,
             );
+            setUser(signupData.user);
             localStorage.setItem('accessToken', signupData.accessToken);
             localStorage.setItem('refreshToken', signupData.refreshToken);
-            router.replace('/'); // 회원가입 후 이동
+            console.log('🟢 로그인 성공, accessToken=', signupData.accessToken);
+            router.replace('/signUp'); // 회원가입 후 이동
           } catch (signupErr: unknown) {
             setError(
               signupErr instanceof Error

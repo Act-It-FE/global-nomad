@@ -13,6 +13,7 @@ export function useUserProfile() {
       try {
         const data = await kakaoApi.getProfile();
         setProfile(data);
+        console.log(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);

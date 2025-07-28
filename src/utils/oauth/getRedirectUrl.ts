@@ -13,7 +13,7 @@ export function getRedirectUrl(): string {
     throw new Error('NEXT_PUBLIC_APP_URL 환경변수가 설정되지 않았습니다.');
   }
 
-  const REDIRECT_URI = `${APP_URL}/auth/callback/kakao`;
+  const REDIRECT_URI = `${APP_URL}/signUp`;
 
   const params = new URLSearchParams({
     client_id: REST_API_KEY,

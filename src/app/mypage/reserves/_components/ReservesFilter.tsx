@@ -55,7 +55,7 @@ function FilterContent({
   onStatusClick: (value: string) => void;
 }) {
   return (
-    <div className='flex items-start gap-8 overflow-x-auto'>
+    <div className='flex w-full max-w-full items-start gap-8 overflow-x-auto'>
       {statusOptions.map((option) => (
         <button
           key={option.value}

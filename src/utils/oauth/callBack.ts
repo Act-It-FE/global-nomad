@@ -1,11 +1,10 @@
-//카카오 로그인 동의 후 파라미터로 code와 함께 Redirect된 인가 코드로 accessToken, refreshToken 발급 받아 로컬스토리지에 저장
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import oAuthApi from '@/api/oAuth';
-import {
+import type {
   OAuthAppProvider,
   OAuthRequest,
   OAuthResponse,
@@ -13,8 +12,7 @@ import {
 
 export default function KakaoCallbackPage() {
   const router = useRouter();
-  const params = useSearchParams();
-  const code = params.get('code');
+  const code = useSearchParams().get('code');
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -29,24 +27,49 @@ export default function KakaoCallbackPage() {
       nickname: '',
     };
 
-    async function handleSignUp() {
+    async function handleAuth() {
+      // 1) 로그인 시도
       try {
-        const data: OAuthResponse = await oAuthApi.postSignUp(
+        const data: OAuthResponse = await oAuthApi.postLogin(
           body,
           'kakao' as OAuthAppProvider,
         );
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
-        router.replace('/'); //로그인 후 이동할 주소
-      } catch (error) {
-        console.error('OAuth 로그인 실패:', error);
-        setError('로그인 중 오류가 발생했습니다.');
+        router.replace('/'); // 로그인 성공 후 이동
+        return;
+      } catch (loginErr: unknown) {
+        // 2) 등록된 사용자가 아니면 회원가입으로
+        if (
+          loginErr instanceof Error &&
+          loginErr.message === 'User not registered'
+        ) {
+          try {
+            const signupData: OAuthResponse = await oAuthApi.postSignUp(
+              body,
+              'kakao' as OAuthAppProvider,
+            );
+            localStorage.setItem('accessToken', signupData.accessToken);
+            localStorage.setItem('refreshToken', signupData.refreshToken);
+            router.replace('/'); // 회원가입 후 이동
+          } catch (signupErr: unknown) {
+            setError(
+              signupErr instanceof Error
+                ? signupErr.message
+                : '회원가입 중 오류가 발생했습니다.',
+            );
+          }
+        } else {
+          setError(
+            loginErr instanceof Error
+              ? loginErr.message
+              : '로그인 중 오류가 발생했습니다.',
+          );
+        }
       }
     }
 
-    handleSignUp();
+    void handleAuth();
   }, [code, router]);
-  if (error) {
-    return error;
-  }
+  return { error };
 }

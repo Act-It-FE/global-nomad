@@ -38,11 +38,17 @@ export interface OAuthResponse extends Token {
   user: UserProfile;
 }
 
-//oauth login req, oauth signup req
-export interface OAuthRequest {
+//oauth login req
+export interface OAuthLoginRequest {
   redirectUri: string;
   token: string;
 }
+
+//oauth signup req
+export interface OAuthSignUpRequest extends OAuthLoginRequest {
+  nickname: string;
+}
+
 //auth login req
 export interface LoginRequest {
   email: string;
@@ -54,8 +60,9 @@ export interface LoginResponse extends Token {
   user: UserProfile;
 }
 
-export interface SignUp extends LoginRequest {
-  nickname?: string;
+// POST /{teamId}/users : 회원가입
+export interface SignUpRequest extends LoginRequest {
+  nickname: string;
 }
 
 export type SignUpResponse = UserProfile;

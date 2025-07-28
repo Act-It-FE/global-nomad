@@ -59,9 +59,13 @@ export default function Toast({
 
   return (
     <div
+      aria-atomic='true'
+      aria-live='polite'
       className={`${getToastStyles()} ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'}`}
+      role='alert'
     >
       <Icon
+        aria-hidden='true'
         className={cn(`size-20`, {
           'text-green-600': type === 'success',
           'text-red-600': type === 'error',
@@ -71,13 +75,14 @@ export default function Toast({
       />
       <span className='txt-14_M flex-1'>{message}</span>
       <button
+        aria-label='토스트 닫기'
         className='text-gray-400 transition-colors hover:text-gray-600'
         onClick={() => {
           setIsVisible(false);
           setTimeout(onClose, 300);
         }}
       >
-        <Icon className='size-16' icon='X' />
+        <Icon aria-hidden='true' className='size-16' icon='X' />
       </button>
     </div>
   );

@@ -24,9 +24,6 @@ export default function CancelReservationButton({
       variant: 'warning',
       message: '예약을 취소하시겠어요?',
       onConfirm: () => {
-        setModalProps(null);
-      },
-      onCancel: () => {
         if (reservationId) {
           cancelReservation(
             {
@@ -55,6 +52,9 @@ export default function CancelReservationButton({
             },
           );
         }
+      },
+      onCancel: () => {
+        setModalProps(null);
       },
     });
   };

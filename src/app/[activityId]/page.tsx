@@ -14,10 +14,14 @@ export default async function ActivityDetail(props: Props) {
     const activity = await activitiesDetailApi.getDetail(activityId);
     const address = activity.address;
 
-    return <LoadKakaoMap address={address} />;
+    return (
+      <div className='w-full px-[30px] sm:px-[24px]'>
+        <LoadKakaoMap address={address} />
+      </div>
+    );
   } catch (error) {
     const message = getErrorMessage(error, '체험 정보를 불러오지 못했습니다.');
-    console.error(' 실패:', message);
+    console.error('실패:', message);
 
     return (
       <div className='flex h-200 items-center justify-center text-red-500'>

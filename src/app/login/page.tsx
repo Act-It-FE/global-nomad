@@ -5,14 +5,23 @@ import React, { useState } from 'react';
 
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
+import Input from '@/components/Input';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const isButtonEnabled = email.trim() !== '' && password.trim() !== '';
 
+  const isEmailValid = /^\S+@\S+\.\S+$/.test(email);
+  const emailError =
+    email.length > 0 && !isEmailValid ? '이메일 형식으로 작성해 주세요.' : '';
+
+  const isPasswordValid = password.length >= 8;
+  const passwordError =
+    password.length > 0 && !isPasswordValid ? '8자 이상 입력해 주세요.' : '';
+
+  const isFormValid = isEmailValid && isPasswordValid;
   const handleSubmit = () => {
-    console.log({ email, password });
+    console.log(email, password);
   };
 
   return (
@@ -38,8 +47,10 @@ export default function Login() {
             <div className='flex w-328 flex-col gap-16 md:w-640 md:gap-20'>
               <div className='flex flex-col gap-10'>
                 <p className='txt-16_M text-gray-950'>이메일</p>
-                <input
-                  className='h-54 w-full rounded-2xl border border-gray-100 px-20 focus:outline-none'
+                <Input
+                  className='h-54 w-full'
+                  errorMessage={emailError}
+                  id='text1'
                   placeholder='이메일을 입력해 주세요'
                   type='email'
                   value={email}
@@ -48,8 +59,10 @@ export default function Login() {
               </div>
               <div className='flex flex-col gap-10'>
                 <p className='txt-16_M text-gray-950'>비밀번호</p>
-                <input
-                  className='h-54 w-full rounded-2xl border border-gray-100 px-20 focus:outline-none'
+                <Input
+                  className='h-54 w-full'
+                  errorMessage={passwordError}
+                  id='password1'
                   placeholder='비밀번호를 입력해 주세요'
                   type='password'
                   value={password}
@@ -58,9 +71,9 @@ export default function Login() {
               </div>
             </div>
 
-            {isButtonEnabled ? (
+            {isFormValid ? (
               <Button
-                className='txt-16_B mt-24 mb-24 h-54 w-full md:mt-30 md:mb-30'
+                className='txt-16_B mt-24 h-54 w-full md:mt-30'
                 rounded='16'
                 variant='primary'
                 onClick={handleSubmit}

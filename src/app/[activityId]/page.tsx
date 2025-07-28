@@ -1,41 +1,63 @@
+'use client';
+
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
 import activitiesDetailApi from '@/libs/activitiesDetail';
 import getErrorMessage from '@/utils/getErrorMessage';
 
 import LoadKakaoMap from './_components/LoadKakaoMap';
 
-interface Props {
-  params?: { activityId?: string };
-}
+export default function ActivityDetail() {
+  const { activityId } = useParams();
+  const [address, setAddress] = useState('');
+  const [error, setError] = useState('');
 
-export default async function ActivityDetail({ params }: Props) {
-  const rawId = params?.activityId;
-  const activityId = rawId ? Number(rawId) : NaN;
+  useEffect(() => {
+    if (!activityId) return;
 
-  if (!rawId || isNaN(activityId)) {
+    const id = Number(activityId);
+    if (isNaN(id)) {
+      setError('잘못된 체험 ID입니다.');
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const activity = await activitiesDetailApi.getDetail(id);
+        setAddress(activity.address);
+      } catch (err) {
+        const message = getErrorMessage(
+          err,
+          '체험 정보를 불러오지 못했습니다.',
+        );
+        console.error('실패:', message);
+        setError(message);
+      }
+    };
+
+    fetchData();
+  }, [activityId]);
+
+  if (error) {
     return (
       <div className='flex h-200 items-center justify-center text-red-500'>
-        잘못된 체험 ID입니다.
+        {error}
       </div>
     );
   }
 
-  try {
-    const activity = await activitiesDetailApi.getDetail(activityId);
-    const address = activity.address;
-
+  if (!address) {
     return (
-      <div className='w-full px-30 sm:px-24'>
-        <LoadKakaoMap address={address} />
-      </div>
-    );
-  } catch (error) {
-    const message = getErrorMessage(error, '체험 정보를 불러오지 못했습니다.');
-    console.error('실패:', message);
-
-    return (
-      <div className='flex h-200 items-center justify-center text-red-500'>
-        {message}
+      <div className='flex h-200 items-center justify-center text-gray-500'>
+        체험 정보를 불러오는 중입니다...
       </div>
     );
   }
+
+  return (
+    <div className='w-full px-30 sm:px-24'>
+      <LoadKakaoMap address={address} />
+    </div>
+  );
 }

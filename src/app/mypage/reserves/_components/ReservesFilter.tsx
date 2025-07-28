@@ -31,7 +31,7 @@ export default function ReservesFilter({
     >
       <FilterHeader />
       {isEmpty ? (
-        <div className='flex flex-col items-center justify-center leading-[normal]'>
+        <div className='] flex flex-col items-center justify-center leading-[normal]'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             alt='예약이 없어요'
@@ -61,7 +61,7 @@ export default function ReservesFilter({
 
 function FilterHeader() {
   return (
-    <div className='flex flex-col items-start justify-center gap-10 self-stretch py-10 leading-normal'>
+    <div className='flex flex-col items-start justify-center gap-10 self-stretch py-10 leading-[normal]'>
       <div className='txt-18_B tracking-[-0.45px]'>예약 내역</div>
       <div className='txt-14_M tracking-[-0.35px] text-gray-500'>
         예약내역 변경 및 취소할 수 있습니다.
@@ -80,12 +80,12 @@ function FilterContent({
   onStatusClick: (value: ReservationStatus) => void;
 }) {
   return (
-    <div className='flex w-full gap-8 overflow-x-auto leading-normal'>
+    <div className='flex w-full gap-8 overflow-x-auto'>
       {statusOptions.map((option) => (
         <button
           key={option.value}
           className={cn(
-            'txt-14_M flex items-center justify-center rounded-full border px-16 py-10 leading-normal text-nowrap',
+            'txt-14_M flex items-center justify-center rounded-full border px-16 py-10 leading-[normal] text-nowrap',
             selectedStatus === option.value
               ? 'bg-[#333333] text-white'
               : 'border-[#D8D8D8] bg-white text-black',

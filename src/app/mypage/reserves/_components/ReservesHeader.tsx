@@ -16,7 +16,7 @@ export default function ReservesHeader({
   reservesHeaderInfo: ReservesHeaderInfo;
 }) {
   return (
-    <div className='flex w-full flex-col items-start gap-12 leading-normal max-lg:gap-8'>
+    <div className='flex w-full flex-col items-start gap-12 leading-[normal] max-lg:gap-8'>
       <StatusBadge status={reservesHeaderInfo.status} />
       <div className='flex flex-col items-start gap-10 max-lg:gap-4'>
         <div className='txt-18_B max-lg:txt-14_B w-full tracking-[-0.45px] text-gray-950 max-lg:tracking-[-0.35px]'>

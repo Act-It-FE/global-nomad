@@ -97,7 +97,16 @@ export default function Page() {
                     )}
                     {reservation.status === 'completed' &&
                       !reservation.reviewSubmitted && (
-                        <ReviewReservationButton {...reservation} />
+                        <ReviewReservationButton
+                          date={reservation.date}
+                          endTime={reservation.endTime}
+                          headCount={reservation.headCount}
+                          isReviewSubmitted={reservation.reviewSubmitted}
+                          reservationId={reservation.id}
+                          startTime={reservation.startTime}
+                          status={reservation.status}
+                          title={reservation.activity?.title}
+                        />
                       )}
                   </>
                 )}

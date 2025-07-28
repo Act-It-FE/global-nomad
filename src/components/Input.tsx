@@ -81,14 +81,7 @@ export default function Input({
           <DropdownInput className={`${COMMON_STYLE}`} id={id} {...props} />
         );
       case 'textarea':
-        return (
-          <textarea
-            className={`${className} resize-none`}
-            id={id}
-            style={{ height: props.height }}
-            {...props}
-          />
-        );
+        return <TextareaInput className={className} id={id} {...props} />;
       case 'password':
         return <PasswordInput className={className} id={id} {...props} />;
       default:
@@ -177,6 +170,16 @@ function DropdownInput({
         </div>
       )}
     </>
+  );
+}
+
+function TextareaInput({ className, height, ...props }: TextareaProps) {
+  return (
+    <textarea
+      className={`${className} resize-none`}
+      style={{ height }}
+      {...props}
+    />
   );
 }
 

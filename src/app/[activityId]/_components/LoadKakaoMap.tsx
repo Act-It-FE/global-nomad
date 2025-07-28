@@ -35,7 +35,7 @@ export default function LoadKakaoMap({ address }: LoadKakaoMapProps) {
     script.async = true;
     script.onload = onLoad;
     script.onerror = () => {
-      console.error('❌ 카카오 지도 SDK 로딩 실패');
+      console.error('지도를 불러오는데 실패했습니다.');
     };
 
     document.head.appendChild(script);

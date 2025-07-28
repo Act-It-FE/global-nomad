@@ -45,7 +45,7 @@ export default function NotificationPanel({
   if (!open) return null;
 
   return (
-    <div className='absolute top-27 -right-116 z-50 flex h-326 w-327 flex-col rounded-[10px] bg-white shadow-lg md:right-0 md:w-[231px]'>
+    <div className='absolute top-27 -right-116 z-50 flex h-326 w-327 flex-col rounded-[10px] bg-white shadow-lg md:right-0 md:w-231'>
       <div className='flex items-center justify-between border-b border-gray-100 px-20 py-16'>
         <span className='txt-16_B'>알림 {list.length}개</span>
         <button onClick={onClose}>

@@ -31,14 +31,14 @@ export default function ReservesFilter({
     >
       <FilterHeader />
       {isEmpty ? (
-        <div className='flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center leading-[normal]'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             alt='예약이 없어요'
             className='size-182 p-30'
             src='/images/empty-image.png'
           />
-          <div className='txt-18_M mb-30 leading-normal tracking-[-0.45px] text-gray-600'>
+          <div className='txt-18_M mb-30 tracking-[-0.45px] text-gray-600'>
             아직 예약한 체험이 없어요
           </div>
           <Link
@@ -80,12 +80,12 @@ function FilterContent({
   onStatusClick: (value: ReservationStatus) => void;
 }) {
   return (
-    <div className='flex w-full max-w-full items-start gap-8 overflow-x-auto'>
+    <div className='flex w-full gap-8 overflow-x-auto leading-normal'>
       {statusOptions.map((option) => (
         <button
           key={option.value}
           className={cn(
-            'txt-14_M flex items-center justify-center rounded-full border px-16 py-10 text-nowrap',
+            'txt-14_M flex items-center justify-center rounded-full border px-16 py-10 leading-normal text-nowrap',
             selectedStatus === option.value
               ? 'bg-[#333333] text-white'
               : 'border-[#D8D8D8] bg-white text-black',

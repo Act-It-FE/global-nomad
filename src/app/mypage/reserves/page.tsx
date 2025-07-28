@@ -19,6 +19,7 @@ export default function Page() {
   const [selectedStatus, setSelectedStatus] =
     useState<ReservationStatus | null>(null);
 
+  const queryParams = selectedStatus ? { status: selectedStatus } : {};
   const {
     data,
     fetchNextPage,
@@ -27,7 +28,7 @@ export default function Page() {
     isLoading,
     isError,
     error,
-  } = useMyReservationsQuery({});
+  } = useMyReservationsQuery(queryParams);
   const errorMessage = getErrorMessage(error, '예약 내역 조회에 실패했습니다');
   const isPC = useMediaQuery('pc');
 
@@ -41,9 +42,7 @@ export default function Page() {
   const filteredData = data?.pages
     .map((page) => ({
       ...page,
-      reservations: page.reservations?.filter((reservation) =>
-        selectedStatus ? reservation.status === selectedStatus : true,
-      ),
+      reservations: page.reservations,
     }))
     .filter((page) => page.reservations && page.reservations.length > 0);
 
@@ -87,7 +86,7 @@ export default function Page() {
                         endTime: reservation.endTime,
                       }}
                     />
-                    <ReservesBottom reservesInfo={{ ...reservation }} />
+                    <ReservesBottom reservesInfo={reservation} />
                   </ReservesCard.Content>
                   <ReservesCard.Thumbnail />
                 </ReservesCard>
@@ -98,16 +97,7 @@ export default function Page() {
                     )}
                     {reservation.status === 'completed' &&
                       !reservation.reviewSubmitted && (
-                        <ReviewReservationButton
-                          date={reservation.date}
-                          endTime={reservation.endTime}
-                          headCount={reservation.headCount}
-                          isReviewSubmitted={reservation.reviewSubmitted}
-                          reservationId={reservation.id}
-                          startTime={reservation.startTime}
-                          status={reservation.status}
-                          title={reservation.activity?.title}
-                        />
+                        <ReviewReservationButton {...reservation} />
                       )}
                   </>
                 )}
@@ -117,11 +107,6 @@ export default function Page() {
         )}
 
         {isFetchingNextPage && <div>다음 페이지 로딩 중...</div>}
-        {!hasNextPage && filteredData && filteredData.length > 0 && (
-          <div className='txt-15_M mb-10 flex items-center justify-center text-gray-500'>
-            모든 예약을 불러왔습니다.
-          </div>
-        )}
       </div>
     </div>
   );

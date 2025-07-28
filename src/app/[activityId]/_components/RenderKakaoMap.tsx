@@ -21,6 +21,10 @@ export default function RenderKakaoMap({ address }: RenderKakaoMapProps) {
         const map = new window.kakao.maps.Map(mapRef.current!, {
           center: coords,
           level: 3,
+          draggable: false,
+          scrollwheel: false,
+          disableDoubleClick: true,
+          disableDoubleClickZoom: true,
         });
 
         new window.kakao.maps.Marker({
@@ -34,6 +38,8 @@ export default function RenderKakaoMap({ address }: RenderKakaoMapProps) {
   }, [address]);
 
   return (
-    <div ref={mapRef} className='h-[300px] w-full rounded-md bg-gray-100' />
+    <div className='flex justify-center'>
+      <div ref={mapRef} className='h-450 w-full max-w-670 rounded-[24px]' />
+    </div>
   );
 }

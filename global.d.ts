@@ -19,6 +19,10 @@ declare global {
         options: {
           center: LatLng;
           level: number;
+          draggable?: boolean;
+          scrollwheel?: boolean;
+          disableDoubleClick?: boolean;
+          disableDoubleClickZoom?: boolean;
         },
       ) => KakaoMap;
       LatLng: new (lat: number | string, lng: number | string) => LatLng;

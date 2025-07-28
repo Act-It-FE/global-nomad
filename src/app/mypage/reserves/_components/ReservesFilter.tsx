@@ -1,13 +1,17 @@
 'use client';
 
+import Link from 'next/link';
+
 import { cn } from '@/utils/cn';
 
 export default function ReservesFilter({
   selectedStatus,
   onStatusChange,
+  isEmpty = false,
 }: {
   selectedStatus: string | null;
   onStatusChange: (status: string | null) => void;
+  isEmpty?: boolean;
 }) {
   const statusOptions = [
     { value: 'pending', label: '예약 완료' },
@@ -23,13 +27,38 @@ export default function ReservesFilter({
   };
 
   return (
-    <div className='flex flex-col items-start gap-14 self-stretch'>
+    <div
+      className={cn(
+        'flex flex-col self-stretch',
+        isEmpty ? 'items-center gap-40' : 'items-start gap-14',
+      )}
+    >
       <FilterHeader />
-      <FilterContent
-        selectedStatus={selectedStatus}
-        statusOptions={statusOptions}
-        onStatusClick={handleStatusClick}
-      />
+      {isEmpty ? (
+        <div className='flex flex-col items-center justify-center'>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            alt='예약이 없어요'
+            className='size-182 p-30'
+            src='/images/reserves-none.png'
+          />
+          <div className='txt-18_M mb-30 leading-normal tracking-[-0.45px] text-gray-600'>
+            아직 예약한 체험이 없어요
+          </div>
+          <Link
+            className='txt-16_B bg-primary-50 bg-primary-500 flex w-full items-center justify-center rounded-2xl px-40 py-13 tracking-[-0.4px] text-white'
+            href='/'
+          >
+            둘러보기
+          </Link>
+        </div>
+      ) : (
+        <FilterContent
+          selectedStatus={selectedStatus}
+          statusOptions={statusOptions}
+          onStatusClick={handleStatusClick}
+        />
+      )}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Icon from '../../components/Icon';
 
 type CardProps = {
-  image: string;
+  bannerImageUrl: string;
   title: string;
   rating: number;
   reviewCount: number;
@@ -13,7 +13,7 @@ type CardProps = {
 };
 
 export default function CardColumn({
-  image,
+  bannerImageUrl,
   title,
   rating,
   reviewCount,
@@ -28,7 +28,7 @@ export default function CardColumn({
           fill
           alt={`${title} 이미지`}
           className='rounded-[18px] object-cover md:rounded-[32px]'
-          src={image}
+          src={bannerImageUrl}
         />
       </div>
       <article className='relative z-10 mt-[-66px] flex w-full flex-col gap-4 rounded-[18px] bg-white px-17 py-16 text-gray-950 shadow-[-4.5px_-4.5px_11.25px_0px_rgba(0,0,0,0.05)] md:mt-[-76px] md:gap-2 md:rounded-[32px] md:px-30 md:py-20'>

@@ -15,7 +15,7 @@ export default async function ActivityDetail(props: Props) {
     const address = activity.address;
 
     return (
-      <div className='w-full px-[30px] sm:px-[24px]'>
+      <div className='w-full px-30 sm:px-24'>
         <LoadKakaoMap address={address} />
       </div>
     );

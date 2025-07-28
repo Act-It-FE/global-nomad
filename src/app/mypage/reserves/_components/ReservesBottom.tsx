@@ -12,7 +12,7 @@ export function ReservesBottom({
   const isPC = useMediaQuery('pc');
   return (
     <div className='flex w-full items-center justify-between'>
-      <div className='flex items-center gap-4 leading-normal'>
+      <div className='flex items-center gap-4'>
         <div className='txt-16_B lg:txt-18_B tracking-[-0.4px] text-gray-950 lg:tracking-[-0.45px]'>
           ₩{reservesInfo.totalPrice?.toLocaleString()}
         </div>

@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import Icon from '@/components/Icon';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/utils/cn';
 
 type Props = {
@@ -19,12 +20,16 @@ const sortOptions = [
 
 export default function SortDropdown({ selected = 'latest', onChange }: Props) {
   const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(dropdownRef, () => setOpen(false));
+
   const selectedLabel = sortOptions.find(
     (option) => option.value === selected,
   )?.label;
 
   return (
-    <div className='relative inline-block'>
+    <div ref={dropdownRef} className='relative inline-block'>
       <button
         className='flex items-center rounded-[15px] py-10 pr-10 pl-14'
         onClick={() => setOpen((prev) => !prev)}

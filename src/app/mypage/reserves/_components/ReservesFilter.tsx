@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-
 import { cn } from '@/utils/cn';
 
-export default function ReservesFilter() {
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-
+export default function ReservesFilter({
+  selectedStatus,
+  onStatusChange,
+}: {
+  selectedStatus: string | null;
+  onStatusChange: (status: string | null) => void;
+}) {
   const statusOptions = [
     { value: 'pending', label: '예약 완료' },
     { value: 'canceled', label: '예약 취소' },
@@ -16,7 +18,8 @@ export default function ReservesFilter() {
   ];
 
   const handleStatusClick = (value: string) => {
-    setSelectedStatus(selectedStatus === value ? null : value);
+    const newStatus = selectedStatus === value ? null : value;
+    onStatusChange(newStatus);
   };
 
   return (
@@ -57,7 +60,7 @@ function FilterContent({
         <button
           key={option.value}
           className={cn(
-            'txt-14_M flex items-center justify-center rounded-full border px-16 py-10',
+            'txt-14_M flex items-center justify-center rounded-full border px-16 py-10 text-nowrap',
             selectedStatus === option.value
               ? 'bg-[#333333] text-white'
               : 'border-[#D8D8D8] bg-white text-black',

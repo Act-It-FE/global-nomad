@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import useMyReservationsQuery from '@/hooks/reservations/useMyReservationsQuery';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -13,6 +15,8 @@ import ReservesHeader from './_components/ReservesHeader';
 import ReviewReservationButton from './_components/ReviewReservationButton';
 
 export default function Page() {
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+
   const {
     data,
     fetchNextPage,
@@ -31,19 +35,32 @@ export default function Page() {
     fetchNextPage,
   });
 
+  // 필터링된 데이터
+  const filteredData = data?.pages
+    .map((page) => ({
+      ...page,
+      reservations: page.reservations?.filter((reservation) =>
+        selectedStatus ? reservation.status === selectedStatus : true,
+      ),
+    }))
+    .filter((page) => page.reservations && page.reservations.length > 0);
+
   if (isLoading) return <div>로딩 중...</div>;
   if (isError) {
     return <div>에러:{errorMessage}</div>;
   }
   return (
     <div className='flex w-full flex-col gap-30 max-md:gap-13'>
-      <ReservesFilter />
+      <ReservesFilter
+        selectedStatus={selectedStatus}
+        onStatusChange={setSelectedStatus}
+      />
 
       <div>
-        {data?.pages.map((page, pageIndex) =>
+        {filteredData?.map((page, pageIndex) =>
           page.reservations?.map((reservation, itemIndex) => {
             const isLastElement =
-              pageIndex === data.pages.length - 1 &&
+              pageIndex === filteredData.length - 1 &&
               itemIndex === page.reservations.length - 1;
 
             return (
@@ -96,7 +113,11 @@ export default function Page() {
         )}
 
         {isFetchingNextPage && <div>다음 페이지 로딩 중...</div>}
-        {!hasNextPage && <div>모든 예약을 불러왔습니다.</div>}
+        {!hasNextPage && (
+          <div className='txt-15_M mb-10 flex items-center justify-center text-gray-500'>
+            모든 예약을 불러왔습니다.
+          </div>
+        )}
       </div>
     </div>
   );

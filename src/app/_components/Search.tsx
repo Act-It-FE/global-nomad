@@ -64,7 +64,7 @@ export default function Search({ isLoading, onSearch }: SearchProps) {
           {!isLoading ? (
             '검색하기'
           ) : (
-            <div className='flex items-center justify-center space-x-5'>
+            <div className='flex items-center justify-center gap-5'>
               <div className='h-8 w-8 animate-bounce rounded-full bg-white [animation-delay:-0.3s]' />
               <div className='h-8 w-8 animate-bounce rounded-full bg-white [animation-delay:-0.15s]' />
               <div className='h-8 w-8 animate-bounce rounded-full bg-white' />

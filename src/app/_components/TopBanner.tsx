@@ -21,6 +21,7 @@ export default function TopBanner({
           className='object-cover'
           src={imageUrl}
         />
+        <div className='absolute inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.15)] to-[rgba(0,0,0,0.5)]' />
       </div>
 
       <div className='absolute right-0 bottom-36 left-0 flex flex-col items-center justify-end gap-8 text-white md:bottom-76 md:gap-14 lg:bottom-101 lg:gap-19'>

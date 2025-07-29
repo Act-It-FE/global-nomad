@@ -78,7 +78,11 @@ export default function Input({
     switch (props.type) {
       case 'dropdown':
         return (
-          <DropdownInput className={`${COMMON_STYLE}`} id={id} {...props} />
+          <DropdownInput
+            className={`${COMMON_STYLE} ${FOCUS_STYLE}`}
+            id={id}
+            {...props}
+          />
         );
       case 'textarea':
         return (
@@ -150,7 +154,10 @@ function DropdownInput({
       />
       <div
         className='absolute top-15 right-20'
-        onClick={() => ref.current?.click()}
+        onClick={() => {
+          ref.current?.focus();
+          ref.current?.click();
+        }}
       >
         <Icon className='size-24 text-gray-950' icon='TriangleDown' />
       </div>

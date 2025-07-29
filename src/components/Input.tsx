@@ -169,8 +169,18 @@ function DropdownInput({
 }
 
 function TextareaInput({ className, height, ...props }: TextareaProps) {
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
-    <label className={cn(className, 'px-[16px]')} style={{ height }}>
+    <label
+      className={cn(
+        className,
+        isFocused
+          ? 'border-primary-500 border-[1.5px] px-[15.5px] py-[14.5px]'
+          : 'px-[16px]',
+      )}
+      style={{ height }}
+    >
       <textarea
         className={cn(
           'block h-full resize-none outline-none',
@@ -181,6 +191,8 @@ function TextareaInput({ className, height, ...props }: TextareaProps) {
         style={{
           scrollbarGutter: 'stable both-edges',
         }}
+        onBlur={() => setIsFocused(false)}
+        onFocus={() => setIsFocused(true)}
         {...props}
       />
     </label>

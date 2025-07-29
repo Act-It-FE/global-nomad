@@ -16,11 +16,11 @@ interface UseCalendarProps {
   onDateSelect?: (date: Date) => void;
 }
 
-export const useCalendar = ({
+export function useCalendar({
   currentDate = new Date(),
   events = [],
   onDateSelect,
-}: UseCalendarProps): UseCalendarReturn => {
+}: UseCalendarProps): UseCalendarReturn {
   // 1. 상태 관리
   const [state, setState] = useState<CalendarState>({
     currentDate: new Date(currentDate),
@@ -104,4 +104,4 @@ export const useCalendar = ({
     goToNextMonth,
     selectDate,
   };
-};
+}

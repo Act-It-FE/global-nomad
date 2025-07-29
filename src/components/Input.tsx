@@ -148,6 +148,11 @@ function DropdownInput({
     setIsOpen((prev) => !prev);
   };
 
+  const handleIconClick = () => {
+    ref.current?.focus();
+    ref.current?.click();
+  };
+
   useClickOutside(ref, () => setIsOpen(false));
 
   return (
@@ -164,13 +169,7 @@ function DropdownInput({
         onClick={handleClick}
         {...props}
       />
-      <div
-        className='absolute top-15 right-20'
-        onClick={() => {
-          ref.current?.focus();
-          ref.current?.click();
-        }}
-      >
+      <div className='absolute top-15 right-20' onClick={handleIconClick}>
         <Icon className='size-24 text-gray-950' icon='TriangleDown' />
       </div>
       {isOpen && (

@@ -33,6 +33,7 @@ export default function SortDropdown({ selected = 'latest', onChange }: Props) {
     <div ref={dropdownRef} className='relative inline-block'>
       <button
         className='flex items-center rounded-[15px] py-10 pr-10 pl-14'
+        type='button'
         onClick={() => setOpen((prev) => !prev)}
       >
         <span className='txt-16_M leading-19 text-gray-950'>

@@ -21,37 +21,38 @@ export default function CategoryBar({
   onSelectCategory,
 }: CategoryProps) {
   return (
-    <div className='flex gap-8 md:gap-20'>
-      {categories.map(({ label, icon }) => {
-        const isSelected = selectedCategory === label;
-
-        return (
-          <button
-            key={label}
-            className={cn(
-              'flex items-center justify-center gap-4 rounded-[100px] px-14 py-10 md:gap-6 md:px-16',
-              isSelected ? 'bg-[#333333]' : 'bg-white ring-1 ring-[#D8D8D8]',
-            )}
-            onClick={() => onSelectCategory(isSelected ? null : label)}
-          >
-            <Icon
+    <div className='overflow-x-auto p-1'>
+      <div className='flex gap-8 md:gap-20'>
+        {categories.map(({ label, icon }) => {
+          const isSelected = selectedCategory === label;
+          return (
+            <button
+              key={label}
               className={cn(
-                'size-16 md:size-24',
-                isSelected ? 'text-white' : 'text-black',
+                'flex shrink-0 items-center justify-center gap-4 rounded-[100px] px-14 py-10 md:gap-6 md:px-16',
+                isSelected ? 'bg-[#333333]' : 'bg-white ring-1 ring-[#D8D8D8]',
               )}
-              icon={icon}
-            />
-            <span
-              className={cn(
-                'txt-14_M md:txt-16_M leading-17 md:leading-19',
-                isSelected ? 'text-white' : 'text-gray-950',
-              )}
+              onClick={() => onSelectCategory(isSelected ? null : label)}
             >
-              {label}
-            </span>
-          </button>
-        );
-      })}
+              <Icon
+                className={cn(
+                  'size-16 md:size-24',
+                  isSelected ? 'text-white' : 'text-black',
+                )}
+                icon={icon}
+              />
+              <span
+                className={cn(
+                  'txt-14_M md:txt-16_M leading-17 md:leading-19',
+                  isSelected ? 'text-white' : 'text-gray-950',
+                )}
+              >
+                {label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

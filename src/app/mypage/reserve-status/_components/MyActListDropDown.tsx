@@ -22,7 +22,7 @@ export function MyActListDropDown({
         className='flex h-54 w-full items-center justify-between self-stretch rounded-2xl border border-gray-100 bg-white px-20 py-16 text-gray-950 shadow-[0_2px_6px_0_rgba(0,0,0,0.02)]'
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className='txt-16_M max-w-500 truncate tracking-[-0.4px]'>
+        <span className='txt-16_M max-w-300 truncate tracking-[-0.4px] lg:max-w-500'>
           {selectedActivity?.title || '체험 목록'}
         </span>
         <Icon icon={isOpen ? 'TriangleUp' : 'TriangleDown'} />

@@ -1,11 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import activitiesDetailApi from '@/api/activitiesApi';
-import { Review } from '@/api/types/Activities';
 import Icon from '@/components/Icon';
 import Pagination from '@/components/Pagination';
+import useActivityReviews from '@/hooks/activity-details/useActivityReviews';
 
 import ReviewCard from './ReviewCard';
 
@@ -14,36 +11,16 @@ type Props = {
 };
 
 export default function ActivityReviews({ activityId }: Props) {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [averageRating, setAverageRating] = useState(0);
-  const [page, setPage] = useState(1);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const size = 3;
-
-  useEffect(() => {
-    async function fetchReviews() {
-      try {
-        setIsLoading(true);
-        setErrorMessage('');
-
-        const { reviews, totalCount, averageRating } =
-          await activitiesDetailApi.getReviews(activityId, { page, size });
-
-        setReviews(reviews);
-        setTotalCount(totalCount);
-        setAverageRating(averageRating);
-      } catch (error) {
-        console.error('리뷰를 불러오는데 실패했습니다.', error);
-        setErrorMessage('후기를 불러오는데 문제가 발생했어요.');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchReviews();
-  }, [activityId, page]);
+  const {
+    reviews,
+    totalCount,
+    averageRating,
+    errorMessage,
+    isLoading,
+    page,
+    setPage,
+    size,
+  } = useActivityReviews({ activityId });
 
   const getRatingText = (rating: number) => {
     if (rating >= 0 && rating <= 1) return '매우 아쉬움';

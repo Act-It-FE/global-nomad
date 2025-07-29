@@ -133,7 +133,7 @@ function DropdownInput({
   defaultValue,
   placeholder,
   items,
-  maxHeight,
+  maxHeight = '280px',
   ...props
 }: DropdownProps) {
   const [value, setValue] = useState({ item: defaultValue, key: '' });
@@ -181,7 +181,6 @@ function DropdownInput({
         >
           <div
             className={cn(
-              maxHeight ? '' : 'max-h-256',
               'flex flex-col gap-4 overflow-y-auto pl-3',
               SCROLLBAR_STYLE,
             )}

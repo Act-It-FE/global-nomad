@@ -10,6 +10,9 @@ export default function RenderKakaoMap({ address }: RenderKakaoMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // 리사이즈 핸들러를 useEffect 바깥에 정의 가능하도록 초기화
+  const resizeHandlerRef = useRef<(() => void) | null>(null);
+
   useEffect(() => {
     if (!window.kakao || !mapRef.current) {
       setError('지도 정보를 불러올 수 없습니다.');
@@ -47,16 +50,21 @@ export default function RenderKakaoMap({ address }: RenderKakaoMapProps) {
           marker.setPosition(coords);
         };
 
-        window.addEventListener('resize', handleResize);
+        // 핸들러를 ref에 저장해서 클린업 함수에 접근 가능하게 함
+        resizeHandlerRef.current = handleResize;
 
-        return () => {
-          window.removeEventListener('resize', handleResize);
-        };
+        window.addEventListener('resize', handleResize);
       } catch (e) {
         console.error('지도 로딩 중 에러:', e);
         setError('지도를 표시하는 중 문제가 발생했습니다.');
       }
     });
+
+    return () => {
+      if (resizeHandlerRef.current) {
+        window.removeEventListener('resize', resizeHandlerRef.current);
+      }
+    };
   }, [address]);
 
   return (

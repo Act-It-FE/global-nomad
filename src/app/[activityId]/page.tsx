@@ -55,9 +55,6 @@ export default function ActivityDetail() {
       </div>
     );
   }
-  if (!activityId) {
-    return <div>유효하지 않은 체험 ID입니다.</div>;
-  }
 
   return (
     <div className='w-full px-30 sm:px-24'>

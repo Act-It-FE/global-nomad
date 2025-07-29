@@ -19,7 +19,7 @@ export function CalendarGrid() {
           </div>
         ))}
       </div>
-      <div className='grid grid-cols-7 bg-white'>
+      <div className='grid grid-cols-7'>
         {getCalendarDates(currentDate).map((date) => (
           <DayCell
             key={date.toISOString()}

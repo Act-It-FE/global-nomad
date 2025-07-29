@@ -37,8 +37,8 @@ export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
 
   if (!isCurrentMonth) {
     return (
-      <div className='flex h-124 flex-col items-center gap-5 border-t border-gray-50 bg-white px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10'>
-        <span className='txt-16_M leading-[normal] tracking-[-0.4px] text-gray-300'>
+      <div className='flex h-124 flex-col items-center gap-5 border-t border-gray-50 px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10'>
+        <span className='md:txt-16_M txt-12_M leading-[normal] tracking-[-0.4px] text-gray-300'>
           {date.getDate()}
         </span>
       </div>
@@ -49,7 +49,7 @@ export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
     <button
       ref={cellRef} // ref 추가
       className={cn(
-        'relative flex h-124 flex-col items-center gap-5 border-t border-gray-50 bg-white px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10',
+        'relative flex h-124 flex-col items-center gap-5 border-t border-gray-50 px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10',
         isSelected && 'border-primary-500 border',
       )}
       onClick={handleClick}

@@ -1,83 +1,69 @@
+// src/app/mypage/reserve-status/page.tsx
+
 'use client';
 
+import { useMyActQuery } from '@/hooks/reserve-status/useMyActivitiesQuery';
+
 import {
-  useMyActQuery,
-  // useMyActivitiesReservations,
-  // useMyActivitiesReservedSchedule,
-  useMyActReservationDashboard,
-} from '@/hooks/reserve-status/useMyActivitiesQuery';
-//import { useMyActReservationMutate } from '@/hooks/reserve-status/useMyActReservationMutate';
+  formatDateKorean,
+  getMonthName,
+  useCalendar,
+} from './_components/calendar';
 
 export default function Page() {
   const { data } = useMyActQuery();
-  const { data: reservationDashboard } = useMyActReservationDashboard(
-    data?.activities[0].id || 0,
-    { year: '2025', month: '07' },
-  );
 
-  // const { data: reservedSchedule } = useMyActivitiesReservedSchedule(
-  //   data?.activities[0].id || 0,
-  //   { date: '2025-07-28' },
-  // );
+  const { calendarDates, currentDate, goToPreviousMonth, goToNextMonth } =
+    useCalendar({
+      currentDate: new Date(),
+      events: [],
+      onDateSelect: (date) => {
+        console.warn('선택된 날짜:', date);
+      },
+    });
 
-  // const { data: reservations } = useMyActivitiesReservations(
-  //   data?.activities[0].id || 0,
-  //   {
-  //     scheduleId: reservedSchedule?.[0].scheduleId || 0,
-  //     status: 'pending',
-  //   },
-  // );
+  if (!data) return null;
 
-  // const { mutate: updateReservation } = useMyActReservationMutate(
-  //   data?.activities[0].id || 0,
-  //   reservations?.reservations?.[0].id || 0,
-  // );
-
-  // const handleApprove = () => {
-  //   if (reservations?.reservations?.[0]?.id) {
-  //     updateReservation({ status: 'confirmed' });
-  //   }
-  // };
-
-  // console.log(reservationDashboard);
-  // console.log(reservations?.reservations);
   return (
-    <div>
-      {reservationDashboard?.map((item) => (
-        <div key={item.date}>
-          <div>{item.date}</div>
-          <div>{item.reservations.completed}</div>
-          <div>{item.reservations.confirmed}</div>
-          <div>{item.reservations.pending}</div>
-        </div>
-      ))}
-      {/* <div>
+    <div className='flex w-full flex-col'>
+      <div className='flex items-center gap-4'>
         <button
-          className='mb-4 rounded bg-blue-500 px-4 py-2 text-white'
-          onClick={handleApprove}
+          className='rounded bg-blue-500 px-4 py-2 text-white'
+          onClick={goToPreviousMonth}
         >
-          승인 테스트
+          이전 달
+        </button>
+
+        <h2>{getMonthName(currentDate)}</h2>
+
+        <button
+          className='rounded bg-blue-500 px-4 py-2 text-white'
+          onClick={goToNextMonth}
+        >
+          다음 달
         </button>
       </div>
-      <div>
-        {reservedSchedule?.map((item) => (
-          <div key={item.scheduleId}>
-            <div>{item.startTime}</div>
-            <div>{item.endTime}</div>
-            <div>
-              <div>{item.count.declined}</div>
-              <div>{item.count.confirmed}</div>
-              <div>{item.count.pending}</div>
-            </div>
-          </div>
-        ))}
-      </div> */}
 
-      {data?.activities.map((item) => (
-        <div key={item.id}>
-          <div>{item.title}</div>
+      {/* 월 변경 확인용 정보 */}
+      <div className='mt-4 space-y-2'>
+        <p>현재 월: {currentDate.getMonth() + 1}월</p>
+        <p>현재 년도: {currentDate.getFullYear()}년</p>
+        <p>월 이름: {getMonthName(currentDate)}</p>
+        <p>총 날짜 개수: {calendarDates.length}개</p>
+
+        {/* 처음 5개 날짜 보여주기 */}
+        <div>
+          <p>처음 5개 날짜:</p>
+          <ul className='ml-4'>
+            {calendarDates.slice(0, 5).map((date) => (
+              <li key={date.date.toISOString()}>
+                {formatDateKorean(date.date)}
+                (이번달: {date.isCurrentMonth ? 'O' : 'X'})
+              </li>
+            ))}
+          </ul>
         </div>
-      ))}
+      </div>
     </div>
   );
 }

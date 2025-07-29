@@ -12,7 +12,7 @@ export default function TopBanner({
   subtitle,
 }: TopBannerProps) {
   return (
-    <section className='relative w-full overflow-hidden rounded-[12px] shadow-[0_4px_24px_0_rgba(156,180,202,0.20)] md:rounded-[18px] lg:rounded-[24px]'>
+    <section className='card-shadow relative w-full overflow-hidden rounded-[12px] md:rounded-[18px] lg:rounded-[24px]'>
       <div className='relative aspect-[327/181] md:aspect-[684/375] lg:aspect-[1120/500]'>
         <Image
           fill

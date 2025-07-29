@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import { Category, Sort } from '@/api/types/activities';
 import useActivitiesQuery from '@/hooks/activities/useActivitiesQuery';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
@@ -11,8 +12,10 @@ import CategoryBar from './CategoryBar';
 import SortDropdown from './SortDropdown';
 
 export default function AllActivities() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [sortOption, setSortOption] = useState<string>('latest');
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null,
+  );
+  const [sortOption, setSortOption] = useState<Sort>('latest');
   const [currentPage, setCurrentPage] = useState(1);
 
   const isMobile = useMediaQuery('mobile');
@@ -28,7 +31,7 @@ export default function AllActivities() {
     isError,
   } = useActivitiesQuery({
     method: 'offset',
-    category: selectedCategory || null,
+    category: selectedCategory || undefined,
     sort: sortOption,
     page: currentPage,
     size: pageSize,
@@ -38,12 +41,12 @@ export default function AllActivities() {
     setCurrentPage(1);
   }, [pageSize]);
 
-  const handleSelectCategory = (category) => {
+  const handleSelectCategory = (category: Category | null) => {
     setSelectedCategory(category);
     setCurrentPage(1); // 카테고리 바뀌면 페이지 초기화
   };
 
-  const handleChangeSort = (sort) => {
+  const handleChangeSort = (sort: Sort) => {
     setSortOption(sort);
     setCurrentPage(1); // 정렬 바뀌면 페이지 초기화
   };

@@ -1,7 +1,13 @@
 // Activities 타입
 
-type Category = '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
-type Sort = 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
+export type Category =
+  | '문화 · 예술'
+  | '식음료'
+  | '스포츠'
+  | '투어'
+  | '관광'
+  | '웰빙';
+export type Sort = 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
 
 // 체험 리스트 조회
 export interface BaseActivity {
@@ -24,6 +30,7 @@ export interface Activity extends BaseActivity {
 
 export interface ActivityResponse {
   activities: Activity[];
+  totalCount: number;
 }
 
 interface CommonParams {

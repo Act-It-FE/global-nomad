@@ -2,13 +2,14 @@
 
 import { useRef, useState } from 'react';
 
+import { Sort } from '@/api/types/activities';
 import Icon from '@/components/Icon';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/utils/cn';
 
 type Props = {
   selected: string;
-  onChange: (value: string) => void;
+  onChange: (value: Sort) => void;
 };
 
 const sortOptions = [

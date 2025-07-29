@@ -1,11 +1,12 @@
 'use client';
 
+import { Category } from '@/api/types/activities';
 import Icon from '@/components/Icon';
 import { cn } from '@/utils/cn';
 
 type CategoryProps = {
-  selectedCategory: string | null;
-  onSelectCategory: (category: string | null) => void;
+  selectedCategory: Category | null;
+  onSelectCategory: (category: Category | null) => void;
 };
 
 const categories = [

@@ -3,12 +3,7 @@
 'use client';
 
 import { useMyActQuery } from '@/hooks/reserve-status/useMyActivitiesQuery';
-
-import {
-  formatDateKorean,
-  getMonthName,
-  useCalendar,
-} from './_components/calendar';
+import { formatDateKorean, getMonthName, useCalendar } from '@/utils/calendar';
 
 export default function Page() {
   const { data } = useMyActQuery();

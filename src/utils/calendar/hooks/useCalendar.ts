@@ -2,13 +2,13 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
+import { getCalendarDates, isSameDate } from '../../dateUtils';
 import {
   CalendarDate,
   CalendarEvent,
   CalendarState,
   UseCalendarReturn,
 } from '../types';
-import { getCalendarDates, isSameDate } from '../utils/dateUtils';
 
 interface UseCalendarProps {
   currentDate?: Date;

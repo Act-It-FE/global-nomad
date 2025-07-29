@@ -2,7 +2,7 @@
 export * from './types';
 
 // Utils
-export * from './utils/dateUtils';
+export * from '../dateUtils';
 
 // Hooks
 export * from './hooks/useCalendar';

@@ -11,6 +11,7 @@ type CategoryProps = {
 const categories = [
   { label: '문화 · 예술', icon: 'Art' },
   { label: '식음료', icon: 'Food' },
+  { label: '스포츠', icon: 'Sport' },
   { label: '투어', icon: 'Tour' },
   { label: '관광', icon: 'Bus' },
   { label: '웰빙', icon: 'Wellbeing' },

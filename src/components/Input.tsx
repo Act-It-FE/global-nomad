@@ -174,27 +174,35 @@ function DropdownInput({
       {isOpen && (
         <div
           className={cn(
-            'z-10 flex flex-col gap-4',
-            'absolute top-64 w-full rounded-2xl border border-gray-100 bg-white p-12',
+            'absolute top-64 z-10 w-full rounded-2xl border border-gray-100 bg-white px-8 py-11',
             'shadow-[0_2px_6px_rgba(0,0,0,0.02)]',
           )}
         >
-          {elements.current.map((element) => (
-            <button
-              key={element.key}
-              className={cn(
-                'txt-16_M rounded-xl px-20 py-16 text-start leading-none wrap-break-word text-gray-900',
-                element === value && 'bg-primary-100',
-              )}
-              type='button'
-              onClick={() => {
-                setValue(element);
-                setIsOpen(false);
-              }}
-            >
-              {element.item}
-            </button>
-          ))}
+          <div
+            className={cn(
+              'max-h-256',
+              'flex flex-col gap-4 overflow-y-auto pl-3',
+              SCROLLBAR_STYLE,
+            )}
+            style={{ scrollbarGutter: 'stable' }}
+          >
+            {elements.current.map((element) => (
+              <button
+                key={element.key}
+                className={cn(
+                  'txt-16_M rounded-xl px-20 py-16 text-start leading-none wrap-break-word text-gray-900',
+                  element === value && 'bg-primary-100',
+                )}
+                type='button'
+                onClick={() => {
+                  setValue(element);
+                  setIsOpen(false);
+                }}
+              >
+                {element.item}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </>

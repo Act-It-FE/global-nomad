@@ -125,8 +125,11 @@ function DropdownInput({
   items,
   ...props
 }: DropdownProps) {
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState({ item: defaultValue, id: '' });
   const [isOpen, setIsOpen] = useState(false);
+  const elements = useRef(
+    items.map((item) => ({ item, id: crypto.randomUUID() })),
+  );
   const ref = useRef<HTMLInputElement>(null);
 
   const handleClick = (e: MouseEvent<HTMLInputElement>) => {
@@ -140,10 +143,10 @@ function DropdownInput({
     <>
       <input
         ref={ref}
-        className={`${className} ${value ? 'text-gray-950' : 'text-gray-400'} text-start`}
+        className={`${className} ${value.id ? 'text-gray-950' : 'text-gray-400'} text-start`}
         id={id}
         type='button'
-        value={value ?? placeholder ?? ''}
+        value={value.item ?? placeholder ?? ''}
         onClick={handleClick}
         {...props}
       />
@@ -158,20 +161,20 @@ function DropdownInput({
             'shadow-[0_2px_6px_rgba(0,0,0,0.02)]',
           )}
         >
-          {items.map((item) => (
+          {elements.current.map((element) => (
             <button
-              key={item}
+              key={element.id}
               className={cn(
                 'txt-16_M h-48 rounded-xl px-20 text-start text-gray-900',
-                item === value && 'bg-primary-100',
+                element === value && 'bg-primary-100',
               )}
               type='button'
               onClick={() => {
-                setValue(item);
+                setValue(element);
                 setIsOpen(false);
               }}
             >
-              {item}
+              {element.item}
             </button>
           ))}
         </div>

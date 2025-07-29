@@ -1,4 +1,4 @@
-export type ReservationStatus = 'pending' | 'confirmed' | 'completed';
+export type DailyReservationStatus = 'pending' | 'confirmed' | 'completed';
 
 export interface CalendarDate {
   date: Date;
@@ -7,7 +7,7 @@ export interface CalendarDate {
   isDisabled: boolean;
   pendingCount?: number; // 대기중
   confirmedCount?: number; // 확정
-  declinedCount?: number; // 거절;
+  completedCount?: number; // 완료
   hadReservation?: boolean;
 }
 
@@ -16,7 +16,7 @@ export interface CalendarEvent {
   name: string;
   headCount: number;
   time: string;
-  status: ReservationStatus;
+  status: DailyReservationStatus;
   date: Date;
 }
 

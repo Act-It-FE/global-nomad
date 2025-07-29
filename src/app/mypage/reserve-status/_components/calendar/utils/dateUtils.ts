@@ -19,13 +19,20 @@ export const getLastDayOfMonth = (date: Date): Date => {
 // 달력에 표시할 모든 날짜 배열 생성
 export const getCalendarDates = (date: Date): Date[] => {
   const firstDay = getFirstDayOfMonth(date);
+  const firstDayOfWeek = firstDay.getDay(); // 0(일요일) ~ 6(토요일)
+  const daysInMonth = getLastDayOfMonth(date).getDate(); // 해당 월의 마지막 날
 
+  // 필요한 주 수 계산
+  const weeksCount = Math.ceil((firstDayOfWeek + daysInMonth) / 7);
+  const totalDays = weeksCount * 7; // 총 필요한 날짜 수
+
+  // 시작 날짜 (일요일부터)
   const startDate = new Date(firstDay);
-  startDate.setDate(startDate.getDate() - firstDay.getDay());
+  startDate.setDate(startDate.getDate() - firstDayOfWeek);
 
-  // 5주 완성 (35일)
+  // 끝 날짜
   const endDate = new Date(startDate);
-  endDate.setDate(endDate.getDate() + 34);
+  endDate.setDate(endDate.getDate() + totalDays - 1);
 
   const dates: Date[] = [];
   const current = new Date(startDate);

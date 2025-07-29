@@ -1,66 +1,33 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import activitiesDetailApi from '@/api/activitiesApi';
+import { useActivityDescription } from '@/hooks/activity-details/useActivityDescription';
 
 type Props = {
   activityId: number;
 };
 
 export default function ActivityDescription({ activityId }: Props) {
-  const [description, setDescription] = useState('');
-  const [bannerImageUrl, setBannerImageUrl] = useState('');
-  const [subImages, setSubImages] = useState<string[]>([]);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  // 중복 제거 후 랜덤 2장 선택
-  const getRandomTwo = (arr: string[]) => {
-    const unique = Array.from(new Set(arr));
-    if (unique.length <= 2) return unique;
-    const shuffled = [...unique].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 2);
-  };
-
-  useEffect(() => {
-    async function fetchActivityDetail() {
-      try {
-        setIsLoading(true);
-        setErrorMessage('');
-
-        const activity = await activitiesDetailApi.getDetail(activityId);
-        setDescription(activity.description);
-        setBannerImageUrl(activity.bannerImageUrl);
-
-        const imageUrls = activity.subImages.map((img) => img.imageUrl);
-        const selected =
-          imageUrls.length === 1 ? imageUrls : getRandomTwo(imageUrls);
-        setSubImages(selected);
-      } catch (error) {
-        console.error('체험 설명을 불러오는데 실패했습니다.', error);
-        setErrorMessage('체험 설명을 불러오지 못했습니다.');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchActivityDetail();
-  }, [activityId]);
-
-  if (isLoading)
-    return <div className='text-center text-gray-400'>불러오는 중...</div>;
-  if (errorMessage)
-    return <div className='text-center text-red-500'>{errorMessage}</div>;
+  const { description, bannerImageUrl, subImages, errorMessage, isLoading } =
+    useActivityDescription(activityId);
 
   const isSingleSubImage = subImages.length === 1;
+
+  if (isLoading) {
+    return <div className='text-center text-gray-400'>불러오는 중...</div>;
+  }
+
+  if (errorMessage) {
+    return <div className='text-center text-red-500'>{errorMessage}</div>;
+  }
 
   return (
     <section className='my-40 flex flex-col gap-24'>
       <div className='flex w-full gap-12'>
         {bannerImageUrl && (
           <div
-            className={`overflow-hidden ${isSingleSubImage ? 'aspect-[6/3] w-1/2' : 'aspect-[6/3] flex-1'}`}
+            className={`overflow-hidden ${
+              isSingleSubImage ? 'aspect-[6/3] w-1/2' : 'aspect-[6/3] flex-1'
+            }`}
           >
             <img
               alt='배너 이미지'
@@ -71,15 +38,23 @@ export default function ActivityDescription({ activityId }: Props) {
         )}
 
         <div
-          className={`flex ${isSingleSubImage ? 'w-1/2' : 'flex-1'} flex-col gap-12`}
+          className={`flex ${
+            isSingleSubImage ? 'w-1/2' : 'flex-1'
+          } flex-col gap-12`}
         >
           {subImages[0] && (
             <div
-              className={`overflow-hidden ${isSingleSubImage ? 'aspect-[6/3]' : 'aspect-[6/3] flex-1'}`}
+              className={`overflow-hidden ${
+                isSingleSubImage ? 'aspect-[6/3]' : 'aspect-[6/3] flex-1'
+              }`}
             >
               <img
                 alt='서브 이미지 1'
-                className={`h-full w-full ${subImages.length === 1 ? 'rounded-tr-[24px] rounded-br-[24px]' : 'rounded-tr-[24px] object-cover'}`}
+                className={`h-full w-full ${
+                  subImages.length === 1
+                    ? 'rounded-tr-[24px] rounded-br-[24px]'
+                    : 'rounded-tr-[24px]'
+                } object-cover`}
                 src={subImages[0]}
               />
             </div>

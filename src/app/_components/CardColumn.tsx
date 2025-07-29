@@ -21,7 +21,7 @@ export default function CardColumn({
 }: CardProps) {
   const formatted = price.toLocaleString();
   return (
-    <Link className='flex w-full flex-col lg:w-262' href={`/${id}`}>
+    <Link className='flex w-full flex-col' href={`/${id}`}>
       <div className='relative aspect-[155/177] w-full md:aspect-[332/347] lg:h-290'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

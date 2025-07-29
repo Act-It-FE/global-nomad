@@ -223,10 +223,11 @@ function TextareaInput({ className, height, ...props }: TextareaProps) {
       style={{ height }}
     >
       <textarea
-        className={cn('block h-full resize-none outline-none', SCROLLBAR_STYLE)}
-        style={{
-          scrollbarGutter: 'stable both-edges',
-        }}
+        className={cn(
+          'block h-full resize-none pl-3 outline-none',
+          SCROLLBAR_STYLE,
+        )}
+        style={{ scrollbarGutter: 'stable' }}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
         {...props}

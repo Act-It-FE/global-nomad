@@ -23,8 +23,8 @@ export default function ActivityReviews({ activityId }: Props) {
   } = useActivityReviews({ activityId });
 
   const getRatingText = (rating: number) => {
-    if (rating >= 0 && rating <= 1) return '매우 아쉬움';
-    if (rating > 1 && rating <= 2) return '아쉬움';
+    if (rating >= 0 && rating <= 1) return '매우 불만족';
+    if (rating > 1 && rating <= 2) return '불만족';
     if (rating > 2 && rating <= 3) return '보통';
     if (rating > 3 && rating <= 4) return '만족';
     if (rating > 4 && rating <= 5) return '매우 만족';
@@ -33,18 +33,18 @@ export default function ActivityReviews({ activityId }: Props) {
 
   return (
     <div className='my-40'>
-      <div className='txt-16_B sm:txt-18_B flex flex-row gap-10 leading-19 sm:leading-21'>
+      <div className='txt-16_B md:txt-18_B flex flex-row gap-10 leading-19 md:leading-21'>
         체험 후기
-        <span className='sm:txt-16_B txt-14_M leading-20 font-semibold text-gray-500 sm:leading-20'>
+        <span className='md:txt-16_B txt-14_M leading-20 font-semibold text-gray-500 md:leading-20'>
           {totalCount}개
         </span>
       </div>
 
       <section className='flex flex-col items-center justify-center gap-4'>
-        <p className='txt-24_M sm:txt-32_B font-semibold'>
+        <p className='txt-24_M md:txt-32_B font-semibold'>
           {isNaN(averageRating) ? '0.0' : averageRating.toFixed(1)}
         </p>
-        <p className='txt-14_B sm:txt-16_B leading-24 sm:leading-19'>
+        <p className='txt-14_B md:txt-16_B leading-24 md:leading-19'>
           {getRatingText(averageRating)}
         </p>
         <div className='flex flex-row items-center justify-center'>

@@ -14,7 +14,7 @@ function formatDate(dateString: string) {
 
 export default function ReviewCard({ review }: Props) {
   return (
-    <div className='w-full rounded-[24px] bg-white p-20 shadow-[0_4px_20px_rgba(0,0,0,0.06)]'>
+    <div className='card-shadow w-full rounded-[24px] bg-white p-20'>
       <div className='txt-16_B leading-19'>
         {review.user.nickname}
         <span className='txt-14_M ml-6 leading-17 text-gray-400'>
@@ -36,7 +36,7 @@ export default function ReviewCard({ review }: Props) {
           ))}
         </div>
       </div>
-      <div className='sm:txt-16_M text-14_M text-gray-950'>
+      <div className='md:txt-16_M text-14_M text-gray-950'>
         {review.content}
       </div>
     </div>

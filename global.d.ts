@@ -1,8 +1,3 @@
-declare module '*.svg' {
-  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
-  export default content;
-}
-
 export {};
 
 // 전역스코프에 타입 확장

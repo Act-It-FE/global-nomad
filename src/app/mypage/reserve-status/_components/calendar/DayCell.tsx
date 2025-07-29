@@ -1,7 +1,9 @@
 import { useRef } from 'react';
 
 import { useClickOutside } from '@/hooks/useClickOutside';
+import { useCalendarStore } from '@/stores/calendarStore';
 import { cn } from '@/utils/cn';
+import { isSameDate } from '@/utils/dateUtils';
 
 interface DayCellProps {
   // 기본 날짜 정보
@@ -14,39 +16,28 @@ interface DayCellProps {
     confirmed: number; // 승인: 8
     completed: number; // 완료: 10
   };
-
-  // 상호작용
-  isSelected?: boolean; // 선택된 날짜인지
-  onClick?: (date: Date) => void; // 클릭 이벤트
-  onDeselect?: () => void; // 선택 해제 이벤트 추가
 }
 
-export function DayCell({
-  date,
-  isCurrentMonth,
-  reservations,
-  isSelected,
-  onClick,
-  onDeselect, // 추가
-}: DayCellProps) {
-  const cellRef = useRef<HTMLButtonElement>(null); // ref 추가
+export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
+  const cellRef = useRef<HTMLButtonElement>(null);
+  const { selectedDate, setSelectedDate } = useCalendarStore();
+
+  const handleClick = () => {
+    setSelectedDate(date);
+  };
+
+  const isSelected = selectedDate ? isSameDate(date, selectedDate) : false;
 
   // 다른 곳 클릭 시 선택 해제
   useClickOutside(cellRef, () => {
-    if (isSelected && onDeselect) {
-      onDeselect();
+    if (isSelected) {
+      setSelectedDate(null); // store에서 직접 해제
     }
   });
 
-  const handleClick = () => {
-    if (onClick) {
-      onClick(date);
-    }
-  };
-
   if (!isCurrentMonth) {
     return (
-      <div className='flex h-124 flex-col items-center gap-5 bg-white px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10'>
+      <div className='flex h-124 flex-col items-center gap-5 border-t border-gray-50 bg-white px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10'>
         <span className='txt-16_M leading-[normal] tracking-[-0.4px] text-gray-300'>
           {date.getDate()}
         </span>
@@ -58,7 +49,7 @@ export function DayCell({
     <button
       ref={cellRef} // ref 추가
       className={cn(
-        'relative flex h-124 flex-col items-center gap-5 bg-white px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10',
+        'relative flex h-124 flex-col items-center gap-5 border-t border-gray-50 bg-white px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10',
         isSelected && 'border-primary-500 border',
       )}
       onClick={handleClick}

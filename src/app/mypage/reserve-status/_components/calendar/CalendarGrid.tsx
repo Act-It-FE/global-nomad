@@ -1,20 +1,11 @@
-import { getCalendarDates, isSameDate } from '@/utils/dateUtils';
+import { useCalendarStore } from '@/stores/calendarStore';
+import { getCalendarDates } from '@/utils/dateUtils';
 
 import { DayCell } from './DayCell';
 
-interface CalendarGridProps {
-  currentDate: Date; // 현재 월
-  selectedDate?: Date | null; // 선택된 날짜
-  onDateSelect?: (date: Date) => void; // 날짜 클릭 시
-  onDateDeselect?: () => void; // 선택 해제 시
-}
-export function CalendarGrid({
-  currentDate,
-  selectedDate,
-  onDateSelect,
-  onDateDeselect,
-}: CalendarGridProps) {
+export function CalendarGrid() {
   const weekDay = ['일', '월', '화', '수', '목', '금', '토'];
+  const { currentDate } = useCalendarStore();
 
   return (
     <div>
@@ -34,9 +25,6 @@ export function CalendarGrid({
             key={date.toISOString()}
             date={date}
             isCurrentMonth={date.getMonth() === currentDate.getMonth()}
-            isSelected={selectedDate ? isSameDate(date, selectedDate) : false}
-            onClick={onDateSelect}
-            onDeselect={onDateDeselect}
           />
         ))}
       </div>

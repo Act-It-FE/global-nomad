@@ -42,3 +42,16 @@ export function useMyActMutate(activityId: number) {
     },
   });
 }
+
+export function useMyActDelete(activityId: number) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => myActivitiesApi.delete(activityId),
+    onSuccess: () => {
+      // 내 체험 목록 새로고침
+      queryClient.invalidateQueries({
+        queryKey: myActivitiesQueryKeys().getList({}),
+      });
+    },
+  });
+}

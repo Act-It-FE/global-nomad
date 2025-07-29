@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import activitiesDetailApi from '@/api/activitiesApi';
 import getErrorMessage from '@/utils/getErrorMessage';
 
+import ActivityReviews from './_components/ActivityReviews';
 import LoadKakaoMap from './_components/LoadKakaoMap';
 
 export default function ActivityDetail() {
@@ -58,6 +59,7 @@ export default function ActivityDetail() {
   return (
     <div className='w-full px-30 sm:px-24'>
       <LoadKakaoMap address={address} />
+      <ActivityReviews activityId={Number(activityId)} />
     </div>
   );
 }

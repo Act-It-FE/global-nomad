@@ -41,7 +41,7 @@ export default function SortDropdown({ selected = 'latest', onChange }: Props) {
       </button>
 
       {open && (
-        <ul className='absolute right-10 z-10 mt-2 min-w-[150px] rounded border border-gray-200 bg-white shadow'>
+        <ul className='absolute right-10 z-11 mt-2 min-w-[150px] rounded border border-gray-200 bg-white shadow'>
           {sortOptions.map((option) => (
             <li key={option.value}>
               <button

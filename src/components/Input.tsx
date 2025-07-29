@@ -148,12 +148,12 @@ function DropdownInput({
         onClick={handleClick}
         {...props}
       />
-      <label
+      <div
         className='absolute top-15 right-20'
         onClick={() => ref.current?.click()}
       >
         <Icon className='size-24 text-gray-950' icon='TriangleDown' />
-      </label>
+      </div>
       {isOpen && (
         <div
           className={cn(

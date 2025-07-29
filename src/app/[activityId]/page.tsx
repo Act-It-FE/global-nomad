@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import activitiesDetailApi from '@/libs/activitiesDetail';
+import activitiesDetailApi from '@/api/activitiesApi';
 import getErrorMessage from '@/utils/getErrorMessage';
 
 import LoadKakaoMap from './_components/LoadKakaoMap';

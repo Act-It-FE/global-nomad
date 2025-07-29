@@ -21,9 +21,11 @@ export default function ReviewCard({ review }: Props) {
           {formatDate(review.createdAt)}
         </span>
         <div className='mt-2 mb-10 flex gap-1'>
+          <span className='sr-only'>{review.rating}점 (5점 만점)</span>
           {[1, 2, 3, 4, 5].map((i) => (
             <Icon
               key={i}
+              aria-hidden='true'
               className={
                 i <= review.rating
                   ? 'h-16 w-16 fill-yellow-400'

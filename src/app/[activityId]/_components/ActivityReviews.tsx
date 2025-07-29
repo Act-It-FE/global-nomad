@@ -35,14 +35,14 @@ export default function ActivityReviews({ activityId }: Props) {
     <div className='my-40'>
       <div className='txt-16_B sm:txt-18_B flex flex-row gap-10 leading-19 sm:leading-21'>
         체험 후기
-        <span className='sm:txt-16_B txt_14_M leading-20 font-semibold text-gray-500 sm:leading-20'>
+        <span className='sm:txt-16_B txt-14_M leading-20 font-semibold text-gray-500 sm:leading-20'>
           {totalCount}개
         </span>
       </div>
 
       <section className='flex flex-col items-center justify-center gap-4'>
         <p className='txt-24_M sm:txt-32_B font-semibold'>
-          {averageRating.toFixed(1)}
+          {isNaN(averageRating) ? '0.0' : averageRating.toFixed(1)}
         </p>
         <p className='txt-14_B sm:txt-16_B leading-24 sm:leading-19'>
           {getRatingText(averageRating)}

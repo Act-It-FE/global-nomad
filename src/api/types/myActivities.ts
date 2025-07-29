@@ -143,3 +143,8 @@ export interface UpdateMyActivityBody {
   scheduleIdsToRemove?: number[];
   schedulesToAdd?: CreateScheduleBody[];
 }
+
+export interface GetMyActivitiesParams {
+  cursorId?: number;
+  size?: number;
+}

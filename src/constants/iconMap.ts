@@ -28,7 +28,6 @@ const ICON_MAP = {
   User: () => import('@/assets/icons/user.svg'),
   Warning: () => import('@/assets/icons/warning.svg'),
   Wellbeing: () => import('@/assets/icons/wellbeing.svg'),
-  Kakao: () => import('@/assets/icons/kakao.svg'),
   X: () => import('@/assets/icons/x.svg'),
   Youtube: () => import('@/assets/icons/youtube.svg'),
 };

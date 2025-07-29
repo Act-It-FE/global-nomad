@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
+import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/Button';
-import Icon from '@/components/Icon';
 import Input from '@/components/Input';
 
 export default function Login() {
@@ -25,7 +25,7 @@ export default function Login() {
   };
 
   return (
-    <div className='flex h-full w-full flex-col items-center justify-center'>
+    <div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
       <div className='flex w-328 flex-col items-center md:w-640'>
         <div className='relative mb-42 h-144 w-144 md:mb-62 md:h-199 md:w-255'>
           <Image
@@ -71,32 +71,23 @@ export default function Login() {
               </div>
             </div>
 
-            {isFormValid ? (
-              <Button
-                className='txt-16_B mt-24 h-54 w-full md:mt-30'
-                rounded='16'
-                variant='primary'
-                onClick={handleSubmit}
-              >
-                로그인하기
-              </Button>
-            ) : (
-              <Button
-                disabled
-                className='txt-16_B mt-24 h-54 w-full md:mt-30'
-                rounded='16'
-              >
-                로그인하기
-              </Button>
-            )}
+            <Button
+              className='txt-16_B mt-24 h-54 w-full md:mt-30'
+              disabled={!isFormValid}
+              rounded='16'
+              variant={isFormValid ? 'primary' : undefined}
+              onClick={handleSubmit}
+            >
+              로그인하기
+            </Button>
           </div>
           <div className='flex w-full items-center'>
-            <div className='h-1 flex-grow bg-gray-100' />
-            <span className='txt-16 text-gray-550 px-10'>or</span>
-            <div className='h-1 flex-grow bg-gray-100' />
+            <hr className='h-1 flex-grow text-gray-100' />
+            <span className='txt-16 px-10 text-[#79747e]'>or</span>
+            <hr className='h-1 flex-grow text-gray-100' />
           </div>
           <Button
-            icon={<Icon className='mr-2 size-24' icon='Kakao' />}
+            icon={<KakaoIcon className='mr-2 h-24 w-24' />}
             size='xl'
             variant='kakao'
           >

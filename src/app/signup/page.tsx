@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
+import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/Button';
-import Icon from '@/components/Icon';
 import Input from '@/components/Input';
 
 export default function SignUp() {
@@ -16,7 +16,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const isEmailValid = /^\S+@\S+\.\S+$/.test(email);
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const emailError =
     email.length > 0 && !isEmailValid ? '잘못된 이메일입니다.' : '';
 
@@ -42,7 +42,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className='flex h-full w-full flex-col items-center justify-center'>
+    <div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
       <div className='flex w-328 flex-col items-center md:w-640'>
         {/* 로고 */}
         <div className='relative mb-42 h-144 w-144 md:mb-62 md:h-199 md:w-255'>
@@ -60,9 +60,7 @@ export default function SignUp() {
           />
         </div>
 
-        {/* 폼 필드 & 버튼 & SNS & 하단 링크 */}
         <div className='flex flex-col items-center gap-24 md:gap-30'>
-          {/* 입력 필드 */}
           <div className='flex w-328 flex-col gap-16 md:w-640 md:gap-20'>
             <div className='flex flex-col gap-10'>
               <p className='txt-16_M text-gray-950'>이메일</p>
@@ -113,35 +111,26 @@ export default function SignUp() {
             </div>
           </div>
 
-          {isFormValid ? (
-            <Button
-              className='txt-16_B mt-24 h-54 w-full md:mt-30'
-              rounded='16'
-              variant='primary'
-              onClick={handleSubmit}
-            >
-              회원가입하기
-            </Button>
-          ) : (
-            <Button
-              disabled
-              className='txt-16_B mt-24 h-54 w-full md:mt-30'
-              rounded='16'
-            >
-              회원가입하기
-            </Button>
-          )}
+          <Button
+            className='txt-16_B mt-24 h-54 w-full md:mt-30'
+            disabled={!isFormValid}
+            rounded='16'
+            variant={isFormValid ? 'primary' : undefined}
+            onClick={handleSubmit}
+          >
+            회원가입하기
+          </Button>
 
           <div className='flex w-full items-center'>
-            <div className='h-1 flex-grow bg-gray-100' />
-            <span className='txt-16 text-gray-550 px-10'>
+            <hr className='h-1 flex-grow text-gray-100' />
+            <span className='txt-16 px-10 text-[#79747e]'>
               SNS 계정으로 회원가입하기
             </span>
-            <div className='h-1 flex-grow bg-gray-100' />
+            <hr className='h-1 flex-grow text-gray-100' />
           </div>
 
           <Button
-            icon={<Icon className='mr-2 size-24' icon='Kakao' />}
+            icon={<KakaoIcon className='mr-2 h-24 w-24' />}
             size='xl'
             variant='kakao'
           >

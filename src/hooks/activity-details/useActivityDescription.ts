@@ -13,7 +13,13 @@ export function useActivityDescription(activityId: number) {
   const getRandomTwo = (arr: string[]) => {
     const unique = Array.from(new Set(arr));
     if (unique.length <= 2) return unique;
-    const shuffled = [...unique].sort(() => 0.5 - Math.random());
+
+    const shuffled = [...unique];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
     return shuffled.slice(0, 2);
   };
 

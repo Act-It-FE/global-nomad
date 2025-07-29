@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
-import { Review } from '@/api/types/Activities';
+import { Review } from '@/api/types/activities';
 
 interface UseActivityReviewsProps {
   activityId: number;

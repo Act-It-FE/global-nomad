@@ -1,4 +1,4 @@
-import { Review } from '@/api/types/Activities';
+import { Review } from '@/api/types/activities';
 import Icon from '@/components/Icon';
 
 type Props = {

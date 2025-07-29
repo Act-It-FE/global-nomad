@@ -1,3 +1,5 @@
+// src/app/mypage/reserve-status/page.tsx
+
 'use client';
 
 import { useState } from 'react';
@@ -11,13 +13,13 @@ export default function Page() {
   const [selectedActivity, setSelectedActivity] =
     useState<ActivityBasic | null>(null);
   const { data } = useMyActQuery();
+
   // const { data: reservationDashboard } = useMyActReservationDashboard(
   //   data?.activities[0].id || 0,
   //   { year: '2025', month: '07' },
   // );
 
   if (!data) return null;
-
   return (
     <div className='flex w-full flex-col'>
       <MyActListDropDown
@@ -25,11 +27,6 @@ export default function Page() {
         selectedActivity={selectedActivity}
         onActivitySelect={setSelectedActivity}
       />
-      {/* {data?.activities.map((item) => (
-        <div key={item.id}>
-          <div>{item.title}</div>
-        </div>
-      ))} */}
     </div>
   );
 }

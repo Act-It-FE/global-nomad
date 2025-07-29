@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
 import { Review } from '@/api/types/Activities';
+import Icon from '@/components/Icon';
 
 import ReviewCard from './ReviewCard';
 
@@ -51,13 +52,16 @@ export default function ActivityReviews({ activityId }: Props) {
           {totalCount}개
         </span>
       </div>
-      <section className='flex flex-col items-center justify-center'>
+      <section className='mt-8 flex flex-col items-center justify-center'>
         <p className='txt-24_M sm:txt-32_B font-semibold'>{averageRating}</p>
         <p className='txt-14_B sm:txt-16_B leading-24 sm:leading-19'>
           {getRatingText(averageRating)}
         </p>
         <div className='txt-14_M leading-24 text-gray-500'>
-          {totalCount}개 후기
+          <div className='flex flex-row items-center gap-4'>
+            <Icon className='fill-yellow-400' icon='Star' />
+            <span>{totalCount}개 후기</span>
+          </div>
         </div>
       </section>
       <section className='mt-20 flex flex-col gap-16'>

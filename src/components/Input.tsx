@@ -177,7 +177,7 @@ function DropdownInput({
             <button
               key={element.key}
               className={cn(
-                'txt-16_M h-48 rounded-xl px-20 text-start text-gray-900',
+                'txt-16_M rounded-xl px-20 py-16 text-start leading-none wrap-break-word text-gray-900',
                 element === value && 'bg-primary-100',
               )}
               type='button'

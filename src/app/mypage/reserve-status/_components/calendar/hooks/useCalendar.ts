@@ -53,9 +53,9 @@ export function useCalendar({
           ? isSameDate(date, state.selectedDate)
           : false,
         isDisabled: false,
-        pendingCount: pendingCount || undefined,
-        confirmedCount: confirmedCount || undefined,
-        completedCount: completedCount || undefined,
+        pendingCount: pendingCount > 0 ? pendingCount : undefined,
+        confirmedCount: confirmedCount > 0 ? confirmedCount : undefined,
+        completedCount: completedCount > 0 ? completedCount : undefined,
         hadReservation: dayEvents.length > 0,
       };
     });

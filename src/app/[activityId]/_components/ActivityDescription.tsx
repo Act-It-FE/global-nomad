@@ -15,7 +15,7 @@ export default function ActivityDescription({ activityId }: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // 2장 랜덤 선택 함수
+  // 중복 제거 후 랜덤 2장 선택
   const getRandomTwo = (arr: string[]) => {
     const unique = Array.from(new Set(arr));
     if (unique.length <= 2) return unique;
@@ -32,10 +32,11 @@ export default function ActivityDescription({ activityId }: Props) {
         const activity = await activitiesDetailApi.getDetail(activityId);
         setDescription(activity.description);
         setBannerImageUrl(activity.bannerImageUrl);
-        const randomSubImages = getRandomTwo(
-          activity.subImages.map((img) => img.imageUrl),
-        );
-        setSubImages(randomSubImages);
+
+        const imageUrls = activity.subImages.map((img) => img.imageUrl);
+        const selected =
+          imageUrls.length === 1 ? imageUrls : getRandomTwo(imageUrls);
+        setSubImages(selected);
       } catch (error) {
         console.error('체험 설명을 불러오는데 실패했습니다.', error);
         setErrorMessage('체험 설명을 불러오지 못했습니다.');
@@ -47,19 +48,20 @@ export default function ActivityDescription({ activityId }: Props) {
     fetchActivityDetail();
   }, [activityId]);
 
-  if (isLoading) {
+  if (isLoading)
     return <div className='text-center text-gray-400'>불러오는 중...</div>;
-  }
-
-  if (errorMessage) {
+  if (errorMessage)
     return <div className='text-center text-red-500'>{errorMessage}</div>;
-  }
+
+  const isSingleSubImage = subImages.length === 1;
 
   return (
     <section className='my-40 flex flex-col gap-24'>
       <div className='flex w-full gap-12'>
         {bannerImageUrl && (
-          <div className='aspect-[6/3] flex-1 overflow-hidden'>
+          <div
+            className={`overflow-hidden ${isSingleSubImage ? 'aspect-[6/3] w-1/2' : 'aspect-[6/3] flex-1'}`}
+          >
             <img
               alt='배너 이미지'
               className='h-full w-full rounded-tl-[24px] rounded-bl-[24px] object-cover'
@@ -68,17 +70,21 @@ export default function ActivityDescription({ activityId }: Props) {
           </div>
         )}
 
-        <div className='flex flex-1 flex-col gap-12'>
+        <div
+          className={`flex ${isSingleSubImage ? 'w-1/2' : 'flex-1'} flex-col gap-12`}
+        >
           {subImages[0] && (
-            <div className='aspect-[6/3] flex-1 overflow-hidden'>
+            <div
+              className={`overflow-hidden ${isSingleSubImage ? 'aspect-[6/3]' : 'aspect-[6/3] flex-1'}`}
+            >
               <img
                 alt='서브 이미지 1'
-                className='h-full w-full rounded-tr-[24px] object-cover'
+                className={`h-full w-full ${subImages.length === 1 ? 'rounded-tr-[24px] rounded-br-[24px]' : 'rounded-tr-[24px] object-cover'}`}
                 src={subImages[0]}
               />
             </div>
           )}
-          {subImages[1] && (
+          {subImages[1] && !isSingleSubImage && (
             <div className='aspect-[6/3] flex-1 overflow-hidden'>
               <img
                 alt='서브 이미지 2'

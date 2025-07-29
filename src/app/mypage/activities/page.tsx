@@ -1,8 +1,13 @@
+'use client';
+
 import Link from 'next/link';
 
 import Button from '@/components/Button';
+import { useMyActQuery } from '@/hooks/reserve-status/useMyActivitiesQuery';
 
-export default function page() {
+export default function Page() {
+  const {} = useMyActQuery();
+
   return (
     <div className='flex w-full flex-col gap-15 md:gap-30'>
       <header className='flex items-center justify-between gap-12'>

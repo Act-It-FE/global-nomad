@@ -17,13 +17,16 @@ export default function AllActivities() {
   );
   const [sortOption, setSortOption] = useState<Sort>('latest');
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(8);
 
   const isMobile = useMediaQuery('mobile');
   const isTablet = useMediaQuery('tablet');
 
-  let pageSize = 8;
-  if (isTablet) pageSize = 4;
-  if (isMobile) pageSize = 6;
+  useEffect(() => {
+    if (isMobile) setPageSize(6);
+    else if (isTablet) setPageSize(4);
+    else setPageSize(8);
+  }, [isMobile, isTablet]);
 
   const {
     data: { activities = [], totalCount = 0 } = {},
@@ -55,7 +58,7 @@ export default function AllActivities() {
     <div className='flex flex-col gap-24 md:gap-30'>
       <section className='flex flex-col'>
         <div className='flex items-center justify-between pb-10 md:pb-17 lg:block lg:pb-20'>
-          <div className='md:txt-32_B text-[18px]/26 font-bold'>
+          <div className='md:txt-32_B txt-18_B leading-26 md:leading-38'>
             🛼 모든 체험
           </div>
           <div className='lg:hidden'>

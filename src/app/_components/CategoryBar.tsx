@@ -9,7 +9,7 @@ type CategoryProps = {
   onSelectCategory: (category: Category | null) => void;
 };
 
-const categories = [
+const categories: { label: Category; icon: string }[] = [
   { label: '문화 · 예술', icon: 'Art' },
   { label: '식음료', icon: 'Food' },
   { label: '스포츠', icon: 'Sport' },

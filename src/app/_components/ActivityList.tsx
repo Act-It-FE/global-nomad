@@ -1,21 +1,17 @@
 'use client';
 
+import { Activity } from '@/api/types/activities';
 import Pagination from '@/components/Pagination';
 
 import CardColumn from './CardColumn';
 
-type Activity = {
-  id: number;
-  bannerImageUrl: string;
-  title: string;
-  rating: number;
-  reviewCount: number;
-  price: number;
-  category: string;
-};
+type ActivityCard = Omit<
+  Activity,
+  'description' | 'address' | 'userId' | 'createdAt' | 'updatedAt'
+>;
 
 type ActivityListProps = {
-  activities: Activity[];
+  activities: ActivityCard[];
   totalCount: number;
   currentPage: number;
   onPageChange: (page: number) => void;

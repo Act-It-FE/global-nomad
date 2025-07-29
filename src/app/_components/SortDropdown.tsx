@@ -12,7 +12,7 @@ type Props = {
   onChange: (value: Sort) => void;
 };
 
-const sortOptions = [
+const sortOptions: { label: Sort; value: string }[] = [
   { label: '최신순', value: 'latest' },
   { label: '리뷰 많은순', value: 'most_reviewed' },
   { label: '낮은 가격순', value: 'price_asc' },
@@ -43,7 +43,7 @@ export default function SortDropdown({ selected = 'latest', onChange }: Props) {
       </button>
 
       {open && (
-        <ul className='absolute right-10 z-11 mt-2 min-w-[150px] rounded border border-gray-200 bg-white shadow'>
+        <ul className='absolute right-10 z-11 mt-2 w-120 rounded border border-gray-200 bg-white shadow'>
           {sortOptions.map((option) => (
             <li key={option.value}>
               <button

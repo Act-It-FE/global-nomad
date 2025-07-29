@@ -19,14 +19,14 @@ export function WarningContent({
         <Button
           className='txt-14_M md:txt-16_M h-41 w-113 rounded-[12px] md:h-47 md:w-135 md:rounded-[14px]'
           variant='secondary'
-          onClick={onConfirm}
+          onClick={onCancel}
         >
           아니오
         </Button>
         <Button
           className='md:s-200 txt-14_B md:txt-16_B h-41 w-113 md:h-47 md:w-135'
           variant='primary'
-          onClick={onCancel}
+          onClick={onConfirm}
         >
           취소하기
         </Button>

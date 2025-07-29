@@ -8,8 +8,6 @@ import Input from '@/components/Input';
 export function MyActListDropDown({
   activities,
 }: {
-  selectedActivity: ActivityBasic | null;
-  onActivitySelect: (activity: ActivityBasic) => void;
   activities: ActivityBasic[];
 }) {
   const dropdownRef = useRef<HTMLDivElement>(null);

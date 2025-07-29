@@ -66,7 +66,6 @@ const FOCUS_STYLE =
   'focus:border-primary-500 focus:border-[1.5px] focus:px-18.5 focus:py-14.5';
 
 export default function Input({
-  id,
   className = '',
   label,
   errorMessage,
@@ -77,29 +76,20 @@ export default function Input({
 
     switch (props.type) {
       case 'dropdown':
-        return (
-          <DropdownInput className={`${COMMON_STYLE}`} id={id} {...props} />
-        );
+        return <DropdownInput className={`${COMMON_STYLE}`} {...props} />;
       case 'textarea':
-        return (
-          <textarea
-            className={`${className} resize-none`}
-            id={id}
-            style={{ height: props.height }}
-            {...props}
-          />
-        );
+        return <TextareaInput className={className} {...props} />;
       case 'password':
-        return <PasswordInput className={className} id={id} {...props} />;
+        return <PasswordInput className={className} {...props} />;
       default:
-        return <input className={className} id={id} {...props} />;
+        return <input className={className} {...props} />;
     }
   };
 
   return (
     <div className={'flex flex-col gap-10 ' + className}>
       {label && (
-        <label className='txt-16_M leading-19 text-gray-950' htmlFor={id}>
+        <label className='txt-16_M leading-19 text-gray-950' htmlFor={props.id}>
           {label}
         </label>
       )}
@@ -116,7 +106,6 @@ export default function Input({
 }
 
 function DropdownInput({
-  id,
   className,
   type,
   onClick,
@@ -141,13 +130,12 @@ function DropdownInput({
       <input
         ref={ref}
         className={`${className} ${value ? 'text-gray-950' : 'text-gray-400'} text-start`}
-        id={id}
         type='button'
         value={value ?? placeholder ?? ''}
         onClick={handleClick}
         {...props}
       />
-      <label className='absolute top-15 right-20' htmlFor={id}>
+      <label className='absolute top-15 right-20' htmlFor={props.id}>
         <Icon className='size-24 text-gray-950' icon='TriangleDown' />
       </label>
       {isOpen && (
@@ -177,6 +165,37 @@ function DropdownInput({
         </div>
       )}
     </>
+  );
+}
+
+function TextareaInput({ className, height, ...props }: TextareaProps) {
+  const [isFocused, setIsFocused] = useState(false);
+
+  return (
+    <label
+      className={cn(
+        className,
+        isFocused
+          ? 'border-primary-500 border-[1.5px] px-[15.5px] py-[14.5px]'
+          : 'px-[16px]',
+      )}
+      style={{ height }}
+    >
+      <textarea
+        className={cn(
+          'block h-full resize-none outline-none',
+          '[&::-webkit-scrollbar]:w-3',
+          '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-200',
+          '[&::-webkit-scrollbar-button]:hidden',
+        )}
+        style={{
+          scrollbarGutter: 'stable both-edges',
+        }}
+        onBlur={() => setIsFocused(false)}
+        onFocus={() => setIsFocused(true)}
+        {...props}
+      />
+    </label>
   );
 }
 

@@ -19,7 +19,6 @@ export function useKeyboardNavigation<T>({
   const optionRefs = useRef<(HTMLElement | null)[]>([]);
   const containerRef = useRef<HTMLElement>(null);
 
-  // focusedIndex가 변경될 때마다 실제 포커스 이동
   useEffect(() => {
     if (isOpen && focusedIndex >= 0 && optionRefs.current[focusedIndex]) {
       const focusedElement = optionRefs.current[focusedIndex];
@@ -40,6 +39,7 @@ export function useKeyboardNavigation<T>({
     if (!isOpen) {
       if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
         e.preventDefault();
+        if (items.length === 0) return;
         onOpen();
         setFocusedIndex(0);
       }
@@ -61,7 +61,7 @@ export function useKeyboardNavigation<T>({
         case 'Enter':
         case ' ':
           e.preventDefault();
-          if (focusedIndex >= 0) {
+          if (focusedIndex >= 0 && focusedIndex < items.length) {
             onSelect(items[focusedIndex]);
             onClose();
             setFocusedIndex(-1);

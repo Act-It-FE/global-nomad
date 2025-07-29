@@ -57,13 +57,24 @@ type TextareaProps = CommonProps & {
 type DropdownProps = CommonProps & {
   type: 'dropdown';
   items: string[];
+  maxHeight?: string;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
-const COMMON_STYLE =
-  'txt-16_M h-54 w-full rounded-2xl bg-white border border-gray-100 px-19 py-15 leading-19 outline-none placeholder:text-gray-400';
+const COMMON_STYLE = cn(
+  'h-54 w-full rounded-2xl bg-white border border-gray-100 px-19 py-15 outline-none',
+  'txt-16_M leading-19 placeholder:text-gray-400',
+);
 
-const FOCUS_STYLE =
-  'focus:border-primary-500 focus:border-[1.5px] focus:px-18.5 focus:py-14.5';
+const FOCUS_STYLE = cn(
+  'focus:border-primary-500 focus:border-[1.5px]',
+  'focus:px-18.5 focus:py-14.5',
+);
+
+const SCROLLBAR_STYLE = cn(
+  '[&::-webkit-scrollbar]:w-3',
+  '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-200',
+  '[&::-webkit-scrollbar-button]:hidden',
+);
 
 export default function Input({
   className = '',
@@ -72,11 +83,21 @@ export default function Input({
   ...props
 }: InputProps | TextareaProps | DropdownProps) {
   const insideInput = () => {
-    const className = `text-gray-950 ${COMMON_STYLE} ${FOCUS_STYLE} ${errorMessage ? 'border-red-500' : ''}`;
+    const className = cn(
+      'text-gray-950',
+      COMMON_STYLE,
+      FOCUS_STYLE,
+      errorMessage ? 'border-red-500' : '',
+    );
 
     switch (props.type) {
       case 'dropdown':
-        return <DropdownInput className={`${COMMON_STYLE}`} {...props} />;
+        return (
+          <DropdownInput
+            className={`${COMMON_STYLE} ${FOCUS_STYLE}`}
+            {...props}
+          />
+        );
       case 'textarea':
         return <TextareaInput className={className} {...props} />;
       case 'password':
@@ -112,15 +133,24 @@ function DropdownInput({
   defaultValue,
   placeholder,
   items,
+  maxHeight = '280px',
   ...props
 }: DropdownProps) {
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState({ item: defaultValue, key: '' });
   const [isOpen, setIsOpen] = useState(false);
+  const elements = useRef(
+    items.map((item) => ({ item, key: crypto.randomUUID() })),
+  );
   const ref = useRef<HTMLInputElement>(null);
 
   const handleClick = (e: MouseEvent<HTMLInputElement>) => {
     if (onClick) onClick(e);
     setIsOpen((prev) => !prev);
+  };
+
+  const handleIconClick = () => {
+    ref.current?.focus();
+    ref.current?.click();
   };
 
   useClickOutside(ref, () => setIsOpen(false));
@@ -129,39 +159,53 @@ function DropdownInput({
     <>
       <input
         ref={ref}
-        className={`${className} ${value ? 'text-gray-950' : 'text-gray-400'} text-start`}
+        className={cn(
+          className,
+          value.item ? 'text-gray-950' : 'text-gray-400',
+          'truncate pr-43 text-start focus:pr-42.5',
+        )}
         type='button'
-        value={value ?? placeholder ?? ''}
+        value={value.item ?? placeholder ?? ''}
         onClick={handleClick}
         {...props}
       />
-      <label className='absolute top-15 right-20' htmlFor={props.id}>
+      <div className='absolute top-15 right-20' onClick={handleIconClick}>
         <Icon className='size-24 text-gray-950' icon='TriangleDown' />
-      </label>
+      </div>
       {isOpen && (
         <div
           className={cn(
-            'z-10 flex flex-col gap-4',
-            'absolute top-64 w-full rounded-2xl border border-gray-100 bg-white p-12',
+            'absolute top-64 z-10 w-full rounded-2xl border border-gray-100 bg-white px-8 py-11',
             'shadow-[0_2px_6px_rgba(0,0,0,0.02)]',
           )}
         >
-          {items.map((item) => (
-            <button
-              key={item}
-              className={cn(
-                'txt-16_M h-48 rounded-xl px-20 text-start text-gray-900',
-                item === value && 'bg-primary-100',
-              )}
-              type='button'
-              onClick={() => {
-                setValue(item);
-                setIsOpen(false);
-              }}
-            >
-              {item}
-            </button>
-          ))}
+          <div
+            className={cn(
+              'flex flex-col gap-4 overflow-y-auto pl-3',
+              SCROLLBAR_STYLE,
+            )}
+            style={{
+              maxHeight: `calc(${maxHeight} - 24px)`,
+              scrollbarGutter: 'stable',
+            }}
+          >
+            {elements.current.map((element) => (
+              <button
+                key={element.key}
+                className={cn(
+                  'txt-16_M rounded-xl px-20 py-16 text-start leading-none wrap-break-word text-gray-900',
+                  element.key === value.key && 'bg-primary-100',
+                )}
+                type='button'
+                onClick={() => {
+                  setValue(element);
+                  setIsOpen(false);
+                }}
+              >
+                {element.item}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </>
@@ -183,14 +227,10 @@ function TextareaInput({ className, height, ...props }: TextareaProps) {
     >
       <textarea
         className={cn(
-          'block h-full resize-none outline-none',
-          '[&::-webkit-scrollbar]:w-3',
-          '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-200',
-          '[&::-webkit-scrollbar-button]:hidden',
+          'block h-full resize-none pl-3 outline-none',
+          SCROLLBAR_STYLE,
         )}
-        style={{
-          scrollbarGutter: 'stable both-edges',
-        }}
+        style={{ scrollbarGutter: 'stable' }}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
         {...props}

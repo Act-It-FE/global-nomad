@@ -12,7 +12,7 @@ interface DayCellProps {
 
   // 예약 정보
   reservations?: {
-    reserved: number; // 예약: 2
+    pending: number; // 예약: 2
     confirmed: number; // 승인: 8
     completed: number; // 완료: 10
   };
@@ -60,8 +60,8 @@ export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
       {reservations && (
         <div className='absolute top-9 right-16 size-4 rounded-full bg-red-500 md:top-13 md:right-12 md:size-6' />
       )}
-      {reservations?.reserved && (
-        <Badge count={reservations.reserved} label='예약' />
+      {reservations?.pending && (
+        <Badge count={reservations.pending} label='예약' />
       )}
       {reservations?.confirmed && (
         <Badge count={reservations.confirmed} label='승인' />

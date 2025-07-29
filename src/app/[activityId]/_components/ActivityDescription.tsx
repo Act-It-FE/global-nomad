@@ -47,29 +47,35 @@ export default function ActivityDescription({ activityId }: Props) {
 
   return (
     <section className='my-40 flex flex-col gap-24'>
-      <div className='grid grid-cols-1 gap-12 md:grid-cols-3'>
+      <div className='flex w-full gap-12'>
         {bannerImageUrl && (
-          <div className='col-span-1 md:col-span-2'>
+          <div className='aspect-[6/3] flex-1 overflow-hidden'>
             <img
-              alt='체험 배너 이미지'
+              alt='배너 이미지'
               className='h-full w-full rounded-tl-[24px] rounded-bl-[24px] object-cover'
               src={bannerImageUrl}
             />
           </div>
         )}
 
-        <div className='flex flex-col gap-12'>
-          {[0, 1].map((index) =>
-            subImages[index] ? (
+        <div className='flex flex-1 flex-col gap-12'>
+          {subImages[0] && (
+            <div className='aspect-[6/3] flex-1 overflow-hidden'>
               <img
-                key={index}
-                alt={`서브 이미지 ${index + 1}`}
-                className={`h-full w-full object-cover ${
-                  index === 0 ? 'rounded-tr-[24px]' : 'rounded-br-[24px]'
-                }`}
-                src={subImages[index]}
+                alt='서브 이미지 1'
+                className='h-full w-full rounded-tr-[24px] object-cover'
+                src={subImages[0]}
               />
-            ) : null,
+            </div>
+          )}
+          {subImages[1] && (
+            <div className='aspect-[6/3] flex-1 overflow-hidden'>
+              <img
+                alt='서브 이미지 2'
+                className='h-full w-full rounded-br-[24px] object-cover'
+                src={subImages[1]}
+              />
+            </div>
           )}
         </div>
       </div>

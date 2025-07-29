@@ -69,10 +69,10 @@ export default function RenderKakaoMap({ address }: RenderKakaoMapProps) {
 
   return (
     <div className='flex flex-col border-t border-b border-gray-200 py-40'>
-      <p className='txt-16_B sm:txt-18_B my-5 leading-[21px] text-gray-950'>
+      <p className='txt-16_B sm:txt-18_B my-5 leading-21 text-gray-950'>
         오시는 길
       </p>
-      <p className='txt-14_M my-5 leading-[24px] font-semibold opacity-75'>
+      <p className='txt-14_M my-5 leading-24 font-semibold opacity-75'>
         {address}
       </p>
       <div>

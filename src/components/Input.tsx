@@ -116,7 +116,6 @@ export default function Input({
 }
 
 function DropdownInput({
-  id,
   className,
   type,
   onClick,
@@ -125,10 +124,10 @@ function DropdownInput({
   items,
   ...props
 }: DropdownProps) {
-  const [value, setValue] = useState({ item: defaultValue, id: '' });
+  const [value, setValue] = useState({ item: defaultValue, key: '' });
   const [isOpen, setIsOpen] = useState(false);
   const elements = useRef(
-    items.map((item) => ({ item, id: crypto.randomUUID() })),
+    items.map((item) => ({ item, key: crypto.randomUUID() })),
   );
   const ref = useRef<HTMLInputElement>(null);
 
@@ -143,14 +142,13 @@ function DropdownInput({
     <>
       <input
         ref={ref}
-        className={`${className} ${value.id ? 'text-gray-950' : 'text-gray-400'} text-start`}
-        id={id}
+        className={`${className} ${value.key ? 'text-gray-950' : 'text-gray-400'} text-start`}
         type='button'
         value={value.item ?? placeholder ?? ''}
         onClick={handleClick}
         {...props}
       />
-      <label className='absolute top-15 right-20' htmlFor={id}>
+      <label className='absolute top-15 right-20' htmlFor={props.id}>
         <Icon className='size-24 text-gray-950' icon='TriangleDown' />
       </label>
       {isOpen && (
@@ -163,7 +161,7 @@ function DropdownInput({
         >
           {elements.current.map((element) => (
             <button
-              key={element.id}
+              key={element.key}
               className={cn(
                 'txt-16_M h-48 rounded-xl px-20 text-start text-gray-900',
                 element === value && 'bg-primary-100',

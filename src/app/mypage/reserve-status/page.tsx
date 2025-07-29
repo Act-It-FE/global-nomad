@@ -14,11 +14,6 @@ export default function Page() {
     useState<ActivityBasic | null>(null);
   const { data } = useMyActQuery();
 
-  // const { data: reservationDashboard } = useMyActReservationDashboard(
-  //   data?.activities[0].id || 0,
-  //   { year: '2025', month: '07' },
-  // );
-
   if (!data) return null;
   return (
     <div className='flex w-full flex-col'>

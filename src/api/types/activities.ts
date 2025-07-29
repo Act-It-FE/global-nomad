@@ -1,5 +1,8 @@
 // Activities 타입
 
+type Category = '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
+type Sort = 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
+
 // 체험 리스트 조회
 export interface BaseActivity {
   id: number;
@@ -23,20 +26,21 @@ export interface ActivityResponse {
   activities: Activity[];
 }
 
-export interface OffsetParams {
-  method: 'offset';
-  offset: number;
-  limit?: number;
-  category?: string;
+interface CommonParams {
+  category?: Category;
   keyword?: string;
+  sort?: Sort;
+  size?: number;
 }
 
-export interface CursorParams {
+export interface OffsetParams extends CommonParams {
+  method: 'offset';
+  page?: number;
+}
+
+export interface CursorParams extends CommonParams {
   method: 'cursor';
   cursorId: number;
-  limit?: number;
-  category?: string;
-  keyword?: string;
 }
 
 export type GetActivitiesParams = OffsetParams | CursorParams;

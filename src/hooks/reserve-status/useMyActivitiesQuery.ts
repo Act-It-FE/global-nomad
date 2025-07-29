@@ -8,9 +8,9 @@ import {
 
 import myActivitiesQueryKeys from './queryKey';
 
-export function useMyActivitiesQuery(params?: GetMyActivitiesParams) {
+export function useMyActQuery(params?: GetMyActivitiesParams) {
   return useQuery({
-    queryKey: myActivitiesQueryKeys().list(params || {}),
+    queryKey: myActivitiesQueryKeys().getList(params || {}),
     queryFn: () => {
       return myActivitiesApi.get(params);
     },
@@ -22,30 +22,31 @@ export function useMyActReservationDashboard(
   params: { year: string; month: string },
 ) {
   return useQuery({
-    queryKey: myActivitiesQueryKeys().reservationDashboard(activityId, params),
+    queryKey: myActivitiesQueryKeys().getReservationDashboard(
+      activityId,
+      params,
+    ),
     queryFn: () => {
       return myActivitiesApi.getReservationDashboard(activityId, params);
     },
   });
 }
 
-export function useMyActivitiesReservedSchedule(
+export function useMyActReservedSchedule(
   activityId: number,
   params: { date: string },
 ) {
   return useQuery({
-    queryKey: myActivitiesQueryKeys().reservedSchedule(activityId, params),
+    queryKey: myActivitiesQueryKeys().getReservedSchedule(activityId, params),
     queryFn: () => {
       return myActivitiesApi.getReservedSchedule(activityId, params);
     },
   });
 }
 
-export function useMyActivitiesReservations(
+export function useMyActReservations(
   activityId: number,
-  params: {
-    cursorId?: number;
-    size?: number;
+  params: GetMyActivitiesParams & {
     scheduleId: number;
     status: Extract<'declined' | 'pending' | 'confirmed', ReservationStatus>;
   },

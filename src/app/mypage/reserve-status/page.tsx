@@ -1,19 +1,20 @@
 'use client';
 
 import {
-  useMyActivitiesQuery,
+  useMyActQuery,
   // useMyActivitiesReservations,
   // useMyActivitiesReservedSchedule,
-  // useMyActReservationDashboard,
+  useMyActReservationDashboard,
 } from '@/hooks/reserve-status/useMyActivitiesQuery';
 //import { useMyActReservationMutate } from '@/hooks/reserve-status/useMyActReservationMutate';
 
 export default function Page() {
-  const { data } = useMyActivitiesQuery();
-  // const { data: reservationDashboard } = useMyActReservationDashboard(
-  //   data?.activities[0].id || 0,
-  //   { year: '2025', month: '07' },
-  // );
+  const { data } = useMyActQuery();
+  const { data: reservationDashboard } = useMyActReservationDashboard(
+    data?.activities[0].id || 0,
+    { year: '2025', month: '07' },
+  );
+
   // const { data: reservedSchedule } = useMyActivitiesReservedSchedule(
   //   data?.activities[0].id || 0,
   //   { date: '2025-07-28' },
@@ -42,6 +43,14 @@ export default function Page() {
   // console.log(reservations?.reservations);
   return (
     <div>
+      {reservationDashboard?.map((item) => (
+        <div key={item.date}>
+          <div>{item.date}</div>
+          <div>{item.reservations.completed}</div>
+          <div>{item.reservations.confirmed}</div>
+          <div>{item.reservations.pending}</div>
+        </div>
+      ))}
       {/* <div>
         <button
           className='mb-4 rounded bg-blue-500 px-4 py-2 text-white'

@@ -1,38 +1,29 @@
-import {
-  GetMyActivitiesParams,
-  ReservationStatus,
-  UpdateMyActivityReservationBody,
-} from '@/api/types/myActivities';
+import myActivitiesApi from '@/api/myActivities';
 
 export default function myActivitiesQueryKeys() {
   const all = ['myActivities'] as const;
 
   return {
     all,
-    list: (params: GetMyActivitiesParams) => [...all, 'list', params] as const,
-    detail: (id: number) => [...all, 'detail', id] as const,
-    reservationDashboard: (
+    getList: (params: Parameters<typeof myActivitiesApi.get>[0]) =>
+      [...all, 'getList', params] as const,
+    getDetail: (id: number) => [...all, 'getDetail', id] as const,
+    getReservationDashboard: (
       activityId: number,
-      params: { year: string; month: string },
-    ) => [...all, 'reservationDashboard', activityId, params] as const,
-    reservedSchedule: (activityId: number, params: { date: string }) =>
-      [...all, 'reservedSchedule', activityId, params] as const,
+      params: Parameters<typeof myActivitiesApi.getReservationDashboard>[1],
+    ) => [...all, 'getReservationDashboard', activityId, params] as const,
+    getReservedSchedule: (
+      activityId: number,
+      params: Parameters<typeof myActivitiesApi.getReservedSchedule>[1],
+    ) => [...all, 'getReservedSchedule', activityId, params] as const,
     getReservations: (
       activityId: number,
-      params: {
-        cursorId?: number;
-        size?: number;
-        scheduleId: number;
-        status: Extract<
-          'declined' | 'pending' | 'confirmed',
-          ReservationStatus
-        >;
-      },
+      params: Parameters<typeof myActivitiesApi.getReservations>[1],
     ) => [...all, 'getReservations', activityId, params] as const,
     patchReservations: (
       activityId: number,
       reservationId: number,
-      body: UpdateMyActivityReservationBody,
+      body: Parameters<typeof myActivitiesApi.patchReservations>[2],
     ) =>
       [...all, 'patchReservations', activityId, reservationId, body] as const,
   };

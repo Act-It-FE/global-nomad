@@ -1,5 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import myActivitiesApi from '@/api/myActivities';
 import { UpdateMyActivityReservationBody } from '@/api/types/myActivities';
@@ -15,8 +14,13 @@ export function useMyActReservationMutate(
     mutationFn: (body: UpdateMyActivityReservationBody) =>
       myActivitiesApi.patchReservations(activityId, reservationId, body),
     onSuccess: () => {
+      // 내 체험 목록 새로고침
       queryClient.invalidateQueries({
-        queryKey: myActivitiesQueryKeys().list({}),
+        queryKey: myActivitiesQueryKeys().getList({}),
+      });
+      // 예약 관련 모든 쿼리 새로고침 (대시보드, 스케줄, 목록 등)
+      queryClient.invalidateQueries({
+        queryKey: myActivitiesQueryKeys().all,
       });
     },
   });

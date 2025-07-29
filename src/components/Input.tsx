@@ -65,6 +65,12 @@ const COMMON_STYLE =
 const FOCUS_STYLE =
   'focus:border-primary-500 focus:border-[1.5px] focus:px-18.5 focus:py-14.5';
 
+const SCROLLBAR_STYLE = cn(
+  '[&::-webkit-scrollbar]:w-3',
+  '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-200',
+  '[&::-webkit-scrollbar-button]:hidden',
+);
+
 export default function Input({
   className = '',
   label,
@@ -200,12 +206,7 @@ function TextareaInput({ className, height, ...props }: TextareaProps) {
       style={{ height }}
     >
       <textarea
-        className={cn(
-          'block h-full resize-none outline-none',
-          '[&::-webkit-scrollbar]:w-3',
-          '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-200',
-          '[&::-webkit-scrollbar-button]:hidden',
-        )}
+        className={cn('block h-full resize-none outline-none', SCROLLBAR_STYLE)}
         style={{
           scrollbarGutter: 'stable both-edges',
         }}

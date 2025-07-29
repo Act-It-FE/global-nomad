@@ -146,7 +146,11 @@ function DropdownInput({
     <>
       <input
         ref={ref}
-        className={`${className} ${value.item ? 'text-gray-950' : 'text-gray-400'} pr-43 text-start`}
+        className={cn(
+          className,
+          value.item ? 'text-gray-950' : 'text-gray-400',
+          'truncate pr-43 text-start focus:pr-42.5',
+        )}
         type='button'
         value={value.item ?? placeholder ?? ''}
         onClick={handleClick}

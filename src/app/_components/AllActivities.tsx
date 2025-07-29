@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useActivitiesQuery from '@/hooks/activities/useActivitiesQuery';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -33,6 +33,10 @@ export default function AllActivities() {
     page: currentPage,
     size: pageSize,
   });
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [pageSize]);
 
   const handleSelectCategory = (category) => {
     setSelectedCategory(category);

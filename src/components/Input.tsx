@@ -146,7 +146,7 @@ function DropdownInput({
     <>
       <input
         ref={ref}
-        className={`${className} ${value.key ? 'text-gray-950' : 'text-gray-400'} text-start`}
+        className={`${className} ${value.key ? 'text-gray-950' : 'text-gray-400'} pr-43 text-start`}
         type='button'
         value={value.item ?? placeholder ?? ''}
         onClick={handleClick}

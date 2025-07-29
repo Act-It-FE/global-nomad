@@ -17,8 +17,9 @@ export default function TopBanner({
         <Image
           fill
           priority
-          alt={title}
+          alt=''
           className='object-cover'
+          sizes='(min-width: 1024px) 1120px, (min-width: 768px) 684px, 327px'
           src={imageUrl}
         />
         <div className='absolute inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.15)] to-[rgba(0,0,0,0.5)]' />

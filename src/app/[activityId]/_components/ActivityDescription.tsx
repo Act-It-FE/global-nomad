@@ -1,6 +1,11 @@
 'use client';
 
 import { useActivityDescription } from '@/hooks/activity-details/useActivityDescription';
+import {
+  getImageColumnWrapperClass,
+  getImageContainerClass,
+  getSubImageClass,
+} from '@/utils/getImageClass';
 
 type Props = {
   activityId: number;
@@ -24,11 +29,7 @@ export default function ActivityDescription({ activityId }: Props) {
     <section className='my-40 flex flex-col gap-24'>
       <div className='flex w-full gap-12'>
         {bannerImageUrl && (
-          <div
-            className={`overflow-hidden ${
-              isSingleSubImage ? 'aspect-[6/3] w-1/2' : 'aspect-[6/3] flex-1'
-            }`}
-          >
+          <div className={getImageContainerClass(isSingleSubImage)}>
             <img
               alt='배너 이미지'
               className='h-full w-full rounded-tl-[24px] rounded-bl-[24px] object-cover'
@@ -38,23 +39,17 @@ export default function ActivityDescription({ activityId }: Props) {
         )}
 
         <div
-          className={`flex ${
-            isSingleSubImage ? 'w-1/2' : 'flex-1'
-          } flex-col gap-12`}
+          className={`flex ${getImageColumnWrapperClass(isSingleSubImage)} flex-col gap-12`}
         >
           {subImages[0] && (
-            <div
-              className={`overflow-hidden ${
-                isSingleSubImage ? 'aspect-[6/3]' : 'aspect-[6/3] flex-1'
-              }`}
-            >
+            <div className='aspect-[6/3] flex-1 overflow-hidden'>
               <img
                 alt='서브 이미지 1'
-                className={`h-full w-full ${
-                  subImages.length === 1
-                    ? 'rounded-tr-[24px] rounded-br-[24px]'
-                    : 'rounded-tr-[24px]'
-                } object-cover`}
+                className={getSubImageClass({
+                  isSingle: isSingleSubImage,
+                  isFirst: true,
+                  isLast: subImages.length === 1,
+                })}
                 src={subImages[0]}
               />
             </div>
@@ -63,7 +58,11 @@ export default function ActivityDescription({ activityId }: Props) {
             <div className='aspect-[6/3] flex-1 overflow-hidden'>
               <img
                 alt='서브 이미지 2'
-                className='h-full w-full rounded-br-[24px] object-cover'
+                className={getSubImageClass({
+                  isSingle: false,
+                  isFirst: false,
+                  isLast: true,
+                })}
                 src={subImages[1]}
               />
             </div>

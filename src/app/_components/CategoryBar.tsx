@@ -2,6 +2,7 @@
 
 import { Category } from '@/api/types/activities';
 import Icon from '@/components/Icon';
+import ICON_MAP from '@/constants/iconMap';
 import { cn } from '@/utils/cn';
 
 type CategoryProps = {
@@ -9,7 +10,7 @@ type CategoryProps = {
   onSelectCategory: (category: Category | null) => void;
 };
 
-const categories: { label: Category; icon: string }[] = [
+const categories: { label: Category; icon: keyof typeof ICON_MAP }[] = [
   { label: '문화 · 예술', icon: 'Art' },
   { label: '식음료', icon: 'Food' },
   { label: '스포츠', icon: 'Sport' },

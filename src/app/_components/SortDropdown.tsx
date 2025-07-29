@@ -12,7 +12,7 @@ type Props = {
   onChange: (value: Sort) => void;
 };
 
-const sortOptions: { label: Sort; value: string }[] = [
+const sortOptions: { label: string; value: Sort }[] = [
   { label: '최신순', value: 'latest' },
   { label: '리뷰 많은순', value: 'most_reviewed' },
   { label: '낮은 가격순', value: 'price_asc' },

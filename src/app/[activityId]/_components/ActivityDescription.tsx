@@ -1,3 +1,61 @@
-export default function ActivityDescription() {
-  return <div>체험 설명</div>;
+'use client';
+
+import { useEffect, useState } from 'react';
+
+import activitiesDetailApi from '@/api/activitiesApi';
+
+type Props = {
+  activityId: number;
+};
+
+export default function ActivityDescription({ activityId }: Props) {
+  const [description, setDescription] = useState('');
+  const [bannerImageUrl, setBannerImageUrl] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchActivityDetail() {
+      try {
+        setIsLoading(true);
+        setErrorMessage('');
+
+        const activity = await activitiesDetailApi.getDetail(activityId);
+
+        setDescription(activity.description);
+        setBannerImageUrl(activity.bannerImageUrl);
+      } catch (error) {
+        console.error('체험 설명을 불러오는데 실패했습니다.', error);
+        setErrorMessage('체험 설명을 불러오지 못했습니다.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchActivityDetail();
+  }, [activityId]);
+
+  if (isLoading) {
+    return <div className='text-center text-gray-400'>불러오는 중...</div>;
+  }
+
+  if (errorMessage) {
+    return <div className='text-center text-red-500'>{errorMessage}</div>;
+  }
+
+  return (
+    <section className='my-40 flex flex-col gap-16'>
+      {bannerImageUrl && (
+        <img
+          alt='체험 배너 이미지'
+          className='max-h-450 w-full rounded-[24px]'
+          src={bannerImageUrl}
+        />
+      )}
+      <div className='md:txt-18_B txt-16_B'>체험 설명</div>
+      <p className='txt-16_M whitespace-pre-line text-gray-950'>
+        {description}
+      </p>
+    </section>
+  );
 }

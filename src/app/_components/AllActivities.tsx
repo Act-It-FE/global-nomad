@@ -97,7 +97,7 @@ export default function AllActivities() {
             width={182}
           />
           <div className='txt-18_M mb-30 tracking-[-0.45px] text-gray-600'>
-            조건에 맞는 체험이 없어요.
+            체험이 존재하지 않아요.
           </div>
         </div>
       )}

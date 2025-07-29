@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import activitiesDetailApi from '@/api/activitiesApi';
 import { Review } from '@/api/types/Activities';
 
+import ReviewCard from './ReviewCard';
+
 type Props = {
   activityId: number;
 };
@@ -63,11 +65,7 @@ export default function ActivityReviews({ activityId }: Props) {
           <p className='txt-14_M text-gray-500'>아직 후기가 없습니다.</p>
         ) : (
           reviews.map((review) => (
-            <div key={review.id}>
-              <div>{review.user.nickname}</div>
-              <div>{review.createdAt}</div>
-              <div>{review.content}</div>
-            </div>
+            <ReviewCard key={review.id} review={review} />
           ))
         )}
       </section>

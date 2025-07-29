@@ -50,7 +50,7 @@ export default function Login() {
                 <Input
                   className='h-54 w-full'
                   errorMessage={emailError}
-                  id='text1'
+                  id='email'
                   placeholder='이메일을 입력해 주세요'
                   type='email'
                   value={email}

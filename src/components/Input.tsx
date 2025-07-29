@@ -170,11 +170,20 @@ function DropdownInput({
 
 function TextareaInput({ className, height, ...props }: TextareaProps) {
   return (
-    <textarea
-      className={`${className} resize-none`}
-      style={{ height }}
-      {...props}
-    />
+    <label className={cn(className, 'px-[16px]')} style={{ height }}>
+      <textarea
+        className={cn(
+          'block h-full resize-none outline-none',
+          '[&::-webkit-scrollbar]:w-3',
+          '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-200',
+          '[&::-webkit-scrollbar-button]:hidden',
+        )}
+        style={{
+          scrollbarGutter: 'stable both-edges',
+        }}
+        {...props}
+      />
+    </label>
   );
 }
 

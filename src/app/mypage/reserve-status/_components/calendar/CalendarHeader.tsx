@@ -1,6 +1,6 @@
 import Icon from '@/components/Icon';
 import { useCalendarStore } from '@/stores/calendarStore'; // 추가
-import { getMonthName } from '@/utils/calendar';
+import { getMonthName } from '@/utils/dateUtils';
 
 export function CalendarHeader() {
   const { currentDate, setCurrentDate } = useCalendarStore(); // store 사용

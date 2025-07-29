@@ -19,7 +19,7 @@ export function useMyActReservationMutate(
     onSuccess: () => {
       // 내 체험 목록 새로고침
       queryClient.invalidateQueries({
-        queryKey: myActivitiesQueryKeys().getList({}),
+        queryKey: myActivitiesQueryKeys().getActs({}),
       });
       // 예약 관련 모든 쿼리 새로고침 (대시보드, 스케줄, 목록 등)
       queryClient.invalidateQueries({
@@ -37,7 +37,7 @@ export function useMyActMutate(activityId: number) {
     onSuccess: () => {
       // 내 체험 목록 새로고침
       queryClient.invalidateQueries({
-        queryKey: myActivitiesQueryKeys().getList({}),
+        queryKey: myActivitiesQueryKeys().getActs({}),
       });
     },
   });
@@ -50,7 +50,7 @@ export function useMyActDelete(activityId: number) {
     onSuccess: () => {
       // 내 체험 목록 새로고침
       queryClient.invalidateQueries({
-        queryKey: myActivitiesQueryKeys().getList({}),
+        queryKey: myActivitiesQueryKeys().getActs({}),
       });
     },
   });

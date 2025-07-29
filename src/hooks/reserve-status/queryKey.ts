@@ -5,8 +5,8 @@ export default function myActivitiesQueryKeys() {
 
   return {
     all,
-    getList: (params: Parameters<typeof myActivitiesApi.get>[0]) =>
-      [...all, 'getList', params] as const,
+    getActs: (params: Parameters<typeof myActivitiesApi.get>[0]) =>
+      [...all, 'getActs', params] as const,
     getDetail: (id: number) => [...all, 'getDetail', id] as const,
     getReservationDashboard: (
       activityId: number,
@@ -26,9 +26,9 @@ export default function myActivitiesQueryKeys() {
       body: Parameters<typeof myActivitiesApi.patchReservations>[2],
     ) =>
       [...all, 'patchReservations', activityId, reservationId, body] as const,
-    delete: (...arg: Parameters<typeof myActivitiesApi.delete>) =>
+    deleteAct: (...arg: Parameters<typeof myActivitiesApi.delete>) =>
       [...all, 'deleteAct', ...arg] as const,
-    patch: (...arg: Parameters<typeof myActivitiesApi.patch>) =>
+    patchAct: (...arg: Parameters<typeof myActivitiesApi.patch>) =>
       [...all, 'patchAct', ...arg] as const,
   };
 }

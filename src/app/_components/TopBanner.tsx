@@ -26,7 +26,7 @@ export default function TopBanner({
       </div>
 
       <div className='absolute right-0 bottom-36 left-0 flex flex-col items-center justify-end gap-8 text-white md:bottom-76 md:gap-14 lg:bottom-101 lg:gap-19'>
-        <h1 className='txt-18_B md:txt-24_B lg:txt-32_B'>{title}</h1>
+        <h2 className='txt-18_B md:txt-24_B lg:txt-32_B'>{title}</h2>
         <p className='txt-14_M md:txt-16_B lg:txt-18_B'>{subtitle}</p>
       </div>
     </section>

@@ -18,11 +18,16 @@ export default function ActivityReviews({ activityId }: Props) {
   const [totalCount, setTotalCount] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
   const [page, setPage] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const size = 3;
 
   useEffect(() => {
     async function fetchReviews() {
       try {
+        setIsLoading(true);
+        setErrorMessage('');
+
         const { reviews, totalCount, averageRating } =
           await activitiesDetailApi.getReviews(activityId, { page, size });
 
@@ -31,6 +36,9 @@ export default function ActivityReviews({ activityId }: Props) {
         setAverageRating(averageRating);
       } catch (error) {
         console.error('리뷰를 불러오는데 실패했습니다.', error);
+        setErrorMessage('후기를 불러오는데 문제가 발생했어요.');
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -71,21 +79,35 @@ export default function ActivityReviews({ activityId }: Props) {
         </div>
       </section>
 
-      <div className='mt-20 flex flex-col gap-16'>
-        {reviews.map((review) => (
-          <ReviewCard key={review.id} review={review} />
-        ))}
-      </div>
-
-      {totalCount > size && (
-        <div className='mt-24 flex justify-center'>
-          <Pagination
-            currentPage={page}
-            pageSize={size}
-            totalCount={totalCount}
-            onPageChange={setPage}
-          />
+      {isLoading ? (
+        <div className='mt-20 text-center text-gray-400'>
+          후기를 불러오는 중입니다...
         </div>
+      ) : errorMessage ? (
+        <div className='mt-20 text-center text-red-500'>{errorMessage}</div>
+      ) : totalCount === 0 ? (
+        <div className='mt-20 text-center text-gray-400'>
+          아직 등록된 후기가 없습니다.
+        </div>
+      ) : (
+        <>
+          <div className='mt-20 flex flex-col gap-16'>
+            {reviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))}
+          </div>
+
+          {totalCount > size && (
+            <div className='mt-24 flex justify-center'>
+              <Pagination
+                currentPage={page}
+                pageSize={size}
+                totalCount={totalCount}
+                onPageChange={setPage}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   );

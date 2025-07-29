@@ -33,7 +33,7 @@ export interface CalendarState {
 }
 
 export interface UseCalendarReturn {
-  calendarDates: CalendarDate[]; // 달력에 표시할 모든 날짜들 (42개)
+  calendarDates: CalendarDate[]; // 달력에 표시할 모든 날짜들 (35개)
   currentDate: Date; // 현재 보여주는 월
   selectedDate: Date | null; // 선택된 날짜
   goToPreviousMonth: () => void; // 이전 달로 이동하는 함수

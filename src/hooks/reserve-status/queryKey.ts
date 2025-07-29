@@ -26,5 +26,9 @@ export default function myActivitiesQueryKeys() {
       body: Parameters<typeof myActivitiesApi.patchReservations>[2],
     ) =>
       [...all, 'patchReservations', activityId, reservationId, body] as const,
+    delete: (...arg: Parameters<typeof myActivitiesApi.delete>) =>
+      [...all, 'deleteAct', ...arg] as const,
+    patch: (...arg: Parameters<typeof myActivitiesApi.patch>) =>
+      [...all, 'patchAct', ...arg] as const,
   };
 }

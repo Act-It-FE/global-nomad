@@ -15,6 +15,14 @@ export default function ActivityDescription({ activityId }: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // 2장 랜덤 선택 함수
+  const getRandomTwo = (arr: string[]) => {
+    const unique = Array.from(new Set(arr));
+    if (unique.length <= 2) return unique;
+    const shuffled = [...unique].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 2);
+  };
+
   useEffect(() => {
     async function fetchActivityDetail() {
       try {
@@ -22,10 +30,12 @@ export default function ActivityDescription({ activityId }: Props) {
         setErrorMessage('');
 
         const activity = await activitiesDetailApi.getDetail(activityId);
-
         setDescription(activity.description);
         setBannerImageUrl(activity.bannerImageUrl);
-        setSubImages(activity.subImages.map((img) => img.imageUrl));
+        const randomSubImages = getRandomTwo(
+          activity.subImages.map((img) => img.imageUrl),
+        );
+        setSubImages(randomSubImages);
       } catch (error) {
         console.error('체험 설명을 불러오는데 실패했습니다.', error);
         setErrorMessage('체험 설명을 불러오지 못했습니다.');

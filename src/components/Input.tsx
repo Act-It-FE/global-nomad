@@ -57,6 +57,7 @@ type TextareaProps = CommonProps & {
 type DropdownProps = CommonProps & {
   type: 'dropdown';
   items: string[];
+  maxHeight?: string;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
 const COMMON_STYLE = cn(
@@ -132,6 +133,7 @@ function DropdownInput({
   defaultValue,
   placeholder,
   items,
+  maxHeight,
   ...props
 }: DropdownProps) {
   const [value, setValue] = useState({ item: defaultValue, key: '' });
@@ -180,11 +182,14 @@ function DropdownInput({
         >
           <div
             className={cn(
-              'max-h-256',
+              maxHeight ? '' : 'max-h-256',
               'flex flex-col gap-4 overflow-y-auto pl-3',
               SCROLLBAR_STYLE,
             )}
-            style={{ scrollbarGutter: 'stable' }}
+            style={{
+              maxHeight: `calc(${maxHeight} - 24px)`,
+              scrollbarGutter: 'stable',
+            }}
           >
             {elements.current.map((element) => (
               <button

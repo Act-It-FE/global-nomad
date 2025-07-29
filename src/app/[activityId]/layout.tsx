@@ -7,7 +7,7 @@ export default function ActivityDetailLayout({
 }) {
   return (
     <section className='flex justify-center pt-40'>
-      <div className='flex w-full max-w-1200 gap-40'>
+      <div className='flex w-full max-w-1200'>
         <main className='flex-1'>{children}</main>
       </div>
     </section>

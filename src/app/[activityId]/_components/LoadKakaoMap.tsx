@@ -10,6 +10,7 @@ interface LoadKakaoMapProps {
 
 export default function LoadKakaoMap({ address }: LoadKakaoMapProps) {
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const scriptId = 'kakao-map-sdk';
@@ -26,20 +27,33 @@ export default function LoadKakaoMap({ address }: LoadKakaoMapProps) {
 
     if (document.getElementById(scriptId)) {
       onLoad();
-      return;
+    } else {
+      const script = document.createElement('script');
+      script.id = scriptId;
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&autoload=false&libraries=services`;
+      script.async = true;
+      script.onload = onLoad;
+      script.onerror = () => {
+        console.error('지도를 불러오는데 실패했습니다.');
+        setError('지도를 불러오는데 실패했습니다.');
+      };
+      document.head.appendChild(script);
     }
 
-    const script = document.createElement('script');
-    script.id = scriptId;
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&autoload=false&libraries=services`;
-    script.async = true;
-    script.onload = onLoad;
-    script.onerror = () => {
-      console.error('지도를 불러오는데 실패했습니다.');
-    };
+    // 10초 후에도 로딩 안되면 에러
+    const timeout = setTimeout(() => {
+      if (!loaded) {
+        console.error('지도 로딩 시간이 초과되었습니다.');
+        setError('지도 로딩 시간이 초과되었습니다.');
+      }
+    }, 10000);
 
-    document.head.appendChild(script);
-  }, []);
+    return () => clearTimeout(timeout);
+  }, [loaded]);
+
+  if (error) {
+    return <p className='text-red-500'>{error}</p>;
+  }
 
   return loaded ? (
     <RenderKakaoMap address={address} />

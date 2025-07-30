@@ -1,9 +1,8 @@
-// src/app/mypage/reserve-status/page.tsx
-
 'use client';
 
-import { useMyActQuery } from '@/hooks/reserve-status/useMyActivitiesQuery';
+import { useMyActQuery } from '@/hooks/myActivities/useMyActivitiesQuery';
 
+import { Calendar } from './_components/calendar/Calendar';
 import { MyActListDropDown } from './_components/MyActListDropDown';
 
 export default function Page() {
@@ -13,6 +12,7 @@ export default function Page() {
   return (
     <div className='flex w-full flex-col'>
       <MyActListDropDown activities={data.activities} />
+      <Calendar />
     </div>
   );
 }

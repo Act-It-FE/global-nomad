@@ -29,9 +29,9 @@ export default function ActivityDetail() {
       try {
         const activity = await activitiesDetailApi.getDetail(id);
         setAddress(activity.address);
-      } catch (err) {
+      } catch (error) {
         const message = getErrorMessage(
-          err,
+          error,
           '체험 정보를 불러오지 못했습니다.',
         );
         console.error('실패:', message);
@@ -60,7 +60,7 @@ export default function ActivityDetail() {
 
   return (
     <div className='w-full px-24 md:px-30'>
-      <ActivitySummary />
+      <ActivitySummary activityId={Number(activityId)} />
       <ActivityDescription activityId={Number(activityId)} />
       <LoadKakaoMap address={address} />
       <ActivityReviews activityId={Number(activityId)} />

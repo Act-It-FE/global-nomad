@@ -60,6 +60,10 @@ type DropdownProps = CommonProps & {
   maxHeight?: string;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
+type DateCustomProps = CommonProps & {
+  type: 'date-custom';
+} & InputHTMLAttributes<HTMLInputElement>;
+
 const COMMON_STYLE = cn(
   'h-54 w-full rounded-2xl bg-white border border-gray-100 px-19 py-15 outline-none',
   'txt-16_M leading-19 placeholder:text-gray-400',
@@ -261,4 +265,8 @@ function PasswordInput({
       </button>
     </>
   );
+}
+
+function DateCustomInput({}: DateCustomProps) {
+  return;
 }

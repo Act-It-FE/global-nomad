@@ -5,26 +5,24 @@ export default function myActivitiesQueryKeys() {
 
   return {
     all,
-    getList: (params: Parameters<typeof myActivitiesApi.get>[0]) =>
-      [...all, 'getList', params] as const,
+    getActs: (params: Parameters<typeof myActivitiesApi.get>[0]) =>
+      [...all, 'getActs', params] as const,
     getDetail: (id: number) => [...all, 'getDetail', id] as const,
     getReservationDashboard: (
-      activityId: number,
-      params: Parameters<typeof myActivitiesApi.getReservationDashboard>[1],
-    ) => [...all, 'getReservationDashboard', activityId, params] as const,
+      ...arg: Parameters<typeof myActivitiesApi.getReservationDashboard>
+    ) => [...all, 'getReservationDashboard', ...arg] as const,
     getReservedSchedule: (
-      activityId: number,
-      params: Parameters<typeof myActivitiesApi.getReservedSchedule>[1],
-    ) => [...all, 'getReservedSchedule', activityId, params] as const,
+      ...arg: Parameters<typeof myActivitiesApi.getReservedSchedule>
+    ) => [...all, 'getReservedSchedule', ...arg] as const,
     getReservations: (
-      activityId: number,
-      params: Parameters<typeof myActivitiesApi.getReservations>[1],
-    ) => [...all, 'getReservations', activityId, params] as const,
+      ...arg: Parameters<typeof myActivitiesApi.getReservations>
+    ) => [...all, 'getReservations', ...arg] as const,
     patchReservations: (
-      activityId: number,
-      reservationId: number,
-      body: Parameters<typeof myActivitiesApi.patchReservations>[2],
-    ) =>
-      [...all, 'patchReservations', activityId, reservationId, body] as const,
+      ...arg: Parameters<typeof myActivitiesApi.patchReservations>
+    ) => [...all, 'patchReservations', ...arg] as const,
+    deleteAct: (...arg: Parameters<typeof myActivitiesApi.delete>) =>
+      [...all, 'deleteAct', ...arg] as const,
+    patchAct: (...arg: Parameters<typeof myActivitiesApi.patch>) =>
+      [...all, 'patchAct', ...arg] as const,
   };
 }

@@ -3,6 +3,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import AllActivities from './_components/AllActivities';
+import PopularActivities from './_components/PopularActivities';
 import Search from './_components/Search';
 import SearchResult from './_components/SearchResult';
 
@@ -21,12 +22,15 @@ export default function Home() {
 
   return (
     <div className='mx-auto max-w-1200'>
-      <div className='mx-24 min-h-800 md:mx-30 lg:mx-40'>
+      <div className='mx-24 flex min-h-800 flex-col gap-40 pb-136 md:mx-30 md:gap-80 md:pb-204 lg:mx-40 lg:pb-218'>
         <Search isLoading={isLoading} onSearch={handleSearch} />
         {keyword ? (
           <SearchResult keyword={keyword} onLoadingChange={setIsLoading} />
         ) : (
-          <AllActivities />
+          <>
+            <PopularActivities />
+            <AllActivities />
+          </>
         )}
       </div>
     </div>

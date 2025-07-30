@@ -10,7 +10,7 @@ import myActivitiesQueryKeys from './queryKey';
 
 export function useMyActQuery(params?: GetMyActivitiesParams) {
   return useQuery({
-    queryKey: myActivitiesQueryKeys().getList(params || {}),
+    queryKey: myActivitiesQueryKeys().getActs(params || {}),
     queryFn: () => {
       return myActivitiesApi.get(params);
     },

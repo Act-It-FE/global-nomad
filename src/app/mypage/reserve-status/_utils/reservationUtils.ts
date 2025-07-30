@@ -16,8 +16,3 @@ export const getCountByTab = (
       return 0;
   }
 };
-
-// 시간대 텍스트 포맷팅 함수
-export const formatTimeSlotText = (time: string): string => {
-  return `${time}`;
-};

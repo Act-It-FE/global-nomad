@@ -1,9 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import {
-  formatTimeSlotText,
-  getCountByTab,
-} from '@/app/mypage/reserve-status/_utils/reservationUtils';
+import { getCountByTab } from '@/app/mypage/reserve-status/_utils/reservationUtils';
 import Input from '@/components/Input';
 import { useMyActReservedSchedule } from '@/hooks/myActivities/useMyActivitiesQuery';
 import { useCalendarStore } from '@/stores/calendarStore';
@@ -49,7 +46,7 @@ export function ReservationDropDown() {
       <p className='txt-16_B lg:txt-18_B leading-[normal] tracking-[-0.45px]'>
         예약 시간
       </p>
-      <div className='w-full'>
+      <div className='w-full max-w-447'>
         {!activeTab ? (
           <div className='txt-16_M p-16 text-center text-gray-400'>
             먼저 예약 상태를 선택해주세요
@@ -58,7 +55,7 @@ export function ReservationDropDown() {
           <Input
             key={activeTab}
             id='time-dropdown'
-            items={timeSlots.map((slot) => formatTimeSlotText(slot.time))}
+            items={timeSlots.map((slot) => slot.time)}
             placeholder='시간대 선택'
             type='dropdown'
             onDropdownSelect={(index) => {

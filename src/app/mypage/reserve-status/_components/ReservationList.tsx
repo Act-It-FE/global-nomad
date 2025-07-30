@@ -30,7 +30,7 @@ export function ReservationList() {
 
   // 조건 확인
   if (!activeTab) return null;
-  if (!selectedTimeSlot) return <div>시간대를 선택해주세요</div>;
+  if (!selectedTimeSlot) return null;
 
   return (
     <div className='flex max-h-250 w-full flex-col items-start gap-14 overflow-y-auto'>

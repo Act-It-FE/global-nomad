@@ -4,12 +4,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import activitiesApi from '@/api/activitiesApi';
+import myActivitiesApi from '@/api/myActivities';
 import {
   ActivitiesDetail,
   ActivityReviewResponse,
 } from '@/api/types/activities';
 import DropDown from '@/components/DropDown';
 import Icon from '@/components/Icon';
+import { WarningContent } from '@/components/Modal/contents/WarningContent';
 import { useMyActivityStore } from '@/stores/useMyActivityStore';
 
 interface Props {
@@ -17,30 +19,30 @@ interface Props {
 }
 
 export default function ActivitySummary({ activityId }: Props) {
+  const router = useRouter();
+
   const [data, setData] = useState<ActivitiesDetail | null>(null);
   const [review, setReview] = useState<ActivityReviewResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { setActivityOwnerId, setCurrentUserId, isMyActivity } =
     useMyActivityStore();
 
   useEffect(() => {
-    const fetchActivity = async () => {
+    const fetchData = async () => {
       try {
         const [activity, reviewData] = await Promise.all([
           activitiesApi.getDetail(activityId),
           activitiesApi.getReviews(activityId),
         ]);
-
         setData(activity);
         setReview(reviewData);
 
-        setActivityOwnerId(activity.userId);
-
-        const loggedInUserId = 2232; // ← 이건 실제 로그인 유저의 ID로 교체
+        const loggedInUserId = 2232;
         setCurrentUserId(loggedInUserId);
+        setActivityOwnerId(activity.userId);
       } catch (error) {
         console.error(error);
         setError(true);
@@ -49,8 +51,17 @@ export default function ActivitySummary({ activityId }: Props) {
       }
     };
 
-    fetchActivity();
-  }, [activityId, setActivityOwnerId, setCurrentUserId]);
+    fetchData();
+  }, [activityId, setCurrentUserId, setActivityOwnerId]);
+
+  const handleDelete = async () => {
+    try {
+      await myActivitiesApi.delete(activityId);
+      router.push('/');
+    } catch (err) {
+      console.error('삭제 실패:', err);
+    }
+  };
 
   if (loading)
     return (
@@ -62,13 +73,9 @@ export default function ActivitySummary({ activityId }: Props) {
   const { averageRating, totalCount } = review;
 
   return (
-    <section className='my-20 flex flex-col gap-6 md:my-40'>
-      <div className='flex items-start justify-between'>
-        <div className='md:txt-14_M txt-13_M leading-17 text-gray-950 opacity-75'>
-          {category}
-        </div>
-
-        {isMyActivity() && (
+    <section className='relative my-20 flex flex-col gap-6 md:my-40'>
+      {isMyActivity() && (
+        <div className='absolute top-0 right-0'>
           <DropDown
             items={[
               {
@@ -77,16 +84,22 @@ export default function ActivitySummary({ activityId }: Props) {
               },
               {
                 text: '삭제하기',
-                onClick: () => console.log('삭제하기'),
                 danger: true,
+                onClick: () => setIsModalOpen(true),
               },
             ]}
             position='left'
-            trigger={<Icon className='h-24 w-24' icon='More' />}
+            trigger={
+              <button>
+                <Icon className='h-28 w-28 cursor-pointer' icon='More' />
+              </button>
+            }
           />
-        )}
+        </div>
+      )}
+      <div className='md:txt-14_M txt-13_M leading-17 text-gray-950 opacity-75'>
+        {category}
       </div>
-
       <p className='md:txt-24_B txt-18_B leading-29 text-gray-950'>{title}</p>
 
       <div className='txt-14_M leading-17 text-gray-700'>
@@ -101,6 +114,17 @@ export default function ActivitySummary({ activityId }: Props) {
           <p>{address}</p>
         </div>
       </div>
+
+      {isModalOpen && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50'>
+          <WarningContent
+            message='체험을 삭제하시겠습니까?'
+            variant='warning'
+            onCancel={() => setIsModalOpen(false)}
+            onConfirm={handleDelete}
+          />
+        </div>
+      )}
     </section>
   );
 }

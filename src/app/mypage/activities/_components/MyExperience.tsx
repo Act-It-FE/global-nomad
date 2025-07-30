@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 import Icon from '@/components/Icon';
@@ -37,12 +38,12 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
             </div>
           </div>
           <div className='txt-14_M mt-12 flex gap-8 leading-17 text-gray-600 lg:mt-20'>
-            <button
+            <Link
               className='rounded-lg border border-gray-50 px-9 py-5'
-              type='button'
+              href={`/mypage/${data.id}`}
             >
               수정하기
-            </button>
+            </Link>
             <button
               className='rounded-lg bg-gray-50 px-10 py-6'
               type='button'

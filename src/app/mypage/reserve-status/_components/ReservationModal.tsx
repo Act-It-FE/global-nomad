@@ -9,21 +9,25 @@ import { ReservationDropDown } from './ReservationDropDown';
 import { ReservationModalHeader } from './ReservationModalHeader';
 
 export function ReservationModal() {
-  const { isModalOpen, setIsModalOpen, setSelectedTimeSlot } =
+  const { isModalOpen, setIsModalOpen, setSelectedTimeSlot, setActiveTab } =
     useCalendarStore();
 
-  // 모달이 열릴 때 selectedTimeSlot 초기화 (한 번만 실행)
+  // 모달이 열릴 때 초기화, 닫힐 때도 초기화
   useEffect(() => {
     if (isModalOpen) {
       setSelectedTimeSlot(null);
+    } else {
+      // 모달이 닫힐 때 탭과 시간대 모두 초기화
+      setActiveTab(null);
+      setSelectedTimeSlot(null);
     }
-  }, [isModalOpen, setSelectedTimeSlot]);
+  }, [isModalOpen, setSelectedTimeSlot, setActiveTab]);
 
   if (!isModalOpen) return null;
 
   return ReactDOM.createPortal(
     <div
-      className='bg-opacity-50 fixed inset-0 z-100 flex items-end justify-center bg-black/50 lg:top-300 lg:left-650 lg:items-center lg:bg-transparent'
+      className='bg-opacity-50 fixed inset-0 z-100 flex min-w-375 items-end justify-center bg-black/50 md:w-full lg:top-300 lg:left-350 lg:items-center lg:bg-transparent'
       onClick={() => setIsModalOpen(false)} // 배경 클릭 시 모달 닫기
     >
       <div

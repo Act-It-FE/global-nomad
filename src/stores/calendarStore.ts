@@ -13,7 +13,7 @@ interface CalendarState {
   reservations: Record<string, ReservationData>;
   isModalOpen: boolean;
   selectedActivityId: number | null;
-  activeTab: ReservationStatus;
+  activeTab: ReservationStatus | null;
   selectedTimeSlot: number | null; // 선택된 시간대 ID
 
   setSelectedDate: (date: Date | null) => void;
@@ -21,7 +21,7 @@ interface CalendarState {
   setReservations: (reservations: Record<string, ReservationData>) => void;
   setIsModalOpen: (isOpen: boolean) => void;
   setSelectedActivityId: (activityId: number | null) => void;
-  setActiveTab: (tab: ReservationStatus) => void;
+  setActiveTab: (tab: ReservationStatus | null) => void;
   setSelectedTimeSlot: (timeSlotId: number | null) => void;
 }
 
@@ -31,7 +31,7 @@ export const useCalendarStore = create<CalendarState>((set) => ({
   reservations: {},
   isModalOpen: false,
   selectedActivityId: null,
-  activeTab: 'pending',
+  activeTab: null as ReservationStatus | null,
   selectedTimeSlot: null,
 
   setSelectedDate: (date) => set({ selectedDate: date }),

@@ -10,13 +10,8 @@ import { useCalendarStore } from '@/stores/calendarStore';
 import { formatDate } from '@/utils/dateUtils';
 
 export function ReservationDropDown() {
-  const {
-    selectedActivityId,
-    selectedDate,
-    selectedTimeSlot,
-    setSelectedTimeSlot,
-    activeTab,
-  } = useCalendarStore();
+  const { selectedActivityId, selectedDate, setSelectedTimeSlot, activeTab } =
+    useCalendarStore();
 
   // 선택된 날짜의 예약 스케줄 데이터 가져오기
   const { data: reservedSchedule } = useMyActReservedSchedule(
@@ -26,6 +21,9 @@ export function ReservationDropDown() {
 
   // 선택된 탭에 따라 해당 상태의 예약이 있는 시간대만 필터링
   const timeSlots = useMemo(() => {
+    // activeTab이 null이면 빈 배열 반환
+    if (!activeTab) return [];
+
     return (
       reservedSchedule
         ?.filter((schedule) => {
@@ -45,32 +43,29 @@ export function ReservationDropDown() {
     setSelectedTimeSlot(null);
   }, [activeTab, setSelectedTimeSlot]);
 
-  // selectedTimeSlot이 null이고 timeSlots가 있을 때 첫 번째 시간대 선택
-  useEffect(() => {
-    if (selectedTimeSlot === null && timeSlots.length > 0) {
-      setSelectedTimeSlot(timeSlots[0].id);
-    }
-  }, [selectedTimeSlot, timeSlots, setSelectedTimeSlot]);
-
   return (
     <div className='flex w-full flex-col items-start gap-12'>
       <p className='txt-16_B lg:txt-18_B leading-[normal] tracking-[-0.45px]'>
         예약 시간
       </p>
       <div className='w-full'>
-        <Input
-          key={activeTab} // 탭이 바뀔 때마다 컴포넌트 재생성
-          id='time-dropdown'
-          items={timeSlots.map((slot) =>
-            formatTimeSlotText(slot.time, getCountByTab(slot.count, activeTab)),
-          )}
-          placeholder='시간대 선택'
-          type='dropdown'
-          onDropdownSelect={(index) => {
-            const selectedSlot = timeSlots[index];
-            setSelectedTimeSlot(selectedSlot?.id || null);
-          }}
-        />
+        {!activeTab ? (
+          <div className='txt-16_M p-16 text-center text-gray-400'>
+            먼저 예약 상태를 선택해주세요
+          </div>
+        ) : (
+          <Input
+            key={activeTab}
+            id='time-dropdown'
+            items={timeSlots.map((slot) => formatTimeSlotText(slot.time))}
+            placeholder='시간대 선택'
+            type='dropdown'
+            onDropdownSelect={(index) => {
+              const selectedSlot = timeSlots[index];
+              setSelectedTimeSlot(selectedSlot?.id || null);
+            }}
+          />
+        )}
       </div>
     </div>
   );

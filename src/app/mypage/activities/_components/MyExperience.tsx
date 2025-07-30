@@ -9,6 +9,7 @@ import Modal from '@/components/Modal/Modal';
 import { useMyActDelete } from '@/hooks/myActivities/useMyActReservationMutate';
 import { ModalProps } from '@/types/Modal';
 import { cn } from '@/utils/cn';
+import getErrorMessage from '@/utils/getErrorMessage';
 
 export default function MyExperience({ data }: { data: ActivityBasic }) {
   const { mutateAsync } = useMyActDelete(data.id);
@@ -29,10 +30,14 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
     try {
       handleClose();
       await mutateAsync();
-    } catch {
+    } catch (error: unknown) {
+      const errorMessage = getErrorMessage(error, '삭제에 실패했습니다.');
       setModal({
         varient: 'onlyText',
-        message: '삭제에 실패했습니다.',
+        message:
+          errorMessage === 'Unauthorized'
+            ? '로그인이 필요합니다.'
+            : errorMessage,
       });
     }
   };

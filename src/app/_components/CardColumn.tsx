@@ -22,7 +22,7 @@ export default function CardColumn({
   const formatted = price.toLocaleString();
   return (
     <Link className='flex w-full flex-col' href={`/${id}`}>
-      <div className='relative aspect-[155/177] w-full md:aspect-[332/347] lg:h-290'>
+      <div className='relative aspect-[155/177] w-full md:aspect-[332/347]'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt={`${title} 이미지`}

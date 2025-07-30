@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { TouchEvent, useEffect, useState } from 'react';
 
 import { Activity } from '@/api/types/activities';
 import Icon from '@/components/Icon';
@@ -14,7 +14,7 @@ type ActivityCard = Omit<
 >;
 
 type CarouselProps = {
-  activities: Activity[];
+  activities: ActivityCard[];
 };
 
 export default function PopularActivitiesCarousel({
@@ -25,8 +25,8 @@ export default function PopularActivitiesCarousel({
   const isMobile = useMediaQuery('mobile');
   const isTablet = useMediaQuery('tablet');
 
-  const visibleSlides = isMobile || isTablet ? 2 : 4;
-  const movementCorrection = isTablet ? 10 : 6;
+  const visibleSlides = isMobile || isTablet ? 2 : 4; // 한번에 보여줄 카드 개수
+  const movementCorrection = isTablet ? 10 : 6; // gap으로 인한 보정값
 
   const maxIndex = activities.length - visibleSlides;
 
@@ -34,19 +34,19 @@ export default function PopularActivitiesCarousel({
   const [startX, setStartX] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     if (!isMobile) return;
     setStartX(e.touches[0].clientX);
   };
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     if (!isMobile) return;
     if (Math.abs(e.touches[0].clientX - startX) > 10) {
       setIsSwiping(true);
     }
   };
 
-  const handleTouchEnd = (e) => {
+  const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
     if (!isMobile || !isSwiping) return;
 
     const endX = e.changedTouches[0].clientX;

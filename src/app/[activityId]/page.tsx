@@ -59,7 +59,7 @@ export default function ActivityDetail() {
   }
 
   return (
-    <div className='w-full px-30 sm:px-24'>
+    <div className='w-full px-24 md:px-30'>
       <ActivitySummary />
       <ActivityDescription activityId={Number(activityId)} />
       <LoadKakaoMap address={address} />

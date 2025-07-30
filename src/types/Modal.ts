@@ -11,6 +11,8 @@ export interface WarningModalProps {
   message: string;
   onCancel: () => void;
   onConfirm: () => void;
+  cancelText?: string;
+  confirmText?: string;
 }
 
 export interface ReviewModalProps {

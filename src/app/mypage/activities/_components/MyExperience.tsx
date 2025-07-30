@@ -14,16 +14,16 @@ import getErrorMessage from '@/utils/getErrorMessage';
 export default function MyExperience({ data }: { data: ActivityBasic }) {
   const { mutateAsync } = useMyActDelete(data.id);
   const [modal, setModal] = useState<{
-    varient: ModalProps['variant'] | null;
+    variant: ModalProps['variant'] | null;
     message: string;
-  }>({ varient: null, message: '' });
+  }>({ variant: null, message: '' });
 
   const handleOpen = () => {
-    setModal({ varient: 'warning', message: '삭제하시겠습니까?' });
+    setModal({ variant: 'warning', message: '삭제하시겠습니까?' });
   };
 
   const handleClose = () => {
-    setModal({ varient: null, message: '' });
+    setModal({ variant: null, message: '' });
   };
 
   const handleDelete = async () => {
@@ -33,7 +33,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
     } catch (error: unknown) {
       const errorMessage = getErrorMessage(error, '삭제에 실패했습니다.');
       setModal({
-        varient: 'onlyText',
+        variant: 'onlyText',
         message:
           errorMessage === 'Unauthorized'
             ? '로그인이 필요합니다.'
@@ -92,7 +92,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
         />
       </article>
       {(() => {
-        switch (modal.varient) {
+        switch (modal.variant) {
           case 'warning':
             return (
               <Modal

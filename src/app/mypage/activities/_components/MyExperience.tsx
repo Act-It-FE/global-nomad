@@ -17,7 +17,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
     message: string;
   }>({ varient: null, message: '' });
 
-  const handleClick = () => {
+  const handleOpen = () => {
     setModal({ varient: 'warning', message: '삭제하시겠습니까?' });
   };
 
@@ -66,7 +66,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
             <button
               className='rounded-lg bg-gray-50 px-10 py-6'
               type='button'
-              onClick={handleClick}
+              onClick={handleOpen}
             >
               삭제하기
             </button>
@@ -83,7 +83,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
           case 'warning':
             return (
               <Modal
-                message='삭제하시겠습니까?'
+                message={modal.message}
                 variant='warning'
                 onCancel={handleClose}
                 onConfirm={handleDelete}

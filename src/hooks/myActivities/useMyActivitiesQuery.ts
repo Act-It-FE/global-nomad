@@ -20,6 +20,7 @@ export function useMyActQuery(params?: GetMyActivitiesParams) {
 export function useMyActReservationDashboard(
   activityId: number,
   params: { year: string; month: string },
+  options?: { enabled?: boolean },
 ) {
   return useQuery({
     queryKey: myActivitiesQueryKeys().getReservationDashboard(
@@ -29,6 +30,7 @@ export function useMyActReservationDashboard(
     queryFn: () => {
       return myActivitiesApi.getReservationDashboard(activityId, params);
     },
+    enabled: options?.enabled ?? true,
   });
 }
 

@@ -67,3 +67,8 @@ export const getMonthName = (date: Date): string => {
   const month = date.getMonth() + 1;
   return `${year}년 ${month}월`;
 };
+
+export const formatDateForAPI = (date: Date) => ({
+  year: date.getFullYear().toString(),
+  month: (date.getMonth() + 1).toString().padStart(2, '0'),
+});

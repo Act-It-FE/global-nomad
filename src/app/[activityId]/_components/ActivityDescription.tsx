@@ -18,7 +18,9 @@ export default function ActivityDescription({ activityId }: Props) {
   const isSingleSubImage = subImages.length === 1;
 
   if (isLoading) {
-    return <div className='text-center text-gray-400'>불러오는 중...</div>;
+    return (
+      <div className='border-primary-500 size-50 animate-spin rounded-full border-2 border-t-transparent' />
+    );
   }
 
   if (errorMessage) {

@@ -22,9 +22,16 @@ export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
   const cellRef = useRef<HTMLButtonElement>(null);
   const { selectedDate, setSelectedDate, setIsModalOpen } = useCalendarStore();
 
+  // 예약이 있는지 확인
+  const hasReservations =
+    reservations && (reservations.pending > 0 || reservations.confirmed > 0);
+
   const handleClick = () => {
-    setSelectedDate(date);
-    setIsModalOpen(true);
+    // 예약이 있을 때만 클릭 가능
+    if (hasReservations) {
+      setSelectedDate(date);
+      setIsModalOpen(true);
+    }
   };
 
   const isSelected = selectedDate ? isSameDate(date, selectedDate) : false;
@@ -53,6 +60,7 @@ export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
         'relative flex h-124 flex-col items-center gap-5 border-t border-gray-50 px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10',
         isSelected && 'border-primary-500 border',
       )}
+      disabled={!hasReservations} // 예약이 없으면 비활성화
       onClick={handleClick}
     >
       <span className='md:txt-16_M txt-12_M leading-[normal] tracking-[-0.3px] text-gray-800 md:tracking-[-0.4px]'>

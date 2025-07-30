@@ -1,6 +1,6 @@
-// hooks/useCalendar.ts
-
 import { useCallback, useMemo, useState } from 'react';
+
+import { getCalendarDates, isSameDate } from '@/utils/dateUtils';
 
 import {
   CalendarDate,
@@ -8,7 +8,6 @@ import {
   CalendarState,
   UseCalendarReturn,
 } from '../types';
-import { getCalendarDates, isSameDate } from '../utils/dateUtils';
 
 interface UseCalendarProps {
   currentDate?: Date;

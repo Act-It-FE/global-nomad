@@ -1,3 +1,5 @@
+'use client';
+
 import { useMyActQuery } from '@/hooks/myActivities/useMyActivitiesQuery';
 
 import { Calendar } from './_components/calendar/Calendar';

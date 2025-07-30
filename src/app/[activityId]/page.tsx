@@ -7,6 +7,7 @@ import activitiesDetailApi from '@/api/activitiesApi';
 import getErrorMessage from '@/utils/getErrorMessage';
 
 import ActivityDescription from './_components/ActivityDescription';
+import ActivityReviews from './_components/ActivityReviews';
 import LoadKakaoMap from './_components/LoadKakaoMap';
 
 export default function ActivityDetail() {
@@ -60,6 +61,7 @@ export default function ActivityDetail() {
     <div className='w-full px-30 sm:px-24'>
       <ActivityDescription activityId={Number(activityId)} />
       <LoadKakaoMap address={address} />
+      <ActivityReviews activityId={Number(activityId)} />
     </div>
   );
 }

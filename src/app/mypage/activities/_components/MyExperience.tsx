@@ -26,6 +26,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
   };
 
   const handleDelete = async () => {
+    handleClose();
     await mutateAsync();
   };
 

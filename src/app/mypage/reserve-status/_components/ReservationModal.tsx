@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { useCalendarStore } from '@/stores/calendarStore';
 
 import { ReservationDropDown } from './ReservationDropDown';
+import { ReservationList } from './ReservationList';
 import { ReservationModalHeader } from './ReservationModalHeader';
 
 export function ReservationModal() {
@@ -46,8 +47,9 @@ export function ReservationModal() {
 
 export function ReservationModalContent() {
   return (
-    <div className='h-fit w-full'>
+    <div className='flex h-fit w-full flex-col items-start gap-20 md:max-lg:flex-row lg:gap-30'>
       <ReservationDropDown />
+      <ReservationList />
     </div>
   );
 }

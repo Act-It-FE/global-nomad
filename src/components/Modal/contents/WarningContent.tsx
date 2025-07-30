@@ -7,8 +7,8 @@ export function WarningContent({
   message,
   onConfirm,
   onCancel,
-  cancleText,
-  confirmText,
+  cancleText = '취소하기',
+  confirmText = '아니오',
 }: WarningModalProps) {
   const warning = '/images/warning.png';
   return (

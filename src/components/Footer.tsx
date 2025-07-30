@@ -1,8 +1,14 @@
+'use client';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import Icon from '@/components/Icon';
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname === '/login') {
+    return null;
+  }
   return (
     <footer className='bottom-0 grid h-116 w-full grid-cols-2 items-center border-t border-gray-100 bg-white py-10 md:flex md:justify-between md:px-40 lg:px-200'>
       <Link

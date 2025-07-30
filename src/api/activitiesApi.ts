@@ -11,7 +11,7 @@ import {
   GetAvailableSchduleParams,
   ReservationRequest,
   ReservationResponse,
-} from '@/api/types/Activities';
+} from '@/api/types/activities';
 import apiClient from '@/libs/apiClient';
 
 const activitiesDetailApi = {

@@ -1,9 +1,9 @@
 import Icon from '@/components/Icon';
-import { useCalendarStore } from '@/stores/calendarStore'; // 추가
+import { useCalendarStore } from '@/stores/calendarStore';
 import { getMonthName } from '@/utils/dateUtils';
 
 export function CalendarHeader() {
-  const { currentDate, setCurrentDate } = useCalendarStore(); // store 사용
+  const { currentDate, setCurrentDate } = useCalendarStore();
 
   const handlePreviousMonth = () => {
     const prevMonth = new Date(currentDate);

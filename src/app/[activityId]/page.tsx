@@ -60,7 +60,7 @@ export default function ActivityDetail() {
 
   return (
     <main className='w-full px-24 md:px-30'>
-      <div className='grid grid-cols-1 lg:grid-cols-[2fr_1fr] lg:gap-40'>
+      <div className='grid grid-cols-1 lg:grid-cols-[2fr_1fr] lg:gap-x-40'>
         <section className='order-1 lg:col-start-1 lg:row-start-1'>
           <ActivityDescription activityId={Number(activityId)} />
         </section>

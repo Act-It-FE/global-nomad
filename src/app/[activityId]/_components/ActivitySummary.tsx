@@ -49,7 +49,7 @@ export default function ActivitySummary({ activityId }: Props) {
   const { averageRating, totalCount } = review;
 
   return (
-    <section className='my-40 flex flex-col gap-6'>
+    <section className='my-20 flex flex-col gap-6 md:my-40'>
       <div className='md:txt-14_M txt-13_M leading-17 text-gray-950 opacity-75'>
         {category}
       </div>

@@ -52,11 +52,13 @@ export function useMyActReservations(
     scheduleId: number;
     status: Extract<'declined' | 'pending' | 'confirmed', ReservationStatus>;
   },
+  options?: { enabled?: boolean },
 ) {
   return useQuery({
     queryKey: myActivitiesQueryKeys().getReservations(activityId, params),
     queryFn: () => {
       return myActivitiesApi.getReservations(activityId, params);
     },
+    enabled: options?.enabled ?? true,
   });
 }

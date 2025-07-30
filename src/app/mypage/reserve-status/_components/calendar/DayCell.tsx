@@ -16,6 +16,9 @@ interface DayCellProps {
     confirmed: number; // 승인: 8
     completed: number; // 완료: 10
   };
+
+  // 로딩 상태
+  isLoading?: boolean;
 }
 
 export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {

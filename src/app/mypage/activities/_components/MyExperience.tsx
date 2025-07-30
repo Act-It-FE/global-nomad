@@ -13,6 +13,10 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
   const { mutate } = useMyActDelete(data.id);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleDelete = () => {
+    mutate();
+  };
+
   return (
     <>
       <article
@@ -67,7 +71,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
           message='삭제하시겠습니까?'
           variant='warning'
           onCancel={() => setIsModalOpen(false)}
-          onConfirm={() => mutate()}
+          onConfirm={handleDelete}
         />
       )}
     </>

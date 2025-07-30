@@ -19,16 +19,16 @@ export default function SearchResult({
 }: SearchResultProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
-  const [minLoadingDone, setMinLoadingDone] = useState(false);
+  const [isMinLoadingDone, setIsMinLoadingDone] = useState(false);
 
   const isMobile = useMediaQuery('mobile');
   const isTablet = useMediaQuery('tablet');
 
   // 최소 로딩 시간 보장
   useEffect(() => {
-    setMinLoadingDone(false);
+    setIsMinLoadingDone(false);
     const timeout = setTimeout(() => {
-      setMinLoadingDone(true);
+      setIsMinLoadingDone(true);
     }, 500);
 
     return () => clearTimeout(timeout);
@@ -51,15 +51,15 @@ export default function SearchResult({
     size: pageSize,
   });
 
-  const shouldShowLoading = isLoading || !minLoadingDone;
+  const shouldShowLoading = isLoading || !isMinLoadingDone;
 
   useEffect(() => {
-    if (!isLoading && minLoadingDone) {
+    if (!isLoading && isMinLoadingDone) {
       onLoadingChange(false);
     } else {
       onLoadingChange(true);
     }
-  }, [isLoading, minLoadingDone, onLoadingChange]);
+  }, [isLoading, isMinLoadingDone, onLoadingChange]);
 
   useEffect(() => {
     setCurrentPage(1);

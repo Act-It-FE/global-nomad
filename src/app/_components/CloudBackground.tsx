@@ -1,11 +1,8 @@
 'use client';
 import Image from 'next/image';
+import { ReactNode } from 'react';
 
-export default function CloudBackground({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function CloudBackground({ children }: { children: ReactNode }) {
   return (
     <div
       className='relative overflow-hidden'

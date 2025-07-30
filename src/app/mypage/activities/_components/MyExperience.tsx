@@ -10,11 +10,11 @@ import { useMyActDelete } from '@/hooks/myActivities/useMyActReservationMutate';
 import { cn } from '@/utils/cn';
 
 export default function MyExperience({ data }: { data: ActivityBasic }) {
-  const { mutate } = useMyActDelete(data.id);
+  const { mutateAsync } = useMyActDelete(data.id);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleDelete = () => {
-    mutate();
+  const handleDelete = async () => {
+    await mutateAsync();
   };
 
   return (

@@ -39,7 +39,7 @@ export default function KakaoCallbackPage() {
         setUser(data.user);
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
-        router.replace('/signUp'); // 로그인 성공 후 이동
+        router.replace('/'); // 로그인 성공 후 이동
         return;
       } catch (loginErr: unknown) {
         // 2) 등록된 사용자가 아니면

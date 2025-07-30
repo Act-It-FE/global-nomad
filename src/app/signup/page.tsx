@@ -145,7 +145,6 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-      <h1>{profile ? profile.name : 로그인해주세요}</h1>
     </div>
   );
 }

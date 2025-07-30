@@ -1,15 +1,17 @@
-'use client';
+import { Suspense } from 'react';
 
-import AllActivities from './_components/AllActivities';
-import PopularActivities from './_components/PopularActivities';
+import MainPage from './_components/MainPage';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className='mx-auto max-w-1200'>
-      <div className='mx-24 flex min-h-800 flex-col gap-40 pb-136 md:mx-30 md:gap-80 md:pb-204 lg:mx-40 lg:pb-218'>
-        <PopularActivities />
-        <AllActivities />
-      </div>
-    </div>
+    <Suspense
+      fallback={
+        <div className='flex h-200 items-center justify-center'>
+          <div className='border-primary-500 size-50 animate-spin rounded-full border-2 border-t-transparent' />
+        </div>
+      }
+    >
+      <MainPage />
+    </Suspense>
   );
 }

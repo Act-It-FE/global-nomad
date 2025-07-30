@@ -5,11 +5,12 @@ import { useState } from 'react';
 
 import { ActivityBasic } from '@/api/types/myActivities';
 import Icon from '@/components/Icon';
+import Modal from '@/components/Modal/Modal';
 import { useMyActDelete } from '@/hooks/myActivities/useMyActReservationMutate';
 import { cn } from '@/utils/cn';
 
 export default function MyExperience({ data }: { data: ActivityBasic }) {
-  const {} = useMyActDelete(data.id);
+  const { mutate } = useMyActDelete(data.id);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -61,7 +62,14 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
           src={data.bannerImageUrl}
         />
       </article>
-      {isModalOpen}
+      {isModalOpen && (
+        <Modal
+          message='삭제하시겠습니까?'
+          variant='warning'
+          onCancel={() => setIsModalOpen(false)}
+          onConfirm={() => mutate()}
+        />
+      )}
     </>
   );
 }

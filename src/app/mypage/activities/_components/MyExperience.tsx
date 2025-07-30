@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { ActivityBasic } from '@/api/types/myActivities';
 import Icon from '@/components/Icon';
-import { ActivityBasic } from '@/types/MyActivities';
 import { cn } from '@/utils/cn';
 
 export default function MyExperience({ data }: { data: ActivityBasic }) {

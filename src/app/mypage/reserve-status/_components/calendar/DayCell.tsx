@@ -59,6 +59,7 @@ export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
   return (
     <button
       ref={cellRef}
+      aria-label={hasReservations ? '예약 상세 보기' : '예약 없음'}
       className={cn(
         'relative flex h-124 flex-col items-center gap-5 border-t border-gray-50 px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10',
         isSelected && 'border-primary-500 border',

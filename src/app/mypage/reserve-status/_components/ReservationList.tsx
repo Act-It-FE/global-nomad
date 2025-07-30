@@ -11,15 +11,21 @@ export function ReservationList() {
     useCalendarStore();
 
   const { data: reservations } = useMyActReservations(
-    selectedActivityId!,
+    selectedActivityId || 0,
     {
-      scheduleId: selectedTimeSlot!,
+      scheduleId: selectedTimeSlot || 0,
       status: activeTab as Extract<
         'pending' | 'confirmed' | 'declined',
         ReservationStatus
       >,
     },
-    { enabled: !!selectedActivityId && !!selectedTimeSlot && !!activeTab },
+    {
+      enabled:
+        !!selectedActivityId &&
+        !!selectedTimeSlot &&
+        !!activeTab &&
+        ['pending', 'confirmed', 'declined'].includes(activeTab as string),
+    },
   );
 
   // 조건 확인
@@ -104,13 +110,13 @@ function ReservationListButton({
   return (
     <div className='txt-14_M flex flex-col items-center gap-8 text-gray-600'>
       <button
-        className='items-center justify-center rounded-lg border border-gray-50 bg-white px-10 py-6 leading-[normal] tracking-[-0.35px]'
+        className='flex items-center justify-center rounded-lg border border-gray-50 bg-white px-10 py-6 leading-[normal] tracking-[-0.35px]'
         onClick={() => patchReservations({ status: 'confirmed' })}
       >
         승인하기
       </button>
       <button
-        className='items-center justify-center rounded-lg bg-gray-50 px-10 py-6 leading-[normal] tracking-[-0.35px]'
+        className='flex items-center justify-center rounded-lg bg-gray-50 px-10 py-6 leading-[normal] tracking-[-0.35px]'
         onClick={() => patchReservations({ status: 'declined' })}
       >
         거절하기

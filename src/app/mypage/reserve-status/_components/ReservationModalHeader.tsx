@@ -19,8 +19,9 @@ export function ReservationModalHeader() {
 
   // 선택된 날짜의 상세한 예약 스케줄 데이터 가져오기
   const { data: reservedSchedule } = useMyActReservedSchedule(
-    selectedActivityId || 0,
+    selectedActivityId!,
     { date: formatDate(selectedDate || new Date()) },
+    { enabled: !!selectedActivityId },
   );
 
   // 예약 스케줄 데이터에서 카운트 합계 계산

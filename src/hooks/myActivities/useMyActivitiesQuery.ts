@@ -37,12 +37,14 @@ export function useMyActReservationDashboard(
 export function useMyActReservedSchedule(
   activityId: number,
   params: { date: string },
+  options?: { enabled?: boolean },
 ) {
   return useQuery({
     queryKey: myActivitiesQueryKeys().getReservedSchedule(activityId, params),
     queryFn: () => {
       return myActivitiesApi.getReservedSchedule(activityId, params);
     },
+    enabled: options?.enabled ?? true,
   });
 }
 

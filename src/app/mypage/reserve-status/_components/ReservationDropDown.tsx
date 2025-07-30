@@ -15,8 +15,9 @@ export function ReservationDropDown() {
 
   // 선택된 날짜의 예약 스케줄 데이터 가져오기
   const { data: reservedSchedule } = useMyActReservedSchedule(
-    selectedActivityId || 0,
+    selectedActivityId!,
     { date: formatDate(selectedDate || new Date()) },
+    { enabled: !!selectedActivityId },
   );
 
   // 선택된 탭에 따라 해당 상태의 예약이 있는 시간대만 필터링

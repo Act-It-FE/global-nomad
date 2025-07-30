@@ -60,13 +60,13 @@ export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
       {reservations && (
         <div className='absolute top-9 right-16 size-4 rounded-full bg-red-500 md:top-13 md:right-12 md:size-6' />
       )}
-      {reservations?.pending && (
+      {reservations && reservations.pending > 0 && (
         <Badge count={reservations.pending} label='예약' />
       )}
-      {reservations?.confirmed && (
+      {reservations && reservations.confirmed > 0 && (
         <Badge count={reservations.confirmed} label='승인' />
       )}
-      {reservations?.completed && (
+      {reservations && reservations.completed > 0 && (
         <Badge count={reservations.completed} label='완료' />
       )}
     </button>

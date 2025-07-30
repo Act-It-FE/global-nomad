@@ -20,10 +20,11 @@ interface DayCellProps {
 
 export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
   const cellRef = useRef<HTMLButtonElement>(null);
-  const { selectedDate, setSelectedDate } = useCalendarStore();
+  const { selectedDate, setSelectedDate, setIsModalOpen } = useCalendarStore();
 
   const handleClick = () => {
     setSelectedDate(date);
+    setIsModalOpen(true);
   };
 
   const isSelected = selectedDate ? isSameDate(date, selectedDate) : false;
@@ -47,7 +48,7 @@ export function DayCell({ date, isCurrentMonth, reservations }: DayCellProps) {
 
   return (
     <button
-      ref={cellRef} // ref 추가
+      ref={cellRef}
       className={cn(
         'relative flex h-124 flex-col items-center gap-5 border-t border-gray-50 px-4 pt-10 pb-6 md:px-12 md:pt-18 md:pb-10',
         isSelected && 'border-primary-500 border',

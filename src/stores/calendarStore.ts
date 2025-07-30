@@ -8,18 +8,23 @@ interface CalendarState {
   selectedDate: Date | null; // 선택된 날짜
   currentDate: Date; // 현재 표시하는 월
   reservations: Record<string, ReservationData>; // 예약 데이터
+  selectedActivityId: number | null; // 선택된 체험
 
   setSelectedDate: (date: Date | null) => void;
   setCurrentDate: (date: Date) => void;
   setReservations: (reservations: Record<string, ReservationData>) => void;
+  setSelectedActivityId: (activityId: number | null) => void;
 }
 
 export const useCalendarStore = create<CalendarState>((set) => ({
   selectedDate: null,
   currentDate: new Date(),
   reservations: {},
+  selectedActivityId: null,
 
   setSelectedDate: (date) => set({ selectedDate: date }),
   setCurrentDate: (date) => set({ currentDate: date }),
   setReservations: (reservations) => set({ reservations }),
+  setSelectedActivityId: (activityId) =>
+    set({ selectedActivityId: activityId }),
 }));

@@ -2,22 +2,9 @@
 
 import { ReservationStatus } from '@/api/types/myActivities';
 import { useMyActReservations } from '@/hooks/myActivities/useMyActivitiesQuery';
+import { useMyActReservationMutate } from '@/hooks/myActivities/useMyActReservationMutate';
 import { useCalendarStore } from '@/stores/calendarStore';
 import { cn } from '@/utils/cn';
-
-// 탭별 제목 가져오기
-// const getTabTitle = (activeTab: string | null) => {
-//   switch (activeTab) {
-//     case 'pending':
-//       return '신청 예약';
-//     case 'confirmed':
-//       return '승인 예약';
-//     case 'declined':
-//       return '거절 예약';
-//     default:
-//       return '';
-//   }
-// };
 
 export function ReservationList() {
   const { selectedActivityId, selectedTimeSlot, activeTab } =
@@ -39,11 +26,8 @@ export function ReservationList() {
   if (!activeTab) return null;
   if (!selectedTimeSlot) return <div>시간대를 선택해주세요</div>;
 
-  // 콘솔로 데이터 확인
-  console.log('reservations:', reservations);
-
   return (
-    <div className='flex h-fit w-full flex-col items-start gap-14 overflow-y-auto'>
+    <div className='flex max-h-250 w-full flex-col items-start gap-14 overflow-y-auto'>
       <p className='txt-16_B lg:txt-18_B leading-[normal] tracking-[-0.45px]'>
         예약 내역
       </p>
@@ -53,15 +37,26 @@ export function ReservationList() {
           key={reservation.id}
           className='flex w-full items-center justify-between rounded-2xl border border-gray-100 bg-white px-16 py-14'
         >
-          <div>
-            <p className='flex justify-between'>
-              닉네임 <span>{reservation.nickname}</span>{' '}
-            </p>
-            <p className='flex justify-between'>
-              인원 <span>{reservation.headCount}명</span>
-            </p>
+          <div className='txt-14_B lg:txt-16_B flex flex-col gap-10 leading-[normal] tracking-[-0.35px] text-gray-500 lg:tracking-[-0.4px]'>
+            <div className='flex items-center gap-8'>
+              <p>닉네임</p>
+              <span className='txt-14_M lg:txt-16_M truncate text-gray-950'>
+                {reservation.nickname}
+              </span>
+            </div>
+            <div className='flex items-center gap-20'>
+              <p>인원</p>
+              <span className='txt-14_M lg:txt-16_M text-gray-950'>
+                {reservation.headCount}명
+              </span>
+            </div>
           </div>
-          {activeTab === 'pending' && <ReservationListButton />}
+          {activeTab === 'pending' && (
+            <ReservationListButton
+              reservationId={reservation.id}
+              selectedActivityId={selectedActivityId!}
+            />
+          )}
           {activeTab !== 'pending' && (
             <ReservationListBadge activeTab={activeTab} />
           )}
@@ -94,13 +89,30 @@ function ReservationListBadge({ activeTab }: { activeTab: ReservationStatus }) {
   );
 }
 
-function ReservationListButton({}) {
+function ReservationListButton({
+  selectedActivityId,
+  reservationId,
+}: {
+  selectedActivityId: number;
+  reservationId: number;
+}) {
+  const { mutate: patchReservations } = useMyActReservationMutate(
+    selectedActivityId,
+    reservationId,
+  );
+
   return (
-    <div>
-      <button className='txt-16_M leading-[normal] tracking-[-0.45px]'>
+    <div className='txt-14_M flex flex-col items-center gap-8 text-gray-600'>
+      <button
+        className='items-center justify-center rounded-lg border border-gray-50 bg-white px-10 py-6 leading-[normal] tracking-[-0.35px]'
+        onClick={() => patchReservations({ status: 'confirmed' })}
+      >
         승인하기
       </button>
-      <button className='txt-16_M leading-[normal] tracking-[-0.45px]'>
+      <button
+        className='items-center justify-center rounded-lg bg-gray-50 px-10 py-6 leading-[normal] tracking-[-0.35px]'
+        onClick={() => patchReservations({ status: 'declined' })}
+      >
         거절하기
       </button>
     </div>

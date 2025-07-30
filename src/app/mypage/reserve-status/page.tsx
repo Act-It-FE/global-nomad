@@ -66,7 +66,7 @@ export default function Page() {
   }
 
   return (
-    <div className='relative flex w-full flex-col gap-30 max-md:gap-18 md:max-lg:gap-24'>
+    <div className='relative mb-30 flex w-full flex-col gap-30 max-md:gap-18 md:max-lg:gap-24'>
       <div className='flex flex-col items-start justify-center gap-10 py-10 leading-[normal]'>
         <span className='txt-18_B tracking-[-0.45px] text-gray-950'>
           예약 현황

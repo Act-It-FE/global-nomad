@@ -28,7 +28,7 @@ export function ReservationModal() {
 
   return ReactDOM.createPortal(
     <div
-      className='bg-opacity-50 fixed inset-0 z-100 flex min-w-375 items-end justify-center bg-black/50 md:w-full lg:top-300 lg:left-350 lg:items-center lg:bg-transparent'
+      className='bg-opacity-50 fixed inset-0 z-100 flex min-w-375 items-end justify-center bg-black/50 md:w-full lg:top-300 lg:left-300 lg:items-center lg:bg-transparent'
       onClick={() => setIsModalOpen(false)} // 배경 클릭 시 모달 닫기
     >
       <div

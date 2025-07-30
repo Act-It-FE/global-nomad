@@ -24,6 +24,19 @@ export default function SearchResult({
   const isMobile = useMediaQuery('mobile');
   const isTablet = useMediaQuery('tablet');
 
+  const {
+    data: { activities = [], totalCount = 0 } = {},
+    isLoading,
+    isError,
+  } = useActivitiesQuery({
+    method: 'offset',
+    keyword: keyword,
+    page: currentPage,
+    size: pageSize,
+  });
+
+  const shouldShowLoading = isLoading || !isMinLoadingDone;
+
   // 최소 로딩 시간 보장
   useEffect(() => {
     setIsMinLoadingDone(false);
@@ -39,19 +52,6 @@ export default function SearchResult({
     else if (isTablet) setPageSize(4);
     else setPageSize(8);
   }, [isMobile, isTablet]);
-
-  const {
-    data: { activities = [], totalCount = 0 } = {},
-    isLoading,
-    isError,
-  } = useActivitiesQuery({
-    method: 'offset',
-    keyword: keyword,
-    page: currentPage,
-    size: pageSize,
-  });
-
-  const shouldShowLoading = isLoading || !isMinLoadingDone;
 
   useEffect(() => {
     if (!isLoading && isMinLoadingDone) {

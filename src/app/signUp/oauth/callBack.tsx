@@ -42,21 +42,13 @@ export default function KakaoCallbackPage() {
         router.replace('/signUp'); // 로그인 성공 후 이동
         return;
       } catch (loginErr: unknown) {
-        // 2) 등록된 사용자가 아니면 회원가입으로
+        // 2) 등록된 사용자가 아니면
         if (
           loginErr instanceof Error &&
           loginErr.message === 'User not registered'
         ) {
           try {
-            const signupData: OAuthResponse = await oAuthApi.postSignUp(
-              body,
-              'kakao' as OAuthAppProvider,
-            );
-            setUser(signupData.user);
-            localStorage.setItem('accessToken', signupData.accessToken);
-            localStorage.setItem('refreshToken', signupData.refreshToken);
-            console.log('🟢 로그인 성공, accessToken=', signupData.accessToken);
-            router.replace('/signUp'); // 회원가입 후 이동
+            router.replace('/signUp'); // 회원가입 페이지로 이동
           } catch (signupErr: unknown) {
             setError(
               signupErr instanceof Error
@@ -75,6 +67,11 @@ export default function KakaoCallbackPage() {
     }
 
     void handleAuth();
-  }, [code, router]);
-  return { error };
+  }, [code, router, setUser]);
+
+  if (error) {
+    return <p className='text-red-500'>오류: {error}</p>;
+  }
+
+  return null;
 }

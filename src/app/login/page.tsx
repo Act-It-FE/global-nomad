@@ -4,8 +4,10 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 
 import KakaoIcon from '@/assets/icons/kakao.svg';
-import Button from '@/components/Button';
-import Input from '@/components/Input';
+
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import { getRedirectUrl } from '../signup/oauth/getRedirectUrl';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -23,6 +25,7 @@ export default function Login() {
   const handleSubmit = () => {
     console.log(email, password);
   };
+  const redirectUrl = getRedirectUrl();
 
   return (
     <div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
@@ -90,6 +93,9 @@ export default function Login() {
             icon={<KakaoIcon className='mr-2 h-24 w-24' />}
             size='xl'
             variant='kakao'
+            onClick={() => {
+              window.location.href = redirectUrl;
+            }}
           >
             카카오 로그인
           </Button>

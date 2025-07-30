@@ -7,6 +7,8 @@ export function WarningContent({
   message,
   onConfirm,
   onCancel,
+  cancelText = '취소하기',
+  confirmText = '아니오',
 }: WarningModalProps) {
   const warning = '/images/warning.png';
   return (
@@ -21,14 +23,14 @@ export function WarningContent({
           variant='secondary'
           onClick={onCancel}
         >
-          아니오
+          {confirmText}
         </Button>
         <Button
           className='md:s-200 txt-14_B md:txt-16_B h-41 w-113 md:h-47 md:w-135'
           variant='primary'
           onClick={onConfirm}
         >
-          취소하기
+          {cancelText}
         </Button>
       </div>
     </div>

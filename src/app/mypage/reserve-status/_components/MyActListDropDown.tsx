@@ -21,10 +21,8 @@ export function MyActListDropDown({
         items={activities.map((activity) => activity.title)}
         placeholder='체험 선택'
         type='dropdown'
-        onSelect={(selectedItem) => {
-          const selectedActivity = activities.find(
-            (activity) => activity.title === selectedItem,
-          );
+        onDropdownSelect={(selectedIndex) => {
+          const selectedActivity = activities[selectedIndex];
           if (selectedActivity) {
             setSelectedActivityId(selectedActivity.id);
           }

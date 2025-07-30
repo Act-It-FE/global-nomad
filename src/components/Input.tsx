@@ -58,7 +58,7 @@ type DropdownProps = CommonProps & {
   type: 'dropdown';
   items: string[];
   maxHeight?: string;
-  onSelect?: (item: string) => void;
+  onDropdownSelect?: (index: number) => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
 const COMMON_STYLE = cn(
@@ -135,6 +135,7 @@ function DropdownInput({
   placeholder,
   items,
   maxHeight = '280px',
+  onDropdownSelect,
   ...props
 }: DropdownProps) {
   const [value, setValue] = useState({ item: defaultValue, key: '' });
@@ -190,7 +191,7 @@ function DropdownInput({
               scrollbarGutter: 'stable',
             }}
           >
-            {elements.current.map((element) => (
+            {elements.current.map((element, index) => (
               <button
                 key={element.key}
                 className={cn(
@@ -201,7 +202,7 @@ function DropdownInput({
                 onClick={() => {
                   setValue(element);
                   setIsOpen(false);
-                  props.onSelect?.(element.item);
+                  onDropdownSelect?.(index);
                 }}
               >
                 {element.item}

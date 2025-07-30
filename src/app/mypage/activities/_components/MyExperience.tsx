@@ -96,6 +96,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
           case 'warning':
             return (
               <Modal
+                confirmText='예'
                 message={modal.message}
                 variant='warning'
                 onCancel={handleClose}

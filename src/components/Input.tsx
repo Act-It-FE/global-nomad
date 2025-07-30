@@ -58,6 +58,7 @@ type DropdownProps = CommonProps & {
   type: 'dropdown';
   items: string[];
   maxHeight?: string;
+  onSelect?: (item: string) => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
 const COMMON_STYLE = cn(
@@ -200,6 +201,7 @@ function DropdownInput({
                 onClick={() => {
                   setValue(element);
                   setIsOpen(false);
+                  props.onSelect?.(element.item);
                 }}
               >
                 {element.item}

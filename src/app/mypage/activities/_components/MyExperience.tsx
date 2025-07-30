@@ -7,11 +7,23 @@ import { ActivityBasic } from '@/api/types/myActivities';
 import Icon from '@/components/Icon';
 import Modal from '@/components/Modal/Modal';
 import { useMyActDelete } from '@/hooks/myActivities/useMyActReservationMutate';
+import { ModalProps } from '@/types/Modal';
 import { cn } from '@/utils/cn';
 
 export default function MyExperience({ data }: { data: ActivityBasic }) {
   const { mutateAsync } = useMyActDelete(data.id);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modal, setModal] = useState<{
+    varient: ModalProps['variant'] | null;
+    message: string;
+  }>({ varient: null, message: '' });
+
+  const handleClick = () => {
+    setModal({ varient: 'warning', message: '삭제하시겠습니까?' });
+  };
+
+  const handleClose = () => {
+    setModal({ varient: null, message: '' });
+  };
 
   const handleDelete = async () => {
     await mutateAsync();
@@ -54,7 +66,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
             <button
               className='rounded-lg bg-gray-50 px-10 py-6'
               type='button'
-              onClick={() => setIsModalOpen(true)}
+              onClick={handleClick}
             >
               삭제하기
             </button>
@@ -66,14 +78,23 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
           src={data.bannerImageUrl}
         />
       </article>
-      {isModalOpen && (
-        <Modal
-          message='삭제하시겠습니까?'
-          variant='warning'
-          onCancel={() => setIsModalOpen(false)}
-          onConfirm={handleDelete}
-        />
-      )}
+      {(() => {
+        switch (modal.varient) {
+          case 'warning':
+            return (
+              <Modal
+                message='삭제하시겠습니까?'
+                variant='warning'
+                onCancel={handleClose}
+                onConfirm={handleDelete}
+              />
+            );
+          case 'onlyText':
+            return;
+          default:
+            return;
+        }
+      })()}
     </>
   );
 }

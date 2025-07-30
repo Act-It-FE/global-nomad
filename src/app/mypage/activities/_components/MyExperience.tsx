@@ -5,9 +5,11 @@ import { useState } from 'react';
 
 import { ActivityBasic } from '@/api/types/myActivities';
 import Icon from '@/components/Icon';
+import { useMyActDelete } from '@/hooks/myActivities/useMyActReservationMutate';
 import { cn } from '@/utils/cn';
 
 export default function MyExperience({ data }: { data: ActivityBasic }) {
+  const {} = useMyActDelete(data.id);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (

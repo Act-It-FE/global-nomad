@@ -1,5 +1,3 @@
-// hooks/useCalendar.ts
-
 import { useCallback, useMemo, useState } from 'react';
 
 import { getCalendarDates, isSameDate } from '@/utils/dateUtils';

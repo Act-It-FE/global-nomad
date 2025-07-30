@@ -26,8 +26,15 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
   };
 
   const handleDelete = async () => {
-    handleClose();
-    await mutateAsync();
+    try {
+      handleClose();
+      await mutateAsync();
+    } catch {
+      setModal({
+        varient: 'onlyText',
+        message: '삭제에 실패했습니다.',
+      });
+    }
   };
 
   return (
@@ -91,7 +98,13 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
               />
             );
           case 'onlyText':
-            return;
+            return (
+              <Modal
+                message={modal.message}
+                variant='onlyText'
+                onClose={handleClose}
+              />
+            );
           default:
             return;
         }

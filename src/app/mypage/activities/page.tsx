@@ -4,9 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import empty_image from '@/../public/images/empty-image.png';
-import Button from '@/components/Button';
+import {
+  BUTTON_SIZE,
+  BUTTON_TEXT_SIZE,
+  BUTTON_VARIANTS,
+} from '@/constants/ButtonStyles';
 import { useMyActQuery } from '@/hooks/myActivities/useMyActivitiesQuery';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import { cn } from '@/utils/cn';
 
 import MyExperience from './_components/MyExperience';
 
@@ -36,13 +41,15 @@ export default function Page() {
             </div>
           </div>
           <Link
-            className='rounded-[14px]'
+            className={cn(
+              BUTTON_VARIANTS['primary'],
+              BUTTON_SIZE['md'],
+              BUTTON_TEXT_SIZE('primary', 'md'),
+              'content-center rounded-[14px] text-center',
+            )}
             href='/mypage/add-activity'
-            tabIndex={-1}
           >
-            <Button className='w-136' size='md'>
-              체험 등록하기
-            </Button>
+            체험 등록하기
           </Link>
         </header>
         {!isLoading &&

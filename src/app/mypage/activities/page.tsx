@@ -10,7 +10,7 @@ import { useMyActQuery } from '@/hooks/myActivities/useMyActivitiesQuery';
 import MyExperience from './_components/MyExperience';
 
 export default function Page() {
-  const { data } = useMyActQuery();
+  const { data, isLoading } = useMyActQuery();
 
   return (
     <div className='flex w-full flex-col gap-30'>
@@ -31,22 +31,26 @@ export default function Page() {
           </Button>
         </Link>
       </header>
-      {data?.activities.length ? (
-        data.activities.map((act) => <MyExperience key={act.id} data={act} />)
-      ) : (
-        <div className='justify-items-center'>
-          <Image
-            alt='empty'
-            className='m-30'
-            height={122}
-            src={empty_image}
-            width={122}
-          />
-          <div className='txt-18_M leading-21 text-gray-600'>
-            아직 등록한 체험이 없어요
-          </div>
-        </div>
+      {isLoading && (
+        <div className='border-primary-500 m-auto size-50 animate-spin rounded-full border-2 border-t-transparent' />
       )}
+      {!isLoading &&
+        (data?.activities.length ? (
+          data.activities.map((act) => <MyExperience key={act.id} data={act} />)
+        ) : (
+          <div className='justify-items-center'>
+            <Image
+              alt='empty'
+              className='m-30'
+              height={122}
+              src={empty_image}
+              width={122}
+            />
+            <div className='txt-18_M leading-21 text-gray-600'>
+              아직 등록한 체험이 없어요
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

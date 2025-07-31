@@ -274,6 +274,8 @@ function PasswordInput({
 }
 
 function DateCustomInput({ type, ...props }: DateCustomProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.target.value = e.target.value.replace(/[^\d/]/g, '');
   };
@@ -281,6 +283,7 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
   return (
     <div className='relative'>
       <input
+        ref={inputRef}
         maxLength={8}
         pattern='\d{2}/[0-1]\d/[0-3]\d'
         placeholder='yy/mm/dd'

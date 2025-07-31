@@ -281,6 +281,7 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
   return (
     <input
       maxLength={8}
+      pattern='\d{2}/[0-1]\d/[0-3]\d'
       placeholder='yy/mm/dd'
       onChange={handleChange}
       {...props}

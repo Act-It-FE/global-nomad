@@ -24,49 +24,53 @@ export default function Page() {
     : [];
 
   return (
-    <div className='flex w-full flex-col gap-30'>
-      <header className='flex items-center justify-between gap-12'>
-        <div className='flex flex-col gap-10 py-10'>
-          <div className='txt-18_B leading-21 text-gray-950'>내 체험 관리</div>
-          <div className='txt-14_M leading-17 text-gray-500'>
-            체험을 등록하거나 수정 및 삭제가 가능합니다.
-          </div>
-        </div>
-        <Link
-          className='rounded-[14px]'
-          href='/mypage/add-activity'
-          tabIndex={-1}
-        >
-          <Button className='w-136' size='md'>
-            체험 등록하기
-          </Button>
-        </Link>
-      </header>
-      {!isLoading &&
-        (activities?.length ? (
-          <>
-            {activities.map((act) => (
-              <MyExperience key={act.id} data={act} />
-            ))}
-            <div ref={lastElement} />
-          </>
-        ) : (
-          <div className='justify-items-center'>
-            <Image
-              alt='empty'
-              className='m-30'
-              height={122}
-              src={empty_image}
-              width={122}
-            />
-            <div className='txt-18_M leading-21 text-gray-600'>
-              아직 등록한 체험이 없어요
+    <>
+      <div className='flex w-full flex-col gap-30'>
+        <header className='flex items-center justify-between gap-12'>
+          <div className='flex flex-col gap-10 py-10'>
+            <div className='txt-18_B leading-21 text-gray-950'>
+              내 체험 관리
+            </div>
+            <div className='txt-14_M leading-17 text-gray-500'>
+              체험을 등록하거나 수정 및 삭제가 가능합니다.
             </div>
           </div>
-        ))}
-      {(isLoading || isFetchingNextPage) && (
-        <div className='border-primary-500 m-auto size-50 animate-spin rounded-full border-2 border-t-transparent' />
-      )}
-    </div>
+          <Link
+            className='rounded-[14px]'
+            href='/mypage/add-activity'
+            tabIndex={-1}
+          >
+            <Button className='w-136' size='md'>
+              체험 등록하기
+            </Button>
+          </Link>
+        </header>
+        {!isLoading &&
+          (activities?.length ? (
+            <>
+              {activities.map((act) => (
+                <MyExperience key={act.id} data={act} />
+              ))}
+            </>
+          ) : (
+            <div className='justify-items-center'>
+              <Image
+                alt='empty'
+                className='m-30'
+                height={122}
+                src={empty_image}
+                width={122}
+              />
+              <div className='txt-18_M leading-21 text-gray-600'>
+                아직 등록한 체험이 없어요
+              </div>
+            </div>
+          ))}
+        {(isLoading || isFetchingNextPage) && (
+          <div className='border-primary-500 m-auto size-50 animate-spin rounded-full border-2 border-t-transparent' />
+        )}
+      </div>
+      <div ref={lastElement} />
+    </>
   );
 }

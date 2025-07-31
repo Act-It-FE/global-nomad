@@ -60,7 +60,7 @@ export default function ActivityDetail() {
   }
 
   return (
-    <main className='w-full px-24 md:px-30'>
+    <main className='w-full'>
       <div className='flex flex-col lg:flex-row lg:items-start lg:gap-x-40'>
         <div className='flex flex-1 flex-col gap-40'>
           <section>
@@ -73,7 +73,7 @@ export default function ActivityDetail() {
             <ActivityReviews activityId={Number(activityId)} />
           </section>
         </div>
-        <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-[360px]'>
+        <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-[410px]'>
           <ActivitySummary activityId={Number(activityId)} />
           <section className='mt-40'>
             <ReserveCalender activityId={Number(activityId)} />

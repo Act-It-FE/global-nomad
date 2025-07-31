@@ -18,6 +18,7 @@ interface ReserveCalenderProps {
 export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [price, setPrice] = useState<number | null>(null);
+  const [peopleCount, setPeopleCount] = useState(1);
   const dates = getCalendarDates(currentDate);
 
   const getMonthNameEnglish = (date: Date): string => {
@@ -39,6 +40,16 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
 
     fetchDetail();
   }, [activityId]);
+
+  const increaseCount = () => {
+    setPeopleCount((prev) => Math.min(prev + 1, 10));
+  };
+
+  const decreaseCount = () => {
+    setPeopleCount((prev) => Math.max(prev - 1, 1));
+  };
+
+  const totalPrice = price !== null ? price * peopleCount : null;
 
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>
@@ -100,11 +111,11 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       <div className='txt-16_B mt-4 mt-24 flex flex-row items-center justify-between leading-19'>
         참여 인원 수{' '}
         <span className='flex min-w-140 flex-row justify-evenly gap-5 rounded-[24px] border border-gray-50 py-8'>
-          <button>
+          <button disabled={peopleCount === 1} onClick={decreaseCount}>
             <Icon className='h-20 w-20' icon='Minus' />
           </button>
-          <span>10</span>
-          <button>
+          <span className='txt-16_B leading-19'>{peopleCount}</span>
+          <button disabled={peopleCount === 10} onClick={increaseCount}>
             <Icon className='h-20 w-20' icon='Plus' />
           </button>
         </span>
@@ -126,7 +137,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       </div>
       <div className='mt-40 flex flex-row items-center justify-between border-t border-gray-300'>
         <p className='txt-20_M mt-20 text-gray-300'>
-          총 합계 <span className='txt-20_B text-gray-950'>₩ 합계</span>
+          총 합계 <span className='txt-20_B text-gray-950'>₩ {totalPrice}</span>
         </p>
         <Button className='mt-20 h-50 w-135 rounded-[14px]' variant='primary'>
           예약하기

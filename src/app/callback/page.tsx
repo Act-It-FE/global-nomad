@@ -31,7 +31,7 @@ export default function KakaoCallbackPage() {
     const nicknameValue: string = '';
 
     const body: OAuthRequest = {
-      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback/kakao`,
+      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/callback`,
       token: code,
       ...(nicknameValue && { nickname: nicknameValue }),
     };
@@ -39,6 +39,7 @@ export default function KakaoCallbackPage() {
     async function handleAuth() {
       try {
         if (flow === 'login') {
+          console.log(body.token);
           const data = await oAuthApi.postLogin(
             body,
             'kakao' as OAuthAppProvider,

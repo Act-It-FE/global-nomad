@@ -39,7 +39,6 @@ export default function SignUp() {
     isEmailValid && isNicknameValid && isPasswordValid && isConfirmValid;
 
   const handleSubmit = () => {
-    console.log({ email, nickname, password });
     router.push('/');
   };
 

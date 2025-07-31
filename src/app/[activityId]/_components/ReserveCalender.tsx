@@ -29,6 +29,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
   const [timeOptions, setTimeOptions] = useState<
     { id: number; startTime: string; endTime: string }[]
   >([]);
+  const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
 
   const dates = getCalendarDates(currentDate);
 
@@ -57,9 +58,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       try {
         const res = await activitiesApi.getAvailableSchedule(activityId, {
           year: String(currentDate.getFullYear()),
-          month: String(currentDate.getMonth() + 1)
-            .toString()
-            .padStart(2, '0'),
+          month: String(currentDate.getMonth() + 1).padStart(2, '0'),
         });
         setSchedules(res);
       } catch (error) {
@@ -75,6 +74,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
     const found = schedules.find((s) => s.date === formatted);
     setSelectedDate(formatted);
     setTimeOptions(found?.times || []);
+    setSelectedTimeId(null); // 날짜 변경 시 시간 선택 초기화
   };
 
   const increaseCount = () => {
@@ -136,7 +136,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
           return (
             <div
               key={date.toISOString()}
-              className={`txt-16_M aspect-square rounded-full py-10 text-center ${
+              className={`txt-16_M aspect-square rounded-full py-10 text-center leading-19 ${
                 isCurrentMonth
                   ? isAvailable
                     ? 'hover:text-primary-500 hover:bg-primary-100 cursor-pointer text-gray-800'
@@ -172,8 +172,13 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
           timeOptions.map((time) => (
             <Button
               key={time.id}
-              className='txt-16_M text-gray h-51 rounded-[11px] leading-19'
+              className={`txt-16_M active:bg-primary-100 h-51 rounded-[11px] leading-19 ${
+                selectedTimeId === time.id
+                  ? 'bg-primary-100 text-primary-500 border-primary-500 border-2 active:bg-blue-200'
+                  : 'text-gray'
+              }`}
               variant='secondary'
+              onClick={() => setSelectedTimeId(time.id)}
             >
               {time.startTime} - {time.endTime}
             </Button>
@@ -192,7 +197,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
         </p>
         <Button
           className='mt-20 h-50 w-135 rounded-[14px]'
-          disabled={!selectedDate || timeOptions.length === 0}
+          disabled={!selectedDate || selectedTimeId === null}
           variant='primary'
         >
           예약하기

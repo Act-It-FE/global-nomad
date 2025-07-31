@@ -29,7 +29,7 @@ export default function Page() {
           </Button>
         </Link>
       </header>
-      {data
+      {data?.activities.length
         ? data.activities.map((act) => <MyExperience key={act.id} data={act} />)
         : null}
     </div>

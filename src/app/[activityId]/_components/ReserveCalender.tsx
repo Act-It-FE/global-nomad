@@ -19,6 +19,17 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [price, setPrice] = useState<number | null>(null);
   const [peopleCount, setPeopleCount] = useState(1);
+  const [schedules, setSchedules] = useState<
+    {
+      date: string;
+      times: { id: number; startTime: string; endTime: string }[];
+    }[]
+  >([]);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [timeOptions, setTimeOptions] = useState<
+    { id: number; startTime: string; endTime: string }[]
+  >([]);
+
   const dates = getCalendarDates(currentDate);
 
   const getMonthNameEnglish = (date: Date): string => {
@@ -41,6 +52,31 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
     fetchDetail();
   }, [activityId]);
 
+  useEffect(() => {
+    const fetchAvailableSchedule = async () => {
+      try {
+        const res = await activitiesApi.getAvailableSchedule(activityId, {
+          year: String(currentDate.getFullYear()),
+          month: String(currentDate.getMonth() + 1)
+            .toString()
+            .padStart(2, '0'),
+        });
+        setSchedules(res);
+      } catch (error) {
+        console.error('예약 가능 스케줄 불러오기 실패', error);
+      }
+    };
+
+    fetchAvailableSchedule();
+  }, [activityId, currentDate]);
+
+  const handleDateClick = (date: Date) => {
+    const formatted = date.toISOString().split('T')[0];
+    const found = schedules.find((s) => s.date === formatted);
+    setSelectedDate(formatted);
+    setTimeOptions(found?.times || []);
+  };
+
   const increaseCount = () => {
     setPeopleCount((prev) => Math.min(prev + 1, 10));
   };
@@ -57,6 +93,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
         ₩ {price !== null ? price.toLocaleString() : '...'}{' '}
         <span className='txt-20_M leading-24 text-gray-300'>/ 인</span>
       </div>
+
       <p className='txt-16_B mb-10 leading-19'>날짜</p>
       <div className='mb-20 flex items-center justify-between'>
         <p className='txt-16_M leading-19 font-semibold'>
@@ -93,22 +130,30 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
 
         {dates.map((date) => {
           const isCurrentMonth = isSameMonth(currentDate, date);
+          const formatted = date.toISOString().split('T')[0];
+          const isAvailable = schedules.some((s) => s.date === formatted);
 
           return (
             <div
               key={date.toISOString()}
-              className={`aspect-spuare txt-16_M laeding-19 rounded-full py-4 text-center ${
+              className={`txt-16_M aspect-square rounded-full py-10 text-center ${
                 isCurrentMonth
-                  ? 'hover:text-primary-500 hover:bg-primary-100 cursor-pointer text-gray-800'
-                  : 'txt-16_M cursor-default text-gray-300'
-              }`}
+                  ? isAvailable
+                    ? 'hover:text-primary-500 hover:bg-primary-100 cursor-pointer text-gray-800'
+                    : 'cursor-default text-gray-300'
+                  : 'cursor-default text-gray-300'
+              } ${selectedDate === formatted ? 'bg-primary-100 text-primary-500' : ''}`}
+              onClick={() =>
+                isCurrentMonth && isAvailable && handleDateClick(date)
+              }
             >
               {date.getDate()}
             </div>
           );
         })}
       </div>
-      <div className='txt-16_B mt-4 mt-24 flex flex-row items-center justify-between leading-19'>
+
+      <div className='txt-16_B mt-24 flex flex-row items-center justify-between leading-19'>
         참여 인원 수{' '}
         <span className='flex min-w-140 flex-row justify-evenly gap-5 rounded-[24px] border border-gray-50 py-8'>
           <button disabled={peopleCount === 1} onClick={decreaseCount}>
@@ -120,21 +165,24 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
           </button>
         </span>
       </div>
+
       <div className='txt-16_B mt-24 leading-19'>예약 가능한 시간</div>
       <div className='my-10 flex flex-col gap-15'>
-        <Button
-          className='txt-16_M text-gray h-51 rounded-[11px] leading-19'
-          variant='secondary'
-        >
-          시간
-        </Button>
-        <Button
-          className='txt-16_M text-gray h-51 rounded-[11px] leading-19'
-          variant='secondary'
-        >
-          시간
-        </Button>
+        {timeOptions.length > 0 ? (
+          timeOptions.map((time) => (
+            <Button
+              key={time.id}
+              className='txt-16_M text-gray h-51 rounded-[11px] leading-19'
+              variant='secondary'
+            >
+              {time.startTime} - {time.endTime}
+            </Button>
+          ))
+        ) : (
+          <p className='text-sm text-gray-400'>날짜를 선택해 주세요</p>
+        )}
       </div>
+
       <div className='mt-40 flex flex-row items-center justify-between border-t border-gray-300'>
         <p className='txt-20_M mt-20 text-gray-300'>
           총 합계{' '}
@@ -142,7 +190,11 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
             ₩ {totalPrice?.toLocaleString()}
           </span>
         </p>
-        <Button className='mt-20 h-50 w-135 rounded-[14px]' variant='primary'>
+        <Button
+          className='mt-20 h-50 w-135 rounded-[14px]'
+          disabled={!selectedDate || timeOptions.length === 0}
+          variant='primary'
+        >
           예약하기
         </Button>
       </div>

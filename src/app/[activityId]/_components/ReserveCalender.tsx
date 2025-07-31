@@ -6,6 +6,7 @@ import activitiesApi from '@/api/activitiesApi';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { OnlyTextContent } from '@/components/Modal/contents/OnlyTextContent';
+import { useMyActivityStore } from '@/stores/useMyActivityStore';
 import { getCalendarDates } from '@/utils/dateUtils';
 
 const isSameMonth = (base: Date, target: Date) =>
@@ -17,6 +18,8 @@ interface ReserveCalenderProps {
 }
 
 export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
+  const { isMyActivity } = useMyActivityStore();
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [price, setPrice] = useState<number | null>(null);
   const [peopleCount, setPeopleCount] = useState(1);
@@ -37,12 +40,10 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
 
   const dates = getCalendarDates(currentDate);
 
-  const getMonthNameEnglish = (date: Date): string => {
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'long',
-    }).format(date);
-  };
+  const getMonthNameEnglish = (date: Date): string =>
+    new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
+      date,
+    );
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -53,7 +54,6 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
         console.error('가격 정보를 불러오는 데 실패했습니다.', error);
       }
     };
-
     fetchDetail();
   }, [activityId]);
 
@@ -69,7 +69,6 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
         console.error('예약 가능 스케줄 불러오기 실패', error);
       }
     };
-
     fetchAvailableSchedule();
   }, [activityId, currentDate]);
 
@@ -81,13 +80,8 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
     setSelectedTimeId(null);
   };
 
-  const increaseCount = () => {
-    setPeopleCount((prev) => Math.min(prev + 1, 10));
-  };
-
-  const decreaseCount = () => {
-    setPeopleCount((prev) => Math.max(prev - 1, 1));
-  };
+  const increaseCount = () => setPeopleCount((prev) => Math.min(prev + 1, 10));
+  const decreaseCount = () => setPeopleCount((prev) => Math.max(prev - 1, 1));
 
   const totalPrice = price !== null ? price * peopleCount : null;
 
@@ -98,7 +92,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       setIsLoading(true);
       await activitiesApi.postReservation(activityId, {
         scheduleId: selectedTimeId,
-        peopleCount,
+        headCount: peopleCount,
       });
       setIsSuccessModalOpen(true);
     } catch (error) {
@@ -108,6 +102,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       setIsLoading(false);
     }
   };
+  if (isMyActivity()) return null;
 
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>
@@ -125,7 +120,11 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
           <button
             onClick={() =>
               setCurrentDate(
-                (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1),
+                new Date(
+                  currentDate.getFullYear(),
+                  currentDate.getMonth() - 1,
+                  1,
+                ),
               )
             }
           >
@@ -134,7 +133,11 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
           <button
             onClick={() =>
               setCurrentDate(
-                (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1),
+                new Date(
+                  currentDate.getFullYear(),
+                  currentDate.getMonth() + 1,
+                  1,
+                ),
               )
             }
           >
@@ -149,12 +152,10 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
             {day}
           </div>
         ))}
-
         {dates.map((date) => {
           const isCurrentMonth = isSameMonth(currentDate, date);
           const formatted = date.toISOString().split('T')[0];
           const isAvailable = schedules.some((s) => s.date === formatted);
-
           return (
             <div
               key={date.toISOString()}
@@ -164,11 +165,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
                     ? 'hover:text-primary-500 hover:bg-primary-100 cursor-pointer text-gray-800'
                     : 'cursor-default text-gray-300'
                   : 'cursor-default text-gray-300'
-              } ${
-                selectedDate === formatted
-                  ? 'bg-primary-100 text-primary-500'
-                  : ''
-              }`}
+              } ${selectedDate === formatted ? 'bg-primary-100 text-primary-500' : ''}`}
               onClick={() =>
                 isCurrentMonth && isAvailable && handleDateClick(date)
               }
@@ -180,7 +177,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       </div>
 
       <div className='txt-16_B mt-24 flex flex-row items-center justify-between leading-19'>
-        참여 인원 수{' '}
+        참여 인원 수
         <span className='flex min-w-140 flex-row justify-evenly gap-5 rounded-[24px] border border-gray-50 py-8'>
           <button disabled={peopleCount === 1} onClick={decreaseCount}>
             <Icon className='h-20 w-20' icon='Minus' />

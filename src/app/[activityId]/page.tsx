@@ -10,6 +10,7 @@ import ActivityDescription from './_components/ActivityDescription';
 import ActivityReviews from './_components/ActivityReviews';
 import ActivitySummary from './_components/ActivitySummary';
 import LoadKakaoMap from './_components/LoadKakaoMap';
+import ReserveCalender from './_components/ReserveCalender';
 
 export default function ActivityDetail() {
   const { activityId } = useParams();
@@ -66,6 +67,7 @@ export default function ActivityDetail() {
         </section>
         <section className='order-2 h-fit self-start lg:col-start-2 lg:row-start-1'>
           <ActivitySummary activityId={Number(activityId)} />
+          <ReserveCalender />
         </section>
         <section className='order-3 lg:col-start-1 lg:row-start-2'>
           <LoadKakaoMap address={address} />

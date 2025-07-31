@@ -6,8 +6,7 @@ import React, { useState } from 'react';
 import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-
-import { getRedirectUrl } from '../signUp/oauth/getRedirectUrl';
+import { getRedirectUrl } from '@/utils/oauth/getRedirectUrl';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -22,10 +21,7 @@ export default function Login() {
     password.length > 0 && !isPasswordValid ? '8자 이상 입력해 주세요.' : '';
 
   const isFormValid = isEmailValid && isPasswordValid;
-  const handleSubmit = () => {
-    console.log(email, password);
-  };
-  const redirectUrl = getRedirectUrl();
+  const redirectUrl = getRedirectUrl('login');
 
   return (
     <div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
@@ -79,7 +75,6 @@ export default function Login() {
               disabled={!isFormValid}
               rounded='16'
               variant={isFormValid ? 'primary' : undefined}
-              onClick={handleSubmit}
             >
               로그인하기
             </Button>

@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import { getRedirectUrl } from '@/utils/oauth/getRedirectUrl';
 
 export default function SignUp() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function SignUp() {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const redirectUrl = getRedirectUrl('signUp');
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const emailError =
@@ -133,6 +135,9 @@ export default function SignUp() {
             icon={<KakaoIcon className='mr-2 h-24 w-24' />}
             size='xl'
             variant='kakao'
+            onClick={() => {
+              window.location.href = redirectUrl;
+            }}
           >
             카카오 회원가입
           </Button>

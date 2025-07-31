@@ -1,5 +1,5 @@
 //카카오로 로그인 버튼을 눌렀을 때 리다이렉트 될 URL
-export function getRedirectUrl(): string {
+export function getRedirectUrl(flow: 'login' | 'signUp'): string {
   const REST_API_KEY = process.env.NEXT_PUBLIC_OAUTH_APP_KEY;
   const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -19,6 +19,7 @@ export function getRedirectUrl(): string {
     client_id: REST_API_KEY,
     redirect_uri: REDIRECT_URI,
     response_type: 'code',
+    state: flow,
   });
 
   return `https://kauth.kakao.com/oauth/authorize?${params.toString()}`;

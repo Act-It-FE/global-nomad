@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import oAuthApi from '@/api/oAuth';
+import oAuthApi from '@/api/authApi';
 import type {
   OAuthAppProvider,
   OAuthResponse,

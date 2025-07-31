@@ -8,6 +8,7 @@ import getErrorMessage from '@/utils/getErrorMessage';
 
 import ActivityDescription from './_components/ActivityDescription';
 import ActivityReviews from './_components/ActivityReviews';
+import ActivitySummary from './_components/ActivitySummary';
 import LoadKakaoMap from './_components/LoadKakaoMap';
 
 export default function ActivityDetail() {
@@ -28,9 +29,9 @@ export default function ActivityDetail() {
       try {
         const activity = await activitiesDetailApi.getDetail(id);
         setAddress(activity.address);
-      } catch (err) {
+      } catch (error) {
         const message = getErrorMessage(
-          err,
+          error,
           '체험 정보를 불러오지 못했습니다.',
         );
         console.error('실패:', message);
@@ -58,10 +59,21 @@ export default function ActivityDetail() {
   }
 
   return (
-    <div className='w-full px-30 sm:px-24'>
-      <ActivityDescription activityId={Number(activityId)} />
-      <LoadKakaoMap address={address} />
-      <ActivityReviews activityId={Number(activityId)} />
-    </div>
+    <main className='w-full px-24 md:px-30'>
+      <div className='grid grid-cols-1 lg:grid-cols-[2fr_1fr] lg:gap-x-40'>
+        <section className='order-1 lg:col-start-1 lg:row-start-1'>
+          <ActivityDescription activityId={Number(activityId)} />
+        </section>
+        <section className='order-2 h-fit self-start lg:col-start-2 lg:row-start-1'>
+          <ActivitySummary activityId={Number(activityId)} />
+        </section>
+        <section className='order-3 lg:col-start-1 lg:row-start-2'>
+          <LoadKakaoMap address={address} />
+        </section>
+        <section className='order-4 lg:col-start-1 lg:row-start-3'>
+          <ActivityReviews activityId={Number(activityId)} />
+        </section>
+      </div>
+    </main>
   );
 }

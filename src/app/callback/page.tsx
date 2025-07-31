@@ -8,6 +8,7 @@ import type {
   ApiError,
   OAuthAppProvider,
   OAuthRequest,
+  OAuthResponse,
 } from '@/api/types/auth';
 import { useUserStore } from '@/stores/userStore';
 
@@ -30,6 +31,12 @@ export default function KakaoCallbackPage() {
       token: code,
       ...(nicknameValue && { nickname: nicknameValue }),
     };
+    const handleSuccessfulAuth = (data: OAuthResponse) => {
+      setUser(data.user);
+      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+      router.replace('/');
+    };
 
     async function handleAuth() {
       try {
@@ -38,17 +45,14 @@ export default function KakaoCallbackPage() {
             body,
             'kakao' as OAuthAppProvider,
           );
-          setUser(data.user);
-          localStorage.setItem('accessToken', data.accessToken);
-          localStorage.setItem('refreshToken', data.refreshToken);
-          router.replace('/');
+          handleSuccessfulAuth(data);
         }
       } catch (err) {
         const apiErr = err as ApiError;
         if (apiErr.response?.status === 404) {
-          return router.replace('/signUp');
+          router.replace('/signUp');
+          return;
         }
-        return;
       }
       if (flow === 'signup') {
         try {
@@ -56,10 +60,7 @@ export default function KakaoCallbackPage() {
             body,
             'kakao' as OAuthAppProvider,
           );
-          setUser(data.user);
-          localStorage.setItem('accessToken', data.accessToken);
-          localStorage.setItem('refreshToken', data.refreshToken);
-          return router.replace('/');
+          handleSuccessfulAuth(data);
         } catch (err) {
           const apiErr = err as ApiError;
           if (

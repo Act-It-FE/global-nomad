@@ -23,10 +23,7 @@ export default function Page() {
     isFetchingNextPage,
     fetchNextPage,
   });
-  const activitiesSet = data?.pages.map((res) => res.activities);
-  const activities = activitiesSet
-    ? activitiesSet[0].concat(...(activitiesSet.slice(1) || []))
-    : [];
+  const activities = data?.pages.flatMap((page) => page.activities) || [];
 
   return (
     <>

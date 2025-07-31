@@ -46,7 +46,13 @@ export default function Page() {
     }))
     .filter((page) => page.reservations && page.reservations.length > 0);
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) {
+    return (
+      <div className='flex w-full items-center justify-center py-100'>
+        <div className='border-primary-500 size-50 animate-spin rounded-full border-2 border-t-transparent' />
+      </div>
+    );
+  }
   if (isError) {
     return <div>에러:{errorMessage}</div>;
   }

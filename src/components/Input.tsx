@@ -86,7 +86,7 @@ export default function Input({
   label,
   errorMessage,
   ...props
-}: InputProps | TextareaProps | DropdownProps) {
+}: InputProps | TextareaProps | DropdownProps | DateCustomProps) {
   const insideInput = () => {
     const className = cn(
       'text-gray-950',
@@ -107,6 +107,8 @@ export default function Input({
         return <TextareaInput className={className} {...props} />;
       case 'password':
         return <PasswordInput className={className} {...props} />;
+      case 'date-custom':
+        return <DateCustomInput className={className} {...props} />;
       default:
         return <input className={className} {...props} />;
     }
@@ -271,5 +273,5 @@ function PasswordInput({
 }
 
 function DateCustomInput({}: DateCustomProps) {
-  return;
+  return null;
 }

@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import activitiesDetailApi from '@/api/activitiesApi';
 import getErrorMessage from '@/utils/getErrorMessage';
 
+import ActivityDescription from './_components/ActivityDescription';
+import ActivityReviews from './_components/ActivityReviews';
 import LoadKakaoMap from './_components/LoadKakaoMap';
 
 export default function ActivityDetail() {
@@ -50,14 +52,16 @@ export default function ActivityDetail() {
   if (!address) {
     return (
       <div className='flex h-200 items-center justify-center text-gray-500'>
-        체험 정보를 불러오는 중입니다...
+        <div className='border-primary-500 size-50 animate-spin rounded-full border-2 border-t-transparent' />
       </div>
     );
   }
 
   return (
     <div className='w-full px-30 sm:px-24'>
+      <ActivityDescription activityId={Number(activityId)} />
       <LoadKakaoMap address={address} />
+      <ActivityReviews activityId={Number(activityId)} />
     </div>
   );
 }

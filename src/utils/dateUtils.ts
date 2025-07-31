@@ -64,20 +64,11 @@ export const formatDateKorean = (date: Date): string => {
 // 월 이름 가져오기
 export const getMonthName = (date: Date): string => {
   const year = date.getFullYear();
-  const monthNames = [
-    '1월',
-    '2월',
-    '3월',
-    '4월',
-    '5월',
-    '6월',
-    '7월',
-    '8월',
-    '9월',
-    '10월',
-    '11월',
-    '12월',
-  ];
-  const month = monthNames[date.getMonth()];
-  return `${year}년 ${month}`;
+  const month = date.getMonth() + 1;
+  return `${year}년 ${month}월`;
 };
+
+export const formatDateForAPI = (date: Date) => ({
+  year: date.getFullYear().toString(),
+  month: (date.getMonth() + 1).toString().padStart(2, '0'),
+});

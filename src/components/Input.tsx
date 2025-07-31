@@ -278,5 +278,12 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
     e.target.value = e.target.value.replace(/[^\d/]/g, '');
   };
 
-  return <input placeholder='yy/mm/dd' onChange={handleChange} {...props} />;
+  return (
+    <input
+      maxLength={8}
+      placeholder='yy/mm/dd'
+      onChange={handleChange}
+      {...props}
+    />
+  );
 }

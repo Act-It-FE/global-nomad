@@ -1,8 +1,8 @@
 'use client';
 
+import useActivityReviews from '@/app/[activityId]/_hooks/useActivityReviews';
 import Icon from '@/components/Icon';
 import Pagination from '@/components/Pagination';
-import useActivityReviews from '@/hooks/activity-details/useActivityReviews';
 
 import ReviewCard from './ReviewCard';
 

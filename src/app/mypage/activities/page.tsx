@@ -42,9 +42,6 @@ export default function Page() {
           </Button>
         </Link>
       </header>
-      {isLoading && (
-        <div className='border-primary-500 m-auto size-50 animate-spin rounded-full border-2 border-t-transparent' />
-      )}
       {!isLoading &&
         (activities?.length ? (
           <>
@@ -67,6 +64,9 @@ export default function Page() {
             </div>
           </div>
         ))}
+      {(isLoading || isFetchingNextPage) && (
+        <div className='border-primary-500 m-auto size-50 animate-spin rounded-full border-2 border-t-transparent' />
+      )}
     </div>
   );
 }

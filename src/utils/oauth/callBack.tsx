@@ -28,11 +28,12 @@ export default function KakaoCallbackPage() {
       setError('인가 코드가 없습니다.');
       return;
     }
+    const nicknameValue: string = '';
 
     const body: OAuthRequest = {
       redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback/kakao`,
       token: code,
-      nickname: '',
+      ...(nicknameValue && { nickname: nicknameValue }),
     };
 
     async function handleAuth() {

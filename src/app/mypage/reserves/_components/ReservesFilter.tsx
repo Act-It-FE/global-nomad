@@ -31,7 +31,7 @@ export default function ReservesFilter({
     >
       <FilterHeader />
       {isEmpty ? (
-        <div className='] flex flex-col items-center justify-center leading-[normal]'>
+        <div className='flex flex-col items-center justify-center leading-[normal]'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             alt='예약이 없어요'

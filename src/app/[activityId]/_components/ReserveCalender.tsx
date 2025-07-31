@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import activitiesApi from '@/api/activitiesApi';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
+import { OnlyTextContent } from '@/components/Modal/contents/OnlyTextContent';
 import { getCalendarDates } from '@/utils/dateUtils';
 
 const isSameMonth = (base: Date, target: Date) =>
@@ -30,6 +31,9 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
     { id: number; startTime: string; endTime: string }[]
   >([]);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
+
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dates = getCalendarDates(currentDate);
 
@@ -74,7 +78,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
     const found = schedules.find((s) => s.date === formatted);
     setSelectedDate(formatted);
     setTimeOptions(found?.times || []);
-    setSelectedTimeId(null); // 날짜 변경 시 시간 선택 초기화
+    setSelectedTimeId(null);
   };
 
   const increaseCount = () => {
@@ -86,6 +90,24 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
   };
 
   const totalPrice = price !== null ? price * peopleCount : null;
+
+  const handleReserve = async () => {
+    if (!selectedTimeId) return;
+
+    try {
+      setIsLoading(true);
+      await activitiesApi.postReservation(activityId, {
+        scheduleId: selectedTimeId,
+        peopleCount,
+      });
+      setIsSuccessModalOpen(true);
+    } catch (error) {
+      alert('예약에 실패했습니다. 다시 시도해주세요.');
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>
@@ -142,7 +164,11 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
                     ? 'hover:text-primary-500 hover:bg-primary-100 cursor-pointer text-gray-800'
                     : 'cursor-default text-gray-300'
                   : 'cursor-default text-gray-300'
-              } ${selectedDate === formatted ? 'bg-primary-100 text-primary-500' : ''}`}
+              } ${
+                selectedDate === formatted
+                  ? 'bg-primary-100 text-primary-500'
+                  : ''
+              }`}
               onClick={() =>
                 isCurrentMonth && isAvailable && handleDateClick(date)
               }
@@ -197,12 +223,21 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
         </p>
         <Button
           className='mt-20 h-50 w-135 rounded-[14px]'
-          disabled={!selectedDate || selectedTimeId === null}
+          disabled={!selectedDate || selectedTimeId === null || isLoading}
           variant='primary'
+          onClick={handleReserve}
         >
-          예약하기
+          {isLoading ? '예약 중...' : '예약하기'}
         </Button>
       </div>
+
+      {isSuccessModalOpen && (
+        <OnlyTextContent
+          message='예약이 완료되었습니다!'
+          variant='onlyText'
+          onClose={() => setIsSuccessModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

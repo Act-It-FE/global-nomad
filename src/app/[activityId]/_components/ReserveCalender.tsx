@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import activitiesApi from '@/api/activitiesApi';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { getCalendarDates } from '@/utils/dateUtils';
@@ -10,8 +11,13 @@ const isSameMonth = (base: Date, target: Date) =>
   base.getFullYear() === target.getFullYear() &&
   base.getMonth() === target.getMonth();
 
-export default function ReserveCalender() {
+interface ReserveCalenderProps {
+  activityId: number;
+}
+
+export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [price, setPrice] = useState<number | null>(null);
   const dates = getCalendarDates(currentDate);
 
   const getMonthNameEnglish = (date: Date): string => {
@@ -21,10 +27,24 @@ export default function ReserveCalender() {
     }).format(date);
   };
 
+  useEffect(() => {
+    const fetchDetail = async () => {
+      try {
+        const data = await activitiesApi.getDetail(activityId);
+        setPrice(data.price);
+      } catch (error) {
+        console.error('가격 정보를 불러오는 데 실패했습니다.', error);
+      }
+    };
+
+    fetchDetail();
+  }, [activityId]);
+
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>
       <div className='txt-24_B mb-20 leading-29 text-gray-950'>
-        ₩ 1000 <span className='txt-20_M leading-24 text-gray-300'>/ 인</span>
+        ₩ {price !== null ? price.toLocaleString() : '...'}{' '}
+        <span className='txt-20_M leading-24 text-gray-300'>/ 인</span>
       </div>
       <p className='txt-16_B mb-10 leading-19'>날짜</p>
       <div className='mb-20 flex items-center justify-between'>
@@ -106,7 +126,7 @@ export default function ReserveCalender() {
       </div>
       <div className='mt-40 flex flex-row items-center justify-between border-t border-gray-300'>
         <p className='txt-20_M mt-20 text-gray-300'>
-          총 합계 <span className='txt-20_B text-gray-950'>₩ 10000</span>
+          총 합계 <span className='txt-20_B text-gray-950'>₩ 합계</span>
         </p>
         <Button className='mt-20 h-50 w-135 rounded-[14px]' variant='primary'>
           예약하기

@@ -76,7 +76,7 @@ export default function ActivityDetail() {
         <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-[360px]'>
           <ActivitySummary activityId={Number(activityId)} />
           <section className='mt-40'>
-            <ReserveCalender />
+            <ReserveCalender activityId={Number(activityId)} />
           </section>
         </aside>
       </div>

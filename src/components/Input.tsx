@@ -279,12 +279,18 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
   };
 
   return (
-    <input
-      maxLength={8}
-      pattern='\d{2}/[0-1]\d/[0-3]\d'
-      placeholder='yy/mm/dd'
-      onChange={handleChange}
-      {...props}
-    />
+    <div className='relative'>
+      <input
+        maxLength={8}
+        pattern='\d{2}/[0-1]\d/[0-3]\d'
+        placeholder='yy/mm/dd'
+        onChange={handleChange}
+        {...props}
+      />
+      <Icon
+        className='absolute top-15 right-20 size-24 text-black'
+        icon='Calender'
+      />
+    </div>
   );
 }

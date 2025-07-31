@@ -63,7 +63,7 @@ type DropdownProps = CommonProps & {
 
 type DateCustomProps = CommonProps & {
   type: 'date-custom';
-} & InputHTMLAttributes<HTMLInputElement>;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'placeholder'>;
 
 const COMMON_STYLE = cn(
   'h-54 w-full rounded-2xl bg-white border border-gray-100 px-19 py-15 outline-none',

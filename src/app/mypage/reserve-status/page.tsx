@@ -88,7 +88,7 @@ export default function Page() {
     return (
       <div className='flex w-full flex-col gap-30 max-md:gap-18 md:max-lg:gap-24'>
         <ReservationStatusHeader />
-        <MyActListDropDown activities={data.pages[0]?.activities} />
+        <MyActListDropDown activities={data.pages[0]?.activities || []} />
       </div>
     );
   }
@@ -96,7 +96,7 @@ export default function Page() {
   return (
     <div className='relative mb-30 flex w-full flex-col gap-30 max-md:gap-18 md:max-lg:gap-24'>
       <ReservationStatusHeader />
-      <MyActListDropDown activities={data.pages[0]?.activities} />
+      <MyActListDropDown activities={data.pages[0]?.activities || []} />
       <Calendar />
       <ReservationModal />
     </div>

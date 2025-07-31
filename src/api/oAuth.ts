@@ -2,9 +2,8 @@ import {
   OAuthAppProvider,
   OAuthAppRequest,
   OAuthAppResponse,
-  OAuthLoginRequest,
+  OAuthRequest,
   OAuthResponse,
-  OAuthSignUpRequest,
 } from '@/api/types/auth';
 
 import apiClient from '../libs/apiClient';
@@ -22,14 +21,14 @@ const oAuthApi = {
       provider: 'kakao',
     }),
 
-  postSignUp: (body: OAuthSignUpRequest, provider: OAuthAppProvider) =>
-    apiClient.post<OAuthSignUpRequest, OAuthResponse>(
+  postSignUp: (body: OAuthRequest, provider: OAuthAppProvider) =>
+    apiClient.post<OAuthRequest, OAuthResponse>(
       `/oauth/sign-up/${provider}`,
       body,
     ),
 
-  postLogin: (body: OAuthLoginRequest, provider: OAuthAppProvider) =>
-    apiClient.post<OAuthLoginRequest, OAuthResponse>(
+  postLogin: (body: OAuthRequest, provider: OAuthAppProvider) =>
+    apiClient.post<OAuthRequest, OAuthResponse>(
       `/oauth/sign-in/${provider}`,
       body,
     ),

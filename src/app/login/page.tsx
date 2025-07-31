@@ -4,10 +4,10 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 
 import KakaoIcon from '@/assets/icons/kakao.svg';
+import Button from '@/components/Button';
+import Input from '@/components/Input';
 
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import { getRedirectUrl } from '../signup/oauth/getRedirectUrl';
+import { getRedirectUrl } from '../signUp/oauth/getRedirectUrl';
 
 export default function Login() {
   const [email, setEmail] = useState('');

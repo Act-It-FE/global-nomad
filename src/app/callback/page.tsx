@@ -34,7 +34,6 @@ export default function KakaoCallbackPage() {
     async function handleAuth() {
       try {
         if (flow === 'login') {
-          console.log(body.token);
           const data = await oAuthApi.postLogin(
             body,
             'kakao' as OAuthAppProvider,

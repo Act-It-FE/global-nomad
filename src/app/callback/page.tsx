@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import oAuthApi from '@/api/oAuth';
 import type {
@@ -15,7 +15,6 @@ export default function KakaoCallbackPage() {
   const router = useRouter();
   const code = useSearchParams().get('code');
   const flow = useSearchParams().get('state');
-  const [error, setError] = useState<string | null>(null);
   const setUser = useUserStore((s) => s.setUser);
 
   const hasHandledRef = useRef(false);
@@ -24,10 +23,6 @@ export default function KakaoCallbackPage() {
     if (!code || hasHandledRef.current) return;
     hasHandledRef.current = true;
 
-    if (!code) {
-      setError('인가 코드가 없습니다.');
-      return;
-    }
     const nicknameValue: string = '';
 
     const body: OAuthRequest = {
@@ -54,7 +49,6 @@ export default function KakaoCallbackPage() {
         if (apiErr.response?.status === 404) {
           return router.replace('/signUp');
         }
-        setError(apiErr.message || '로그인 중 오류가 발생했습니다.');
         return;
       }
       if (flow === 'signup') {
@@ -81,10 +75,6 @@ export default function KakaoCallbackPage() {
     }
     void handleAuth();
   }, [code, router, setUser, flow]);
-
-  if (error) {
-    return <p className='text-red-500'>오류: {error}</p>;
-  }
 
   return null;
 }

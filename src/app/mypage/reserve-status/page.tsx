@@ -60,7 +60,7 @@ export default function Page() {
             내 체험에 예약된 내역들을 한 눈에 확인할 수 있습니다.
           </span>
         </div>
-        <MyActListDropDown activities={data.activities} />
+        <MyActListDropDown activities={data.pages[0].activities} />
       </div>
     );
   }
@@ -75,7 +75,7 @@ export default function Page() {
           내 체험에 예약된 내역들을 한 눈에 확인할 수 있습니다.
         </span>
       </div>
-      <MyActListDropDown activities={data.activities} />
+      <MyActListDropDown activities={data.pages[0].activities} />
       <Calendar />
       <ReservationModal />
     </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { getCalendarDates } from '@/utils/dateUtils';
 
@@ -76,11 +77,32 @@ export default function ReserveCalender() {
           );
         })}
       </div>
-
-      <p className='mt-4'>
+      <p className='txt-16_B mt-4 mt-24 leading-19'>
         참여 인원 수 <span>명수조절</span>
       </p>
-      <div>예약 가능한 시간</div>
+      <div className='txt-16_B mt-24 leading-19'>예약 가능한 시간</div>
+      <div className='my-10 flex flex-col gap-15'>
+        <Button
+          className='txt-16_M text-gray h-51 rounded-[11px] leading-19'
+          variant='secondary'
+        >
+          시간
+        </Button>
+        <Button
+          className='txt-16_M text-gray h-51 rounded-[11px] leading-19'
+          variant='secondary'
+        >
+          시간
+        </Button>
+      </div>
+      <div className='mt-40 flex flex-row items-center justify-between border-t border-gray-300'>
+        <p className='txt-20_M mt-20 text-gray-300'>
+          총 합계 <span className='txt-20_B text-gray-950'>₩ 10000</span>
+        </p>
+        <Button className='mt-20 h-50 w-135 rounded-[14px]' variant='primary'>
+          예약하기
+        </Button>
+      </div>
     </div>
   );
 }

@@ -61,20 +61,24 @@ export default function ActivityDetail() {
 
   return (
     <main className='w-full px-24 md:px-30'>
-      <div className='grid grid-cols-1 lg:grid-cols-[2fr_1fr] lg:gap-x-40'>
-        <section className='order-1 lg:col-start-1 lg:row-start-1'>
-          <ActivityDescription activityId={Number(activityId)} />
-        </section>
-        <section className='order-2 h-fit self-start lg:col-start-2 lg:row-start-1'>
+      <div className='flex flex-col lg:flex-row lg:items-start lg:gap-x-40'>
+        <div className='flex flex-1 flex-col gap-40'>
+          <section>
+            <ActivityDescription activityId={Number(activityId)} />
+          </section>
+          <section>
+            <LoadKakaoMap address={address} />
+          </section>
+          <section>
+            <ActivityReviews activityId={Number(activityId)} />
+          </section>
+        </div>
+        <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-[360px]'>
           <ActivitySummary activityId={Number(activityId)} />
-          <ReserveCalender />
-        </section>
-        <section className='order-3 lg:col-start-1 lg:row-start-2'>
-          <LoadKakaoMap address={address} />
-        </section>
-        <section className='order-4 lg:col-start-1 lg:row-start-3'>
-          <ActivityReviews activityId={Number(activityId)} />
-        </section>
+          <section className='mt-40'>
+            <ReserveCalender />
+          </section>
+        </aside>
       </div>
     </main>
   );

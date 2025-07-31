@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import Button from '@/components/Button';
-import { useMyActQuery } from '@/hooks/reserve-status/useMyActivitiesQuery';
+import { useMyActQuery } from '@/hooks/myActivities/useMyActivitiesQuery';
 
 export default function Page() {
   const {} = useMyActQuery();

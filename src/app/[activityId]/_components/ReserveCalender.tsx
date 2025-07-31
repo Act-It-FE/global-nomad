@@ -77,9 +77,18 @@ export default function ReserveCalender() {
           );
         })}
       </div>
-      <p className='txt-16_B mt-4 mt-24 leading-19'>
-        참여 인원 수 <span>명수조절</span>
-      </p>
+      <div className='txt-16_B mt-4 mt-24 flex flex-row items-center justify-between leading-19'>
+        참여 인원 수{' '}
+        <span className='flex min-w-140 flex-row justify-evenly gap-5 rounded-[24px] border border-gray-50 py-8'>
+          <button>
+            <Icon className='h-20 w-20' icon='Minus' />
+          </button>
+          <span>10</span>
+          <button>
+            <Icon className='h-20 w-20' icon='Plus' />
+          </button>
+        </span>
+      </div>
       <div className='txt-16_B mt-24 leading-19'>예약 가능한 시간</div>
       <div className='my-10 flex flex-col gap-15'>
         <Button

@@ -5,8 +5,10 @@ import Link from 'next/link';
 import Button from '@/components/Button';
 import { useMyActQuery } from '@/hooks/myActivities/useMyActivitiesQuery';
 
+import MyExperience from './_components/MyExperience';
+
 export default function Page() {
-  const {} = useMyActQuery();
+  const { data } = useMyActQuery();
 
   return (
     <div className='flex w-full flex-col gap-15 md:gap-30'>
@@ -27,6 +29,9 @@ export default function Page() {
           </Button>
         </Link>
       </header>
+      {data
+        ? data.activities.map((act) => <MyExperience key={act.id} data={act} />)
+        : null}
     </div>
   );
 }

@@ -100,7 +100,9 @@ export default function ActivitySummary({ activityId }: Props) {
       <div className='md:txt-14_M txt-13_M leading-17 text-gray-950 opacity-75'>
         {category}
       </div>
-      <p className='md:txt-24_B txt-18_B leading-29 text-gray-950'>{title}</p>
+      <p className='md:txt-24_B txt-18_B leading-21 text-gray-950 md:leading-29'>
+        {title}
+      </p>
 
       <div className='txt-14_M leading-17 text-gray-700'>
         <div className='mt-4 flex flex-row items-center gap-4'>

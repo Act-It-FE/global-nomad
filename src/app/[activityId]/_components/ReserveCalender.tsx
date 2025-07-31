@@ -137,7 +137,10 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       </div>
       <div className='mt-40 flex flex-row items-center justify-between border-t border-gray-300'>
         <p className='txt-20_M mt-20 text-gray-300'>
-          총 합계 <span className='txt-20_B text-gray-950'>₩ {totalPrice}</span>
+          총 합계{' '}
+          <span className='txt-20_B text-gray-950'>
+            ₩ {totalPrice?.toLocaleString()}
+          </span>
         </p>
         <Button className='mt-20 h-50 w-135 rounded-[14px]' variant='primary'>
           예약하기

@@ -272,6 +272,6 @@ function PasswordInput({
   );
 }
 
-function DateCustomInput({}: DateCustomProps) {
-  return null;
+function DateCustomInput({ type, ...props }: DateCustomProps) {
+  return <input placeholder='yy/mm/dd' {...props} />;
 }

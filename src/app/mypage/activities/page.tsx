@@ -6,11 +6,22 @@ import Link from 'next/link';
 import empty_image from '@/../public/images/empty-image.png';
 import Button from '@/components/Button';
 import { useMyActQuery } from '@/hooks/myActivities/useMyActivitiesQuery';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 
 import MyExperience from './_components/MyExperience';
 
 export default function Page() {
-  const { data, isLoading } = useMyActQuery();
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useMyActQuery();
+  const lastElement = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
+  const activitiesSet = data?.pages.map((res) => res.activities);
+  const activities = activitiesSet
+    ? activitiesSet[0].concat(...(activitiesSet.slice(1) || []))
+    : [];
 
   return (
     <div className='flex w-full flex-col gap-30'>
@@ -35,8 +46,13 @@ export default function Page() {
         <div className='border-primary-500 m-auto size-50 animate-spin rounded-full border-2 border-t-transparent' />
       )}
       {!isLoading &&
-        (data?.activities.length ? (
-          data.activities.map((act) => <MyExperience key={act.id} data={act} />)
+        (activities?.length ? (
+          <>
+            {activities.map((act) => (
+              <MyExperience key={act.id} data={act} />
+            ))}
+            <div ref={lastElement} />
+          </>
         ) : (
           <div className='justify-items-center'>
             <Image

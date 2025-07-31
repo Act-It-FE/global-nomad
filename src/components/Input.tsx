@@ -287,10 +287,12 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
         onChange={handleChange}
         {...props}
       />
-      <Icon
-        className='absolute top-15 right-20 size-24 text-black'
-        icon='Calender'
-      />
+      <div className='absolute top-15 right-20 bottom-15 w-24'>
+        <div className='relative size-full'>
+          <Icon className='size-24 text-black' icon='Calender' />
+          <input className='absolute inset-0 opacity-0' type='date' />
+        </div>
+      </div>
     </div>
   );
 }

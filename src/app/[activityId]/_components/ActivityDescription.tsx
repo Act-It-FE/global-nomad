@@ -1,11 +1,11 @@
 'use client';
 
-import { useActivityDescription } from '@/hooks/activity-details/useActivityDescription';
+import { useActivityDescription } from '@/app/[activityId]/_hooks/useActivityDescription';
 import {
   getImageColumnWrapperClass,
   getImageContainerClass,
   getSubImageClass,
-} from '@/utils/getImageClass';
+} from '@/app/[activityId]/_utils/getImageClass';
 
 type Props = {
   activityId: number;

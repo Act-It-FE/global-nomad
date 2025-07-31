@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  ChangeEvent,
   InputHTMLAttributes,
   MouseEvent,
   TextareaHTMLAttributes,
@@ -273,5 +274,9 @@ function PasswordInput({
 }
 
 function DateCustomInput({ type, ...props }: DateCustomProps) {
-  return <input placeholder='yy/mm/dd' {...props} />;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.target.value = e.target.value.replace(/[^\d/]/g, '');
+  };
+
+  return <input placeholder='yy/mm/dd' onChange={handleChange} {...props} />;
 }

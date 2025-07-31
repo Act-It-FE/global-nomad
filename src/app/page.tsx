@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 
+import CloudBackground from './_components/CloudBackground';
 import MainPage from './_components/MainPage';
 
 export default function HomePage() {
@@ -11,7 +12,9 @@ export default function HomePage() {
         </div>
       }
     >
-      <MainPage />
+      <CloudBackground>
+        <MainPage />
+      </CloudBackground>
     </Suspense>
   );
 }

@@ -1,11 +1,11 @@
 import { useCalendarStore } from '@/stores/calendarStore';
-import { getCalendarDates } from '@/utils/dateUtils';
+import { formatDate, getCalendarDates } from '@/utils/dateUtils';
 
 import { DayCell } from './DayCell';
 
 export function CalendarGrid() {
   const weekDay = ['일', '월', '화', '수', '목', '금', '토'];
-  const { currentDate } = useCalendarStore();
+  const { currentDate, reservations } = useCalendarStore();
 
   return (
     <div>
@@ -25,6 +25,7 @@ export function CalendarGrid() {
             key={date.toISOString()}
             date={date}
             isCurrentMonth={date.getMonth() === currentDate.getMonth()}
+            reservations={reservations[formatDate(date)]}
           />
         ))}
       </div>

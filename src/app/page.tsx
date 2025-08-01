@@ -1,12 +1,9 @@
-'use client';
 import { Suspense } from 'react';
-
-import { useUserStore } from '@/stores/userStore';
 
 import CloudBackground from './_components/CloudBackground';
 import MainPage from './_components/MainPage';
+
 export default function HomePage() {
-  const user = useUserStore((s) => s.user);
   return (
     <Suspense
       fallback={
@@ -16,7 +13,6 @@ export default function HomePage() {
       }
     >
       <CloudBackground>
-        <h1> {user?.nickname}님</h1>
         <MainPage />
       </CloudBackground>
     </Suspense>

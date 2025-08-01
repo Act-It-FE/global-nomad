@@ -13,8 +13,6 @@ env:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_OAUTH_APP_KEY: ${{ secrets.NEXT_PUBLIC_OAUTH_APP_KEY }}
     defaults:
       run:
         working-directory: ./global-nomad

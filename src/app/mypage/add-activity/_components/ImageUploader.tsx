@@ -68,6 +68,7 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
           </div>
           <input
             hidden
+            accept='image/*'
             multiple={max > 1}
             type='file'
             onChange={handleChange}

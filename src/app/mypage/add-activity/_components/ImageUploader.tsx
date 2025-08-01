@@ -1,7 +1,9 @@
 'use client';
 
+import { isAxiosError } from 'axios';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
+import activitiesDetailApi from '@/api/activitiesApi';
 import EyeIcon from '@/assets/icons/eye_off.svg';
 import Modal from '@/components/Modal/Modal';
 import { cn } from '@/utils/cn';
@@ -17,12 +19,36 @@ interface Props {
   setImageURLs: Dispatch<SetStateAction<string[]>>;
 }
 
-export default function ImageUploader({ max }: Props) {
+export default function ImageUploader({ max, setImageURLs }: Props) {
   const [modalMessage, setModalMessage] = useState('');
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const getImageURL = async (file: File) => {
+    try {
+      const response = await activitiesDetailApi.uploadImage(file);
+      return response.activityImageUrl;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        switch (error.status) {
+          case 401:
+            setModalMessage('로그인이 필요합니다.');
+            return;
+          case 413:
+            setModalMessage('파일이 너무 큽니다.');
+            return;
+        }
+      }
+      setModalMessage('파일을 업로드 하는 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length && e.target.files?.length > max) {
       setModalMessage(`파일은 최대 ${max}개까지만 업로드 할 수 있습니다.`);
+    } else if (e.target.files) {
+      for (const file of e.target.files) {
+        const url = await getImageURL(file);
+        if (url) setImageURLs((prev) => [...prev, url]);
+      }
     }
     e.target.value = '';
   };

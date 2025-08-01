@@ -5,6 +5,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
 import EyeIcon from '@/assets/icons/eye_off.svg';
+import Icon from '@/components/Icon';
 import Modal from '@/components/Modal/Modal';
 import { cn } from '@/utils/cn';
 
@@ -78,11 +79,20 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
           />
         </label>
         {imageURLs.map((url) => (
-          <img
+          <div
             key={url}
-            className={cn(COMMON_STYLE, 'object-cover')}
-            src={url}
-          />
+            className={cn(COMMON_STYLE, 'relative bg-cover')}
+            style={{ backgroundImage: `url(${url})` }}
+          >
+            <button
+              className={cn(
+                'absolute -top-4 -right-4 lg:-top-6',
+                'size-20 justify-items-center rounded-full bg-gray-950 md:size-26',
+              )}
+            >
+              <Icon className='size-16 text-white md:size-20' icon='Delete' />
+            </button>
+          </div>
         ))}
       </div>
       {modalMessage && (

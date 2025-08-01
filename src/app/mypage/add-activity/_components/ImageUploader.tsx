@@ -11,7 +11,11 @@ const COMMON_STYLE = cn(
   'rounded-lg md:rounded-2xl border border-gray-100',
 );
 
-export default function ImageUploader({ max }: { max: number }) {
+interface Props {
+  max: number;
+}
+
+export default function ImageUploader({ max }: Props) {
   const [modalMessage, setModalMessage] = useState('');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

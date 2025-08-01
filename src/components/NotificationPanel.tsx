@@ -1,13 +1,11 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import stringReplace from 'react-string-replace';
 
-import notificationsApi from '@/api/notificationApi';
 import { MyNotification } from '@/api/types/notifications';
 import Icon from '@/components/Icon';
-import myNotificationsQueryKeys from '@/hooks/myNotifications/queryKey';
-import getErrorMessage from '@/utils/getErrorMessage';
+import { useMyNotifyDelete } from '@/hooks/myNotifications/useMyNotifyMutate';
+import { parseNotificationContent } from '@/utils/parseNotificationContent';
 
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
@@ -39,7 +37,8 @@ export default function NotificationPanel({
   isFetchingNextPage = false,
   fetchNextPage,
 }: NotificationPanelProps) {
-  const queryClient = useQueryClient();
+  const { mutate: deleteNotification } = useMyNotifyDelete();
+
   const lastElementRef = useInfiniteScroll({
     hasNextPage,
     isFetchingNextPage,
@@ -60,6 +59,7 @@ export default function NotificationPanel({
     if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
     return `${Math.floor(diff / 86400)}일 전`;
   };
+
   const highlight = (text: string) =>
     stringReplace(text, /(승인|거절)/g, (match, i) => (
       <strong
@@ -74,31 +74,8 @@ export default function NotificationPanel({
       </strong>
     ));
 
-  const handleCancelReservation = async (notify: Notification) => {
-    try {
-      await notificationsApi.deleteNotification(notify.id);
-      queryClient.invalidateQueries({
-        queryKey: myNotificationsQueryKeys().all,
-      });
-    } catch (error) {
-      getErrorMessage(error, '알림을 삭제하는 데 실패했습니다.');
-    }
-  };
-
-  const parseContent = (content: string) => {
-    const match = content.match(/^(.+?)\((.+?)\)\s*(.+)$/);
-
-    return {
-      activityName: match ? match[1].trim() : '',
-      schedule: match ? `(${match[2]})` : '',
-      statusText: match ? match[3] : content,
-    };
-  };
-
-  const getTitle = (status: string) => {
-    if (status.includes('승인')) return '예약 승인';
-    if (status.includes('거절')) return '예약 거절';
-    return '알림';
+  const handleCancelReservation = (notify: Notification) => {
+    deleteNotification(notify.id);
   };
 
   if (!open) return null;
@@ -117,9 +94,15 @@ export default function NotificationPanel({
 
       <div className='flex-1 overflow-y-auto [scrollbar-width:none]'>
         {list.map((notify, index) => {
-          const { activityName, schedule, statusText } = parseContent(
-            notify.content,
-          );
+          const { activityName, schedule, statusText } =
+            parseNotificationContent(notify.content);
+
+          // 상태에 따라 제목 동적 생성
+          const getTitle = (status: string) => {
+            if (status.includes('승인')) return '예약 승인';
+            if (status.includes('거절')) return '예약 거절';
+            return '알림';
+          };
 
           const isLastItem = index === list.length - 1;
 

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import myActivitiesApi from '@/api/myActivities';
 import {
@@ -9,11 +9,13 @@ import {
 import myActivitiesQueryKeys from './queryKey';
 
 export function useMyActQuery(params?: GetMyActivitiesParams) {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: myActivitiesQueryKeys().getActs(params || {}),
-    queryFn: () => {
-      return myActivitiesApi.get(params);
+    queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
+      return myActivitiesApi.get({ ...(params || {}), cursorId: pageParam });
     },
+    initialPageParam: undefined as number | undefined,
+    getNextPageParam: (lastPage) => lastPage.cursorId,
   });
 }
 

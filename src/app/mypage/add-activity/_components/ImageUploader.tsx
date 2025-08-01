@@ -71,6 +71,7 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
           <input
             hidden
             accept='image/*'
+            disabled={imageURLs.length >= max}
             multiple={max > 1}
             type='file'
             onChange={handleChange}

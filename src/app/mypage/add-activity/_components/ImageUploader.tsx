@@ -19,7 +19,7 @@ interface Props {
   setImageURLs: Dispatch<SetStateAction<string[]>>;
 }
 
-export default function ImageUploader({ max, setImageURLs }: Props) {
+export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
   const [modalMessage, setModalMessage] = useState('');
 
   const getImageURL = async (file: File) => {
@@ -73,6 +73,14 @@ export default function ImageUploader({ max, setImageURLs }: Props) {
             onChange={handleChange}
           />
         </label>
+        {imageURLs.length &&
+          imageURLs.map((url) => (
+            <img
+              key={url}
+              className={cn(COMMON_STYLE, 'object-cover')}
+              src={url}
+            />
+          ))}
       </div>
       {modalMessage && (
         <Modal

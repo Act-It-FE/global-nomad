@@ -9,7 +9,12 @@ const COMMON_STYLE = cn(
 export default function ImageUploader() {
   return (
     <div className='flex gap-12 md:gap-14'>
-      <label className={cn(COMMON_STYLE, 'flex flex-col gap-2 md:gap-10')}>
+      <label
+        className={cn(
+          COMMON_STYLE,
+          'flex flex-col items-center justify-center gap-2 md:gap-10',
+        )}
+      >
         <EyeIcon className='size-40 text-gray-400' />
         <input hidden type='file' />
       </label>

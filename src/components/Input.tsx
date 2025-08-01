@@ -279,7 +279,7 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.target.value = e.target.value.replace(/[^\d/]/g, '');
-    if (e.target.validity.valid && dateRef.current)
+    if (e.target.value && e.target.validity.valid && dateRef.current)
       dateRef.current.value = '20' + e.target.value.replaceAll('/', '-');
   };
 

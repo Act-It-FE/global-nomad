@@ -47,7 +47,7 @@ export default function Login() {
     } catch (err) {
       const apiErr = err as ApiError;
       const msg = apiErr.response?.data?.message;
-      const status = apiErr.response?.status;
+      const status = apiErr.response?.status ?? null;
       setErrStatus(status);
       if (status === 400 && msg === '비밀번호가 일치하지 않습니다.') {
         setErrMsg(msg);

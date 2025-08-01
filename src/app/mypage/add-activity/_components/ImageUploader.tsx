@@ -78,7 +78,7 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
             onChange={handleChange}
           />
         </label>
-        {imageURLs.map((url) => (
+        {imageURLs.map((url, index) => (
           <div
             key={url}
             className={cn(COMMON_STYLE, 'relative bg-cover')}
@@ -89,6 +89,12 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
                 'absolute -top-4 -right-4 lg:-top-6',
                 'size-20 justify-items-center rounded-full bg-gray-950 md:size-26',
               )}
+              onClick={() =>
+                setImageURLs((prev) => [
+                  ...prev.slice(0, index),
+                  ...prev.slice(index + 1),
+                ])
+              }
             >
               <Icon className='size-16 text-white md:size-20' icon='Delete' />
             </button>

@@ -56,8 +56,8 @@ export default function Login() {
         setErrMsg('회원가입을 먼저 진행해 주세요.');
         setIsModalOpen(true);
       } else {
-        console.error('회원가입 중 오류 발생:', err);
-        console.log(msg, status);
+        setErrMsg('로그인 에러.');
+        setIsModalOpen(true);
       }
     }
   }

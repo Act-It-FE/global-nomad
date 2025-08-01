@@ -20,7 +20,9 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isModal, setIsModal] = useState(false);
+  const [errMsg, setErrMsg] = useState('');
   const redirectUrl = getRedirectUrl('signUp');
+  const [errStatus, setErrStatus] = useState<number | null>(null);
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const emailError =
@@ -54,11 +56,14 @@ export default function SignUp() {
       const apiErr = err as ApiError;
       const msg = apiErr.response?.data?.message;
       const status = apiErr.response?.status;
+      setErrStatus(status ?? null);
 
       if (status === 409 && msg === '중복된 이메일입니다.') {
         setIsModal(true);
+        setErrMsg('이미 가입된 아이디입니다. 로그인하시겠습니까?');
       } else {
-        console.log('회원가입 중 오류 발생:', err);
+        setErrMsg('회원가입 에러.');
+        setIsModal(true);
       }
     }
   }
@@ -176,12 +181,14 @@ export default function SignUp() {
       {isModal && (
         <Modal
           confirmText='예'
-          message='이미 가입된 아이디입니다. 로그인하시겠습니까?'
+          message={errMsg}
           variant='warning'
           onCancel={() => setIsModal(false)}
           onConfirm={() => {
             setIsModal(false);
-            router.replace('/login');
+            if (errStatus === 409) {
+              router.replace('/signUp');
+            }
           }}
         />
       )}

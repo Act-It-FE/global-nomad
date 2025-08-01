@@ -27,7 +27,7 @@ export default function KakaoCallbackPage() {
     const nicknameValue: string = '';
 
     const body: OAuthRequest = {
-      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/callback`,
+      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/login/callback`,
       token: code,
       ...(nicknameValue && { nickname: nicknameValue }),
     };
@@ -45,6 +45,7 @@ export default function KakaoCallbackPage() {
             body,
             'kakao' as OAuthAppProvider,
           );
+          console.log(data);
           handleSuccessfulAuth(data);
         }
       } catch (err) {

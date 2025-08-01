@@ -77,14 +77,13 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
             onChange={handleChange}
           />
         </label>
-        {imageURLs.length &&
-          imageURLs.map((url) => (
-            <img
-              key={url}
-              className={cn(COMMON_STYLE, 'object-cover')}
-              src={url}
-            />
-          ))}
+        {imageURLs.map((url) => (
+          <img
+            key={url}
+            className={cn(COMMON_STYLE, 'object-cover')}
+            src={url}
+          />
+        ))}
       </div>
       {modalMessage && (
         <Modal

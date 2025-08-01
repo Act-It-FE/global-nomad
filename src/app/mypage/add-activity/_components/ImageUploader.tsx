@@ -6,7 +6,7 @@ const COMMON_STYLE = cn(
   'rounded-lg md:rounded-2xl border border-gray-100',
 );
 
-export default function ImageUploader() {
+export default function ImageUploader({ max }: { max: number }) {
   return (
     <div className='flex gap-12 md:gap-14'>
       <label
@@ -16,7 +16,10 @@ export default function ImageUploader() {
         )}
       >
         <EyeIcon className='size-40 text-gray-400' />
-        <input hidden type='file' />
+        <div className='txt-13_M md:txt-14_M leading-[calc(1em+3px)] text-gray-600'>
+          /{max > 0 ? max : 1}
+        </div>
+        <input hidden multiple={max > 1} type='file' />
       </label>
     </div>
   );

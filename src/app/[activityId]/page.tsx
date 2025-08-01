@@ -73,12 +73,12 @@ export default function ActivityDetail() {
             <ActivityDescription activityId={Number(activityId)} />
             {isTablet && (
               <>
-                <div className='mt-20 w-full rounded-[16px] border border-gray-200 p-20'>
+                <div>
                   <Button
-                    className='w-full'
+                    className='h-50 w-full'
                     onClick={() => setIsReserveModalOpen(true)}
                   >
-                    날짜 선택하기
+                    예약하러 가기
                   </Button>
                 </div>
                 {isReserveModalOpen && (

@@ -304,6 +304,8 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
           <input
             ref={dateRef}
             className='absolute inset-0 opacity-0'
+            max='2099-12-31'
+            min='2000-01-01'
             type='date'
             onChange={handleDateChange}
           />

@@ -22,10 +22,10 @@ interface Props {
 export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
   const [modalMessage, setModalMessage] = useState('');
 
-  const getImageURL = async (file: File) => {
+  const addImage = async (file: File) => {
     try {
       const response = await activitiesDetailApi.uploadImage(file);
-      return response.activityImageUrl;
+      setImageURLs((prev) => [...prev, response.activityImageUrl]);
     } catch (error) {
       if (isAxiosError(error)) {
         switch (error.status) {
@@ -46,8 +46,7 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
       setModalMessage(`파일은 최대 ${max}개까지만 업로드 할 수 있습니다.`);
     } else if (e.target.files) {
       for (const file of e.target.files) {
-        const url = await getImageURL(file);
-        if (url) setImageURLs((prev) => [...prev, url]);
+        addImage(file);
       }
     }
     e.target.value = '';

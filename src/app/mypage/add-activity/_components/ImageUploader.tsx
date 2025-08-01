@@ -66,7 +66,7 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
         >
           <EyeIcon className='size-40 text-gray-400' />
           <div className='txt-13_M md:txt-14_M leading-[calc(1em+3px)] text-gray-600'>
-            /{max > 0 ? max : 1}
+            {imageURLs.length}/{max > 0 ? max : 1}
           </div>
           <input
             hidden

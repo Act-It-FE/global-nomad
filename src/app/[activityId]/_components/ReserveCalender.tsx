@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import activitiesApi from '@/api/activitiesApi';
 import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
@@ -25,6 +25,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMyActivity, setIsMyActivity] = useState(false);
 
   const year = String(currentDate.getFullYear());
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -80,6 +81,18 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
     new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
       date,
     );
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (!storedUserId || !detail?.userId) return;
+
+    const currentUserId = Number(storedUserId);
+    if (currentUserId === detail.userId) {
+      setIsMyActivity(true);
+    }
+  }, [detail]);
+
+  if (isMyActivity) return null;
 
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>

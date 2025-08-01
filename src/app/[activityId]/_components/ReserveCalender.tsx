@@ -6,7 +6,6 @@ import activitiesApi from '@/api/activitiesApi';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { OnlyTextContent } from '@/components/Modal/contents/OnlyTextContent';
-import { useMyActivityStore } from '@/stores/useMyActivityStore';
 import { getCalendarDates } from '@/utils/dateUtils';
 
 const isSameMonth = (base: Date, target: Date) =>
@@ -18,8 +17,6 @@ interface ReserveCalenderProps {
 }
 
 export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
-  const { isMyActivity } = useMyActivityStore();
-
   const [currentDate, setCurrentDate] = useState(new Date());
   const [price, setPrice] = useState<number | null>(null);
   const [peopleCount, setPeopleCount] = useState(1);
@@ -34,7 +31,6 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
     { id: number; startTime: string; endTime: string }[]
   >([]);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
-
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -82,7 +78,6 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
 
   const increaseCount = () => setPeopleCount((prev) => Math.min(prev + 1, 10));
   const decreaseCount = () => setPeopleCount((prev) => Math.max(prev - 1, 1));
-
   const totalPrice = price !== null ? price * peopleCount : null;
 
   const handleReserve = async () => {
@@ -102,7 +97,6 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       setIsLoading(false);
     }
   };
-  if (isMyActivity()) return null;
 
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>

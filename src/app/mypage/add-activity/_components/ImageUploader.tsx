@@ -1,3 +1,7 @@
+'use client';
+
+import { ChangeEvent } from 'react';
+
 import EyeIcon from '@/assets/icons/eye_off.svg';
 import { cn } from '@/utils/cn';
 
@@ -7,6 +11,10 @@ const COMMON_STYLE = cn(
 );
 
 export default function ImageUploader({ max }: { max: number }) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length && e.target.files?.length > max) return;
+  };
+
   return (
     <div className='flex gap-12 md:gap-14'>
       <label
@@ -19,7 +27,7 @@ export default function ImageUploader({ max }: { max: number }) {
         <div className='txt-13_M md:txt-14_M leading-[calc(1em+3px)] text-gray-600'>
           /{max > 0 ? max : 1}
         </div>
-        <input hidden multiple={max > 1} type='file' />
+        <input hidden multiple={max > 1} type='file' onChange={handleChange} />
       </label>
     </div>
   );

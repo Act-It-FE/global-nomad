@@ -274,7 +274,8 @@ function PasswordInput({
 }
 
 function DateCustomInput({ type, ...props }: DateCustomProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const textRef = useRef<HTMLInputElement>(null);
+  const dateRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.target.value = e.target.value.replace(/[^\d/]/g, '');
@@ -283,7 +284,7 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
   return (
     <div className='relative'>
       <input
-        ref={inputRef}
+        ref={textRef}
         maxLength={8}
         pattern='\d{2}/[0-1]\d/[0-3]\d'
         placeholder='yy/mm/dd'
@@ -293,7 +294,11 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
       <div className='absolute top-15 right-20 bottom-15 w-24'>
         <div className='relative size-full'>
           <Icon className='size-24 text-black' icon='Calender' />
-          <input className='absolute inset-0 opacity-0' type='date' />
+          <input
+            ref={dateRef}
+            className='absolute inset-0 opacity-0'
+            type='date'
+          />
         </div>
       </div>
     </div>

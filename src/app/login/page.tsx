@@ -18,6 +18,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errMsg, setErrMsg] = useState('');
+  const [errStatus, setErrStatus] = useState<number | null>(null);
 
   const isEmailValid = /^\S+@\S+\.\S+$/.test(email);
   const emailError =
@@ -47,8 +48,8 @@ export default function Login() {
       const apiErr = err as ApiError;
       const msg = apiErr.response?.data?.message;
       const status = apiErr.response?.status;
-
-      if (status === 400 && msg === '비밀번호가 일치하지 않습니다') {
+      setErrStatus(status);
+      if (status === 400 && msg === '비밀번호가 일치하지 않습니다.') {
         setErrMsg(msg);
         setIsModalOpen(true);
       } else if (status === 404 && msg === '존재하지 않는 유저입니다.') {
@@ -56,6 +57,7 @@ export default function Login() {
         setIsModalOpen(true);
       } else {
         console.error('회원가입 중 오류 발생:', err);
+        console.log(msg, status);
       }
     }
   }
@@ -144,13 +146,13 @@ export default function Login() {
       </div>
       {isModalOpen && (
         <Modal
-          confirmText='예'
           message={errMsg}
-          variant='warning'
-          onCancel={() => setIsModalOpen(false)}
-          onConfirm={() => {
+          variant='onlyText'
+          onClose={() => {
             setIsModalOpen(false);
-            router.replace('/signUp');
+            if (errStatus === 404) {
+              router.replace('/signUp');
+            }
           }}
         />
       )}

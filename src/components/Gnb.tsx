@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import AlarmActive from '@/assets/icons/alarm_active.svg';
+import useMyNotifyQuery from '@/hooks/myNotifications/useMyNotifyQuery';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 
@@ -31,6 +32,7 @@ export default function Gnb({ user }: TemporaryProps) {
   const router = useRouter();
   const isMobile = useMediaQuery('mobile');
   const [isOpen, setIsOpen] = useState(false);
+  const { data: notifications } = useMyNotifyQuery();
 
   return (
     <nav
@@ -75,7 +77,10 @@ export default function Gnb({ user }: TemporaryProps) {
                 />
               </button>
               <NotificationPanel
-                list={[]}
+                list={
+                  notifications?.pages.flatMap((page) => page.notifications) ||
+                  []
+                }
                 open={isOpen}
                 onClose={() => setIsOpen(false)}
               />

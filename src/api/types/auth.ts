@@ -38,15 +38,11 @@ export interface OAuthResponse extends Token {
   user: UserProfile;
 }
 
-//oauth login req
-export interface OAuthLoginRequest {
+//oauth login req //oauth signup req
+export interface OAuthRequest {
   redirectUri: string;
   token: string;
-}
-
-//oauth signup req
-export interface OAuthSignUpRequest extends OAuthLoginRequest {
-  nickname: string;
+  nickname?: string;
 }
 
 //auth login req
@@ -85,4 +81,13 @@ export interface UploadProfileImageRequest {
 
 export interface UploadProfileImageResponse {
   profileImageUrl: string;
+}
+export interface ApiError {
+  message?: string;
+  response?: {
+    status?: number;
+    data?: {
+      message?: string;
+    };
+  };
 }

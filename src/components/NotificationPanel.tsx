@@ -85,6 +85,22 @@ export default function NotificationPanel({
     }
   };
 
+  const parseContent = (content: string) => {
+    const match = content.match(/^(.+?)\((.+?)\)\s*(.+)$/);
+
+    return {
+      activityName: match ? match[1].trim() : '',
+      schedule: match ? `(${match[2]})` : '',
+      statusText: match ? match[3] : content,
+    };
+  };
+
+  const getTitle = (status: string) => {
+    if (status.includes('승인')) return '예약 승인';
+    if (status.includes('거절')) return '예약 거절';
+    return '알림';
+  };
+
   if (!open) return null;
 
   return (
@@ -101,18 +117,9 @@ export default function NotificationPanel({
 
       <div className='flex-1 overflow-y-auto [scrollbar-width:none]'>
         {list.map((notify, index) => {
-          // content에서 정보 추출
-          const match = notify.content.match(/^(.+?)\((.+?)\)\s*(.+)$/);
-          const activityName = match ? match[1].trim() : '';
-          const schedule = match ? `(${match[2]})` : '';
-          const statusText = match ? match[3] : notify.content;
-
-          // 상태에 따라 제목 동적 생성
-          const getTitle = (status: string) => {
-            if (status.includes('승인')) return '예약 승인';
-            if (status.includes('거절')) return '예약 거절';
-            return '알림';
-          };
+          const { activityName, schedule, statusText } = parseContent(
+            notify.content,
+          );
 
           const isLastItem = index === list.length - 1;
 

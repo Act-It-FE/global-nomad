@@ -53,8 +53,9 @@ export default function SignUp() {
     } catch (err) {
       const apiErr = err as ApiError;
       const msg = apiErr.response?.data?.message;
+      const status = apiErr.response?.status;
 
-      if (msg === '중복된 이메일입니다.') {
+      if (status === 400 && msg === '중복된 이메일입니다.') {
         setIsModal(true);
       } else {
         console.error('회원가입 중 오류 발생:', err);

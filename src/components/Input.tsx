@@ -293,7 +293,7 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
       <input
         ref={textRef}
         maxLength={8}
-        pattern='\d{2}/[0-1]\d/[0-3]\d'
+        pattern='\d{2}/(0[1-9]|1[0-2])/(0[1-9]|[12]\d|3[01])'
         placeholder='yy/mm/dd'
         onChange={handleChange}
         {...props}

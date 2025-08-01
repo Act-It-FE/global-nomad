@@ -49,7 +49,11 @@ export default function Page() {
     }
   }, [reservationDashboard, selectedActivityId, setReservations]);
 
-  if (!data || !data.activities || data.activities.length === 0) {
+  if (
+    !data ||
+    !data.pages[0]?.activities ||
+    data.pages[0]?.activities.length === 0
+  ) {
     return (
       <div className='flex w-full flex-col gap-13 md:gap-30'>
         <ReservationStatusHeader />
@@ -84,7 +88,7 @@ export default function Page() {
     return (
       <div className='flex w-full flex-col gap-30 max-md:gap-18 md:max-lg:gap-24'>
         <ReservationStatusHeader />
-        <MyActListDropDown activities={data.activities} />
+        <MyActListDropDown activities={data.pages[0]?.activities || []} />
       </div>
     );
   }
@@ -92,7 +96,7 @@ export default function Page() {
   return (
     <div className='relative mb-30 flex w-full flex-col gap-30 max-md:gap-18 md:max-lg:gap-24'>
       <ReservationStatusHeader />
-      <MyActListDropDown activities={data.activities} />
+      <MyActListDropDown activities={data.pages[0]?.activities || []} />
       <Calendar />
       <ReservationModal />
     </div>

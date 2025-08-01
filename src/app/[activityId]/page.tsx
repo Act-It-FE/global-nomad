@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import getErrorMessage from '@/utils/getErrorMessage';
 
 import ActivityDescription from './_components/ActivityDescription';
@@ -11,11 +12,14 @@ import ActivityReviews from './_components/ActivityReviews';
 import ActivitySummary from './_components/ActivitySummary';
 import LoadKakaoMap from './_components/LoadKakaoMap';
 import ReserveCalender from './_components/ReserveCalender';
+import TabletReserveCalendar from './_components/TabletReserveCalender';
 
 export default function ActivityDetail() {
   const { activityId } = useParams();
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
+  const isPC = useMediaQuery('pc');
+  const isTablet = useMediaQuery('tablet');
 
   useEffect(() => {
     if (!activityId) return;
@@ -61,10 +65,13 @@ export default function ActivityDetail() {
 
   return (
     <main className='w-full'>
-      <div className='flex flex-col lg:flex-row lg:items-start lg:gap-x-40'>
+      <div className='flex flex-col px-24 md:px-30 lg:flex-row lg:items-start lg:gap-x-40'>
         <div className='flex flex-1 flex-col gap-40'>
           <section>
             <ActivityDescription activityId={Number(activityId)} />
+            {isTablet && (
+              <TabletReserveCalendar activityId={Number(activityId)} />
+            )}
           </section>
           <section>
             <LoadKakaoMap address={address} />
@@ -76,7 +83,7 @@ export default function ActivityDetail() {
         <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-[410px]'>
           <ActivitySummary activityId={Number(activityId)} />
           <section className='mt-40'>
-            <ReserveCalender activityId={Number(activityId)} />
+            {isPC && <ReserveCalender activityId={Number(activityId)} />}
           </section>
         </aside>
       </div>

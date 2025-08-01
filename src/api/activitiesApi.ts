@@ -76,6 +76,11 @@ const activitiesDetailApi = {
     return apiClient.post<FormData, ActivityImageUploadResponse>(
       `/activities/image`,
       formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
   },
 };

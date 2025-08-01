@@ -42,7 +42,10 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
   };
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length && e.target.files?.length > max) {
+    if (
+      e.target.files?.length &&
+      e.target.files?.length > max - imageURLs.length
+    ) {
       setModalMessage(`파일은 최대 ${max}개까지만 업로드 할 수 있습니다.`);
     } else if (e.target.files) {
       for (const file of e.target.files) {

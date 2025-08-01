@@ -1,11 +1,14 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
+import authApi from '@/api/authApi';
 import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import { useUserStore } from '@/stores/userStore';
 import { getRedirectUrl } from '@/utils/oauth/getRedirectUrl';
 
 export default function Login() {
@@ -22,6 +25,20 @@ export default function Login() {
 
   const isFormValid = isEmailValid && isPasswordValid;
   const redirectUrl = getRedirectUrl('login');
+
+  const setUser = useUserStore((s) => s.setUser);
+  const router = useRouter();
+
+  async function handleLogin() {
+    const { user, accessToken, refreshToken } = await authApi.login({
+      email,
+      password,
+    });
+    setUser(user);
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    router.replace('/');
+  }
 
   return (
     <div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
@@ -75,6 +92,7 @@ export default function Login() {
               disabled={!isFormValid}
               rounded='16'
               variant={isFormValid ? 'primary' : undefined}
+              onClick={handleLogin}
             >
               로그인하기
             </Button>

@@ -279,6 +279,13 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.target.value = e.target.value.replace(/[^\d/]/g, '');
+    if (e.target.validity.valid && dateRef.current)
+      dateRef.current.value = '20' + e.target.value.replaceAll('/', '-');
+  };
+
+  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (textRef.current)
+      textRef.current.value = e.target.value.replaceAll('-', '/').slice(2);
   };
 
   return (
@@ -298,6 +305,7 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
             ref={dateRef}
             className='absolute inset-0 opacity-0'
             type='date'
+            onChange={handleDateChange}
           />
         </div>
       </div>

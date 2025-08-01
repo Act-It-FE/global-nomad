@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
+import userApi from '@/api/userApi';
 import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
@@ -38,9 +39,14 @@ export default function SignUp() {
   const isFormValid =
     isEmailValid && isNicknameValid && isPasswordValid && isConfirmValid;
 
-  const handleSubmit = () => {
-    router.push('/');
-  };
+  async function handleSubmit() {
+    const {} = await userApi.signUp({
+      email,
+      password,
+      nickname,
+    });
+    router.replace('/login');
+  }
 
   return (
     <div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>

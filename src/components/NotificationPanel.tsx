@@ -1,9 +1,13 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import stringReplace from 'react-string-replace';
 
+import notificationsApi from '@/api/notificationApi';
 import { MyNotification } from '@/api/types/notifications';
 import Icon from '@/components/Icon';
+import myNotificationsQueryKeys from '@/hooks/myNotifications/queryKey';
+import getErrorMessage from '@/utils/getErrorMessage';
 
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
@@ -19,7 +23,7 @@ type NotificationItem = Notification | MyNotification;
 interface NotificationPanelProps {
   open: boolean;
   onClose: () => void;
-  list: NotificationItem[];
+  list: Notification[];
   totalCount?: number;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
@@ -35,6 +39,7 @@ export default function NotificationPanel({
   isFetchingNextPage = false,
   fetchNextPage,
 }: NotificationPanelProps) {
+  const queryClient = useQueryClient();
   const lastElementRef = useInfiniteScroll({
     hasNextPage,
     isFetchingNextPage,
@@ -69,6 +74,17 @@ export default function NotificationPanel({
       </strong>
     ));
 
+  const handleCancelReservation = async (notify: Notification) => {
+    try {
+      await notificationsApi.deleteNotification(notify.id);
+      queryClient.invalidateQueries({
+        queryKey: myNotificationsQueryKeys().all,
+      });
+    } catch (error) {
+      getErrorMessage(error, '알림을 삭제하는 데 실패했습니다.');
+    }
+  };
+
   if (!open) return null;
 
   return (
@@ -83,13 +99,13 @@ export default function NotificationPanel({
         </button>
       </div>
 
-      <ul className='flex-1 overflow-y-auto [scrollbar-width:none]'>
-        {list.map((n, index) => {
+      <div className='flex-1 overflow-y-auto [scrollbar-width:none]'>
+        {list.map((notify, index) => {
           // content에서 정보 추출
-          const match = n.content.match(/^(.+?)\((.+?)\)\s*(.+)$/);
+          const match = notify.content.match(/^(.+?)\((.+?)\)\s*(.+)$/);
           const activityName = match ? match[1].trim() : '';
           const schedule = match ? `(${match[2]})` : '';
-          const statusText = match ? match[3] : n.content;
+          const statusText = match ? match[3] : notify.content;
 
           // 상태에 따라 제목 동적 생성
           const getTitle = (status: string) => {
@@ -101,15 +117,20 @@ export default function NotificationPanel({
           const isLastItem = index === list.length - 1;
 
           return (
-            <li
-              key={n.id}
-              ref={isLastItem ? lastElement : undefined}
-              className='hover:bg-primary-100 flex flex-col gap-8 px-20 py-16'
+            <button
+              key={notify.id}
+              ref={
+                isLastItem
+                  ? (lastElement as unknown as React.Ref<HTMLButtonElement>)
+                  : undefined
+              }
+              className='hover:bg-primary-100 flex w-full cursor-pointer flex-col gap-8 border-0 bg-transparent px-20 py-16 text-left'
+              onClick={() => handleCancelReservation(notify)}
             >
               <div className='flex items-center justify-between'>
                 <span className='txt-14_B'>{getTitle(statusText)}</span>
                 <span className='txt-12_M text-gray-400'>
-                  {timeAgo(n.createdAt)}
+                  {timeAgo(notify.createdAt)}
                 </span>
               </div>
               <div>
@@ -121,7 +142,7 @@ export default function NotificationPanel({
                   {highlight(statusText)}
                 </p>
               </div>
-            </li>
+            </button>
           );
         })}
 
@@ -137,7 +158,7 @@ export default function NotificationPanel({
             새 알림이 없습니다.
           </p>
         )}
-      </ul>
+      </div>
     </div>
   );
 }

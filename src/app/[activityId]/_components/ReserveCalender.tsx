@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import activitiesApi from '@/api/activitiesApi';
+import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
+import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { OnlyTextContent } from '@/components/Modal/contents/OnlyTextContent';
@@ -18,67 +20,43 @@ interface ReserveCalenderProps {
 
 export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [price, setPrice] = useState<number | null>(null);
   const [peopleCount, setPeopleCount] = useState(1);
-  const [schedules, setSchedules] = useState<
-    {
-      date: string;
-      times: { id: number; startTime: string; endTime: string }[];
-    }[]
-  >([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [timeOptions, setTimeOptions] = useState<
-    { id: number; startTime: string; endTime: string }[]
-  >([]);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const year = String(currentDate.getFullYear());
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const dates = getCalendarDates(currentDate);
 
-  const getMonthNameEnglish = (date: Date): string =>
-    new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
-      date,
-    );
+  const { data: detail } = useActivityDetail(activityId);
+  const { data: schedules = [] } = useAvailableSchedule(
+    activityId,
+    year,
+    month,
+  );
 
-  useEffect(() => {
-    const fetchDetail = async () => {
-      try {
-        const data = await activitiesApi.getDetail(activityId);
-        setPrice(data.price);
-      } catch (error) {
-        console.error('가격 정보를 불러오는 데 실패했습니다.', error);
-      }
-    };
-    fetchDetail();
-  }, [activityId]);
+  const price = detail?.price ?? null;
+  const totalPrice = price ? price * peopleCount : null;
 
-  useEffect(() => {
-    const fetchAvailableSchedule = async () => {
-      try {
-        const res = await activitiesApi.getAvailableSchedule(activityId, {
-          year: String(currentDate.getFullYear()),
-          month: String(currentDate.getMonth() + 1).padStart(2, '0'),
-        });
-        setSchedules(res);
-      } catch (error) {
-        console.error('예약 가능 스케줄 불러오기 실패', error);
-      }
-    };
-    fetchAvailableSchedule();
-  }, [activityId, currentDate]);
+  const timeOptions = selectedDate
+    ? (schedules.find((schedule) => schedule.date === selectedDate)?.times ??
+      [])
+    : [];
 
   const handleDateClick = (date: Date) => {
     const formatted = date.toISOString().split('T')[0];
-    const found = schedules.find((s) => s.date === formatted);
+    const isAvailable = schedules.some(
+      (schedule) => schedule.date === formatted,
+    );
+    if (!isAvailable) return;
     setSelectedDate(formatted);
-    setTimeOptions(found?.times || []);
     setSelectedTimeId(null);
   };
 
   const increaseCount = () => setPeopleCount((prev) => Math.min(prev + 1, 10));
   const decreaseCount = () => setPeopleCount((prev) => Math.max(prev - 1, 1));
-  const totalPrice = price !== null ? price * peopleCount : null;
 
   const handleReserve = async () => {
     if (!selectedTimeId) return;
@@ -97,6 +75,11 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       setIsLoading(false);
     }
   };
+
+  const getMonthNameEnglish = (date: Date): string =>
+    new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
+      date,
+    );
 
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>

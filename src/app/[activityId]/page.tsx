@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
+import Button from '@/components/Button';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import getErrorMessage from '@/utils/getErrorMessage';
 
@@ -12,12 +13,13 @@ import ActivityReviews from './_components/ActivityReviews';
 import ActivitySummary from './_components/ActivitySummary';
 import LoadKakaoMap from './_components/LoadKakaoMap';
 import ReserveCalender from './_components/ReserveCalender';
-import TabletReserveCalendar from './_components/TabletReserveCalender';
+import TabletReserveModal from './_components/TabletReserveModal';
 
 export default function ActivityDetail() {
   const { activityId } = useParams();
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
+  const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const isPC = useMediaQuery('pc');
   const isTablet = useMediaQuery('tablet');
 
@@ -70,7 +72,22 @@ export default function ActivityDetail() {
           <section>
             <ActivityDescription activityId={Number(activityId)} />
             {isTablet && (
-              <TabletReserveCalendar activityId={Number(activityId)} />
+              <>
+                <div className='mt-20 w-full rounded-[16px] border border-gray-200 p-20'>
+                  <Button
+                    className='w-full'
+                    onClick={() => setIsReserveModalOpen(true)}
+                  >
+                    날짜 선택하기
+                  </Button>
+                </div>
+                {isReserveModalOpen && (
+                  <TabletReserveModal
+                    activityId={Number(activityId)}
+                    onClose={() => setIsReserveModalOpen(false)}
+                  />
+                )}
+              </>
             )}
           </section>
           <section>

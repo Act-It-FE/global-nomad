@@ -13,7 +13,7 @@ import ActivityReviews from './_components/ActivityReviews';
 import ActivitySummary from './_components/ActivitySummary';
 import LoadKakaoMap from './_components/LoadKakaoMap';
 import ReserveCalender from './_components/ReserveCalender';
-import TabletReserveModal from './_components/TabletReserveModal';
+import ResponsibleReserveModal from './_components/ResponsibleReserveModal';
 
 export default function ActivityDetail() {
   const { activityId } = useParams();
@@ -22,6 +22,7 @@ export default function ActivityDetail() {
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const isPC = useMediaQuery('pc');
   const isTablet = useMediaQuery('tablet');
+  const isMobile = useMediaQuery('mobile');
 
   useEffect(() => {
     if (!activityId) return;
@@ -82,7 +83,25 @@ export default function ActivityDetail() {
                   </Button>
                 </div>
                 {isReserveModalOpen && (
-                  <TabletReserveModal
+                  <ResponsibleReserveModal
+                    activityId={Number(activityId)}
+                    onClose={() => setIsReserveModalOpen(false)}
+                  />
+                )}
+              </>
+            )}
+            {isMobile && (
+              <>
+                <div>
+                  <Button
+                    className='h-50 w-full'
+                    onClick={() => setIsReserveModalOpen(true)}
+                  >
+                    예약하러 가기
+                  </Button>
+                </div>
+                {isReserveModalOpen && (
+                  <ResponsibleReserveModal
                     activityId={Number(activityId)}
                     onClose={() => setIsReserveModalOpen(false)}
                   />

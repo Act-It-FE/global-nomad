@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 import EyeIcon from '@/assets/icons/eye_off.svg';
 import Modal from '@/components/Modal/Modal';
@@ -13,6 +13,8 @@ const COMMON_STYLE = cn(
 
 interface Props {
   max: number;
+  imageURLs: string[];
+  setImageURLs: Dispatch<SetStateAction<string[]>>;
 }
 
 export default function ImageUploader({ max }: Props) {

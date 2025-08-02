@@ -67,23 +67,41 @@ export default function DateInput({ defaultValue, onClick }: Props) {
             </div>
           )}
           <div className='flex items-center gap-10'>
-            <Input
-              className='md:w-122'
-              defaultValue={defaultValue?.startTime}
-              id='startTime'
-              items={TIME_LIST}
-              placeholder='00:00'
-              type='dropdown'
-            />
+            {defaultValue ? (
+              <Input
+                className='md:w-122'
+                defaultValue={defaultValue.startTime}
+                id='startTime'
+                placeholder='00:00'
+                type='button'
+              />
+            ) : (
+              <Input
+                className='md:w-122'
+                id='startTime'
+                items={TIME_LIST}
+                placeholder='00:00'
+                type='dropdown'
+              />
+            )}
             <div className='h-2 w-8 bg-gray-800' />
-            <Input
-              className='md:w-122'
-              defaultValue={defaultValue?.endTime}
-              id='endTime'
-              items={TIME_LIST}
-              placeholder='00:00'
-              type='dropdown'
-            />
+            {defaultValue ? (
+              <Input
+                className='md:w-122'
+                defaultValue={defaultValue.endTime}
+                id='endTime'
+                placeholder='00:00'
+                type='button'
+              />
+            ) : (
+              <Input
+                className='md:w-122'
+                id='endTime'
+                items={TIME_LIST}
+                placeholder='00:00'
+                type='dropdown'
+              />
+            )}
           </div>
         </div>
         <button

@@ -120,7 +120,7 @@ export default function Page() {
           </label>
         </div>
       </section>
-      <Button className='w-120' size='sm'>
+      <Button className='w-120 self-center' size='sm'>
         {id ? '수정' : '등록'}하기
       </Button>
     </form>

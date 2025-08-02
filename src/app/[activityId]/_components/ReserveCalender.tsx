@@ -3,11 +3,13 @@
 import { useEffect, useState } from 'react';
 
 import activitiesApi from '@/api/activitiesApi';
+import { ApiError } from '@/api/types/auth';
 import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { getCalendarDates } from '@/utils/dateUtils';
+import getErrorMessage from '@/utils/getErrorMessage';
 
 const isSameMonth = (base: Date, target: Date) =>
   base.getFullYear() === target.getFullYear() &&
@@ -34,7 +36,7 @@ export default function ReserveCalender({
   const dates = getCalendarDates(currentDate);
 
   const { data: detail } = useActivityDetail(activityId);
-  const { data: schedules = [] } = useAvailableSchedule(
+  const { data: schedules = [], refetch } = useAvailableSchedule(
     activityId,
     year,
     month,
@@ -66,8 +68,21 @@ export default function ReserveCalender({
       });
       onReserved();
     } catch (error) {
-      alert('예약에 실패했습니다. 다시 시도해주세요.');
-      console.error(error);
+      const err = error as ApiError;
+      const errorMessage = getErrorMessage(err, '예약에 실패했습니다.');
+
+      if (err.response?.status === 409) {
+        alert(
+          '선택하신 시간은 이미 예약이 완료되었습니다. 다른 시간을 선택해주세요.',
+        );
+      } else if (err.response?.status === 400) {
+        alert('예약 정보가 올바르지 않습니다. 다시 확인해주세요.');
+      } else {
+        alert(errorMessage);
+      }
+
+      console.error('Reservation error:', error);
+      refetch();
     } finally {
       setIsLoading(false);
     }

@@ -43,7 +43,7 @@ export default function Gnb() {
         'sticky top-0 right-0 left-0 z-50 w-full',
         'flex items-center justify-between',
         'mx-auto h-48 max-w-1580 px-24 md:h-80 md:px-30',
-        'bg-white',
+        'bg-white/60 backdrop-blur-md',
       )}
     >
       <Link href='/'>

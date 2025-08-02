@@ -85,34 +85,37 @@ export default function Gnb() {
               />
             </div>
             <div className='h-14 w-1 bg-gray-100' />
-            <div className='flex items-center gap-10'>
-              <Image
-                alt='profile image'
-                className='size-30 rounded-full object-cover'
-                height={30}
-                src={user.profileImageUrl ?? imgDefaultProfile}
-                width={30}
-              />
-              <DropDown
-                items={[
-                  {
-                    text: '마이페이지',
-                    onClick: () =>
-                      router.push(isMobile ? '/mypage' : '/mypage/info'),
+
+            <DropDown
+              items={[
+                {
+                  text: '마이페이지',
+                  onClick: () =>
+                    router.push(isMobile ? '/mypage' : '/mypage/info'),
+                },
+                {
+                  text: '로그아웃',
+                  danger: true,
+                  onClick: () => {
+                    clearUser();
+                    router.push('/');
                   },
-                  {
-                    text: '로그아웃',
-                    danger: true,
-                    onClick: () => {
-                      clearUser();
-                      router.push('/');
-                    },
-                  },
-                ]}
-                position='bottom'
-                trigger={user.nickname}
-              />
-            </div>
+                },
+              ]}
+              position='bottom'
+              trigger={
+                <div className='flex items-center gap-10'>
+                  <Image
+                    alt='profile image'
+                    className='size-30 rounded-full object-cover'
+                    height={30}
+                    src={user.profileImageUrl ?? imgDefaultProfile}
+                    width={30}
+                  />
+                  {user.nickname}
+                </div>
+              }
+            />
           </>
         ) : (
           <>

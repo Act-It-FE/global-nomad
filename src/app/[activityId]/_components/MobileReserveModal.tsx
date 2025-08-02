@@ -93,7 +93,8 @@ export default function MobileReserveModal({
         className='h-[80vh] w-full overflow-y-auto rounded-t-2xl bg-white p-20'
       >
         {/* 상단: 월 표시 */}
-        <div className='mb-20 flex justify-between'>
+        <div className='txt-18_B'>날짜</div>
+        <div className='my-20 flex justify-between'>
           <p className='txt-16_B'>{getMonthNameEnglish(currentDate)}</p>
           <div className='flex gap-10'>
             <button
@@ -127,8 +128,11 @@ export default function MobileReserveModal({
 
         {/* 캘린더 */}
         <div className='grid grid-cols-7 items-center gap-10 text-center'>
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-            <div key={day} className='txt-16_M text-center font-semibold'>
+          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+            <div
+              key={`${day}-${index}`}
+              className='txt-16_M text-center font-semibold'
+            >
               {day}
             </div>
           ))}

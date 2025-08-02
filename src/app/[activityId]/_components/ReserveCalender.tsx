@@ -148,8 +148,11 @@ export default function ReserveCalender({
       </div>
 
       <div className='grid grid-cols-7 gap-x-10 gap-y-10'>
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-          <div key={day} className='txt-16_M text-center font-semibold'>
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+          <div
+            key={`${day}-${index}`}
+            className='txt-16_M text-center font-semibold'
+          >
             {day}
           </div>
         ))}

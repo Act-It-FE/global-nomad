@@ -84,8 +84,9 @@ export default function TabletReserveModal({
         className='max-h-[80vh] w-full overflow-y-auto rounded-t-2xl bg-white p-20 md:w-full md:rounded-2xl'
       >
         {/* 달 상단 */}
-        <div className='mb-20 flex justify-between'>
-          <p className='txt-16_B'>
+        <div className='txt-20_B'>날짜</div>
+        <div className='my-20 flex justify-between'>
+          <p className='txt-16_M'>
             {new Intl.DateTimeFormat('en-US', {
               year: 'numeric',
               month: 'long',
@@ -122,12 +123,12 @@ export default function TabletReserveModal({
         </div>
 
         {/* 캘린더 + 시간/인원 */}
-        <div className='flex flex-col gap-20 md:flex-row'>
+        <div className='flex h-420 flex-col gap-20 md:flex-row'>
           {/* 캘린더 */}
           <div className='w-full md:w-1/2'>
             <div className='grid grid-cols-7 items-center gap-10 text-center'>
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                <div key={day} className='txt-14_B text-center'>
+              {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                <div key={`${day}-${index}`} className='txt-14_B text-center'>
                   {day}
                 </div>
               ))}

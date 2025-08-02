@@ -1,9 +1,12 @@
+'use client';
+
 import { ActivityRegisterSchedule } from '@/api/types/activities';
 import Icon from '@/components/Icon';
 import Input from '@/components/Input';
 import { cn } from '@/utils/cn';
 
-const TIME_LIST = Array(24).map(
+const TIME_LIST = Array.from(
+  { length: 24 },
   (_, index) => `${String(index).padStart(2, '0')}:00`,
 );
 
@@ -47,6 +50,7 @@ export default function DateInput({ defaultValue }: Props) {
           <div className='flex items-center gap-10'>
             <Input
               className='md:w-122'
+              defaultValue={defaultValue?.startTime}
               id='startTime'
               items={TIME_LIST}
               placeholder='00:00'
@@ -55,6 +59,7 @@ export default function DateInput({ defaultValue }: Props) {
             <div className='h-2 w-8 bg-gray-800' />
             <Input
               className='md:w-122'
+              defaultValue={defaultValue?.endTime}
               id='endTime'
               items={TIME_LIST}
               placeholder='00:00'

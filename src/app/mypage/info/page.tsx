@@ -1,5 +1,6 @@
 'use client';
 
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 
@@ -75,7 +76,10 @@ export default function Page() {
       setModalMessage('정보가 수정되었습니다!');
       setIsModalOpen(true);
     } catch (e) {
-      setModalMessage(e.response?.data?.message || '정보 수정에 실패했습니다.');
+      const error = e as AxiosError<{ message?: string }>;
+      setModalMessage(
+        error.response?.data?.message || '정보 수정에 실패했습니다.',
+      );
       setIsModalOpen(true);
     }
   };

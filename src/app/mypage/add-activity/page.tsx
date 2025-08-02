@@ -1,13 +1,16 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { ChangeEvent, MouseEvent } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 
+import { ActivityRegisterSchedule } from '@/api/types/activities';
 import { CATEGORY } from '@/api/types/myActivities';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
+
+import DateInput from './_components/DateInput';
 
 const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
   if (e.target.value)
@@ -29,8 +32,9 @@ const handleAddress = (e: MouseEvent<HTMLInputElement>) => {
 export default function Page() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
-
   const isMobile = useMediaQuery('mobile');
+
+  const [schedules, setSchedules] = useState<ActivityRegisterSchedule[]>([]);
 
   return (
     <form
@@ -76,6 +80,34 @@ export default function Page() {
           <label className='txt-16_B leading-19 text-gray-950'>
             예약 가능한 시간대
           </label>
+          <div className='flex flex-col gap-16 md:gap-20'>
+            <DateInput
+              onClick={(sch) => setSchedules((prev) => [...prev, sch])}
+            />
+            {Boolean(schedules.length) && (
+              <>
+                <hr className='text-gray-100' />
+                {schedules.map((schedule) => (
+                  <DateInput
+                    key={schedule.date + schedule.endTime}
+                    defaultValue={schedule}
+                    onClick={(sch) =>
+                      setSchedules((prev) =>
+                        prev.filter(
+                          (ele) =>
+                            !(
+                              ele.date === sch.date &&
+                              ele.startTime === sch.startTime &&
+                              ele.endTime === sch.endTime
+                            ),
+                        ),
+                      )
+                    }
+                  />
+                ))}
+              </>
+            )}
+          </div>
         </div>
         <div>
           <label className='txt-16_B leading-19 text-gray-950'>

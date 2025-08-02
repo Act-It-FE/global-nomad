@@ -72,9 +72,21 @@ export default function Page() {
             onClick={handleAddress}
           />
         </div>
-        <div />
-        <div />
-        <div />
+        <div className='flex flex-col gap-18'>
+          <label className='txt-16_B leading-19 text-gray-950'>
+            예약 가능한 시간대
+          </label>
+        </div>
+        <div>
+          <label className='txt-16_B leading-19 text-gray-950'>
+            배너 이미지 등록
+          </label>
+        </div>
+        <div>
+          <label className='txt-16_B leading-19 text-gray-950'>
+            소개 이미지 등록
+          </label>
+        </div>
       </section>
       <Button className='w-120' size='sm'>
         {id ? '수정' : '등록'}하기

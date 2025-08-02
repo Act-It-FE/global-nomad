@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-nested-ternary */
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -17,65 +19,76 @@ export default function KakaoCallbackPage() {
   const code = useSearchParams().get('code');
   const flow = useSearchParams().get('state');
   const setUser = useUserStore((s) => s.setUser);
+  const isProduction = process.env.NODE_ENV === 'production';
+  const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+  const VERCEL_HOST = process.env.NEXT_PUBLIC_VERCEL_URL;
+  const baseUrl =
+    isProduction && VERCEL_HOST
+      ? VERCEL_HOST.replace(/\/$/, '')
+      : APP_URL
+        ? APP_URL.replace(/\/$/, '')
+        : '';
 
+  const redirectUri = `${baseUrl}/login/callback`;
   const hasHandledRef = useRef(false);
 
-  useEffect(() => {
-    if (!code || hasHandledRef.current) return;
-    hasHandledRef.current = true;
+  // 1) 성공 시 상태 저장 + 리다이렉트
+  function handleSuccessfulAuth(data: OAuthResponse) {
+    setUser(data.user);
+    localStorage.setItem('accessToken', data.accessToken);
+    localStorage.setItem('refreshToken', data.refreshToken);
+    router.replace('/');
+  }
 
-    const nicknameValue: string = '';
-
+  // 2) 실제 카카오 로그인/회원가입 API 호출
+  async function handleAuth() {
     const body: OAuthRequest = {
-      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/login/callback`,
-      token: code,
-      ...(nicknameValue && { nickname: nicknameValue }),
-    };
-    const handleSuccessfulAuth = (data: OAuthResponse) => {
-      setUser(data.user);
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-      router.replace('/');
+      redirectUri,
+      token: code!,
     };
 
-    async function handleAuth() {
-      try {
-        if (flow === 'login') {
-          const data = await oAuthApi.postLogin(
-            body,
-            'kakao' as OAuthAppProvider,
-          );
-          console.log(data);
-          handleSuccessfulAuth(data);
-        }
-      } catch (err) {
-        const apiErr = err as ApiError;
-        if (apiErr.response?.status === 404) {
-          router.replace('/signUp');
-          return;
-        }
+    try {
+      if (flow === 'login') {
+        const data = await oAuthApi.postLogin(
+          body,
+          'kakao' as OAuthAppProvider,
+        );
+        return handleSuccessfulAuth(data);
       }
-      if (flow === 'signup') {
-        try {
-          const data = await oAuthApi.postSignUp(
-            body,
-            'kakao' as OAuthAppProvider,
-          );
-          handleSuccessfulAuth(data);
-        } catch (err) {
-          const apiErr = err as ApiError;
-          if (
-            apiErr.response?.status === 400 &&
-            apiErr.response?.data?.message === '이미 등록된 사용자입니다.'
-          ) {
-            return router.replace('/login');
-          }
-          throw err;
-        }
+    } catch (err) {
+      const apiErr = err as ApiError;
+      if (apiErr.response?.status === 404) {
+        return router.replace('/signUp');
       }
     }
+
+    if (flow === 'signUp') {
+      try {
+        const data = await oAuthApi.postSignUp(
+          body,
+          'kakao' as OAuthAppProvider,
+        );
+        return handleSuccessfulAuth(data);
+      } catch (err) {
+        const apiErr = err as ApiError;
+        if (
+          apiErr.response?.status === 400 &&
+          apiErr.response?.data?.message === '이미 등록된 사용자입니다.'
+        ) {
+          return router.replace('/login');
+        }
+        throw err;
+      }
+    }
+  }
+
+  // 3) useEffect: code가 들어오면 한 번만 handleAuth 호출
+  useEffect(() => {
+    if (!code || hasHandledRef.current) return;
+
+    hasHandledRef.current = true;
     void handleAuth();
-  }, [code, router, setUser, flow]);
+  }, [code, flow, handleAuth, setUser]);
 
   return null;
 }

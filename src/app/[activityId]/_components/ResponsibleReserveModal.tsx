@@ -131,7 +131,7 @@ export default function TabletReserveModal({
                 return (
                   <div
                     key={date.toISOString()}
-                    className={`aspect-square cursor-pointer rounded-full py-6 text-center ${
+                    className={`txt-16_M aspect-square cursor-pointer rounded-full py-6 text-center ${
                       isAvailable
                         ? 'hover:bg-primary-100 hover:text-primary-500 text-gray-800'
                         : 'text-gray-300'
@@ -152,7 +152,7 @@ export default function TabletReserveModal({
           </div>
 
           {/* 시간 및 인원 */}
-          <div className='w-full md:w-1/2'>
+          <div className='card-shadow w-full rounded-[24px] px-20 py-24 md:w-1/2'>
             <div className='txt-16_B mb-10'>예약 가능한 시간</div>
             {selectedDate ? (
               <>
@@ -201,7 +201,7 @@ export default function TabletReserveModal({
           <div className='w-full'>
             <div className='mb-12 flex-row justify-between'>
               <span className='txt-16_B text-gray-950'>
-                <span className='flex flex-row items-center justify-between text-gray-950'>
+                <span className='mt-10 flex flex-row items-center justify-between text-gray-950'>
                   <div className='flex flex-row gap-4'>
                     ₩ {totalPrice?.toLocaleString()}{' '}
                     <p className='txt-16_M text-gray-300'>/ {peopleCount} 명</p>
@@ -228,7 +228,7 @@ export default function TabletReserveModal({
           </div>
         )}
 
-        <div className='mt-20'>
+        <div className='mt-10'>
           <Button
             className='mt-10 min-h-50 w-full'
             disabled={!selectedDate || !selectedTimeId}

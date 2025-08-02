@@ -107,10 +107,22 @@ export default function ActivityDetail() {
             {isMobile && (
               <>
                 <div>
-                  <Button
-                    className='h-50 w-full'
-                    onClick={() => setIsReserveModalOpen(true)}
-                  >
+                  <div className='flex flex-row justify-between'>
+                    <p className='txt-18_B'>
+                      ₩ {price?.toLocaleString()}{' '}
+                      <span className='txt-16_M leading-19 text-gray-300'>
+                        {' '}
+                        / 1명
+                      </span>
+                    </p>
+                    <button
+                      className='txt-16_B text-primary-500 underline'
+                      onClick={() => setIsReserveModalOpen(true)}
+                    >
+                      날짜 선택하기
+                    </button>
+                  </div>
+                  <Button disabled className='mt-10 h-50 w-full'>
                     예약하러 가기
                   </Button>
                 </div>

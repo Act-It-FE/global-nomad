@@ -87,7 +87,7 @@ export default function Page() {
   return (
     <>
       <form
-        className='flex w-full flex-col gap-20 pb-55 md:gap-24 md:pb-275'
+        className='flex w-full flex-col gap-20 md:gap-24'
         onSubmit={handleSubmit}
       >
         <div className='flex flex-col gap-10 py-10'>

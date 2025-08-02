@@ -6,6 +6,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import AlarmActive from '@/assets/icons/alarm_active.svg';
+import AlarmInActive from '@/assets/icons/alarm_inactive.svg';
+import useMyNotifyQuery from '@/hooks/myNotifications/useMyNotifyQuery';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useUserStore } from '@/stores/userStore';
 import { cn } from '@/utils/cn';
@@ -21,7 +23,14 @@ export default function Gnb() {
   const router = useRouter();
   const isMobile = useMediaQuery('mobile');
   const [isOpen, setIsOpen] = useState(false);
+  const {
+    data: notifications,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useMyNotifyQuery();
 
+  const totalCount = notifications?.pages?.[0]?.totalCount || 0;
   const user = useUserStore((s) => s.user);
   const clearUser = useUserStore((s) => s.clearUser);
   const pathname = usePathname();
@@ -63,17 +72,32 @@ export default function Gnb() {
           <>
             <div className='relative'>
               <button type='button' onClick={() => setIsOpen((prev) => !prev)}>
-                <AlarmActive
-                  className={cn(
-                    'size-24',
-                    isOpen ? 'text-primary-500' : 'text-gray-600',
-                  )}
-                />
+                {totalCount === 0 ? (
+                  <AlarmInActive
+                    className={cn(
+                      'size-24',
+                      isOpen ? 'text-primary-500' : 'text-gray-600',
+                    )}
+                  />
+                ) : (
+                  <AlarmActive
+                    className={cn(
+                      'size-24',
+                      isOpen ? 'text-primary-500' : 'text-gray-600',
+                    )}
+                  />
+                )}
               </button>
               <NotificationPanel
-                list={[]}
+                fetchNextPage={fetchNextPage}
+                hasNextPage={hasNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+                list={
+                  notifications?.pages.flatMap((page) => page.notifications) ||
+                  []
+                }
                 open={isOpen}
-                onClose={() => setIsOpen(false)}
+                totalCount={totalCount}
               />
             </div>
             <div className='h-14 w-1 bg-gray-100' />

@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+
 import { ActivityRegisterSchedule } from '@/api/types/activities';
 import Icon from '@/components/Icon';
 import Input from '@/components/Input';
@@ -15,9 +17,21 @@ interface Props {
   onClick: (param: ActivityRegisterSchedule) => void;
 }
 
-export default function DateInput({ defaultValue }: Props) {
+export default function DateInput({ defaultValue, onClick }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleClick = () => {
+    const inputs = ref.current?.querySelectorAll('input');
+    const obj = defaultValue ?? { date: '', startTime: '', endTime: '' };
+    inputs?.forEach(
+      (input) =>
+        (obj[input.id as keyof ActivityRegisterSchedule] = input.value),
+    );
+    onClick(obj);
+  };
+
   return (
-    <div className='flex flex-col gap-10 md:flex-row md:gap-14'>
+    <div ref={ref} className='flex flex-col gap-10 md:flex-row md:gap-14'>
       {defaultValue ? (
         <Input
           className='w-full'
@@ -76,6 +90,7 @@ export default function DateInput({ defaultValue }: Props) {
               : 'bg-primary-500 text-white md:mt-29',
           )}
           type='button'
+          onClick={handleClick}
         >
           <Icon
             className='size-16 md:size-24'

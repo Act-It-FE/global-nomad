@@ -237,7 +237,7 @@ function TextareaInput({ className, height, ...props }: TextareaProps) {
     >
       <textarea
         className={cn(
-          'block h-full resize-none pl-3 outline-none',
+          'block h-full w-full resize-none pl-3 outline-none',
           SCROLLBAR_STYLE,
         )}
         style={{ scrollbarGutter: 'stable' }}

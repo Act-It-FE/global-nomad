@@ -18,7 +18,10 @@ export default function ActivityDetail() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!activityId) return;
+    // activityId가 undefined이거나 배열인 경우 404 처리
+    if (!activityId || Array.isArray(activityId)) {
+      notFound();
+    }
 
     const id = Number(activityId);
     if (isNaN(id)) {

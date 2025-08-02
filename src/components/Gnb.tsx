@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import AlarmActive from '@/assets/icons/alarm_active.svg';
-import useMyNotifyQuery from '@/hooks/myNotifications/useMyNotifyQuery';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useUserStore } from '@/stores/userStore';
 import { cn } from '@/utils/cn';
 
 import DropDown from './DropDown';
@@ -28,21 +28,18 @@ const imgDefaultProfile = '/images/profile-default.svg';
 const imgLogoText = '/images/logo-sm-text.png';
 const imgLogo = '/images/logo-sm.png';
 
-export default function Gnb({ user }: TemporaryProps) {
+export default function Gnb() {
   const router = useRouter();
   const isMobile = useMediaQuery('mobile');
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    data: notifications,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = useMyNotifyQuery();
+
+  const user = useUserStore((s) => s.user);
+  const clearUser = useUserStore((s) => s.clearUser);
 
   return (
     <nav
       className={cn(
-        'sticky top-0 right-0 left-0 z-50',
+        'sticky top-0 right-0 left-0 z-50 w-full',
         'flex items-center justify-between',
         'mx-auto h-48 max-w-1580 px-24 md:h-80 md:px-30',
         'bg-white',
@@ -82,15 +79,8 @@ export default function Gnb({ user }: TemporaryProps) {
                 />
               </button>
               <NotificationPanel
-                fetchNextPage={fetchNextPage}
-                hasNextPage={hasNextPage}
-                isFetchingNextPage={isFetchingNextPage}
-                list={
-                  notifications?.pages.flatMap((page) => page.notifications) ||
-                  []
-                }
+                list={[]}
                 open={isOpen}
-                totalCount={notifications?.pages?.[0]?.totalCount || 0}
                 onClose={() => setIsOpen(false)}
               />
             </div>
@@ -113,7 +103,10 @@ export default function Gnb({ user }: TemporaryProps) {
                   {
                     text: '로그아웃',
                     danger: true,
-                    onClick: () => {},
+                    onClick: () => {
+                      clearUser();
+                      router.push('/');
+                    },
                   },
                 ]}
                 position='bottom'

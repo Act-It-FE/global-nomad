@@ -37,7 +37,11 @@ export default function DateInput({ defaultValue, onClick }: Props) {
           className='w-full'
           id='date'
           type='button'
-          value={defaultValue.date.replaceAll('-', '/').slice(2)}
+          value={
+            defaultValue.date.length > 8
+              ? defaultValue.date.replaceAll('-', '/').slice(2)
+              : defaultValue.date.replaceAll('-', '/')
+          }
         />
       ) : (
         <div>

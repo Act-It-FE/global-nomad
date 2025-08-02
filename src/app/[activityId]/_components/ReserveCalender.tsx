@@ -151,7 +151,7 @@ export default function ReserveCalender({
                     ? 'hover:text-primary-500 hover:bg-primary-100 cursor-pointer text-gray-800'
                     : 'cursor-default text-gray-300'
                   : 'cursor-default text-gray-300'
-              } ${selectedDate === formatted ? 'bg-primary-100 text-primary-500' : ''}`}
+              } ${selectedDate === formatted ? 'bg-primary-500 text-white' : ''}`}
               onClick={() =>
                 isCurrentMonth && isAvailable && handleDateClick(date)
               }

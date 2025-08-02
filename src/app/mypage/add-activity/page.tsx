@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, MouseEvent } from 'react';
 
 import { CATEGORY } from '@/api/types/myActivities';
 import Button from '@/components/Button';
@@ -14,6 +14,16 @@ const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.target.value = Number(
       e.target.value.replace(/[^\d]/g, ''),
     ).toLocaleString('ko-KR');
+};
+
+const handleAddress = (e: MouseEvent<HTMLInputElement>) => {
+  // @ts-expect-error : not found type
+  new daum.Postcode({
+    // @ts-expect-error : not found type
+    oncomplete: function (data) {
+      e.currentTarget.value = data.address;
+    },
+  }).open();
 };
 
 export default function Page() {
@@ -53,6 +63,13 @@ export default function Page() {
             label='가격'
             placeholder='체험 금액을 입력해 주세요'
             onChange={handlePriceChange}
+          />
+          <Input
+            readOnly
+            id='address'
+            label='주소'
+            placeholder='주소를 입력해 주세요'
+            onClick={handleAddress}
           />
         </div>
         <div />

@@ -20,6 +20,7 @@ export default function DateInput({ defaultValue }: Props) {
     <div className='flex flex-col gap-10 md:flex-row md:gap-14'>
       {defaultValue ? (
         <Input
+          className='w-full'
           id='date'
           type='button'
           value={defaultValue.date.replaceAll('-', '/').slice(2)}
@@ -69,10 +70,10 @@ export default function DateInput({ defaultValue }: Props) {
         </div>
         <button
           className={cn(
-            'size-28 justify-items-center rounded-full md:mt-29 md:size-42',
+            'size-28 justify-items-center rounded-full md:size-42',
             defaultValue
               ? 'bg-gray-50 text-black'
-              : 'bg-primary-500 text-white',
+              : 'bg-primary-500 text-white md:mt-29',
           )}
           type='button'
         >

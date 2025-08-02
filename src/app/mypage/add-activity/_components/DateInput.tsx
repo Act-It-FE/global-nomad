@@ -20,7 +20,7 @@ export default function DateInput({ defaultValue }: Props) {
       ) : (
         <div>
           <label
-            className='txt-16_M mb-10 text-gray-950 max-md:hidden'
+            className='txt-16_M mb-10 inline-block text-gray-950 max-md:hidden'
             htmlFor='date'
           >
             날짜
@@ -28,10 +28,10 @@ export default function DateInput({ defaultValue }: Props) {
           <Input id='date' type='date-custom' />
         </div>
       )}
-      <div className='flex gap-14'>
+      <div className='flex items-center gap-14'>
         <button
           className={cn(
-            'size-28 justify-items-center rounded-full md:size-42',
+            'size-28 justify-items-center rounded-full md:mt-29 md:size-42',
             defaultValue
               ? 'bg-gray-50 text-black'
               : 'bg-primary-500 text-white',

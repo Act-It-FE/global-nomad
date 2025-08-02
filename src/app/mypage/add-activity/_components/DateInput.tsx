@@ -1,5 +1,7 @@
 import { ActivityRegisterSchedule } from '@/api/types/activities';
+import Icon from '@/components/Icon';
 import Input from '@/components/Input';
+import { cn } from '@/utils/cn';
 
 interface Props {
   defaultValue?: ActivityRegisterSchedule;
@@ -26,6 +28,22 @@ export default function DateInput({ defaultValue }: Props) {
           <Input id='date' type='date-custom' />
         </div>
       )}
+      <div className='flex gap-14'>
+        <button
+          className={cn(
+            'size-28 justify-items-center rounded-full md:size-42',
+            defaultValue
+              ? 'bg-gray-50 text-black'
+              : 'bg-primary-500 text-white',
+          )}
+          type='button'
+        >
+          <Icon
+            className='size-16 md:size-24'
+            icon={defaultValue ? 'Minus' : 'Plus'}
+          />
+        </button>
+      </div>
     </div>
   );
 }

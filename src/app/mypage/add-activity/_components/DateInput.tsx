@@ -2,7 +2,7 @@ import { ActivityRegisterSchedule } from '@/api/types/activities';
 import Input from '@/components/Input';
 
 interface Props {
-  defaultValue: ActivityRegisterSchedule;
+  defaultValue?: ActivityRegisterSchedule;
   onClick: (param: ActivityRegisterSchedule) => void;
 }
 

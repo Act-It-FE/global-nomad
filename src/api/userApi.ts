@@ -36,6 +36,11 @@ const userApi = {
     return apiClient.post<FormData, UploadProfileImageResponse>(
       '/users/me/image',
       formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
   },
 };

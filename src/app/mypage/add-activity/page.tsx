@@ -1,12 +1,20 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import { ChangeEvent } from 'react';
 
 import { CATEGORY } from '@/api/types/myActivities';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
+
+const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+  if (e.target.value)
+    e.target.value = Number(
+      e.target.value.replace(/[^\d]/g, ''),
+    ).toLocaleString('ko-KR');
+};
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -39,6 +47,12 @@ export default function Page() {
             label='설명'
             placeholder='체험에 대한 설명을 입력해 주세요'
             type='textarea'
+          />
+          <Input
+            id='price'
+            label='가격'
+            placeholder='체험 금액을 입력해 주세요'
+            onChange={handlePriceChange}
           />
         </div>
         <div />

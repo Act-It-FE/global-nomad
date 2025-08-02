@@ -13,17 +13,6 @@ import { cn } from '@/utils/cn';
 import DropDown from './DropDown';
 import NotificationPanel from './NotificationPanel';
 
-interface TemporaryProps {
-  user?: {
-    id: number;
-    email?: string;
-    nickname: string;
-    profileImageUrl: string | null;
-    createdAt?: string;
-    updatedAt?: string;
-  };
-}
-
 const imgDefaultProfile = '/images/profile-default.svg';
 const imgLogoText = '/images/logo-sm-text.png';
 const imgLogo = '/images/logo-sm.png';

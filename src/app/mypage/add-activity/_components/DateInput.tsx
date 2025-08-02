@@ -29,6 +29,12 @@ export default function DateInput({ defaultValue }: Props) {
         </div>
       )}
       <div className='flex items-center gap-14'>
+        <div>
+          {defaultValue ? <div className='mb-10 flex' /> : null}
+          <div className='flex items-center gap-10'>
+            <div className='h-2 w-8 bg-gray-800' />
+          </div>
+        </div>
         <button
           className={cn(
             'size-28 justify-items-center rounded-full md:mt-29 md:size-42',

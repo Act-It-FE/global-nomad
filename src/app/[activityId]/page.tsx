@@ -1,6 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
@@ -17,12 +18,14 @@ export default function ActivityDetail() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!activityId) return;
+    // activityId가 undefined이거나 배열인 경우 404 처리
+    if (!activityId || Array.isArray(activityId)) {
+      notFound();
+    }
 
     const id = Number(activityId);
     if (isNaN(id)) {
-      setError('잘못된 체험 ID입니다.');
-      return;
+      notFound();
     }
 
     const fetchData = async () => {

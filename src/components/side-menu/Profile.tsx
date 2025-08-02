@@ -37,7 +37,7 @@ export default function Profile() {
 
   if (!user) {
     return (
-      <div className='flex h-120 items-center justify-center min-md:max-[1023px]:h-70'>
+      <div className='flex h-120 items-center justify-center md:max-lg:h-70'>
         <div className='border-primary-500 size-20 animate-spin rounded-full border-2 border-t-transparent' />
       </div>
     );

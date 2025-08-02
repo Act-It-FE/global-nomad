@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 
 import userApi from '@/api/userApi';
@@ -10,6 +11,8 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useUserStore } from '@/stores/userStore';
 
 export default function Page() {
+  const router = useRouter();
+
   const user = useUserStore((s) => s.user);
   const setUser = useUserStore((s) => s.setUser);
 
@@ -132,6 +135,7 @@ export default function Page() {
             size='md'
             type='button'
             variant='secondary'
+            onClick={() => router.push('/mypage')}
           >
             취소하기
           </Button>

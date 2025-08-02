@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
 import Button from '@/components/Button';
+import Modal from '@/components/Modal/Modal';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import getErrorMessage from '@/utils/getErrorMessage';
 
@@ -14,14 +15,15 @@ import ActivitySummary from './_components/ActivitySummary';
 import LoadKakaoMap from './_components/LoadKakaoMap';
 import MobileReserveModal from './_components/MobileReserveModal';
 import ReserveCalender from './_components/ReserveCalender';
-import ResponsibleReserveModal from './_components/TabletReserveModal';
+import TabletReserveModal from './_components/TabletReserveModal';
 
 export default function ActivityDetail() {
   const { activityId } = useParams();
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
-  const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const [price, setPrice] = useState<number | null>(null);
+  const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const isPC = useMediaQuery('pc');
   const isTablet = useMediaQuery('tablet');
   const isMobile = useMediaQuery('mobile');
@@ -70,86 +72,110 @@ export default function ActivityDetail() {
   }
 
   return (
-    <main className='w-full'>
-      <div className='flex flex-col px-24 md:px-30 lg:flex-row lg:items-start lg:gap-x-40'>
-        <div className='flex flex-1 flex-col gap-40'>
-          <section>
-            <ActivityDescription activityId={Number(activityId)} />
-            {isTablet && (
-              <>
-                <div>
-                  <div className='flex flex-row justify-between'>
-                    <p className='txt-18_B'>
-                      ₩ {price?.toLocaleString()}{' '}
-                      <span className='txt-16_M leading-19 text-gray-300'>
-                        {' '}
-                        / 1명
-                      </span>
-                    </p>
-                    <button
-                      className='txt-16_B text-primary-500 underline'
-                      onClick={() => setIsReserveModalOpen(true)}
-                    >
-                      날짜 선택하기
-                    </button>
+    <>
+      <main className='w-full'>
+        <div className='flex flex-col px-24 md:px-30 lg:flex-row lg:items-start lg:gap-x-40'>
+          <div className='flex flex-1 flex-col gap-40'>
+            <section>
+              <ActivityDescription activityId={Number(activityId)} />
+              {isTablet && (
+                <>
+                  <div>
+                    <div className='flex flex-row justify-between'>
+                      <p className='txt-18_B'>
+                        ₩ {price?.toLocaleString()}
+                        <span className='txt-16_M leading-19 text-gray-300'>
+                          {' '}
+                          / 1명
+                        </span>
+                      </p>
+                      <button
+                        className='txt-16_B text-primary-500 underline'
+                        onClick={() => setIsReserveModalOpen(true)}
+                      >
+                        날짜 선택하기
+                      </button>
+                    </div>
+                    <Button disabled className='mt-10 h-50 w-full'>
+                      예약하러 가기
+                    </Button>
                   </div>
-                  <Button disabled className='mt-10 h-50 w-full'>
-                    예약하러 가기
-                  </Button>
-                </div>
-                {isReserveModalOpen && (
-                  <ResponsibleReserveModal
-                    activityId={Number(activityId)}
-                    onClose={() => setIsReserveModalOpen(false)}
-                  />
-                )}
-              </>
-            )}
-            {isMobile && (
-              <>
-                <div>
-                  <div className='flex flex-row justify-between'>
-                    <p className='txt-18_B'>
-                      ₩ {price?.toLocaleString()}{' '}
-                      <span className='txt-16_M leading-19 text-gray-300'>
-                        {' '}
-                        / 1명
-                      </span>
-                    </p>
-                    <button
-                      className='txt-16_B text-primary-500 underline'
-                      onClick={() => setIsReserveModalOpen(true)}
-                    >
-                      날짜 선택하기
-                    </button>
+                  {isReserveModalOpen && (
+                    <TabletReserveModal
+                      activityId={Number(activityId)}
+                      onClose={() => setIsReserveModalOpen(false)}
+                      onReserved={() => {
+                        setIsReserveModalOpen(false);
+                        setIsSuccessModalOpen(true);
+                      }}
+                    />
+                  )}
+                </>
+              )}
+              {isMobile && (
+                <>
+                  <div>
+                    <div className='flex flex-row justify-between'>
+                      <p className='txt-18_B'>
+                        ₩ {price?.toLocaleString()}
+                        <span className='txt-16_M leading-19 text-gray-300'>
+                          {' '}
+                          / 1명
+                        </span>
+                      </p>
+                      <button
+                        className='txt-16_B text-primary-500 underline'
+                        onClick={() => setIsReserveModalOpen(true)}
+                      >
+                        날짜 선택하기
+                      </button>
+                    </div>
+                    <Button disabled className='mt-10 h-50 w-full'>
+                      예약하러 가기
+                    </Button>
                   </div>
-                  <Button disabled className='mt-10 h-50 w-full'>
-                    예약하러 가기
-                  </Button>
-                </div>
-                {isReserveModalOpen && (
-                  <MobileReserveModal
-                    activityId={Number(activityId)}
-                    onClose={() => setIsReserveModalOpen(false)}
-                  />
-                )}
-              </>
-            )}
-          </section>
-          <section>
-            <LoadKakaoMap address={address} />
-          </section>
-          <section>
-            <ActivityReviews activityId={Number(activityId)} />
-          </section>
+                  {isReserveModalOpen && (
+                    <MobileReserveModal
+                      activityId={Number(activityId)}
+                      onClose={() => setIsReserveModalOpen(false)}
+                      onReserved={() => {
+                        setIsReserveModalOpen(false);
+                        setIsSuccessModalOpen(true);
+                      }}
+                    />
+                  )}
+                </>
+              )}
+            </section>
+            <section>
+              <LoadKakaoMap address={address} />
+            </section>
+            <section>
+              <ActivityReviews activityId={Number(activityId)} />
+            </section>
+          </div>
+          <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-[410px]'>
+            <ActivitySummary activityId={Number(activityId)} />
+            <section className='mt-40'>
+              {isPC && (
+                <ReserveCalender
+                  activityId={Number(activityId)}
+                  onReserved={() => setIsSuccessModalOpen(true)}
+                />
+              )}
+            </section>
+          </aside>
         </div>
-        <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-[410px]'>
-          <ActivitySummary activityId={Number(activityId)} />
-          <section className='mt-40'>
-            {isPC && <ReserveCalender activityId={Number(activityId)} />}
-          </section>
-        </aside>
-      </div>
-    </main>
+      </main>
+
+      {/* 예약 완료 시 띄우는 모달 */}
+      {isSuccessModalOpen && (
+        <Modal
+          message='예약이 완료되었습니다!'
+          variant='onlyText'
+          onClose={() => setIsSuccessModalOpen(false)}
+        />
+      )}
+    </>
   );
 }

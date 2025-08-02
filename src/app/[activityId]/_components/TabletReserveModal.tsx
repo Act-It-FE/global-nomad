@@ -7,7 +7,6 @@ import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivity
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
-import { OnlyTextContent } from '@/components/Modal/contents/OnlyTextContent';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { getCalendarDates } from '@/utils/dateUtils';
 
@@ -18,11 +17,13 @@ const isSameMonth = (base: Date, target: Date) =>
 interface TabletReserveModalProps {
   activityId: number;
   onClose: () => void;
+  onReserved: () => void;
 }
 
 export default function TabletReserveModal({
   activityId,
   onClose,
+  onReserved,
 }: TabletReserveModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   useClickOutside(modalRef, onClose);
@@ -31,7 +32,6 @@ export default function TabletReserveModal({
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
   const [peopleCount, setPeopleCount] = useState(1);
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const year = String(currentDate.getFullYear());
@@ -60,10 +60,7 @@ export default function TabletReserveModal({
         scheduleId: selectedTimeId,
         headCount: peopleCount,
       });
-      setIsSuccessModalOpen(true);
-      setSelectedDate(null);
-      setSelectedTimeId(null);
-      setPeopleCount(1);
+      onReserved();
     } catch (error) {
       alert('예약에 실패했습니다.');
       console.error(error);
@@ -72,15 +69,9 @@ export default function TabletReserveModal({
     }
   };
 
-  const getMonthNameEnglish = (date: Date): string =>
-    new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
-      date,
-    );
-
   useEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = 'hidden';
-
     return () => {
       document.body.style.overflow = originalStyle;
     };
@@ -92,8 +83,14 @@ export default function TabletReserveModal({
         ref={modalRef}
         className='max-h-[80vh] w-full overflow-y-auto rounded-t-2xl bg-white p-20 md:w-full md:rounded-2xl'
       >
+        {/* 달 상단 */}
         <div className='mb-20 flex justify-between'>
-          <p className='txt-16_B'>{getMonthNameEnglish(currentDate)}</p>
+          <p className='txt-16_B'>
+            {new Intl.DateTimeFormat('en-US', {
+              year: 'numeric',
+              month: 'long',
+            }).format(currentDate)}
+          </p>
           <div className='flex gap-10'>
             <button
               onClick={() =>
@@ -124,6 +121,7 @@ export default function TabletReserveModal({
           </div>
         </div>
 
+        {/* 캘린더 + 시간/인원 */}
         <div className='flex flex-col gap-20 md:flex-row'>
           {/* 캘린더 */}
           <div className='w-full md:w-1/2'>
@@ -160,7 +158,7 @@ export default function TabletReserveModal({
             </div>
           </div>
 
-          {/* 시간 및 인원 */}
+          {/* 시간 / 인원 수 선택 */}
           <div className='card-shadow w-full rounded-[24px] px-20 py-24 md:w-1/2'>
             <div className='txt-16_B mb-10'>예약 가능한 시간</div>
             {selectedDate ? (
@@ -206,32 +204,32 @@ export default function TabletReserveModal({
             )}
           </div>
         </div>
+
+        {/* 요약 및 예약 버튼 */}
         {price !== null && (
           <div className='w-full'>
             <div className='mb-12 flex-row justify-between'>
               <span className='txt-16_B text-gray-950'>
-                <span className='mt-10 flex flex-row items-center justify-between text-gray-950'>
+                <div className='flex flex-row items-center justify-between'>
                   <div className='flex flex-row gap-4'>
                     ₩ {totalPrice?.toLocaleString()}{' '}
                     <p className='txt-16_M text-gray-300'>/ {peopleCount} 명</p>
                   </div>
-                  <div>
-                    {selectedDate && selectedTimeId && (
-                      <span className='txt-14_B text-primary-500 underline'>
-                        {selectedDate.replaceAll('-', '/')}{' '}
-                        {
-                          timeOptions.find((t) => t.id === selectedTimeId)
-                            ?.startTime
-                        }{' '}
-                        ~{' '}
-                        {
-                          timeOptions.find((t) => t.id === selectedTimeId)
-                            ?.endTime
-                        }
-                      </span>
-                    )}
-                  </div>
-                </span>
+                  {selectedDate && selectedTimeId && (
+                    <span className='txt-14_B text-primary-500 underline'>
+                      {selectedDate.replaceAll('-', '/')}{' '}
+                      {
+                        timeOptions.find((t) => t.id === selectedTimeId)
+                          ?.startTime
+                      }{' '}
+                      ~{' '}
+                      {
+                        timeOptions.find((t) => t.id === selectedTimeId)
+                          ?.endTime
+                      }
+                    </span>
+                  )}
+                </div>
               </span>
             </div>
           </div>
@@ -246,14 +244,6 @@ export default function TabletReserveModal({
             {isLoading ? '예약 중...' : '예약하기'}
           </Button>
         </div>
-
-        {isSuccessModalOpen && (
-          <OnlyTextContent
-            message='예약이 완료되었습니다!'
-            variant='onlyText'
-            onClose={() => setIsSuccessModalOpen(false)}
-          />
-        )}
       </div>
     </div>
   );

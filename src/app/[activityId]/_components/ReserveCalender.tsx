@@ -7,7 +7,6 @@ import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivity
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
-import { OnlyTextContent } from '@/components/Modal/contents/OnlyTextContent';
 import { getCalendarDates } from '@/utils/dateUtils';
 
 const isSameMonth = (base: Date, target: Date) =>
@@ -16,14 +15,17 @@ const isSameMonth = (base: Date, target: Date) =>
 
 interface ReserveCalenderProps {
   activityId: number;
+  onReserved: () => void;
 }
 
-export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
+export default function ReserveCalender({
+  activityId,
+  onReserved,
+}: ReserveCalenderProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [peopleCount, setPeopleCount] = useState(1);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isMyActivity, setIsMyActivity] = useState(false);
 
@@ -42,22 +44,16 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
   const totalPrice = price ? price * peopleCount : null;
 
   const timeOptions = selectedDate
-    ? (schedules.find((schedule) => schedule.date === selectedDate)?.times ??
-      [])
+    ? (schedules.find((s) => s.date === selectedDate)?.times ?? [])
     : [];
 
   const handleDateClick = (date: Date) => {
     const formatted = date.toISOString().split('T')[0];
-    const isAvailable = schedules.some(
-      (schedule) => schedule.date === formatted,
-    );
+    const isAvailable = schedules.some((s) => s.date === formatted);
     if (!isAvailable) return;
     setSelectedDate(formatted);
     setSelectedTimeId(null);
   };
-
-  const increaseCount = () => setPeopleCount((prev) => Math.min(prev + 1, 10));
-  const decreaseCount = () => setPeopleCount((prev) => Math.max(prev - 1, 1));
 
   const handleReserve = async () => {
     if (!selectedTimeId) return;
@@ -68,7 +64,7 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
         scheduleId: selectedTimeId,
         headCount: peopleCount,
       });
-      setIsSuccessModalOpen(true);
+      onReserved();
     } catch (error) {
       alert('예약에 실패했습니다. 다시 시도해주세요.');
       console.error(error);
@@ -76,11 +72,6 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       setIsLoading(false);
     }
   };
-
-  const getMonthNameEnglish = (date: Date): string =>
-    new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
-      date,
-    );
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
@@ -93,6 +84,11 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
   }, [detail]);
 
   if (isMyActivity) return null;
+
+  const getMonthNameEnglish = (date: Date): string =>
+    new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
+      date,
+    );
 
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>
@@ -169,11 +165,17 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
       <div className='txt-16_B mt-24 flex flex-row items-center justify-between leading-19'>
         참여 인원 수
         <span className='flex min-w-140 flex-row justify-evenly gap-5 rounded-[24px] border border-gray-50 py-8'>
-          <button disabled={peopleCount === 1} onClick={decreaseCount}>
+          <button
+            disabled={peopleCount === 1}
+            onClick={() => setPeopleCount((p) => Math.max(1, p - 1))}
+          >
             <Icon className='h-20 w-20' icon='Minus' />
           </button>
           <span className='txt-16_B leading-19'>{peopleCount}</span>
-          <button disabled={peopleCount === 10} onClick={increaseCount}>
+          <button
+            disabled={peopleCount === 10}
+            onClick={() => setPeopleCount((p) => Math.min(10, p + 1))}
+          >
             <Icon className='h-20 w-20' icon='Plus' />
           </button>
         </span>
@@ -217,14 +219,6 @@ export default function ReserveCalender({ activityId }: ReserveCalenderProps) {
           {isLoading ? '예약 중...' : '예약하기'}
         </Button>
       </div>
-
-      {isSuccessModalOpen && (
-        <OnlyTextContent
-          message='예약이 완료되었습니다!'
-          variant='onlyText'
-          onClose={() => setIsSuccessModalOpen(false)}
-        />
-      )}
     </div>
   );
 }

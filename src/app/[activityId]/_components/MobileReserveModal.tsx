@@ -7,7 +7,6 @@ import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivity
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
-import { OnlyTextContent } from '@/components/Modal/contents/OnlyTextContent';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { getCalendarDates } from '@/utils/dateUtils';
 
@@ -18,11 +17,13 @@ const isSameMonth = (base: Date, target: Date) =>
 interface MobileReserveModalProps {
   activityId: number;
   onClose: () => void;
+  onReserved: () => void;
 }
 
 export default function MobileReserveModal({
   activityId,
   onClose,
+  onReserved,
 }: MobileReserveModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   useClickOutside(modalRef, onClose);
@@ -31,7 +32,6 @@ export default function MobileReserveModal({
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
   const [peopleCount, setPeopleCount] = useState(1);
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const year = String(currentDate.getFullYear());
@@ -60,7 +60,7 @@ export default function MobileReserveModal({
         scheduleId: selectedTimeId,
         headCount: peopleCount,
       });
-      setIsSuccessModalOpen(true);
+      onReserved();
       setSelectedDate(null);
       setSelectedTimeId(null);
       setPeopleCount(1);
@@ -93,6 +93,7 @@ export default function MobileReserveModal({
         className='h-[80vh] w-full overflow-y-auto rounded-t-2xl bg-white p-20'
       >
         {/* 상단: 월 표시 */}
+        <div className='txt-18_B'>날짜</div>
         <div className='mb-20 flex justify-between'>
           <p className='txt-16_B'>{getMonthNameEnglish(currentDate)}</p>
           <div className='flex gap-10'>
@@ -235,14 +236,6 @@ export default function MobileReserveModal({
         >
           {isLoading ? '예약 중...' : '예약하기'}
         </Button>
-
-        {isSuccessModalOpen && (
-          <OnlyTextContent
-            message='예약이 완료되었습니다!'
-            variant='onlyText'
-            onClose={() => setIsSuccessModalOpen(false)}
-          />
-        )}
       </div>
     </div>
   );

@@ -12,8 +12,9 @@ import ActivityDescription from './_components/ActivityDescription';
 import ActivityReviews from './_components/ActivityReviews';
 import ActivitySummary from './_components/ActivitySummary';
 import LoadKakaoMap from './_components/LoadKakaoMap';
+import MobileReserveModal from './_components/MobileReserveModal';
 import ReserveCalender from './_components/ReserveCalender';
-import ResponsibleReserveModal from './_components/ResponsibleReserveModal';
+import ResponsibleReserveModal from './_components/TabletReserveModal';
 
 export default function ActivityDetail() {
   const { activityId } = useParams();
@@ -127,7 +128,7 @@ export default function ActivityDetail() {
                   </Button>
                 </div>
                 {isReserveModalOpen && (
-                  <ResponsibleReserveModal
+                  <MobileReserveModal
                     activityId={Number(activityId)}
                     onClose={() => setIsReserveModalOpen(false)}
                   />

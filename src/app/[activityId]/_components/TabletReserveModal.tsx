@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import activitiesApi from '@/api/activitiesApi';
 import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
@@ -77,6 +77,15 @@ export default function TabletReserveModal({
       date,
     );
 
+  useEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []);
+
   return (
     <div className='fixed inset-0 z-50 flex items-end justify-center bg-black/40'>
       <div
@@ -137,7 +146,7 @@ export default function TabletReserveModal({
                         : 'text-gray-300'
                     } ${
                       selectedDate === formatted
-                        ? 'bg-primary-100 text-primary-500'
+                        ? 'bg-primary-500 text-white'
                         : ''
                     }`}
                     onClick={() =>

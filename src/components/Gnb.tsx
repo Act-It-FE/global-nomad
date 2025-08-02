@@ -98,6 +98,7 @@ export default function Gnb() {
                 }
                 open={isOpen}
                 totalCount={totalCount}
+                onClose={() => setIsOpen(false)}
               />
             </div>
             <div className='h-14 w-1 bg-gray-100' />

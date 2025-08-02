@@ -17,6 +17,7 @@ export default function Page() {
       )}
     >
       <h1 className='txt-18_B h-41 content-center'>내 체험 등록</h1>
+      <section className='flex flex-col gap-30' />
       <Button className='w-120' size='sm'>
         {id ? '수정' : '등록'}하기
       </Button>

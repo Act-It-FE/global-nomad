@@ -3,7 +3,6 @@
 import { useActivityDescription } from '@/app/[activityId]/_hooks/useActivityDescription';
 import {
   getImageColumnWrapperClass,
-  getImageContainerClass,
   getSubImageClass,
 } from '@/app/[activityId]/_utils/getImageClass';
 
@@ -31,10 +30,18 @@ export default function ActivityDescription({ activityId }: Props) {
     <section className='my-40 flex flex-col gap-24'>
       <div className='flex w-full gap-12'>
         {bannerImageUrl && (
-          <div className={getImageContainerClass(isSingleSubImage)}>
+          <div
+            className={`aspect-[6/3] min-h-240 overflow-hidden ${
+              subImages.length === 0 ? 'w-full' : 'w-1/2'
+            }`}
+          >
             <img
               alt='배너 이미지'
-              className='h-full w-full rounded-tl-[24px] rounded-bl-[24px] object-cover'
+              className={`h-full w-full rounded-tl-[24px] object-cover ${
+                subImages.length === 0
+                  ? 'rounded-tr-[24px] rounded-br-[24px] rounded-bl-[24px]'
+                  : 'rounded-bl-[24px]'
+              }`}
               src={bannerImageUrl}
             />
           </div>

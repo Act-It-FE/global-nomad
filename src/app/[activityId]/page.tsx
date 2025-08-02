@@ -7,6 +7,7 @@ import activitiesDetailApi from '@/api/activitiesApi';
 import Button from '@/components/Button';
 import Modal from '@/components/Modal/Modal';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useUserStore } from '@/stores/userStore';
 import getErrorMessage from '@/utils/getErrorMessage';
 
 import ActivityDescription from './_components/ActivityDescription';
@@ -24,6 +25,11 @@ export default function ActivityDetail() {
   const [price, setPrice] = useState<number | null>(null);
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [creatorId, setCreatorId] = useState<number | null>(null);
+
+  const user = useUserStore((state) => state.user);
+  const myUserId = user?.id;
+
   const isPC = useMediaQuery('pc');
   const isTablet = useMediaQuery('tablet');
   const isMobile = useMediaQuery('mobile');
@@ -42,6 +48,7 @@ export default function ActivityDetail() {
         const activity = await activitiesDetailApi.getDetail(id);
         setAddress(activity.address);
         setPrice(activity.price);
+        setCreatorId(activity.userId); // 작성자 ID 저장
       } catch (error) {
         const message = getErrorMessage(
           error,
@@ -54,6 +61,8 @@ export default function ActivityDetail() {
 
     fetchData();
   }, [activityId]);
+
+  const isMyActivity = myUserId !== undefined && myUserId === creatorId;
 
   if (error) {
     return (
@@ -78,6 +87,7 @@ export default function ActivityDetail() {
           <div className='flex flex-1 flex-col gap-40'>
             <section>
               <ActivityDescription activityId={Number(activityId)} />
+
               {(isTablet || isMobile) && (
                 <>
                   <div>
@@ -91,7 +101,13 @@ export default function ActivityDetail() {
                       </p>
                       <button
                         className='txt-16_B text-primary-500 underline'
-                        onClick={() => setIsReserveModalOpen(true)}
+                        onClick={() => {
+                          if (isMyActivity) {
+                            alert('내가 생성한 체험은 예약할 수 없습니다.');
+                          } else {
+                            setIsReserveModalOpen(true);
+                          }
+                        }}
                       >
                         날짜 선택하기
                       </button>
@@ -100,6 +116,7 @@ export default function ActivityDetail() {
                       예약하기
                     </Button>
                   </div>
+
                   {isReserveModalOpen && (
                     <>
                       {isTablet ? (
@@ -126,13 +143,16 @@ export default function ActivityDetail() {
                 </>
               )}
             </section>
+
             <section>
               <LoadKakaoMap address={address} />
             </section>
+
             <section>
               <ActivityReviews activityId={Number(activityId)} />
             </section>
           </div>
+
           <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-[410px]'>
             <ActivitySummary activityId={Number(activityId)} />
             <section className='mt-40'>

@@ -8,7 +8,7 @@ import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvail
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useClickOutside } from '@/hooks/useClickOutside';
-import { useUserStore } from '@/stores/userStore'; // ✅ 유저 store import
+import { useUserStore } from '@/stores/userStore';
 import { getCalendarDates } from '@/utils/dateUtils';
 
 const isSameMonth = (base: Date, target: Date) =>
@@ -46,8 +46,8 @@ export default function TabletReserveModal({
     month,
   );
 
-  const user = useUserStore((state) => state.user); // ✅ 현재 로그인한 유저
-  const isMyActivity = user && detail?.userId === user.id; // ✅ 본인 체험인지 여부
+  const user = useUserStore((state) => state.user);
+  const isMyActivity = user && detail?.userId === user.id;
 
   const price = detail?.price ?? null;
   const totalPrice = price ? price * peopleCount : null;

@@ -5,11 +5,14 @@ import { useSearchParams } from 'next/navigation';
 import { CATEGORY } from '@/api/types/myActivities';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 
 export default function Page() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
+
+  const isMobile = useMediaQuery('mobile');
 
   return (
     <form
@@ -29,6 +32,13 @@ export default function Page() {
             maxHeight='1000px'
             placeholder='카테고리를 선택해 주세요'
             type='dropdown'
+          />
+          <Input
+            height={isMobile ? '140px' : '200px'}
+            id='description'
+            label='설명'
+            placeholder='체험에 대한 설명을 입력해 주세요'
+            type='textarea'
           />
         </div>
         <div />

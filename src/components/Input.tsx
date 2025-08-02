@@ -68,7 +68,7 @@ type DateCustomProps = CommonProps & {
 
 const COMMON_STYLE = cn(
   'h-54 w-full rounded-2xl bg-white border border-gray-100 px-19 py-15 outline-none',
-  'txt-16_M leading-19 placeholder:text-gray-400',
+  'txt-16_M leading-19 placeholder:text-gray-400 text-start',
 );
 
 const FOCUS_STYLE = cn(
@@ -171,7 +171,7 @@ function DropdownInput({
         className={cn(
           className,
           value.item ? 'text-gray-950' : 'text-gray-400',
-          'truncate pr-43 text-start focus:pr-42.5',
+          'truncate pr-43 focus:pr-42.5',
         )}
         type='button'
         value={value.item ?? placeholder ?? ''}

@@ -11,7 +11,7 @@ import { cn } from '@/utils/cn';
 
 const COMMON_STYLE = cn(
   'size-80 md:size-126 lg:size-128',
-  'rounded-lg md:rounded-2xl border border-gray-100',
+  'rounded-lg md:rounded-2xl border border-gray-100 shrink-0',
 );
 
 interface Props {
@@ -58,7 +58,10 @@ export default function ImageUploader({ max, imageURLs, setImageURLs }: Props) {
 
   return (
     <>
-      <div className='flex gap-12 md:gap-14'>
+      <div
+        className='flex w-full gap-12 overflow-x-auto overflow-y-visible pt-10 md:gap-14'
+        style={{ scrollbarWidth: 'none' }}
+      >
         <label
           className={cn(
             COMMON_STYLE,

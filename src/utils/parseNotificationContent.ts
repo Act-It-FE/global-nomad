@@ -5,6 +5,14 @@
  * @returns { activityName, schedule, statusText }
  */
 export const parseNotificationContent = (content: string) => {
+  if (!content || typeof content !== 'string') {
+    return {
+      activityName: '',
+      schedule: '',
+      statusText: content || '',
+    };
+  }
+
   // 정규식을 사용하여 괄호 안의 내용과 나머지 부분을 추출합니다.
   const match = content.match(/^(.+?)\s*\((.+?)\)\s*(.+)$/);
 

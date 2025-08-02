@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import notificationsApi from '@/api/notificationApi';
+import getErrorMessage from '@/utils/getErrorMessage';
 
 import myNotificationsQueryKeys from './queryKey';
 
@@ -18,8 +19,7 @@ export function useMyNotifyDelete() {
       });
     },
     onError: (error: AxiosError) => {
-      // 실제 운영에서는 토스트 메시지 등으로 사용자에게 피드백을 주는 것이 좋습니다.
-      console.error('알림 삭제 중 에러:', error);
+      getErrorMessage(error, '알림 삭제를 실패하였습니다!');
     },
   });
 }

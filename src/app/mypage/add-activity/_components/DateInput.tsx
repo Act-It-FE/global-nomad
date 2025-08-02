@@ -1,4 +1,10 @@
+import { ActivityRegisterSchedule } from '@/api/types/activities';
 import Input from '@/components/Input';
+
+interface Props {
+  defaultValue: ActivityRegisterSchedule;
+  onClick: (param: ActivityRegisterSchedule) => void;
+}
 
 export default function DateInput() {
   return (

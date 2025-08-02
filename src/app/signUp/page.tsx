@@ -4,9 +4,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
+import { ApiError } from '@/api/types/auth';
+import userApi from '@/api/userApi';
 import KakaoIcon from '@/assets/icons/kakao.svg';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import Modal from '@/components/Modal/Modal';
 import { getRedirectUrl } from '@/utils/oauth/getRedirectUrl';
 
 export default function SignUp() {
@@ -16,7 +19,10 @@ export default function SignUp() {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isModal, setIsModal] = useState(false);
+  const [errMsg, setErrMsg] = useState('');
   const redirectUrl = getRedirectUrl('signUp');
+  const [errStatus, setErrStatus] = useState<number | null>(null);
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const emailError =
@@ -38,117 +44,154 @@ export default function SignUp() {
   const isFormValid =
     isEmailValid && isNicknameValid && isPasswordValid && isConfirmValid;
 
-  const handleSubmit = () => {
-    router.push('/');
-  };
+  async function handleSubmit() {
+    try {
+      await userApi.signUp({
+        email,
+        password,
+        nickname,
+      });
+      router.replace('/login');
+    } catch (err) {
+      const apiErr = err as ApiError;
+      const msg = apiErr.response?.data?.message;
+      const status = apiErr.response?.status;
+      setErrStatus(status ?? null);
+
+      if (status === 409 && msg === '중복된 이메일입니다.') {
+        setIsModal(true);
+        setErrMsg('이미 가입된 아이디입니다. 로그인하시겠습니까?');
+      } else {
+        setErrMsg('회원가입 에러.');
+        setIsModal(true);
+      }
+    }
+  }
 
   return (
-    <div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
-      <div className='flex w-328 flex-col items-center md:w-640'>
-        {/* 로고 */}
-        <div className='relative mb-42 h-144 w-144 md:mb-62 md:h-199 md:w-255'>
-          <Image
-            fill
-            alt='로고+텍스트'
-            className='hidden object-contain md:block'
-            src='/images/logo-lg-text.png'
-          />
-          <Image
-            fill
-            alt='로고'
-            className='block object-contain md:hidden'
-            src='/images/logo-lg.png'
-          />
-        </div>
-
-        <div className='flex flex-col items-center gap-24 md:gap-30'>
-          <div className='flex w-328 flex-col gap-16 md:w-640 md:gap-20'>
-            <div className='flex flex-col gap-10'>
-              <p className='txt-16_M text-gray-950'>이메일</p>
-              <Input
-                className='h-54 w-full'
-                errorMessage={emailError}
-                id='email'
-                placeholder='이메일을 입력해 주세요'
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className='flex flex-col gap-10'>
-              <p className='txt-16_M text-gray-950'>닉네임</p>
-              <Input
-                className='h-54 w-full'
-                id='nickname'
-                placeholder='닉네임을 입력해 주세요'
-                type='text'
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-              />
-            </div>
-            <div className='flex flex-col gap-10'>
-              <p className='txt-16_M text-gray-950'>비밀번호</p>
-              <Input
-                className='h-54 w-full'
-                errorMessage={passwordError}
-                id='password'
-                placeholder='8자 이상 입력해 주세요'
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className='flex flex-col gap-10'>
-              <p className='txt-16_M text-gray-950'>비밀번호 확인</p>
-              <Input
-                className='h-54 w-full'
-                errorMessage={confirmError}
-                id='confirmPassword'
-                placeholder='비밀번호를 한 번 더 입력해 주세요'
-                type='password'
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
+    <>
+      <div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
+        <div className='flex w-328 flex-col items-center md:w-640'>
+          {/* 로고 */}
+          <div className='relative mb-42 h-144 w-144 md:mb-62 md:h-199 md:w-255'>
+            <Image
+              fill
+              alt='로고+텍스트'
+              className='hidden object-contain md:block'
+              src='/images/logo-lg-text.png'
+            />
+            <Image
+              fill
+              alt='로고'
+              className='block object-contain md:hidden'
+              src='/images/logo-lg.png'
+            />
           </div>
 
-          <Button
-            className='txt-16_B mt-24 h-54 w-full md:mt-30'
-            disabled={!isFormValid}
-            rounded='16'
-            variant={isFormValid ? 'primary' : undefined}
-            onClick={handleSubmit}
-          >
-            회원가입하기
-          </Button>
+          <div className='flex flex-col items-center gap-24 md:gap-30'>
+            <div className='flex w-328 flex-col gap-16 md:w-640 md:gap-20'>
+              <div className='flex flex-col gap-10'>
+                <p className='txt-16_M text-gray-950'>이메일</p>
+                <Input
+                  className='h-54 w-full'
+                  errorMessage={emailError}
+                  id='email'
+                  placeholder='이메일을 입력해 주세요'
+                  type='email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className='flex flex-col gap-10'>
+                <p className='txt-16_M text-gray-950'>닉네임</p>
+                <Input
+                  className='h-54 w-full'
+                  id='nickname'
+                  placeholder='닉네임을 입력해 주세요'
+                  type='text'
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
+                />
+              </div>
+              <div className='flex flex-col gap-10'>
+                <p className='txt-16_M text-gray-950'>비밀번호</p>
+                <Input
+                  className='h-54 w-full'
+                  errorMessage={passwordError}
+                  id='password'
+                  placeholder='8자 이상 입력해 주세요'
+                  type='password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className='flex flex-col gap-10'>
+                <p className='txt-16_M text-gray-950'>비밀번호 확인</p>
+                <Input
+                  className='h-54 w-full'
+                  errorMessage={confirmError}
+                  id='confirmPassword'
+                  placeholder='비밀번호를 한 번 더 입력해 주세요'
+                  type='password'
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+            </div>
 
-          <div className='flex w-full items-center'>
-            <hr className='h-1 flex-grow text-gray-100' />
-            <span className='txt-16 px-10 text-[#79747e]'>
-              SNS 계정으로 회원가입하기
-            </span>
-            <hr className='h-1 flex-grow text-gray-100' />
-          </div>
+            <Button
+              className='txt-16_B mt-24 h-54 w-full md:mt-30'
+              disabled={!isFormValid}
+              rounded='16'
+              variant={isFormValid ? 'primary' : undefined}
+              onClick={handleSubmit}
+            >
+              회원가입하기
+            </Button>
 
-          <Button
-            icon={<KakaoIcon className='mr-2 h-24 w-24' />}
-            size='xl'
-            variant='kakao'
-            onClick={() => {
-              window.location.href = redirectUrl;
-            }}
-          >
-            카카오 회원가입
-          </Button>
+            <div className='flex w-full items-center'>
+              <hr className='h-1 flex-grow text-gray-100' />
+              <span className='txt-16 px-10 text-[#79747e]'>
+                SNS 계정으로 회원가입하기
+              </span>
+              <hr className='h-1 flex-grow text-gray-100' />
+            </div>
 
-          <div className='flex gap-2'>
-            <p className='txt-16_M text-gray-400'>회원이신가요?</p>
-            <Link className='txt-16_M text-gray-400 underline' href='/login'>
-              로그인하기
-            </Link>
+            <Button
+              icon={<KakaoIcon className='mr-2 h-24 w-24' />}
+              size='xl'
+              variant='kakao'
+              onClick={() => {
+                window.location.href = redirectUrl;
+              }}
+            >
+              카카오 회원가입
+            </Button>
+
+            <div className='flex gap-2'>
+              <p className='txt-16_M text-gray-400'>회원이신가요?</p>
+              <Link className='txt-16_M text-gray-400 underline' href='/login'>
+                로그인하기
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {isModal && (
+        <Modal
+          confirmText='예'
+          message={errMsg}
+          variant='warning'
+          onCancel={() => setIsModal(false)}
+          onConfirm={() => {
+            setIsModal(false);
+            if (errStatus === 409) {
+              router.replace('/signUp');
+            }
+          }}
+        />
+      )}
+    </>
   );
 }

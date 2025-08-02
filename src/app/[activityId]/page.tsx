@@ -153,7 +153,7 @@ export default function ActivityDetail() {
             </section>
           </div>
 
-          <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-[410px]'>
+          <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-410'>
             <ActivitySummary activityId={Number(activityId)} />
             <section className='mt-40'>
               {isPC && (

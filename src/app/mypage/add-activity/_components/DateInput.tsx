@@ -3,6 +3,10 @@ import Icon from '@/components/Icon';
 import Input from '@/components/Input';
 import { cn } from '@/utils/cn';
 
+const TIME_LIST = Array(24).map(
+  (_, index) => `${String(index).padStart(2, '0')}:00`,
+);
+
 interface Props {
   defaultValue?: ActivityRegisterSchedule;
   onClick: (param: ActivityRegisterSchedule) => void;
@@ -20,7 +24,7 @@ export default function DateInput({ defaultValue }: Props) {
       ) : (
         <div>
           <label
-            className='txt-16_M mb-10 inline-block text-gray-950 max-md:hidden'
+            className='txt-16_M mb-10 inline-block leading-19 text-gray-950 max-md:hidden'
             htmlFor='date'
           >
             날짜
@@ -30,9 +34,32 @@ export default function DateInput({ defaultValue }: Props) {
       )}
       <div className='flex items-center gap-14'>
         <div>
-          {defaultValue ? <div className='mb-10 flex' /> : null}
+          {defaultValue ? null : (
+            <div className='mb-10 flex justify-between max-md:hidden'>
+              <label className='txt-16_M inline-block leading-19 text-gray-950 max-md:hidden'>
+                시작 시간
+              </label>
+              <label className='txt-16_M inline-block w-122 leading-19 text-gray-950 max-md:hidden'>
+                종료 시간
+              </label>
+            </div>
+          )}
           <div className='flex items-center gap-10'>
+            <Input
+              className='md:w-122'
+              id='startTime'
+              items={TIME_LIST}
+              placeholder='00:00'
+              type='dropdown'
+            />
             <div className='h-2 w-8 bg-gray-800' />
+            <Input
+              className='md:w-122'
+              id='endTime'
+              items={TIME_LIST}
+              placeholder='00:00'
+              type='dropdown'
+            />
           </div>
         </div>
         <button

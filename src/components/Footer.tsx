@@ -6,7 +6,7 @@ import Icon from '@/components/Icon';
 
 export default function Footer() {
   const pathname = usePathname();
-  if (pathname === '/login') {
+  if (pathname === '/login' || pathname === '/signup') {
     return null;
   }
   return (

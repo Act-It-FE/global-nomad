@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import AlarmActive from '@/assets/icons/alarm_active.svg';
@@ -24,7 +24,10 @@ export default function Gnb() {
 
   const user = useUserStore((s) => s.user);
   const clearUser = useUserStore((s) => s.clearUser);
-
+  const pathname = usePathname();
+  if (pathname === '/login' || pathname === '/signup') {
+    return null;
+  }
   return (
     <nav
       className={cn(

@@ -97,7 +97,7 @@ export default function ActivityDetail() {
                       </button>
                     </div>
                     <Button disabled className='mt-10 h-50 w-full'>
-                      예약하러 가기
+                      예약하기
                     </Button>
                   </div>
                   {isReserveModalOpen && (
@@ -131,7 +131,7 @@ export default function ActivityDetail() {
                       </button>
                     </div>
                     <Button disabled className='mt-10 h-50 w-full'>
-                      예약하러 가기
+                      예약하기
                     </Button>
                   </div>
                   {isReserveModalOpen && (

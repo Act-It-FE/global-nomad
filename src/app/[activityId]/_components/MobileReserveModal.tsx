@@ -93,7 +93,6 @@ export default function MobileReserveModal({
         className='h-[80vh] w-full overflow-y-auto rounded-t-2xl bg-white p-20'
       >
         {/* 상단: 월 표시 */}
-        <div className='txt-18_B'>날짜</div>
         <div className='mb-20 flex justify-between'>
           <p className='txt-16_B'>{getMonthNameEnglish(currentDate)}</p>
           <div className='flex gap-10'>
@@ -108,7 +107,7 @@ export default function MobileReserveModal({
                 )
               }
             >
-              <Icon className='h-20 w-20' icon='TriangleLeft' />
+              <Icon className='h-24 w-24' icon='TriangleLeft' />
             </button>
             <button
               onClick={() =>
@@ -121,7 +120,7 @@ export default function MobileReserveModal({
                 )
               }
             >
-              <Icon className='h-20 w-20' icon='TriangleRight' />
+              <Icon className='h-24 w-24' icon='TriangleRight' />
             </button>
           </div>
         </div>
@@ -129,7 +128,7 @@ export default function MobileReserveModal({
         {/* 캘린더 */}
         <div className='grid grid-cols-7 items-center gap-10 text-center'>
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-            <div key={day} className='txt-14_B text-center'>
+            <div key={day} className='txt-16_M text-center font-semibold'>
               {day}
             </div>
           ))}
@@ -159,7 +158,7 @@ export default function MobileReserveModal({
 
         {/* 예약 가능한 시간 */}
         <div className='mt-24'>
-          <p className='txt-16_B mb-12'>예약 가능한 시간</p>
+          <p className='txt-16_B mb-12 text-gray-950'>예약 가능한 시간</p>
           {selectedDate ? (
             <div className='flex flex-col gap-10'>
               {timeOptions.map((time) => (
@@ -178,7 +177,9 @@ export default function MobileReserveModal({
               ))}
             </div>
           ) : (
-            <p className='txt-14_M text-gray-400'>날짜를 선택해주세요.</p>
+            <p className='txt-16_M text-center text-gray-400'>
+              날짜를 선택해주세요.
+            </p>
           )}
         </div>
 

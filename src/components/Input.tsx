@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  ChangeEvent,
   InputHTMLAttributes,
   MouseEvent,
   TextareaHTMLAttributes,
@@ -61,6 +62,10 @@ type DropdownProps = CommonProps & {
   onDropdownSelect?: (index: number) => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>;
 
+type DateCustomProps = CommonProps & {
+  type: 'date-custom';
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'placeholder'>;
+
 const COMMON_STYLE = cn(
   'h-54 w-full rounded-2xl bg-white border border-gray-100 px-19 py-15 outline-none',
   'txt-16_M leading-19 placeholder:text-gray-400',
@@ -82,7 +87,7 @@ export default function Input({
   label,
   errorMessage,
   ...props
-}: InputProps | TextareaProps | DropdownProps) {
+}: InputProps | TextareaProps | DropdownProps | DateCustomProps) {
   const insideInput = () => {
     const className = cn(
       'text-gray-950',
@@ -103,6 +108,8 @@ export default function Input({
         return <TextareaInput className={className} {...props} />;
       case 'password':
         return <PasswordInput className={className} {...props} />;
+      case 'date-custom':
+        return <DateCustomInput className={className} {...props} />;
       default:
         return <input className={className} {...props} />;
     }
@@ -263,5 +270,47 @@ function PasswordInput({
         )}
       </button>
     </>
+  );
+}
+
+function DateCustomInput({ type, ...props }: DateCustomProps) {
+  const textRef = useRef<HTMLInputElement>(null);
+  const dateRef = useRef<HTMLInputElement>(null);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.target.value = e.target.value.replace(/[^\d/]/g, '');
+    if (e.target.value && e.target.validity.valid && dateRef.current)
+      dateRef.current.value = '20' + e.target.value.replaceAll('/', '-');
+  };
+
+  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (textRef.current)
+      textRef.current.value = e.target.value.replaceAll('-', '/').slice(2);
+  };
+
+  return (
+    <div className='relative'>
+      <input
+        ref={textRef}
+        maxLength={8}
+        pattern='\d{2}/(0[1-9]|1[0-2])/(0[1-9]|[12]\d|3[01])'
+        placeholder='yy/mm/dd'
+        onChange={handleChange}
+        {...props}
+      />
+      <div className='absolute top-15 right-20 bottom-15 w-24'>
+        <div className='relative size-full'>
+          <Icon className='size-24 text-black' icon='Calender' />
+          <input
+            ref={dateRef}
+            className='absolute inset-0 opacity-0'
+            max='2099-12-31'
+            min='2000-01-01'
+            type='date'
+            onChange={handleDateChange}
+          />
+        </div>
+      </div>
+    </div>
   );
 }

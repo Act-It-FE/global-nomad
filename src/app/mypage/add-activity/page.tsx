@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 
 import Button from '@/components/Button';
+import Input from '@/components/Input';
 import { cn } from '@/utils/cn';
 
 export default function Page() {
@@ -18,7 +19,9 @@ export default function Page() {
     >
       <h1 className='txt-18_B h-41 content-center'>내 체험 등록</h1>
       <section className='flex flex-col gap-30'>
-        <div className='flex flex-col gap-24' />
+        <div className='flex flex-col gap-24'>
+          <Input id='title' label='제목' placeholder='제목을 입력해 주세요' />
+        </div>
         <div />
         <div />
         <div />

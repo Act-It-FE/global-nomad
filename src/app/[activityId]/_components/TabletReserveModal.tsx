@@ -8,6 +8,7 @@ import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvail
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useClickOutside } from '@/hooks/useClickOutside';
+import { useUserStore } from '@/stores/userStore'; // ✅ 유저 store import
 import { getCalendarDates } from '@/utils/dateUtils';
 
 const isSameMonth = (base: Date, target: Date) =>
@@ -45,6 +46,9 @@ export default function TabletReserveModal({
     month,
   );
 
+  const user = useUserStore((state) => state.user); // ✅ 현재 로그인한 유저
+  const isMyActivity = user && detail?.userId === user.id; // ✅ 본인 체험인지 여부
+
   const price = detail?.price ?? null;
   const totalPrice = price ? price * peopleCount : null;
 
@@ -76,6 +80,8 @@ export default function TabletReserveModal({
       document.body.style.overflow = originalStyle;
     };
   }, []);
+
+  if (isMyActivity) return null;
 
   return (
     <div className='fixed inset-0 z-50 flex items-end justify-center bg-black/40'>

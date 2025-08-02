@@ -8,6 +8,7 @@ import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvail
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useClickOutside } from '@/hooks/useClickOutside';
+import { useUserStore } from '@/stores/userStore';
 import { getCalendarDates } from '@/utils/dateUtils';
 
 const isSameMonth = (base: Date, target: Date) =>
@@ -45,6 +46,9 @@ export default function MobileReserveModal({
     month,
   );
 
+  const user = useUserStore((state) => state.user);
+  const isMyActivity = user && detail?.userId === user.id;
+
   const price = detail?.price ?? null;
   const totalPrice = price ? price * peopleCount : null;
 
@@ -80,11 +84,12 @@ export default function MobileReserveModal({
   useEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = 'hidden';
-
     return () => {
       document.body.style.overflow = originalStyle;
     };
   }, []);
+
+  if (isMyActivity) return null;
 
   return (
     <div className='fixed inset-0 z-50 flex items-end justify-center bg-black/40'>
@@ -92,7 +97,7 @@ export default function MobileReserveModal({
         ref={modalRef}
         className='h-[80vh] w-full overflow-y-auto rounded-t-2xl bg-white p-20'
       >
-        {/* 상단: 월 표시 */}
+        {/* 날짜 선택 */}
         <div className='txt-18_B'>날짜</div>
         <div className='my-20 flex justify-between'>
           <p className='txt-16_B'>{getMonthNameEnglish(currentDate)}</p>
@@ -160,7 +165,7 @@ export default function MobileReserveModal({
           })}
         </div>
 
-        {/* 예약 가능한 시간 */}
+        {/* 시간 선택 */}
         <div className='mt-24'>
           <p className='txt-16_B mb-12 text-gray-950'>예약 가능한 시간</p>
           {selectedDate ? (
@@ -187,7 +192,7 @@ export default function MobileReserveModal({
           )}
         </div>
 
-        {/* 참여 인원 수 */}
+        {/* 인원 선택 */}
         <div className='txt-16_B mt-24 leading-19'>
           <p className='mb-10'>참여 인원 수</p>
           <div className='flex h-50 w-full items-center justify-between rounded-[12px] border border-gray-50 px-20'>
@@ -207,36 +212,30 @@ export default function MobileReserveModal({
           </div>
         </div>
 
-        {/* 가격 및 예약 정보 요약 */}
+        {/* 가격 및 시간 요약 */}
         {price !== null && (
           <div className='mt-24'>
-            <div className='mb-12'>
-              <div className='flex flex-row justify-between'>
-                <span className='txt-16_B'>
-                  ₩ {totalPrice?.toLocaleString()}{' '}
-                  <span className='txt-16_M text-gray-300'>
-                    / {peopleCount}명
-                  </span>
+            <div className='mb-12 flex justify-between'>
+              <span className='txt-16_B'>
+                ₩ {totalPrice?.toLocaleString()}{' '}
+                <span className='txt-16_M text-gray-300'>
+                  / {peopleCount}명
                 </span>
-                {selectedDate && selectedTimeId && (
-                  <span className='txt-14_B text-primary-500 underline'>
-                    {selectedDate.replaceAll('-', '/')}{' '}
-                    {
-                      timeOptions.find((t) => t.id === selectedTimeId)
-                        ?.startTime
-                    }{' '}
-                    ~{' '}
-                    {timeOptions.find((t) => t.id === selectedTimeId)?.endTime}
-                  </span>
-                )}
-              </div>
+              </span>
+              {selectedDate && selectedTimeId && (
+                <span className='txt-14_B text-primary-500 underline'>
+                  {selectedDate.replaceAll('-', '/')}{' '}
+                  {timeOptions.find((t) => t.id === selectedTimeId)?.startTime}{' '}
+                  ~ {timeOptions.find((t) => t.id === selectedTimeId)?.endTime}
+                </span>
+              )}
             </div>
           </div>
         )}
 
         <Button
           className='mt-20 h-50 w-full'
-          disabled={!selectedDate || !selectedTimeId}
+          disabled={!selectedDate || !selectedTimeId || isLoading}
           onClick={handleReserve}
         >
           {isLoading ? '예약 중...' : '예약하기'}

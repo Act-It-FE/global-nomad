@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import activitiesApi from '@/api/activitiesApi';
 import { ApiError } from '@/api/types/auth';
@@ -8,6 +8,7 @@ import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivity
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
+import { useUserStore } from '@/stores/userStore';
 import { getCalendarDates } from '@/utils/dateUtils';
 import getErrorMessage from '@/utils/getErrorMessage';
 
@@ -29,7 +30,8 @@ export default function ReserveCalender({
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isMyActivity, setIsMyActivity] = useState(false);
+
+  const user = useUserStore((s) => s.user);
 
   const year = String(currentDate.getFullYear());
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -88,16 +90,7 @@ export default function ReserveCalender({
     }
   };
 
-  useEffect(() => {
-    const storedUserId = localStorage.getItem('userId');
-    if (!storedUserId || !detail?.userId) return;
-
-    const currentUserId = Number(storedUserId);
-    if (currentUserId === detail.userId) {
-      setIsMyActivity(true);
-    }
-  }, [detail]);
-
+  const isMyActivity = user && detail && user.id === detail.userId;
   if (isMyActivity) return null;
 
   const getMonthNameEnglish = (date: Date): string =>

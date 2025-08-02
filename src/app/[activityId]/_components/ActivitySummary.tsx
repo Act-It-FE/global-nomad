@@ -12,6 +12,7 @@ import {
 import DropDown from '@/components/DropDown';
 import Icon from '@/components/Icon';
 import { WarningContent } from '@/components/Modal/contents/WarningContent';
+import { useUserStore } from '@/stores/userStore';
 
 interface Props {
   activityId: number;
@@ -25,7 +26,10 @@ export default function ActivitySummary({ activityId }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMyActivity, setIsMyActivity] = useState(false);
+
+  const user = useUserStore((state) => state.user);
+
+  const isMyActivity = user && data?.userId === user.id;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,11 +40,6 @@ export default function ActivitySummary({ activityId }: Props) {
         ]);
         setData(activity);
         setReview(reviewData);
-
-        const storedUserId = localStorage.getItem('userId');
-        if (storedUserId && activity.userId === Number(storedUserId)) {
-          setIsMyActivity(true);
-        }
       } catch (error) {
         console.error('데이터 요청 중 오류 발생:', error);
         setError(true);

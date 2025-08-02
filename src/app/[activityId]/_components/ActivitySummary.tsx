@@ -120,6 +120,7 @@ export default function ActivitySummary({ activityId }: Props) {
       {isModalOpen && (
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50'>
           <WarningContent
+            confirmText='삭제하기'
             message='체험을 삭제하시겠습니까?'
             variant='warning'
             onCancel={() => setIsModalOpen(false)}

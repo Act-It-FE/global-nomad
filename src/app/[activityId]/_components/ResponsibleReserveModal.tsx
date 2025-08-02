@@ -202,7 +202,10 @@ export default function TabletReserveModal({
             <div className='mb-12 flex-row justify-between'>
               <span className='txt-16_B text-gray-950'>
                 <span className='flex flex-row items-center justify-between text-gray-950'>
-                  ₩ {totalPrice?.toLocaleString()} / {peopleCount} 명
+                  <div className='flex flex-row gap-4'>
+                    ₩ {totalPrice?.toLocaleString()}{' '}
+                    <p className='txt-16_M text-gray-300'>/ {peopleCount} 명</p>
+                  </div>
                   <div>
                     {selectedDate && selectedTimeId && (
                       <span className='txt-14_B text-primary-500 underline'>

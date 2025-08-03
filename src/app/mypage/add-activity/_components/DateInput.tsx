@@ -20,6 +20,7 @@ interface Props {
 export default function DateInput({ defaultValue, onClick }: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(defaultValue ? false : true);
+  const [key, setKey] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +47,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
       obj[input.id as keyof ActivityRegisterSchedule] = input.value;
       input.value = '';
     });
+    setKey((prev) => prev + 1);
     onClick(obj);
   };
 
@@ -96,6 +98,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
           <div className='flex items-center gap-10'>
             {defaultValue ? (
               <Input
+                key={key}
                 className='md:w-122'
                 defaultValue={defaultValue.startTime}
                 id='startTime'
@@ -104,6 +107,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
               />
             ) : (
               <Input
+                key={key}
                 className='md:w-122'
                 id='startTime'
                 items={TIME_LIST}
@@ -114,6 +118,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
             <div className='h-2 w-8 bg-gray-800' />
             {defaultValue ? (
               <Input
+                key={key + 2}
                 className='md:w-122'
                 defaultValue={defaultValue.endTime}
                 id='endTime'
@@ -122,6 +127,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
               />
             ) : (
               <Input
+                key={key + 2}
                 className='md:w-122'
                 id='endTime'
                 items={TIME_LIST}

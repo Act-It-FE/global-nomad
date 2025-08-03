@@ -28,11 +28,12 @@ const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
 };
 
 const handleAddress = (e: MouseEvent<HTMLInputElement>) => {
+  const input = e.currentTarget;
   // @ts-expect-error : not found type
   new daum.Postcode({
     // @ts-expect-error : not found type
     oncomplete: function (data) {
-      e.currentTarget.value = data.address;
+      input.value = data.address;
     },
   }).open();
 };

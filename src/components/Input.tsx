@@ -145,7 +145,7 @@ function DropdownInput({
   onDropdownSelect,
   ...props
 }: DropdownProps) {
-  const [value, setValue] = useState({ item: defaultValue, key: '' });
+  const [value, setValue] = useState({ item: '', key: '' });
   const [isOpen, setIsOpen] = useState(false);
   const elements = useRef(
     items.map((item) => ({ item, key: crypto.randomUUID() })),
@@ -170,11 +170,11 @@ function DropdownInput({
         ref={ref}
         className={cn(
           className,
-          value.item ? 'text-gray-950' : 'text-gray-400',
+          value.item || defaultValue ? 'text-gray-950' : 'text-gray-400',
           'truncate pr-43 focus:pr-42.5',
         )}
         type='button'
-        value={value.item ?? placeholder ?? ''}
+        value={value.item || (defaultValue ?? placeholder ?? '')}
         onClick={handleClick}
         {...props}
       />

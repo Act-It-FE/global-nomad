@@ -153,8 +153,8 @@ function DropdownInput({
   const ref = useRef<HTMLInputElement>(null);
 
   const handleClick = (e: MouseEvent<HTMLInputElement>) => {
-    if (onClick) onClick(e);
     setIsOpen((prev) => !prev);
+    if (onClick) onClick(e);
   };
 
   const handleIconClick = () => {
@@ -273,7 +273,7 @@ function PasswordInput({
   );
 }
 
-function DateCustomInput({ type, ...props }: DateCustomProps) {
+function DateCustomInput({ type, onChange, ...props }: DateCustomProps) {
   const textRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
 
@@ -281,6 +281,7 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
     e.target.value = e.target.value.replace(/[^\d/]/g, '');
     if (e.target.value && e.target.validity.valid && dateRef.current)
       dateRef.current.value = '20' + e.target.value.replaceAll('/', '-');
+    if (onChange) onChange(e);
   };
 
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {

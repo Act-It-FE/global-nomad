@@ -27,9 +27,7 @@ export default function MobileReserveModal({
   onReserved,
 }: MobileReserveModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  useClickOutside(modalRef, () => {
-    if (step === 2 || step === 3) onClose();
-  });
+  useClickOutside(modalRef, onClose);
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -58,6 +56,18 @@ export default function MobileReserveModal({
   const timeOptions = selectedDate
     ? (schedules.find((s) => s.date === selectedDate)?.times ?? [])
     : [];
+
+  const handleGoStep2 = () => {
+    setTimeout(() => {
+      setStep(2);
+    }, 10);
+  };
+
+  const handleGoStep3 = () => {
+    setTimeout(() => {
+      setStep(3);
+    });
+  };
 
   const handleReserve = async () => {
     if (!selectedTimeId) return;
@@ -203,7 +213,7 @@ export default function MobileReserveModal({
             <Button
               className='mt-24 h-50 w-full'
               disabled={!selectedDate || !selectedTimeId}
-              onClick={() => setStep(2)}
+              onClick={handleGoStep2}
             >
               다음
             </Button>
@@ -244,7 +254,7 @@ export default function MobileReserveModal({
             <Button
               className='mt-24 h-50 w-full'
               disabled={peopleCount < 1}
-              onClick={() => setStep(3)}
+              onClick={handleGoStep3}
             >
               다음
             </Button>

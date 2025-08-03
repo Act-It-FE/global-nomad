@@ -32,10 +32,13 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# .env 파일 형식 전달을 위해 예외 처리 (배포 단계에서 제거)
+!.env.example
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
+
+

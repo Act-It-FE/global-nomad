@@ -1,14 +1,16 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
+import myActivitiesApi from '@/api/myActivities';
 import {
   ActivitiesDetail,
+  ActivityRegisterPayload,
   ActivityRegisterSchedule,
 } from '@/api/types/activities';
-import { CATEGORY } from '@/api/types/myActivities';
+import { CATEGORY, UpdateMyActivityBody } from '@/api/types/myActivities';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Modal from '@/components/Modal/Modal';
@@ -19,6 +21,17 @@ import getErrorMessage from '@/utils/getErrorMessage';
 
 import DateInput from './_components/DateInput';
 import ImageUploader from './_components/ImageUploader';
+
+const isSameSchedule = (
+  sch1: ActivityRegisterSchedule,
+  sch2: ActivityRegisterSchedule,
+) => {
+  return (
+    sch1.date === sch2.date &&
+    sch1.startTime === sch2.startTime &&
+    sch1.endTime === sch2.endTime
+  );
+};
 
 const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
   if (e.target.value)
@@ -41,7 +54,7 @@ const handleAddress = (e: MouseEvent<HTMLInputElement>) => {
 export default function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get('id');
+  const id = Number(searchParams.get('id'));
   const isMobile = useMediaQuery('mobile');
 
   const [defaultValue, setDefaultValue] = useState<ActivitiesDetail | null>(
@@ -52,11 +65,86 @@ export default function Page() {
   const [subImages, setSubImages] = useState<string[]>([]);
   const [modal, setModal] = useState<ModalProps | null>(null);
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    formData.set('price', String(formData.get('price')).replaceAll(',', ''));
+    formData.set(
+      'category',
+      (document.querySelector('input#category') as HTMLInputElement).value,
+    );
+    if (id) {
+      const data: UpdateMyActivityBody = Object.fromEntries(formData.entries());
+      data.price = Number(data.price);
+      data.bannerImageUrl = bannerImages[0];
+      data.scheduleIdsToRemove = [];
+      defaultValue?.schedules.forEach((sch) => {
+        if (!schedules.find((s) => isSameSchedule(s, sch)))
+          data.scheduleIdsToRemove?.push(sch.id);
+      });
+      data.schedulesToAdd = [];
+      schedules.forEach((sch) => {
+        if (!defaultValue?.schedules.find((s) => isSameSchedule(s, sch)))
+          data.schedulesToAdd?.push(sch);
+      });
+      data.subImageIdsToRemove = [];
+      defaultValue?.subImages.forEach((sub) => {
+        if (!subImages.find((s) => s === sub.imageUrl))
+          data.subImageIdsToRemove?.push(sub.id);
+      });
+      data.subImageUrlsToAdd = [];
+      subImages.forEach((sub) => {
+        if (!defaultValue?.subImages.find((s) => s.imageUrl === sub))
+          data.subImageUrlsToAdd?.push(sub);
+      });
+
+      try {
+        await myActivitiesApi.patch(id, data);
+        setModal({
+          variant: 'onlyText',
+          message: '수정이 완료되었습니다.',
+          onClose: () => router.back(),
+        });
+      } catch (error) {
+        setModal({
+          variant: 'onlyText',
+          message: getErrorMessage(error, '수정에 실패했습니다.'),
+          onClose: () => setModal(null),
+        });
+      }
+    } else {
+      const data: Partial<ActivityRegisterPayload> = Object.fromEntries(
+        formData.entries(),
+      );
+      data.price = Number(data.price);
+      data.schedule = schedules;
+      data.bannerImageUrl = bannerImages[0];
+      data.subImageUrls = subImages;
+
+      try {
+        const response = await activitiesDetailApi.post(
+          data as ActivityRegisterPayload,
+        );
+        setModal({
+          variant: 'onlyText',
+          message: '체험 등록이 완료되었습니다.',
+          onClose: () => router.push('/' + response.id),
+        });
+      } catch (error) {
+        setModal({
+          variant: 'onlyText',
+          message: getErrorMessage(error, '체험 등록에 실패했습니다.'),
+          onClose: () => setModal(null),
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     if (id) {
       (async () => {
         try {
-          const response = await activitiesDetailApi.getDetail(Number(id));
+          const response = await activitiesDetailApi.getDetail(id);
           setDefaultValue(response);
           setSchedules(
             response.schedules.map((sch) => {
@@ -87,6 +175,7 @@ export default function Page() {
           'mx-auto max-w-760 px-24 py-30 md:px-30 md:py-40',
           'flex flex-col gap-24',
         )}
+        onSubmit={handleSubmit}
       >
         <h1 className='txt-18_B h-41 content-center'>내 체험 등록</h1>
         <section className='flex flex-col gap-30'>
@@ -95,6 +184,7 @@ export default function Page() {
               defaultValue={defaultValue?.title}
               id='title'
               label='제목'
+              name='title'
               placeholder='제목을 입력해 주세요'
             />
             <Input
@@ -103,6 +193,7 @@ export default function Page() {
               items={[...CATEGORY]}
               label='카테고리'
               maxHeight='1000px'
+              name='category'
               placeholder='카테고리를 선택해 주세요'
               type='dropdown'
             />
@@ -111,6 +202,7 @@ export default function Page() {
               height={isMobile ? '140px' : '200px'}
               id='description'
               label='설명'
+              name='description'
               placeholder='체험에 대한 설명을 입력해 주세요'
               type='textarea'
             />
@@ -118,6 +210,7 @@ export default function Page() {
               defaultValue={defaultValue?.price.toLocaleString('ko-KR')}
               id='price'
               label='가격'
+              name='price'
               placeholder='체험 금액을 입력해 주세요'
               onChange={handlePriceChange}
             />
@@ -126,6 +219,7 @@ export default function Page() {
               defaultValue={defaultValue?.address}
               id='address'
               label='주소'
+              name='address'
               placeholder='주소를 입력해 주세요'
               onClick={handleAddress}
             />
@@ -178,7 +272,7 @@ export default function Page() {
             />
           </div>
         </section>
-        <Button className='w-120 self-center' size='sm'>
+        <Button className='w-120 self-center' size='sm' type='submit'>
           {id ? '수정' : '등록'}하기
         </Button>
       </form>

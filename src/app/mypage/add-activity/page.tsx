@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
@@ -11,8 +11,11 @@ import {
 import { CATEGORY } from '@/api/types/myActivities';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import Modal from '@/components/Modal/Modal';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { ModalProps } from '@/types/Modal';
 import { cn } from '@/utils/cn';
+import getErrorMessage from '@/utils/getErrorMessage';
 
 import DateInput from './_components/DateInput';
 
@@ -34,6 +37,7 @@ const handleAddress = (e: MouseEvent<HTMLInputElement>) => {
 };
 
 export default function Page() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
   const isMobile = useMediaQuery('mobile');
@@ -42,6 +46,7 @@ export default function Page() {
     null,
   );
   const [schedules, setSchedules] = useState<ActivityRegisterSchedule[]>([]);
+  const [modal, setModal] = useState<ModalProps | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -55,101 +60,113 @@ export default function Page() {
               return rest;
             }),
           );
-        } catch {}
+        } catch (error) {
+          setModal({
+            variant: 'onlyText',
+            message: getErrorMessage(
+              error,
+              '체험 정보를 불러오는 데 실패했습니다.',
+            ),
+            onClose: () => router.back(),
+          });
+        }
       })();
     }
-  }, [id]);
+  }, [id, router]);
 
   return (
-    <form
-      className={cn(
-        'mx-auto max-w-760 px-24 py-30 md:px-30 md:py-40',
-        'flex flex-col gap-24',
-      )}
-    >
-      <h1 className='txt-18_B h-41 content-center'>내 체험 등록</h1>
-      <section className='flex flex-col gap-30'>
-        <div className='flex flex-col gap-24'>
-          <Input
-            defaultValue={defaultValue?.title}
-            id='title'
-            label='제목'
-            placeholder='제목을 입력해 주세요'
-          />
-          <Input
-            defaultValue={defaultValue?.category}
-            id='category'
-            items={[...CATEGORY]}
-            label='카테고리'
-            maxHeight='1000px'
-            placeholder='카테고리를 선택해 주세요'
-            type='dropdown'
-          />
-          <Input
-            defaultValue={defaultValue?.description}
-            height={isMobile ? '140px' : '200px'}
-            id='description'
-            label='설명'
-            placeholder='체험에 대한 설명을 입력해 주세요'
-            type='textarea'
-          />
-          <Input
-            defaultValue={defaultValue?.price.toLocaleString('ko-KR')}
-            id='price'
-            label='가격'
-            placeholder='체험 금액을 입력해 주세요'
-            onChange={handlePriceChange}
-          />
-          <Input
-            readOnly
-            defaultValue={defaultValue?.address}
-            id='address'
-            label='주소'
-            placeholder='주소를 입력해 주세요'
-            onClick={handleAddress}
-          />
-        </div>
-        <div className='flex flex-col gap-18'>
-          <label className='txt-16_B leading-19 text-gray-950'>
-            예약 가능한 시간대
-          </label>
-          <div className='flex flex-col gap-16 md:gap-20'>
-            <DateInput
-              onClick={(sch) => setSchedules((prev) => [...prev, sch])}
+    <>
+      <form
+        className={cn(
+          'mx-auto max-w-760 px-24 py-30 md:px-30 md:py-40',
+          'flex flex-col gap-24',
+        )}
+      >
+        <h1 className='txt-18_B h-41 content-center'>내 체험 등록</h1>
+        <section className='flex flex-col gap-30'>
+          <div className='flex flex-col gap-24'>
+            <Input
+              defaultValue={defaultValue?.title}
+              id='title'
+              label='제목'
+              placeholder='제목을 입력해 주세요'
             />
-            {Boolean(schedules.length) && (
-              <>
-                <hr className='text-gray-100' />
-                {schedules.map((schedule, index) => (
-                  <DateInput
-                    key={schedule.date + schedule.endTime}
-                    defaultValue={schedule}
-                    onClick={() =>
-                      setSchedules((prev) => {
-                        prev.splice(index, 1);
-                        return [...prev];
-                      })
-                    }
-                  />
-                ))}
-              </>
-            )}
+            <Input
+              defaultValue={defaultValue?.category}
+              id='category'
+              items={[...CATEGORY]}
+              label='카테고리'
+              maxHeight='1000px'
+              placeholder='카테고리를 선택해 주세요'
+              type='dropdown'
+            />
+            <Input
+              defaultValue={defaultValue?.description}
+              height={isMobile ? '140px' : '200px'}
+              id='description'
+              label='설명'
+              placeholder='체험에 대한 설명을 입력해 주세요'
+              type='textarea'
+            />
+            <Input
+              defaultValue={defaultValue?.price.toLocaleString('ko-KR')}
+              id='price'
+              label='가격'
+              placeholder='체험 금액을 입력해 주세요'
+              onChange={handlePriceChange}
+            />
+            <Input
+              readOnly
+              defaultValue={defaultValue?.address}
+              id='address'
+              label='주소'
+              placeholder='주소를 입력해 주세요'
+              onClick={handleAddress}
+            />
           </div>
-        </div>
-        <div>
-          <label className='txt-16_B leading-19 text-gray-950'>
-            배너 이미지 등록
-          </label>
-        </div>
-        <div>
-          <label className='txt-16_B leading-19 text-gray-950'>
-            소개 이미지 등록
-          </label>
-        </div>
-      </section>
-      <Button className='w-120 self-center' size='sm'>
-        {id ? '수정' : '등록'}하기
-      </Button>
-    </form>
+          <div className='flex flex-col gap-18'>
+            <label className='txt-16_B leading-19 text-gray-950'>
+              예약 가능한 시간대
+            </label>
+            <div className='flex flex-col gap-16 md:gap-20'>
+              <DateInput
+                onClick={(sch) => setSchedules((prev) => [...prev, sch])}
+              />
+              {Boolean(schedules.length) && (
+                <>
+                  <hr className='text-gray-100' />
+                  {schedules.map((schedule, index) => (
+                    <DateInput
+                      key={schedule.date + schedule.endTime}
+                      defaultValue={schedule}
+                      onClick={() =>
+                        setSchedules((prev) => {
+                          prev.splice(index, 1);
+                          return [...prev];
+                        })
+                      }
+                    />
+                  ))}
+                </>
+              )}
+            </div>
+          </div>
+          <div>
+            <label className='txt-16_B leading-19 text-gray-950'>
+              배너 이미지 등록
+            </label>
+          </div>
+          <div>
+            <label className='txt-16_B leading-19 text-gray-950'>
+              소개 이미지 등록
+            </label>
+          </div>
+        </section>
+        <Button className='w-120 self-center' size='sm'>
+          {id ? '수정' : '등록'}하기
+        </Button>
+      </form>
+      {modal && <Modal {...modal} />}
+    </>
   );
 }

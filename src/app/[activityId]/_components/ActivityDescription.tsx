@@ -31,7 +31,7 @@ export default function ActivityDescription({ activityId }: Props) {
       <div className='flex w-full gap-12'>
         {bannerImageUrl && (
           <div
-            className={`aspect-[6/3] min-h-240 overflow-hidden ${
+            className={`aspect-[6/3] overflow-hidden ${
               subImages.length === 0 ? 'w-full' : 'w-1/2'
             }`}
           >
@@ -51,7 +51,13 @@ export default function ActivityDescription({ activityId }: Props) {
           className={`flex ${getImageColumnWrapperClass(isSingleSubImage)} flex-col gap-12`}
         >
           {subImages[0] && (
-            <div className='aspect-[6/3] flex-1 overflow-hidden'>
+            <div
+              className={`${
+                subImages.length === 1
+                  ? 'h-full flex-1 overflow-hidden'
+                  : 'aspect-[6/3] flex-1 overflow-hidden'
+              }`}
+            >
               <img
                 alt='서브 이미지 1'
                 className={getSubImageClass({

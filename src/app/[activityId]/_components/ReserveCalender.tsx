@@ -9,12 +9,12 @@ import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvail
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useUserStore } from '@/stores/userStore';
-import { getCalendarDates, getMonthNameEnglish } from '@/utils/dateUtils';
+import {
+  getCalendarDates,
+  getMonthNameEnglish,
+  isSameMonth,
+} from '@/utils/dateUtils';
 import getErrorMessage from '@/utils/getErrorMessage';
-
-const isSameMonth = (base: Date, target: Date) =>
-  base.getFullYear() === target.getFullYear() &&
-  base.getMonth() === target.getMonth();
 
 interface ReserveCalenderProps {
   activityId: number;

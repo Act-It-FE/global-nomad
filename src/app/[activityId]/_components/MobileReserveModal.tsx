@@ -9,11 +9,11 @@ import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useUserStore } from '@/stores/userStore';
-import { getCalendarDates, getMonthNameEnglish } from '@/utils/dateUtils';
-
-const isSameMonth = (base: Date, target: Date) =>
-  base.getFullYear() === target.getFullYear() &&
-  base.getMonth() === target.getMonth();
+import {
+  getCalendarDates,
+  getMonthNameEnglish,
+  isSameMonth,
+} from '@/utils/dateUtils';
 
 interface MobileReserveModalProps {
   activityId: number;

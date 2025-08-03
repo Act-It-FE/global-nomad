@@ -18,6 +18,7 @@ import { cn } from '@/utils/cn';
 import getErrorMessage from '@/utils/getErrorMessage';
 
 import DateInput from './_components/DateInput';
+import ImageUploader from './_components/ImageUploader';
 
 const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
   if (e.target.value)
@@ -46,6 +47,8 @@ export default function Page() {
     null,
   );
   const [schedules, setSchedules] = useState<ActivityRegisterSchedule[]>([]);
+  const [bannerImages, setBannerImages] = useState<string[]>([]);
+  const [subImages, setSubImages] = useState<string[]>([]);
   const [modal, setModal] = useState<ModalProps | null>(null);
 
   useEffect(() => {
@@ -60,6 +63,8 @@ export default function Page() {
               return rest;
             }),
           );
+          setBannerImages([response.bannerImageUrl]);
+          setSubImages(response.subImages.map((subimage) => subimage.imageUrl));
         } catch (error) {
           setModal({
             variant: 'onlyText',
@@ -155,11 +160,21 @@ export default function Page() {
             <label className='txt-16_B leading-19 text-gray-950'>
               배너 이미지 등록
             </label>
+            <ImageUploader
+              imageURLs={bannerImages}
+              max={1}
+              setImageURLs={setBannerImages}
+            />
           </div>
           <div>
             <label className='txt-16_B leading-19 text-gray-950'>
               소개 이미지 등록
             </label>
+            <ImageUploader
+              imageURLs={subImages}
+              max={4}
+              setImageURLs={setSubImages}
+            />
           </div>
         </section>
         <Button className='w-120 self-center' size='sm'>

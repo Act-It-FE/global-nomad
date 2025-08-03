@@ -132,7 +132,7 @@ export default function MobileReserveModal({
         </div>
 
         {/* 캘린더 */}
-        <div className='grid grid-cols-7 items-center gap-10 text-center'>
+        <div className='grid grid-cols-7 gap-10 text-center'>
           {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
             <div
               key={`${day}-${index}`}
@@ -148,7 +148,7 @@ export default function MobileReserveModal({
             return (
               <div
                 key={date.toISOString()}
-                className={`txt-16_M aspect-square cursor-pointer rounded-full py-6 text-center ${
+                className={`txt-16_M flex aspect-square cursor-pointer items-center justify-center rounded-full text-center ${
                   isAvailable
                     ? 'hover:bg-primary-100 hover:text-primary-500 text-gray-800'
                     : 'text-gray-300'

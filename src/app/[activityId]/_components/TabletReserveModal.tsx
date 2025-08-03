@@ -132,9 +132,12 @@ export default function TabletReserveModal({
         <div className='flex h-420 flex-col gap-20 md:flex-row'>
           {/* 캘린더 */}
           <div className='w-full md:w-1/2'>
-            <div className='grid grid-cols-7 items-center gap-10 text-center'>
+            <div className='flex grid grid-cols-7 items-center justify-center gap-10 text-center'>
               {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-                <div key={`${day}-${index}`} className='txt-14_B text-center'>
+                <div
+                  key={`${day}-${index}`}
+                  className='txt-14_B items-center text-center'
+                >
                   {day}
                 </div>
               ))}
@@ -145,7 +148,7 @@ export default function TabletReserveModal({
                 return (
                   <div
                     key={date.toISOString()}
-                    className={`txt-16_M aspect-square cursor-pointer rounded-full py-6 text-center ${
+                    className={`txt-16_M flex aspect-square cursor-pointer items-center justify-center rounded-full text-center ${
                       isAvailable
                         ? 'hover:bg-primary-100 hover:text-primary-500 text-gray-800'
                         : 'text-gray-300'

@@ -62,23 +62,6 @@ export default function KakaoCallbackPage() {
 
     if (flow === 'signUp') {
       try {
-        // const kakaoToken = await fetchKakaoToken(code!, redirectUri);
-        // console.log('kakaoAccessToken:', kakaoToken);
-
-        // //액세스 토큰 → 프로필 닉네임 조회
-        // const nickname = await fetchKakaoProfile(kakaoToken);
-        // console.log('nickname:', nickname);
-
-        // //토큰 교환에 사용한 code가 아니라, 액세스 토큰(kakaoToken)
-        // const signupData = await oAuthApi.postSignUp(
-        //   { redirectUri, token: kakaoToken, nickname },
-        //   'kakao' as OAuthAppProvider,
-        // );
-        // setUser(signupData.user);
-        // localStorage.setItem('accessToken', signupData.accessToken);
-        // localStorage.setItem('refreshToken', signupData.refreshToken);
-
-        //
         const signupData = await oAuthApi.postSignUp(
           {
             redirectUri,

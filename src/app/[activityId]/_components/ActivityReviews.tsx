@@ -33,7 +33,7 @@ export default function ActivityReviews({ activityId }: Props) {
   };
 
   return (
-    <div className='my-40'>
+    <div className='py-40'>
       <div className='txt-16_B md:txt-18_B flex flex-row gap-10 leading-19 md:leading-21'>
         체험 후기
         <span className='md:txt-16_B txt-14_M leading-20 font-semibold text-gray-500 md:leading-20'>

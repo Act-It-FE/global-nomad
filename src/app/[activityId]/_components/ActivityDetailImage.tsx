@@ -19,7 +19,7 @@ export default function ActivityDetailImage({ activityId }: Props) {
   if (isLoading || errorMessage) return null;
 
   return (
-    <section className='my-40 flex w-full gap-12'>
+    <section className='flex w-full gap-12'>
       {bannerImageUrl && (
         <div
           className={`aspect-[6/3] overflow-hidden ${

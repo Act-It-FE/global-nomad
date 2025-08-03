@@ -87,21 +87,15 @@ export default function Page() {
             {Boolean(schedules.length) && (
               <>
                 <hr className='text-gray-100' />
-                {schedules.map((schedule) => (
+                {schedules.map((schedule, index) => (
                   <DateInput
                     key={schedule.date + schedule.endTime}
                     defaultValue={schedule}
-                    onClick={(sch) =>
-                      setSchedules((prev) =>
-                        prev.filter(
-                          (ele) =>
-                            !(
-                              ele.date === sch.date &&
-                              ele.startTime === sch.startTime &&
-                              ele.endTime === sch.endTime
-                            ),
-                        ),
-                      )
+                    onClick={() =>
+                      setSchedules((prev) => {
+                        prev.splice(index, 1);
+                        return [...prev];
+                      })
                     }
                   />
                 ))}

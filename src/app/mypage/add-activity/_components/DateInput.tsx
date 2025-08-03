@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 
 import { ActivityRegisterSchedule } from '@/api/types/activities';
 import Icon from '@/components/Icon';
@@ -18,20 +18,42 @@ interface Props {
 }
 
 export default function DateInput({ defaultValue, onClick }: Props) {
+  const [errorMessage, setErrorMessage] = useState('');
+  const [disabled, setDisabled] = useState(defaultValue ? false : true);
   const ref = useRef<HTMLDivElement>(null);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const dateString =
+      e.target.value.length < 10
+        ? '20' + e.target.value.replaceAll('/', '-')
+        : e.target.value;
+    if (
+      e.target.validity.valid &&
+      dateString === new Date(dateString).toISOString().slice(0, 10)
+    ) {
+      setErrorMessage('');
+      setDisabled(false);
+    } else {
+      setErrorMessage('yy/mm/dd 형식으로 입력해주세요');
+      setDisabled(true);
+    }
+  };
 
   const handleClick = () => {
     const inputs = ref.current?.querySelectorAll('input');
     const obj = defaultValue ?? { date: '', startTime: '', endTime: '' };
-    inputs?.forEach(
-      (input) =>
-        (obj[input.id as keyof ActivityRegisterSchedule] = input.value),
-    );
+    inputs?.forEach((input) => {
+      obj[input.id as keyof ActivityRegisterSchedule] = input.value;
+      input.value = '';
+    });
     onClick(obj);
   };
 
   return (
-    <div ref={ref} className='flex flex-col gap-10 md:flex-row md:gap-14'>
+    <div
+      ref={ref}
+      className='flex flex-col items-start gap-10 md:flex-row md:gap-14'
+    >
       {defaultValue ? (
         <Input
           className='w-full'
@@ -51,7 +73,12 @@ export default function DateInput({ defaultValue, onClick }: Props) {
           >
             날짜
           </label>
-          <Input id='date' type='date-custom' />
+          <Input
+            errorMessage={errorMessage}
+            id='date'
+            type='date-custom'
+            onChange={handleChange}
+          />
         </div>
       )}
       <div className='flex items-center gap-14'>
@@ -111,6 +138,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
               ? 'bg-gray-50 text-black'
               : 'bg-primary-500 text-white md:mt-29',
           )}
+          disabled={disabled}
           type='button'
           onClick={handleClick}
         >

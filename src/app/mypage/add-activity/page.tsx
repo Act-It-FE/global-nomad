@@ -1,9 +1,13 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 
-import { ActivityRegisterSchedule } from '@/api/types/activities';
+import activitiesDetailApi from '@/api/activitiesApi';
+import {
+  ActivitiesDetail,
+  ActivityRegisterSchedule,
+} from '@/api/types/activities';
 import { CATEGORY } from '@/api/types/myActivities';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
@@ -34,7 +38,27 @@ export default function Page() {
   const id = searchParams.get('id');
   const isMobile = useMediaQuery('mobile');
 
+  const [defaultValue, setDefaultValue] = useState<ActivitiesDetail | null>(
+    null,
+  );
   const [schedules, setSchedules] = useState<ActivityRegisterSchedule[]>([]);
+
+  useEffect(() => {
+    if (id) {
+      (async () => {
+        try {
+          const response = await activitiesDetailApi.getDetail(Number(id));
+          setDefaultValue(response);
+          setSchedules(
+            response.schedules.map((sch) => {
+              const { id, ...rest } = sch;
+              return rest;
+            }),
+          );
+        } catch {}
+      })();
+    }
+  }, [id]);
 
   return (
     <form
@@ -46,8 +70,14 @@ export default function Page() {
       <h1 className='txt-18_B h-41 content-center'>내 체험 등록</h1>
       <section className='flex flex-col gap-30'>
         <div className='flex flex-col gap-24'>
-          <Input id='title' label='제목' placeholder='제목을 입력해 주세요' />
           <Input
+            defaultValue={defaultValue?.title}
+            id='title'
+            label='제목'
+            placeholder='제목을 입력해 주세요'
+          />
+          <Input
+            defaultValue={defaultValue?.category}
             id='category'
             items={[...CATEGORY]}
             label='카테고리'
@@ -56,6 +86,7 @@ export default function Page() {
             type='dropdown'
           />
           <Input
+            defaultValue={defaultValue?.description}
             height={isMobile ? '140px' : '200px'}
             id='description'
             label='설명'
@@ -63,6 +94,7 @@ export default function Page() {
             type='textarea'
           />
           <Input
+            defaultValue={defaultValue?.price.toLocaleString('ko-KR')}
             id='price'
             label='가격'
             placeholder='체험 금액을 입력해 주세요'
@@ -70,6 +102,7 @@ export default function Page() {
           />
           <Input
             readOnly
+            defaultValue={defaultValue?.address}
             id='address'
             label='주소'
             placeholder='주소를 입력해 주세요'

@@ -28,6 +28,7 @@ export default function ActivityDetail() {
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [creatorId, setCreatorId] = useState<number | null>(null);
+  const [isAlertModal, setIsAlertModal] = useState(false);
 
   const user = useUserStore((state) => state.user);
   const myUserId = user?.id;
@@ -102,7 +103,7 @@ export default function ActivityDetail() {
                       className='txt-16_B text-primary-500 underline'
                       onClick={() => {
                         if (isMyActivity) {
-                          alert('내가 생성한 체험은 예약할 수 없습니다.');
+                          setIsAlertModal(true);
                         } else {
                           setIsReserveModalOpen(true);
                         }
@@ -170,6 +171,13 @@ export default function ActivityDetail() {
           message='예약이 완료되었습니다!'
           variant='onlyText'
           onClose={() => setIsSuccessModalOpen(false)}
+        />
+      )}
+      {isAlertModal && (
+        <Modal
+          message='내가 생성한 체험은 예약할 수 없습니다.'
+          variant='onlyText'
+          onClose={() => setIsAlertModal(false)}
         />
       )}
     </>

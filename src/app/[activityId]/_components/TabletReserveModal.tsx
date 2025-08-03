@@ -87,7 +87,7 @@ export default function TabletReserveModal({
     <div className='fixed inset-0 z-50 flex items-end justify-center bg-black/40'>
       <div
         ref={modalRef}
-        className='max-h-[80vh] w-full overflow-y-auto rounded-t-2xl bg-white p-20 md:w-full md:rounded-2xl'
+        className='max-h-[80vh] w-full overflow-y-auto rounded-t-2xl bg-white p-20'
       >
         {/* 달 상단 */}
         <div className='txt-20_B'>날짜</div>
@@ -129,9 +129,9 @@ export default function TabletReserveModal({
         </div>
 
         {/* 캘린더 + 시간/인원 */}
-        <div className='flex h-420 flex-col gap-20 md:flex-row'>
+        <div className='flex h-420 flex-row gap-20'>
           {/* 캘린더 */}
-          <div className='w-full md:w-1/2'>
+          <div className='w-1/2'>
             <div className='flex grid grid-cols-7 items-center justify-center gap-10 text-center'>
               {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
                 <div
@@ -169,7 +169,7 @@ export default function TabletReserveModal({
           </div>
 
           {/* 시간 / 인원 수 선택 */}
-          <div className='card-shadow w-full rounded-[24px] px-20 py-24 md:w-1/2'>
+          <div className='card-shadow w-1/2 rounded-[24px] px-20 py-24'>
             <div className='txt-16_B mb-10'>예약 가능한 시간</div>
             {selectedDate ? (
               <>
@@ -226,7 +226,7 @@ export default function TabletReserveModal({
                     <p className='txt-16_M text-gray-300'>/ {peopleCount} 명</p>
                   </div>
                   {selectedDate && selectedTimeId && (
-                    <span className='txt-14_B text-primary-500 underline'>
+                    <span className='txt-14_B text-primary-500 mt-10 underline'>
                       {selectedDate.replaceAll('-', '/')}{' '}
                       {
                         timeOptions.find((t) => t.id === selectedTimeId)

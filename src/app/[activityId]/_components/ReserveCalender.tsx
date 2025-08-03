@@ -6,14 +6,14 @@ import activitiesApi from '@/api/activitiesApi';
 import { ApiError } from '@/api/types/auth';
 import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
+import {
+  getMonthNameEnglish,
+  isSameMonth,
+} from '@/app/[activityId]/_utils/activityDetailDates';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useUserStore } from '@/stores/userStore';
-import {
-  getCalendarDates,
-  getMonthNameEnglish,
-  isSameMonth,
-} from '@/utils/dateUtils';
+import { getCalendarDates } from '@/utils/dateUtils';
 import getErrorMessage from '@/utils/getErrorMessage';
 
 interface ReserveCalenderProps {

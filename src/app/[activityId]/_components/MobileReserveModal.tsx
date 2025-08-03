@@ -5,15 +5,15 @@ import { useEffect, useRef, useState } from 'react';
 import activitiesApi from '@/api/activitiesApi';
 import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
+import {
+  getMonthNameEnglish,
+  isSameMonth,
+} from '@/app/[activityId]/_utils/activityDetailDates';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useUserStore } from '@/stores/userStore';
-import {
-  getCalendarDates,
-  getMonthNameEnglish,
-  isSameMonth,
-} from '@/utils/dateUtils';
+import { getCalendarDates } from '@/utils/dateUtils';
 
 interface MobileReserveModalProps {
   activityId: number;

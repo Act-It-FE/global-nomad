@@ -287,6 +287,7 @@ function DateCustomInput({ type, onChange, ...props }: DateCustomProps) {
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (textRef.current)
       textRef.current.value = e.target.value.replaceAll('-', '/').slice(2);
+    if (onChange) onChange(e);
   };
 
   return (

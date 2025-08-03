@@ -22,6 +22,7 @@ export default function FallbackImage({
     <img
       alt={alt}
       className={className}
+      draggable={false}
       src={src || fallbackSrc}
       onError={handleError}
     />

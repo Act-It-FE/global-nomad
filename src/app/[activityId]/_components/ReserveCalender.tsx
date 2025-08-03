@@ -9,7 +9,7 @@ import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvail
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useUserStore } from '@/stores/userStore';
-import { getCalendarDates } from '@/utils/dateUtils';
+import { getCalendarDates, getMonthNameEnglish } from '@/utils/dateUtils';
 import getErrorMessage from '@/utils/getErrorMessage';
 
 const isSameMonth = (base: Date, target: Date) =>
@@ -92,11 +92,6 @@ export default function ReserveCalender({
 
   const isMyActivity = user && detail && user.id === detail.userId;
   if (isMyActivity) return null;
-
-  const getMonthNameEnglish = (date: Date): string =>
-    new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
-      date,
-    );
 
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>

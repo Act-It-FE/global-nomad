@@ -72,3 +72,9 @@ export const formatDateForAPI = (date: Date) => ({
   year: date.getFullYear().toString(),
   month: (date.getMonth() + 1).toString().padStart(2, '0'),
 });
+
+// 달 이름 영어로 변경
+export const getMonthNameEnglish = (date: Date): string =>
+  new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
+    date,
+  );

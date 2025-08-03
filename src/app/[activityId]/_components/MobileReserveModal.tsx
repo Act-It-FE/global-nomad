@@ -9,7 +9,7 @@ import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useUserStore } from '@/stores/userStore';
-import { getCalendarDates } from '@/utils/dateUtils';
+import { getCalendarDates, getMonthNameEnglish } from '@/utils/dateUtils';
 
 const isSameMonth = (base: Date, target: Date) =>
   base.getFullYear() === target.getFullYear() &&
@@ -75,11 +75,6 @@ export default function MobileReserveModal({
       setIsLoading(false);
     }
   };
-
-  const getMonthNameEnglish = (date: Date): string =>
-    new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
-      date,
-    );
 
   useEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;

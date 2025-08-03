@@ -9,7 +9,7 @@ import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useUserStore } from '@/stores/userStore';
-import { getCalendarDates } from '@/utils/dateUtils';
+import { getCalendarDates, getMonthNameEnglish } from '@/utils/dateUtils';
 
 const isSameMonth = (base: Date, target: Date) =>
   base.getFullYear() === target.getFullYear() &&
@@ -92,12 +92,7 @@ export default function TabletReserveModal({
         {/* 달 상단 */}
         <div className='txt-20_B'>날짜</div>
         <div className='my-20 flex justify-between'>
-          <p className='txt-16_M'>
-            {new Intl.DateTimeFormat('en-US', {
-              year: 'numeric',
-              month: 'long',
-            }).format(currentDate)}
-          </p>
+          <p className='txt-16_M'>{getMonthNameEnglish(currentDate)}</p>
           <div className='flex gap-10'>
             <button
               onClick={() =>

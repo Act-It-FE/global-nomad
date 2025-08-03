@@ -1,10 +1,10 @@
 'use client';
 
-import { useParams } from 'next/navigation';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import activitiesDetailApi from '@/api/activitiesApi';
+import { ActivitiesDetail } from '@/api/types/activities';
 import Button from '@/components/Button';
 import Modal from '@/components/Modal/Modal';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -22,12 +22,10 @@ import TabletReserveModal from './_components/TabletReserveModal';
 
 export default function ActivityDetail() {
   const { activityId } = useParams();
-  const [address, setAddress] = useState('');
+  const [activity, setActivity] = useState<ActivitiesDetail | null>(null);
   const [error, setError] = useState('');
-  const [price, setPrice] = useState<number | null>(null);
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  const [creatorId, setCreatorId] = useState<number | null>(null);
   const [isAlertModal, setIsAlertModal] = useState(false);
 
   const user = useUserStore((state) => state.user);
@@ -44,10 +42,8 @@ export default function ActivityDetail() {
 
     const fetchData = async () => {
       try {
-        const activity = await activitiesDetailApi.getDetail(id);
-        setAddress(activity.address);
-        setPrice(activity.price);
-        setCreatorId(activity.userId);
+        const data = await activitiesDetailApi.getDetail(id);
+        setActivity(data);
       } catch (error) {
         const message = getErrorMessage(
           error,
@@ -61,7 +57,7 @@ export default function ActivityDetail() {
     fetchData();
   }, [activityId]);
 
-  const isMyActivity = myUserId !== undefined && myUserId === creatorId;
+  const isMyActivity = myUserId !== undefined && myUserId === activity?.userId;
 
   if (error) {
     return (
@@ -71,7 +67,7 @@ export default function ActivityDetail() {
     );
   }
 
-  if (!address) {
+  if (!activity) {
     return (
       <div className='flex h-200 items-center justify-center text-gray-500'>
         <div className='border-primary-500 size-50 animate-spin rounded-full border-2 border-t-transparent' />
@@ -86,14 +82,14 @@ export default function ActivityDetail() {
           <div className='flex flex-1 flex-col gap-40'>
             {isTablet || isMobile ? (
               <>
-                <ActivityDetailImage activityId={Number(activityId)} />
-                <ActivitySummary activityId={Number(activityId)} />
-                <ActivityDescription activityId={Number(activityId)} />
+                <ActivityDetailImage activityId={activity.id} />
+                <ActivitySummary activityId={activity.id} />
+                <ActivityDescription activityId={activity.id} />
 
                 <div>
                   <div className='flex flex-row justify-between'>
                     <p className='txt-18_B'>
-                      ₩ {price?.toLocaleString()}
+                      ₩ {activity.price.toLocaleString()}
                       <span className='txt-16_M leading-19 text-gray-300'>
                         {' '}
                         / 1명
@@ -117,47 +113,44 @@ export default function ActivityDetail() {
                   </Button>
                 </div>
 
-                {isReserveModalOpen && (
-                  <>
-                    {isTablet ? (
-                      <TabletReserveModal
-                        activityId={Number(activityId)}
-                        onClose={() => setIsReserveModalOpen(false)}
-                        onReserved={() => {
-                          setIsReserveModalOpen(false);
-                          setIsSuccessModalOpen(true);
-                        }}
-                      />
-                    ) : (
-                      <MobileReserveModal
-                        activityId={Number(activityId)}
-                        onClose={() => setIsReserveModalOpen(false)}
-                        onReserved={() => {
-                          setIsReserveModalOpen(false);
-                          setIsSuccessModalOpen(true);
-                        }}
-                      />
-                    )}
-                  </>
-                )}
+                {isReserveModalOpen &&
+                  (isTablet ? (
+                    <TabletReserveModal
+                      activityId={activity.id}
+                      onClose={() => setIsReserveModalOpen(false)}
+                      onReserved={() => {
+                        setIsReserveModalOpen(false);
+                        setIsSuccessModalOpen(true);
+                      }}
+                    />
+                  ) : (
+                    <MobileReserveModal
+                      activityId={activity.id}
+                      onClose={() => setIsReserveModalOpen(false)}
+                      onReserved={() => {
+                        setIsReserveModalOpen(false);
+                        setIsSuccessModalOpen(true);
+                      }}
+                    />
+                  ))}
               </>
             ) : (
               <>
-                <ActivityDetailImage activityId={Number(activityId)} />
-                <ActivityDescription activityId={Number(activityId)} />
+                <ActivityDetailImage activityId={activity.id} />
+                <ActivityDescription activityId={activity.id} />
               </>
             )}
 
-            <LoadKakaoMap address={address} />
-            <ActivityReviews activityId={Number(activityId)} />
+            <LoadKakaoMap address={activity.address} />
+            <ActivityReviews activityId={activity.id} />
           </div>
 
           {isPC && (
             <aside className='mt-40 w-full shrink-0 lg:mt-0 lg:w-410'>
-              <ActivitySummary activityId={Number(activityId)} />
+              <ActivitySummary activityId={activity.id} />
               <section className='mt-40'>
                 <ReserveCalender
-                  activityId={Number(activityId)}
+                  activityId={activity.id}
                   onReserved={() => setIsSuccessModalOpen(true)}
                 />
               </section>

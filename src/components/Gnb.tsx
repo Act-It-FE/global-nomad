@@ -2,33 +2,24 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import AlarmActive from '@/assets/icons/alarm_active.svg';
+import AlarmInActive from '@/assets/icons/alarm_inactive.svg';
 import useMyNotifyQuery from '@/hooks/myNotifications/useMyNotifyQuery';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useUserStore } from '@/stores/userStore';
 import { cn } from '@/utils/cn';
 
 import DropDown from './DropDown';
 import NotificationPanel from './NotificationPanel';
 
-interface TemporaryProps {
-  user?: {
-    id: number;
-    email?: string;
-    nickname: string;
-    profileImageUrl: string | null;
-    createdAt?: string;
-    updatedAt?: string;
-  };
-}
-
 const imgDefaultProfile = '/images/profile-default.svg';
 const imgLogoText = '/images/logo-sm-text.png';
 const imgLogo = '/images/logo-sm.png';
 
-export default function Gnb({ user }: TemporaryProps) {
+export default function Gnb() {
   const router = useRouter();
   const isMobile = useMediaQuery('mobile');
   const [isOpen, setIsOpen] = useState(false);
@@ -39,70 +30,86 @@ export default function Gnb({ user }: TemporaryProps) {
     fetchNextPage,
   } = useMyNotifyQuery();
 
+  const totalCount = notifications?.pages?.[0]?.totalCount || 0;
+  const user = useUserStore((s) => s.user);
+  const clearUser = useUserStore((s) => s.clearUser);
+  const pathname = usePathname();
+  if (pathname === '/login' || pathname === '/signup') {
+    return null;
+  }
   return (
     <nav
       className={cn(
-        'sticky top-0 right-0 left-0 z-50',
-        'flex items-center justify-between',
-        'mx-auto h-48 max-w-1580 px-24 md:h-80 md:px-30',
-        'bg-white',
+        'sticky top-0 right-0 left-0 z-50 w-full',
+        'bg-white/60 backdrop-blur-md',
       )}
     >
-      <Link href='/'>
-        <Image
-          alt='logo'
-          className='max-md:hidden'
-          height={28}
-          src={imgLogoText}
-          width={174}
-        />
-        <Image
-          alt='logo'
-          className='md:hidden'
-          height={28}
-          src={imgLogo}
-          width={28}
-        />
-      </Link>
       <div
         className={cn(
-          'txt-14_M flex items-center text-gray-950',
-          user ? 'gap-20' : 'gap-10 md:gap-12',
+          'flex items-center justify-between',
+          'mx-auto h-48 max-w-1580 px-24 md:h-80 md:px-30',
         )}
       >
-        {user ? (
-          <>
-            <div className='relative'>
-              <button type='button' onClick={() => setIsOpen((prev) => !prev)}>
-                <AlarmActive
-                  className={cn(
-                    'size-24',
-                    isOpen ? 'text-primary-500' : 'text-gray-600',
+        <Link href='/'>
+          <Image
+            alt='logo'
+            className='max-md:hidden'
+            height={28}
+            src={imgLogoText}
+            width={174}
+          />
+          <Image
+            alt='logo'
+            className='md:hidden'
+            height={28}
+            src={imgLogo}
+            width={28}
+          />
+        </Link>
+        <div
+          className={cn(
+            'txt-14_M flex items-center text-gray-950',
+            user ? 'gap-20' : 'gap-10 md:gap-12',
+          )}
+        >
+          {user ? (
+            <>
+              <div className='relative'>
+                <button
+                  type='button'
+                  onClick={() => setIsOpen((prev) => !prev)}
+                >
+                  {totalCount === 0 ? (
+                    <AlarmInActive
+                      className={cn(
+                        'size-24',
+                        isOpen ? 'text-primary-500' : 'text-gray-600',
+                      )}
+                    />
+                  ) : (
+                    <AlarmActive
+                      className={cn(
+                        'size-24',
+                        isOpen ? 'text-primary-500' : 'text-gray-600',
+                      )}
+                    />
                   )}
+                </button>
+                <NotificationPanel
+                  fetchNextPage={fetchNextPage}
+                  hasNextPage={hasNextPage}
+                  isFetchingNextPage={isFetchingNextPage}
+                  list={
+                    notifications?.pages.flatMap(
+                      (page) => page.notifications,
+                    ) || []
+                  }
+                  open={isOpen}
+                  totalCount={totalCount}
+                  onClose={() => setIsOpen(false)}
                 />
-              </button>
-              <NotificationPanel
-                fetchNextPage={fetchNextPage}
-                hasNextPage={hasNextPage}
-                isFetchingNextPage={isFetchingNextPage}
-                list={
-                  notifications?.pages.flatMap((page) => page.notifications) ||
-                  []
-                }
-                open={isOpen}
-                totalCount={notifications?.pages?.[0]?.totalCount || 0}
-                onClose={() => setIsOpen(false)}
-              />
-            </div>
-            <div className='h-14 w-1 bg-gray-100' />
-            <div className='flex items-center gap-10'>
-              <Image
-                alt='profile image'
-                className='size-30 rounded-full object-cover'
-                height={30}
-                src={user.profileImageUrl ?? imgDefaultProfile}
-                width={30}
-              />
+              </div>
+              <div className='h-14 w-1 bg-gray-100' />
               <DropDown
                 items={[
                   {
@@ -113,24 +120,38 @@ export default function Gnb({ user }: TemporaryProps) {
                   {
                     text: '로그아웃',
                     danger: true,
-                    onClick: () => {},
+                    onClick: () => {
+                      clearUser();
+                      router.push('/');
+                    },
                   },
                 ]}
                 position='bottom'
-                trigger={user.nickname}
+                trigger={
+                  <div className='flex items-center gap-10'>
+                    <Image
+                      alt='profile image'
+                      className='size-30 rounded-full object-cover'
+                      height={30}
+                      src={user.profileImageUrl ?? imgDefaultProfile}
+                      width={30}
+                    />
+                    {user.nickname}
+                  </div>
+                }
               />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className='w-60 text-center md:w-70'>
-              <Link href='/login'>로그인</Link>
-            </div>
-            <div className='w-60 text-center md:w-70'>
-              <Link href='/signup'>회원가입</Link>
-            </div>
-          </>
-        )}
+            </>
+          ) : (
+            <>
+              <div className='w-60 text-center md:w-70'>
+                <Link href='/login'>로그인</Link>
+              </div>
+              <div className='w-60 text-center md:w-70'>
+                <Link href='/signup'>회원가입</Link>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );

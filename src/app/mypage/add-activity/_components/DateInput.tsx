@@ -21,6 +21,8 @@ export default function DateInput({ defaultValue, onClick }: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(defaultValue ? false : true);
   const [key, setKey] = useState(0);
+  const [startSelected, setStartSelected] = useState(false);
+  const [endSelected, setEndSelected] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,14 +43,34 @@ export default function DateInput({ defaultValue, onClick }: Props) {
   };
 
   const handleClick = () => {
-    const inputs = ref.current?.querySelectorAll('input');
-    const obj = defaultValue ?? { date: '', startTime: '', endTime: '' };
-    inputs?.forEach((input) => {
-      obj[input.id as keyof ActivityRegisterSchedule] = input.value;
-      input.value = '';
-    });
-    setKey((prev) => prev + 1);
-    onClick(obj);
+    if (defaultValue) {
+      onClick(defaultValue);
+    } else {
+      const dateInput = ref.current?.querySelector(
+        'input#date',
+      ) as HTMLInputElement;
+      const startTimeInput = ref.current?.querySelector(
+        'input#startTime',
+      ) as HTMLInputElement;
+      const endTimeInput = ref.current?.querySelector(
+        'input#endTime',
+      ) as HTMLInputElement;
+      if (
+        dateInput.value &&
+        startTimeInput.value !== endTimeInput.value &&
+        startSelected &&
+        endSelected
+      ) {
+        const obj = {
+          date: dateInput.value,
+          startTime: startTimeInput.value,
+          endTime: endTimeInput.value,
+        };
+        dateInput.value = '';
+        if (!defaultValue) setKey((prev) => prev + 1);
+        onClick(obj);
+      }
+    }
   };
 
   return (
@@ -113,6 +135,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
                 items={TIME_LIST}
                 placeholder='00:00'
                 type='dropdown'
+                onDropdownSelect={() => setStartSelected(true)}
               />
             )}
             <div className='h-2 w-8 bg-gray-800' />
@@ -133,6 +156,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
                 items={TIME_LIST}
                 placeholder='00:00'
                 type='dropdown'
+                onDropdownSelect={() => setEndSelected(true)}
               />
             )}
           </div>

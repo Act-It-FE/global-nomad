@@ -12,7 +12,7 @@ import {
 import DropDown from '@/components/DropDown';
 import Icon from '@/components/Icon';
 import { WarningContent } from '@/components/Modal/contents/WarningContent';
-import { useMyActivityStore } from '@/stores/useMyActivityStore';
+import { useUserStore } from '@/stores/userStore';
 
 interface Props {
   activityId: number;
@@ -27,8 +27,9 @@ export default function ActivitySummary({ activityId }: Props) {
   const [error, setError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { setActivityOwnerId, setCurrentUserId, isMyActivity } =
-    useMyActivityStore();
+  const user = useUserStore((state) => state.user);
+
+  const isMyActivity = user && data?.userId === user.id;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,12 +40,8 @@ export default function ActivitySummary({ activityId }: Props) {
         ]);
         setData(activity);
         setReview(reviewData);
-
-        const loggedInUserId = 2232;
-        setCurrentUserId(loggedInUserId);
-        setActivityOwnerId(activity.userId);
       } catch (error) {
-        console.error(error);
+        console.error('데이터 요청 중 오류 발생:', error);
         setError(true);
       } finally {
         setLoading(false);
@@ -52,7 +49,7 @@ export default function ActivitySummary({ activityId }: Props) {
     };
 
     fetchData();
-  }, [activityId, setCurrentUserId, setActivityOwnerId]);
+  }, [activityId]);
 
   const handleDelete = async () => {
     try {
@@ -67,6 +64,7 @@ export default function ActivitySummary({ activityId }: Props) {
     return (
       <div className='border-primary-500 size-50 animate-spin rounded-full border-2 border-t-transparent' />
     );
+
   if (error || !data || !review) return <p>오류가 발생했어요.</p>;
 
   const { title, address, category } = data;
@@ -74,13 +72,14 @@ export default function ActivitySummary({ activityId }: Props) {
 
   return (
     <section className='relative my-20 flex flex-col gap-6 md:my-40'>
-      {isMyActivity() && (
+      {isMyActivity && (
         <div className='absolute top-0 right-0'>
           <DropDown
             items={[
               {
                 text: '수정하기',
-                onClick: () => router.push('/mypage/{activityId}'),
+                onClick: () =>
+                  router.push(`/mypage/add-activity?id={activityId}`),
               },
               {
                 text: '삭제하기',
@@ -97,9 +96,11 @@ export default function ActivitySummary({ activityId }: Props) {
           />
         </div>
       )}
+
       <div className='md:txt-14_M txt-13_M leading-17 text-gray-950 opacity-75'>
         {category}
       </div>
+
       <p className='md:txt-24_B txt-18_B leading-21 text-gray-950 md:leading-29'>
         {title}
       </p>

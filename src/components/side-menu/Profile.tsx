@@ -3,6 +3,7 @@
 import userApi from '@/api/userApi';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useUserStore } from '@/stores/userStore';
 import { cn } from '@/utils/cn';
 
 import Icon from '../Icon';
@@ -10,14 +11,21 @@ import ImageUploader from '../ImageUploader';
 
 export default function Profile() {
   const isTablet = useMediaQuery('tablet');
+  const user = useUserStore((s) => s.user);
+  const setUser = useUserStore((s) => s.setUser);
+
   const { previewUrl, isUploading, handleChange } = useImageUpload({
-    defaultImage: '/images/profile-default.svg',
+    defaultImage: user?.profileImageUrl || '/images/profile-default.svg',
     uploadFn: async (file: File) => {
       try {
         const result = await userApi.uploadProfileImage(file);
         if (!result?.profileImageUrl) {
           throw new Error('업로드된 이미지 URL을 받을 수 없습니다');
         }
+        const updated = await userApi.updateMyInfo({
+          profileImageUrl: result.profileImageUrl,
+        });
+        setUser(updated);
         return result.profileImageUrl;
       } catch (error) {
         console.error('프로필 이미지 업로드 실패:', error);
@@ -27,13 +35,26 @@ export default function Profile() {
   });
   const size = isTablet ? 70 : 120;
 
+  if (!user) {
+    return (
+      <div className='flex h-120 items-center justify-center md:max-lg:h-70'>
+        <div className='border-primary-500 size-20 animate-spin rounded-full border-2 border-t-transparent' />
+      </div>
+    );
+  }
+
+  const displayUrl =
+    previewUrl && previewUrl.startsWith('blob:')
+      ? previewUrl
+      : user?.profileImageUrl || '/images/profile-default.svg';
+
   return (
     <div className='relative h-120 w-120 min-md:max-[1023px]:h-70 min-md:max-[1023px]:w-70'>
       <img
         alt='프로필 이미지'
         className='aspect-square rounded-full object-cover'
         height={size}
-        src={previewUrl}
+        src={displayUrl}
         width={size}
       />
 

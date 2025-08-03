@@ -28,10 +28,10 @@ export default function MobileReserveModal({
 }: MobileReserveModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   useClickOutside(modalRef, () => {
-    if (step === 2) onClose();
+    if (step === 2 || step === 3) onClose();
   });
 
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
@@ -71,7 +71,7 @@ export default function MobileReserveModal({
       setSelectedDate(null);
       setSelectedTimeId(null);
       setPeopleCount(1);
-      setStep(1); // 초기화
+      setStep(1);
     } catch (error) {
       alert('예약에 실패했습니다.');
       console.error(error);
@@ -95,7 +95,7 @@ export default function MobileReserveModal({
       <div
         ref={modalRef}
         className={`w-full overflow-y-auto rounded-t-2xl bg-white p-20 transition-all duration-300 ${
-          step === 1 ? 'h-[80vh]' : 'h-[40vh]'
+          step === 1 ? 'h-[80vh]' : step === 2 ? 'h-[40vh]' : 'h-[20vh]'
         }`}
       >
         {step === 1 && (
@@ -145,20 +145,22 @@ export default function MobileReserveModal({
                 const isCurrent = isSameMonth(currentDate, date);
                 const formatted = date.toISOString().split('T')[0];
                 const isAvailable = schedules.some((s) => s.date === formatted);
+                const isSelected = selectedDate === formatted;
+
                 return (
                   <div
                     key={date.toISOString()}
-                    className={`txt-16_M flex aspect-square cursor-pointer items-center justify-center rounded-full text-center ${
+                    className={`txt-16_M flex aspect-square cursor-pointer items-center justify-center rounded-full ${
                       isAvailable
                         ? 'hover:bg-primary-100 hover:text-primary-500 text-gray-800'
                         : 'text-gray-300'
-                    } ${
-                      selectedDate === formatted
-                        ? 'bg-primary-500 text-white'
-                        : ''
-                    }`}
+                    } ${isSelected ? 'bg-primary-500 text-white' : ''}`}
                     onClick={() =>
-                      isCurrent && isAvailable && setSelectedDate(formatted)
+                      isCurrent &&
+                      isAvailable &&
+                      setSelectedDate((prev) =>
+                        prev === formatted ? null : formatted,
+                      )
                     }
                   >
                     {date.getDate()}
@@ -181,7 +183,11 @@ export default function MobileReserveModal({
                           : ''
                       }`}
                       variant='secondary'
-                      onClick={() => setSelectedTimeId(time.id)}
+                      onClick={() =>
+                        setSelectedTimeId((prev) =>
+                          prev === time.id ? null : time.id,
+                        )
+                      }
                     >
                       {time.startTime} - {time.endTime}
                     </Button>
@@ -208,11 +214,9 @@ export default function MobileReserveModal({
           <>
             {/* 인원 선택 */}
             <div className='flex flex-row gap-4'>
-              <span>
-                <button onClick={() => setStep(1)}>
-                  <Icon className='h-24 w-24' icon='ArrowLeft' />
-                </button>
-              </span>
+              <button onClick={() => setStep(1)}>
+                <Icon className='h-24 w-24' icon='ArrowLeft' />
+              </button>
               <p className='txt-18_B leading-21'>인원</p>
             </div>
             <p className='txt-16_M my-10 leading-19'>
@@ -237,6 +241,18 @@ export default function MobileReserveModal({
               </div>
             </div>
 
+            <Button
+              className='mt-24 h-50 w-full'
+              disabled={peopleCount < 1}
+              onClick={() => setStep(3)}
+            >
+              다음
+            </Button>
+          </>
+        )}
+
+        {step === 3 && (
+          <>
             {/* 가격 및 시간 요약 */}
             {price !== null && (
               <div className='mt-24'>

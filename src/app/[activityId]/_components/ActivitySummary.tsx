@@ -79,7 +79,7 @@ export default function ActivitySummary({ activityId }: Props) {
               {
                 text: '수정하기',
                 onClick: () =>
-                  router.push(`/mypage/add-activity?id={activityId}`),
+                  router.push(`/mypage/add-activity?id=${activityId}`),
               },
               {
                 text: '삭제하기',

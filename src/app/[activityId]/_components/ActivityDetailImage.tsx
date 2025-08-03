@@ -31,7 +31,7 @@ export default function ActivityDetailImage({ activityId }: Props) {
     !bannerImageUrl && (!subImages || subImages.length === 0);
 
   return (
-    <section className='my-40 flex w-full gap-12'>
+    <section className='flex w-full gap-12'>
       {showOnlyFallbackImage ? (
         <div className='aspect-[6/3] w-full overflow-hidden rounded-[24px]'>
           <FallbackImage

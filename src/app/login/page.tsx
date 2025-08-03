@@ -151,7 +151,7 @@ export default function Login() {
           onClose={() => {
             setIsModalOpen(false);
             if (errStatus === 404) {
-              router.replace('/signUp');
+              router.replace('/signup');
             }
           }}
         />

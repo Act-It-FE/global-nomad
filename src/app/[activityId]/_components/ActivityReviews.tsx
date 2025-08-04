@@ -23,7 +23,8 @@ export default function ActivityReviews({ activityId }: Props) {
   } = useActivityReviews({ activityId });
 
   const getRatingText = (rating: number) => {
-    if (rating >= 0 && rating <= 1) return '매우 불만족';
+    if (rating === 0) return '평점이 아직 없습니다.';
+    if (rating > 0 && rating <= 1) return '매우 불만족';
     if (rating > 1 && rating <= 2) return '불만족';
     if (rating > 2 && rating <= 3) return '보통';
     if (rating > 3 && rating <= 4) return '만족';
@@ -32,7 +33,7 @@ export default function ActivityReviews({ activityId }: Props) {
   };
 
   return (
-    <div className='my-40'>
+    <div className='py-40'>
       <div className='txt-16_B md:txt-18_B flex flex-row gap-10 leading-19 md:leading-21'>
         체험 후기
         <span className='md:txt-16_B txt-14_M leading-20 font-semibold text-gray-500 md:leading-20'>

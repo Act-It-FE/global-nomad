@@ -1,10 +1,12 @@
 export const getImageContainerClass = (isSingle: boolean) => {
-  const base = 'overflow-hidden aspect-[6/3]';
-  return isSingle ? `${base} w-1/2` : `${base} flex-1`;
+  const base = 'overflow-hidden';
+  return isSingle
+    ? `${base} w-1/2 aspect-[6/3]`
+    : `${base} flex-1 aspect-[6/3]`;
 };
 
 export const getImageColumnWrapperClass = (isSingle: boolean) => {
-  return isSingle ? 'w-1/2' : 'flex-1';
+  return isSingle ? 'w-1/2 h-full' : 'flex-1';
 };
 
 export const getSubImageClass = ({

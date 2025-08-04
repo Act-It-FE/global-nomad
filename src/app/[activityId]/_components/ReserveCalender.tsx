@@ -6,15 +6,15 @@ import activitiesApi from '@/api/activitiesApi';
 import { ApiError } from '@/api/types/auth';
 import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
+import {
+  getMonthNameEnglish,
+  isSameMonth,
+} from '@/app/[activityId]/_utils/activityDetailDates';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import { useUserStore } from '@/stores/userStore';
 import { getCalendarDates } from '@/utils/dateUtils';
 import getErrorMessage from '@/utils/getErrorMessage';
-
-const isSameMonth = (base: Date, target: Date) =>
-  base.getFullYear() === target.getFullYear() &&
-  base.getMonth() === target.getMonth();
 
 interface ReserveCalenderProps {
   activityId: number;
@@ -92,11 +92,6 @@ export default function ReserveCalender({
 
   const isMyActivity = user && detail && user.id === detail.userId;
   if (isMyActivity) return null;
-
-  const getMonthNameEnglish = (date: Date): string =>
-    new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(
-      date,
-    );
 
   return (
     <div className='card-shadow w-full rounded-[24px] border border-gray-50 p-30'>

@@ -59,7 +59,6 @@ export default function KakaoCallbackPage() {
       if (apiErr.response?.status === 404) {
         setIsModalOpen(true);
         setMsg('먼저 회원가입을 해주세요.');
-        return router.replace('/signUp');
       }
     }
 

@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 import QueryProvider from '@/app/provider/QueryProvider';
@@ -12,6 +13,17 @@ const pretendard = localFont({
   weight: '45 920',
   variable: '--font-pretendard',
 });
+
+export const metadata: Metadata = {
+  title: '글로벌 노마드',
+  description: '언제 어디서든 원하는 체험을 예약하세요',
+  metadataBase: new URL('https://global-nomad-omega.vercel.app'),
+  openGraph: {
+    title: '글로벌 노마드',
+    description: '언제 어디서든 원하는 체험을 예약하세요',
+    images: ['/images/actit-logo.png'],
+  },
+};
 
 export default function RootLayout({
   children,
@@ -26,6 +38,10 @@ export default function RootLayout({
           <main className='flex-grow'>{children}</main>
           <Footer />
         </QueryProvider>
+        <script
+          async
+          src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
+        />
       </body>
     </html>
   );

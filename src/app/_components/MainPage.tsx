@@ -18,7 +18,7 @@ export default function MainPage() {
   const handleSearch = (query: string) => {
     if (query.trim() === '') return;
     const encoded = encodeURIComponent(query);
-    router.push(`/?search=${encoded}`);
+    router.push(`/?search=${encoded}`, { scroll: false });
   };
 
   return (

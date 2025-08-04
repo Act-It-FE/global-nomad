@@ -137,7 +137,7 @@ export default function Login() {
             </Button>
             <div className='flex'>
               <p className='txt-16_M text-gray-400'>회원이 아니신가요?</p>
-              <Link className='txt-16_M text-gray-400 underline' href='/signUp'>
+              <Link className='txt-16_M text-gray-400 underline' href='/signup'>
                 회원가입하기
               </Link>
             </div>

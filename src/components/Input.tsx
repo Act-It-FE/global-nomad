@@ -68,7 +68,7 @@ type DateCustomProps = CommonProps & {
 
 const COMMON_STYLE = cn(
   'h-54 w-full rounded-2xl bg-white border border-gray-100 px-19 py-15 outline-none',
-  'txt-16_M leading-19 placeholder:text-gray-400',
+  'txt-16_M leading-19 placeholder:text-gray-400 text-start',
 );
 
 const FOCUS_STYLE = cn(
@@ -145,7 +145,7 @@ function DropdownInput({
   onDropdownSelect,
   ...props
 }: DropdownProps) {
-  const [value, setValue] = useState({ item: defaultValue, key: '' });
+  const [value, setValue] = useState({ item: '', key: '' });
   const [isOpen, setIsOpen] = useState(false);
   const elements = useRef(
     items.map((item) => ({ item, key: crypto.randomUUID() })),
@@ -153,8 +153,8 @@ function DropdownInput({
   const ref = useRef<HTMLInputElement>(null);
 
   const handleClick = (e: MouseEvent<HTMLInputElement>) => {
-    if (onClick) onClick(e);
     setIsOpen((prev) => !prev);
+    if (onClick) onClick(e);
   };
 
   const handleIconClick = () => {
@@ -170,11 +170,11 @@ function DropdownInput({
         ref={ref}
         className={cn(
           className,
-          value.item ? 'text-gray-950' : 'text-gray-400',
-          'truncate pr-43 text-start focus:pr-42.5',
+          value.item || defaultValue ? 'text-gray-950' : 'text-gray-400',
+          'truncate pr-43 focus:pr-42.5',
         )}
         type='button'
-        value={value.item ?? placeholder ?? ''}
+        value={value.item || (defaultValue ?? placeholder ?? '')}
         onClick={handleClick}
         {...props}
       />
@@ -237,7 +237,7 @@ function TextareaInput({ className, height, ...props }: TextareaProps) {
     >
       <textarea
         className={cn(
-          'block h-full resize-none pl-3 outline-none',
+          'block h-full w-full resize-none pl-3 outline-none',
           SCROLLBAR_STYLE,
         )}
         style={{ scrollbarGutter: 'stable' }}
@@ -273,7 +273,7 @@ function PasswordInput({
   );
 }
 
-function DateCustomInput({ type, ...props }: DateCustomProps) {
+function DateCustomInput({ type, onChange, ...props }: DateCustomProps) {
   const textRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
 
@@ -281,11 +281,13 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
     e.target.value = e.target.value.replace(/[^\d/]/g, '');
     if (e.target.value && e.target.validity.valid && dateRef.current)
       dateRef.current.value = '20' + e.target.value.replaceAll('/', '-');
+    if (onChange) onChange(e);
   };
 
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (textRef.current)
       textRef.current.value = e.target.value.replaceAll('-', '/').slice(2);
+    if (onChange) onChange(e);
   };
 
   return (
@@ -293,6 +295,7 @@ function DateCustomInput({ type, ...props }: DateCustomProps) {
       <input
         ref={textRef}
         maxLength={8}
+        minLength={8}
         pattern='\d{2}/(0[1-9]|1[0-2])/(0[1-9]|[12]\d|3[01])'
         placeholder='yy/mm/dd'
         onChange={handleChange}

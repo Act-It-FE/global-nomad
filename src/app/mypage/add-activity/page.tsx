@@ -230,7 +230,18 @@ export default function Page() {
             </label>
             <div className='flex flex-col gap-16 md:gap-20'>
               <DateInput
-                onClick={(sch) => setSchedules((prev) => [...prev, sch])}
+                onClick={(sch) => {
+                  setSchedules((prev) => {
+                    if (!prev.find((s) => isSameSchedule(s, sch))) {
+                      return [...prev, sch].sort((a, b) =>
+                        a.date + a.startTime + a.endTime >
+                        b.date + b.startTime + b.endTime
+                          ? 1
+                          : -1,
+                      );
+                    } else return prev;
+                  });
+                }}
               />
               {Boolean(schedules.length) && (
                 <>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { queryClient } from '@/app/provider/QueryProvider';
 import AlarmActive from '@/assets/icons/alarm_active.svg';
 import AlarmInActive from '@/assets/icons/alarm_inactive.svg';
 import useMyNotifyQuery from '@/hooks/myNotifications/useMyNotifyQuery';
@@ -122,6 +123,7 @@ export default function Gnb() {
                     danger: true,
                     onClick: () => {
                       clearUser();
+                      queryClient.clear();
                       router.push('/');
                     },
                   },

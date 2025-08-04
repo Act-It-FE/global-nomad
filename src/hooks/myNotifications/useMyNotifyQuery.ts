@@ -14,5 +14,6 @@ export default function useMyNotifyQuery(params?: GetNotificationsParams) {
     },
     initialPageParam: undefined as number | undefined,
     getNextPageParam: (lastPage) => lastPage.cursorId,
+    refetchInterval: 60000, // 1분마다 다시 가져오기
   });
 }

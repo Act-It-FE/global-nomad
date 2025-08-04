@@ -14,3 +14,19 @@ export const getKSTDateString = (date: Date) => {
   const kstDate = new Date(date.getTime() + offset);
   return kstDate.toISOString().split('T')[0];
 };
+
+// 오늘 날짜와 비교하는 함수
+export const isPastDate = (date: Date) => {
+  const now = new Date();
+  const kstNow = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+
+  return (
+    kstDate.getFullYear() < kstNow.getFullYear() ||
+    (kstDate.getFullYear() === kstNow.getFullYear() &&
+      kstDate.getMonth() < kstNow.getMonth()) ||
+    (kstDate.getFullYear() === kstNow.getFullYear() &&
+      kstDate.getMonth() === kstNow.getMonth() &&
+      kstDate.getDate() < kstNow.getDate())
+  );
+};

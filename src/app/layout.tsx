@@ -26,6 +26,10 @@ export default function RootLayout({
           <main className='flex-grow'>{children}</main>
           <Footer />
         </QueryProvider>
+        <script
+          async
+          src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
+        />
       </body>
     </html>
   );

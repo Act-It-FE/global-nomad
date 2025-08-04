@@ -6,6 +6,7 @@ import activitiesApi from '@/api/activitiesApi';
 import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
 import {
+  getKSTDateString,
   getMonthNameEnglish,
   isSameMonth,
 } from '@/app/[activityId]/_utils/activityDetailDates';
@@ -144,7 +145,7 @@ export default function TabletReserveModal({
                   ))}
                   {dates.map((date) => {
                     const isCurrent = isSameMonth(currentDate, date);
-                    const formatted = date.toISOString().split('T')[0];
+                    const formatted = getKSTDateString(date);
                     const isAvailable = schedules.some(
                       (s) => s.date === formatted,
                     );

@@ -7,6 +7,7 @@ import { ApiError } from '@/api/types/auth';
 import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
 import {
+  getKSTDateString,
   getMonthNameEnglish,
   isSameMonth,
 } from '@/app/[activityId]/_utils/activityDetailDates';
@@ -52,7 +53,7 @@ export default function ReserveCalender({
     : [];
 
   const handleDateClick = (date: Date) => {
-    const formatted = date.toISOString().split('T')[0];
+    const formatted = getKSTDateString(date);
     const isAvailable = schedules.some((s) => s.date === formatted);
     if (!isAvailable) return;
     setSelectedDate(formatted);
@@ -146,7 +147,7 @@ export default function ReserveCalender({
         ))}
         {dates.map((date) => {
           const isCurrentMonth = isSameMonth(currentDate, date);
-          const formatted = date.toISOString().split('T')[0];
+          const formatted = getKSTDateString(date);
           const isAvailable = schedules.some((s) => s.date === formatted);
           return (
             <div

@@ -6,6 +6,7 @@ import activitiesApi from '@/api/activitiesApi';
 import { useActivityDetail } from '@/app/[activityId]/_hooks/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvailableSchedule';
 import {
+  getKSTDateString,
   getMonthNameEnglish,
   isSameMonth,
 } from '@/app/[activityId]/_utils/activityDetailDates';
@@ -110,7 +111,6 @@ export default function MobileReserveModal({
       >
         {step === 1 && (
           <>
-            {/* 날짜 선택 */}
             <div className='txt-18_B'>날짜</div>
             <div className='my-20 flex justify-between'>
               <p className='txt-16_B'>{getMonthNameEnglish(currentDate)}</p>
@@ -144,7 +144,6 @@ export default function MobileReserveModal({
               </div>
             </div>
 
-            {/* 캘린더 */}
             <div className='grid grid-cols-7 gap-10 text-center'>
               {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
                 <div key={i} className='txt-16_M font-semibold'>
@@ -153,7 +152,7 @@ export default function MobileReserveModal({
               ))}
               {dates.map((date) => {
                 const isCurrent = isSameMonth(currentDate, date);
-                const formatted = date.toISOString().split('T')[0];
+                const formatted = getKSTDateString(date);
                 const isAvailable = schedules.some((s) => s.date === formatted);
                 const isSelected = selectedDate === formatted;
 
@@ -179,7 +178,6 @@ export default function MobileReserveModal({
               })}
             </div>
 
-            {/* 시간 선택 */}
             <div className='mt-24'>
               <p className='txt-16_B mb-12 text-gray-950'>예약 가능한 시간</p>
               {selectedDate ? (
@@ -222,7 +220,6 @@ export default function MobileReserveModal({
 
         {step === 2 && (
           <>
-            {/* 인원 선택 */}
             <div className='flex flex-row gap-4'>
               <button onClick={() => setStep(1)}>
                 <Icon className='h-24 w-24' icon='ArrowLeft' />
@@ -263,7 +260,6 @@ export default function MobileReserveModal({
 
         {step === 3 && (
           <>
-            {/* 가격 및 시간 요약 */}
             {price !== null && (
               <div className='mt-24'>
                 <div className='mb-12 flex justify-between'>

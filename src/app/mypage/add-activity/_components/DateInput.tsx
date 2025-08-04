@@ -98,6 +98,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
             날짜
           </label>
           <Input
+            key={key - 2}
             errorMessage={errorMessage}
             id='date'
             type='date-custom'

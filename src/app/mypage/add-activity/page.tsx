@@ -73,10 +73,10 @@ export default function Page() {
       'category',
       (document.querySelector('input#category') as HTMLInputElement).value,
     );
-    const scheduleList = schedules.map((s) => ({
-      ...s,
-      date: '20' + s.date.replaceAll('/', '-'),
-    }));
+    const scheduleList = schedules.map((s) => {
+      if (s.date.includes('-')) return s;
+      return { ...s, date: '20' + s.date.replaceAll('/', '-') };
+    });
 
     if (id) {
       const data: UpdateMyActivityBody = Object.fromEntries(formData.entries());

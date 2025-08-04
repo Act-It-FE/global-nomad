@@ -9,10 +9,12 @@ import { useAvailableSchedule } from '@/app/[activityId]/_hooks/queries/useAvail
 import {
   getKSTDateString,
   getMonthNameEnglish,
+  isPastDate,
   isSameMonth,
 } from '@/app/[activityId]/_utils/activityDetailDates';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
+import Modal from '@/components/Modal/Modal';
 import { useUserStore } from '@/stores/userStore';
 import { getCalendarDates } from '@/utils/dateUtils';
 import getErrorMessage from '@/utils/getErrorMessage';
@@ -31,6 +33,7 @@ export default function ReserveCalender({
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [pastDateModal, setPastDateModal] = useState(false);
 
   const user = useUserStore((s) => s.user);
 
@@ -149,6 +152,8 @@ export default function ReserveCalender({
           const isCurrentMonth = isSameMonth(currentDate, date);
           const formatted = getKSTDateString(date);
           const isAvailable = schedules.some((s) => s.date === formatted);
+          const isSelected = selectedDate === formatted;
+
           return (
             <div
               key={date.toISOString()}
@@ -158,10 +163,15 @@ export default function ReserveCalender({
                     ? 'hover:text-primary-500 hover:bg-primary-100 cursor-pointer text-gray-800'
                     : 'cursor-default text-gray-300'
                   : 'cursor-default text-gray-300'
-              } ${selectedDate === formatted ? 'bg-primary-500 text-white' : ''}`}
-              onClick={() =>
-                isCurrentMonth && isAvailable && handleDateClick(date)
-              }
+              } ${isSelected ? 'bg-primary-500 text-white' : ''}`}
+              onClick={() => {
+                if (!isCurrentMonth || !isAvailable) return;
+                if (isPastDate(date)) {
+                  setPastDateModal(true);
+                  return;
+                }
+                handleDateClick(date);
+              }}
             >
               {date.getDate()}
             </div>
@@ -226,6 +236,15 @@ export default function ReserveCalender({
           {isLoading ? '예약 중...' : '예약하기'}
         </Button>
       </div>
+
+      {/* 과거 날짜 모달 */}
+      {pastDateModal && (
+        <Modal
+          message='이미 지난 날짜의 예약은 신청할 수 없습니다.'
+          variant='onlyText'
+          onClose={() => setPastDateModal(false)}
+        />
+      )}
     </div>
   );
 }

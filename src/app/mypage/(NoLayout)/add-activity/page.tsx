@@ -122,7 +122,7 @@ export default function Page() {
         formData.entries(),
       );
       data.price = Number(data.price);
-      data.schedule = scheduleList;
+      data.schedules = scheduleList;
       data.bannerImageUrl = bannerImages[0];
       data.subImageUrls = subImages;
 

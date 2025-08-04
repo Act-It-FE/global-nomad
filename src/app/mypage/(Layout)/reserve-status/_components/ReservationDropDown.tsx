@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { getCountByTab } from '@/app/mypage/reserve-status/_utils/reservationUtils';
+import { getCountByTab } from '@/app/mypage/(Layout)/reserve-status/_utils/reservationUtils';
 import Input from '@/components/Input';
 import { useMyActReservedSchedule } from '@/hooks/myActivities/useMyActivitiesQuery';
 import { useCalendarStore } from '@/stores/calendarStore';

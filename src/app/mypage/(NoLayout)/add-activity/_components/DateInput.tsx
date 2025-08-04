@@ -90,7 +90,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
           }
         />
       ) : (
-        <div>
+        <div className='w-full'>
           <label
             className='txt-16_M mb-10 inline-block leading-19 text-gray-950 max-md:hidden'
             htmlFor='date'
@@ -106,8 +106,8 @@ export default function DateInput({ defaultValue, onClick }: Props) {
           />
         </div>
       )}
-      <div className='flex items-center gap-14'>
-        <div>
+      <div className='flex w-full items-center gap-14'>
+        <div className='flex-1'>
           {defaultValue ? null : (
             <div className='mb-10 flex justify-between max-md:hidden'>
               <label className='txt-16_M inline-block leading-19 text-gray-950 max-md:hidden'>
@@ -122,7 +122,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
             {defaultValue ? (
               <Input
                 key={key}
-                className='md:w-122'
+                className='flex-1 md:w-122'
                 defaultValue={defaultValue.startTime}
                 id='startTime'
                 placeholder='00:00'
@@ -131,7 +131,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
             ) : (
               <Input
                 key={key}
-                className='md:w-122'
+                className='flex-1 md:w-122'
                 id='startTime'
                 items={TIME_LIST}
                 placeholder='00:00'
@@ -143,7 +143,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
             {defaultValue ? (
               <Input
                 key={key + 2}
-                className='md:w-122'
+                className='flex-1 md:w-122'
                 defaultValue={defaultValue.endTime}
                 id='endTime'
                 placeholder='00:00'
@@ -152,7 +152,7 @@ export default function DateInput({ defaultValue, onClick }: Props) {
             ) : (
               <Input
                 key={key + 2}
-                className='md:w-122'
+                className='flex-1 md:w-122'
                 id='endTime'
                 items={TIME_LIST}
                 placeholder='00:00'

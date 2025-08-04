@@ -73,17 +73,22 @@ export default function Page() {
       'category',
       (document.querySelector('input#category') as HTMLInputElement).value,
     );
+    const scheduleList = schedules.map((s) => ({
+      ...s,
+      date: '20' + s.date.replaceAll('/', '-'),
+    }));
+
     if (id) {
       const data: UpdateMyActivityBody = Object.fromEntries(formData.entries());
       data.price = Number(data.price);
       data.bannerImageUrl = bannerImages[0];
       data.scheduleIdsToRemove = [];
       defaultValue?.schedules.forEach((sch) => {
-        if (!schedules.find((s) => isSameSchedule(s, sch)))
+        if (!scheduleList.find((s) => isSameSchedule(s, sch)))
           data.scheduleIdsToRemove?.push(sch.id);
       });
       data.schedulesToAdd = [];
-      schedules.forEach((sch) => {
+      scheduleList.forEach((sch) => {
         if (!defaultValue?.schedules.find((s) => isSameSchedule(s, sch)))
           data.schedulesToAdd?.push(sch);
       });
@@ -117,7 +122,7 @@ export default function Page() {
         formData.entries(),
       );
       data.price = Number(data.price);
-      data.schedule = schedules;
+      data.schedule = scheduleList;
       data.bannerImageUrl = bannerImages[0];
       data.subImageUrls = subImages;
 

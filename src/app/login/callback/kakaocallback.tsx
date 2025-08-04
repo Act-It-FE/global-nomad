@@ -24,6 +24,7 @@ export default function KakaoCallbackPage() {
   const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
   const VERCEL_HOST = process.env.NEXT_PUBLIC_VERCEL_URL;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [msg, setMsg] = useState('');
   const baseUrl =
     isProduction && VERCEL_HOST
       ? VERCEL_HOST.replace(/\/$/, '')
@@ -56,6 +57,8 @@ export default function KakaoCallbackPage() {
     } catch (err) {
       const apiErr = err as ApiError;
       if (apiErr.response?.status === 404) {
+        setIsModalOpen(true);
+        setMsg('먼저 회원가입을 해주세요.');
         return router.replace('/signUp');
       }
     }
@@ -82,6 +85,7 @@ export default function KakaoCallbackPage() {
           apiErr.response?.data?.message === '이미 등록된 사용자입니다.'
         ) {
           setIsModalOpen(true);
+          setMsg('이미 등록된 아이디 입니다.');
           return;
         }
       }
@@ -99,11 +103,15 @@ export default function KakaoCallbackPage() {
     <>
       {isModalOpen && (
         <Modal
-          message='이미 등록된 아이디 입니다.'
+          message={msg}
           variant='onlyText'
           onClose={() => {
             setIsModalOpen(false);
-            router.replace('/login');
+            if (flow === 'login') {
+              router.replace('/signUp');
+            } else {
+              router.replace('/login');
+            }
           }}
         />
       )}

@@ -154,7 +154,7 @@ export interface ActivityRegisterPayload {
   price: number;
   bannerImageUrl: string;
   subImageUrls: string[];
-  schedule: ActivityRegisterSchedule[];
+  schedules: ActivityRegisterSchedule[];
 }
 
 export interface ActivityRegisterSchedule {

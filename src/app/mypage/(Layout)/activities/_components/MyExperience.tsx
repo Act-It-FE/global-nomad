@@ -72,7 +72,7 @@ export default function MyExperience({ data }: { data: ActivityBasic }) {
           <div className='txt-14_M mt-12 flex gap-8 leading-17 text-gray-600 lg:mt-20'>
             <Link
               className='rounded-lg border border-gray-50 px-9 py-5'
-              href={`/mypage/${data.id}`}
+              href={`/mypage/add-activity?id=${data.id}`}
             >
               수정하기
             </Link>

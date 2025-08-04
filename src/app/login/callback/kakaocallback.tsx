@@ -73,6 +73,7 @@ export default function KakaoCallbackPage() {
         setUser(signupData.user);
         localStorage.setItem('accessToken', signupData.accessToken);
         localStorage.setItem('refreshToken', signupData.refreshToken);
+        router.replace('/login');
       } catch (err) {
         const apiErr = err as ApiError;
         console.log(apiErr.response?.data?.message);

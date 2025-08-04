@@ -1,3 +1,5 @@
+import { SyntheticEvent } from 'react';
+
 type FallbackImageProps = {
   src?: string;
   alt: string;
@@ -11,11 +13,9 @@ export default function FallbackImage({
   className,
   fallbackSrc = '/images/logo-lg.png',
 }: FallbackImageProps) {
-  const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  const handleError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.currentTarget;
-    if (target.src !== fallbackSrc) {
-      target.src = fallbackSrc;
-    }
+    target.src = fallbackSrc;
   };
 
   return (

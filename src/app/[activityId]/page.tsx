@@ -3,8 +3,6 @@
 import { notFound, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import activitiesDetailApi from '@/api/activitiesApi';
-import { ActivitiesDetail } from '@/api/types/activities';
 import Button from '@/components/Button';
 import Modal from '@/components/Modal/Modal';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -19,10 +17,10 @@ import LoadKakaoMap from './_components/LoadKakaoMap';
 import MobileReserveModal from './_components/MobileReserveModal';
 import ReserveCalender from './_components/ReserveCalender';
 import TabletReserveModal from './_components/TabletReserveModal';
+import { useActivityDetail } from './_hooks/queries/useActivityDetail';
 
 export default function ActivityDetail() {
   const { activityId } = useParams();
-  const [activity, setActivity] = useState<ActivitiesDetail | null>(null);
   const [error, setError] = useState('');
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -35,27 +33,26 @@ export default function ActivityDetail() {
   const isTablet = useMediaQuery('tablet');
   const isMobile = useMediaQuery('mobile');
 
+  if (!activityId || Array.isArray(activityId)) notFound();
+  const id = Number(activityId);
+  if (isNaN(id)) notFound();
+
+  const {
+    data: activity,
+    isLoading,
+    error: queryError,
+  } = useActivityDetail(id);
+
   useEffect(() => {
-    if (!activityId || Array.isArray(activityId)) notFound();
-    const id = Number(activityId);
-    if (isNaN(id)) notFound();
-
-    const fetchData = async () => {
-      try {
-        const data = await activitiesDetailApi.getDetail(id);
-        setActivity(data);
-      } catch (error) {
-        const message = getErrorMessage(
-          error,
-          '체험 정보를 불러오지 못했습니다.',
-        );
-        console.error('실패:', message);
-        setError(message);
-      }
-    };
-
-    fetchData();
-  }, [activityId]);
+    if (queryError) {
+      const message = getErrorMessage(
+        queryError,
+        '체험 정보를 불러오지 못했습니다.',
+      );
+      console.error('실패:', message);
+      setError(message);
+    }
+  }, [queryError]);
 
   const isMyActivity = myUserId !== undefined && myUserId === activity?.userId;
 
@@ -67,7 +64,7 @@ export default function ActivityDetail() {
     );
   }
 
-  if (!activity) {
+  if (isLoading || !activity) {
     return (
       <div className='flex h-200 items-center justify-center text-gray-500'>
         <div className='border-primary-500 size-50 animate-spin rounded-full border-2 border-t-transparent' />

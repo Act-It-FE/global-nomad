@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {
           'mt-35 items-center': isMobile && isMyPageRoot,
           'mx-24 mt-30': isMobile && !isMyPageRoot,
-          'mt-40': !isMobile,
+          'mx-30 mt-40': !isMobile,
         },
       )}
     >

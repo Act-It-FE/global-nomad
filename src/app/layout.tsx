@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 
 import QueryProvider from '@/app/provider/QueryProvider';
 import Footer from '@/components/Footer';
+import Gnb from '@/components/Gnb';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -19,9 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html className={pretendard.variable} lang='ko'>
-      <body className={pretendard.className}>
+      <body className={`${pretendard.className} flex min-h-screen flex-col`}>
         <QueryProvider>
-          {children}
+          <Gnb />
+          <main className='flex-grow'>{children}</main>
           <Footer />
         </QueryProvider>
       </body>

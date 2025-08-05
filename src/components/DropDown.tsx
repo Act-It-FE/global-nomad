@@ -48,7 +48,7 @@ export default function DropDown({
             <button
               key={idx}
               className={cn(
-                'txt-16_M cursor-pointer px-19 py-18 leading-19 whitespace-nowrap',
+                'txt-16_M px-19 py-18 leading-19 whitespace-nowrap',
                 'hover:bg-primary-100 bg-white',
                 'first:rounded-t-lg last:rounded-b-lg',
                 'border-x border-gray-50 first:border-t last:border-b',

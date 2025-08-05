@@ -42,13 +42,13 @@ export default function DropDown({
             position === 'left'
               ? 'top-1/2 right-full mr-2 -translate-y-1/5'
               : 'top-full left-1/2 mt-2 -translate-x-1/2',
-            'flex w-95 flex-col justify-center rounded-[8px] border border-gray-50 bg-white text-gray-950 md:h-auto md:w-103 lg:w-95',
+            'flex flex-col rounded-[8px] border border-gray-50 bg-white text-gray-950',
           )}
         >
           {items.map(({ text, onClick, danger }, idx) => (
             <button
               key={idx}
-              className='hover:bg-primary-100 txt-16_M min-h-55 w-full cursor-pointer'
+              className='hover:bg-primary-100 txt-16_M cursor-pointer px-20 py-18 leading-19 whitespace-nowrap'
               onClick={(e) => {
                 onClick(e);
                 setIsOpen(false);

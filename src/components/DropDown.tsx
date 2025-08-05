@@ -38,11 +38,10 @@ export default function DropDown({
       {isOpen && (
         <div
           className={cn(
-            'absolute z-50',
+            'absolute z-50 flex flex-col',
             position === 'left'
               ? 'top-1/2 right-full mr-2 -translate-y-1/5'
               : 'top-full left-1/2 mt-2 -translate-x-1/2',
-            'flex flex-col text-gray-950',
           )}
         >
           {items.map(({ text, onClick, danger }, idx) => (

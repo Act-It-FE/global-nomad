@@ -6,10 +6,8 @@ export default function ActivityDetailLayout({
   children: ReactNode;
 }) {
   return (
-    <section className='flex justify-center pt-40'>
-      <div className='flex w-full'>
-        <main className='flex-1'>{children}</main>
-      </div>
+    <section className='mx-auto max-w-1200 pt-40'>
+      <main className='w-full'>{children}</main>
     </section>
   );
 }

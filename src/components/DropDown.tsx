@@ -27,10 +27,6 @@ export default function DropDown({
 
   useClickOutside(dropdownRef, () => setIsOpen(false));
 
-  const buttonClass = cn(
-    'cursor-pointer hover:bg-primary-100 w-full min-h-55 txt-16_M',
-  );
-
   return (
     <div ref={dropdownRef} className='relative'>
       <div
@@ -52,7 +48,7 @@ export default function DropDown({
           {items.map(({ text, onClick, danger }, idx) => (
             <button
               key={idx}
-              className={buttonClass}
+              className='hover:bg-primary-100 txt-16_M min-h-55 w-full cursor-pointer'
               onClick={(e) => {
                 onClick(e);
                 setIsOpen(false);

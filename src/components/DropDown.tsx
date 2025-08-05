@@ -52,15 +52,14 @@ export default function DropDown({
                 'hover:bg-primary-100 bg-white',
                 'first:rounded-t-lg last:rounded-b-lg',
                 'border-x border-gray-50 first:border-t last:border-b',
+                danger ? 'text-red-500' : 'text-gray-950',
               )}
               onClick={(e) => {
                 onClick(e);
                 setIsOpen(false);
               }}
             >
-              <span className={cn('text-gray-950', danger && 'text-red-500')}>
-                {text}
-              </span>
+              {text}
             </button>
           ))}
         </div>

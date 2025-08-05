@@ -27,10 +27,6 @@ export default function DropDown({
 
   useClickOutside(dropdownRef, () => setIsOpen(false));
 
-  const buttonClass = cn(
-    'cursor-pointer hover:bg-primary-100 w-full min-h-55 txt-16_M',
-  );
-
   return (
     <div ref={dropdownRef} className='relative'>
       <div
@@ -42,25 +38,28 @@ export default function DropDown({
       {isOpen && (
         <div
           className={cn(
-            'absolute z-50',
+            'absolute z-50 flex flex-col',
             position === 'left'
               ? 'top-1/2 right-full mr-2 -translate-y-1/5'
               : 'top-full left-1/2 mt-2 -translate-x-1/2',
-            'flex w-95 flex-col justify-center rounded-[8px] border border-gray-50 bg-white text-gray-950 md:h-auto md:w-103 lg:w-95',
           )}
         >
           {items.map(({ text, onClick, danger }, idx) => (
             <button
               key={idx}
-              className={buttonClass}
+              className={cn(
+                'txt-16_M px-19 py-18 leading-19 whitespace-nowrap',
+                'hover:bg-primary-100 bg-white',
+                'first:rounded-t-lg last:rounded-b-lg',
+                'border-x border-gray-50 first:border-t last:border-b',
+                danger ? 'text-red-500' : 'text-gray-950',
+              )}
               onClick={(e) => {
                 onClick(e);
                 setIsOpen(false);
               }}
             >
-              <span className={cn('text-gray-950', danger && 'text-red-500')}>
-                {text}
-              </span>
+              {text}
             </button>
           ))}
         </div>

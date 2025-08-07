@@ -142,17 +142,23 @@ export default function Gnb() {
               />
             </>
           ) : (
-            <>
-              <div className='w-60 text-center md:w-70'>
-                <Link href='/login'>로그인</Link>
-              </div>
-              <div className='w-60 text-center md:w-70'>
-                <Link href='/signup'>회원가입</Link>
-              </div>
-            </>
+            <LoggedoutButtons />
           )}
         </div>
       </div>
     </nav>
+  );
+}
+
+function LoggedoutButtons() {
+  return (
+    <>
+      <div className='w-60 text-center md:w-70'>
+        <Link href='/login'>로그인</Link>
+      </div>
+      <div className='w-60 text-center md:w-70'>
+        <Link href='/signup'>회원가입</Link>
+      </div>
+    </>
   );
 }

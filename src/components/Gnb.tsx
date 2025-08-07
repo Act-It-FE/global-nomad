@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { UserProfile } from '@/api/types/auth';
 import AlarmActive from '@/assets/icons/alarm_active.svg';
 import AlarmInActive from '@/assets/icons/alarm_inactive.svg';
 import useMyNotifyQuery from '@/hooks/myNotifications/useMyNotifyQuery';
@@ -20,19 +21,7 @@ const imgLogoText = '/images/logo-sm-text.png';
 const imgLogo = '/images/logo-sm.png';
 
 export default function Gnb() {
-  const router = useRouter();
-  const isMobile = useMediaQuery('mobile');
-  const [isOpen, setIsOpen] = useState(false);
-  const {
-    data: notifications,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = useMyNotifyQuery();
-
-  const totalCount = notifications?.pages?.[0]?.totalCount || 0;
   const user = useUserStore((s) => s.user);
-  const clearUser = useUserStore((s) => s.clearUser);
   const pathname = usePathname();
   if (pathname === '/login' || pathname === '/signup') {
     return null;
@@ -72,87 +61,102 @@ export default function Gnb() {
             user ? 'gap-20' : 'gap-10 md:gap-12',
           )}
         >
-          {user ? (
-            <>
-              <div className='relative'>
-                <button
-                  type='button'
-                  onClick={() => setIsOpen((prev) => !prev)}
-                >
-                  {totalCount === 0 ? (
-                    <AlarmInActive
-                      className={cn(
-                        'size-24',
-                        isOpen ? 'text-primary-500' : 'text-gray-600',
-                      )}
-                    />
-                  ) : (
-                    <AlarmActive
-                      className={cn(
-                        'size-24',
-                        isOpen ? 'text-primary-500' : 'text-gray-600',
-                      )}
-                    />
-                  )}
-                </button>
-                <NotificationPanel
-                  fetchNextPage={fetchNextPage}
-                  hasNextPage={hasNextPage}
-                  isFetchingNextPage={isFetchingNextPage}
-                  list={
-                    notifications?.pages.flatMap(
-                      (page) => page.notifications,
-                    ) || []
-                  }
-                  open={isOpen}
-                  totalCount={totalCount}
-                  onClose={() => setIsOpen(false)}
-                />
-              </div>
-              <div className='h-14 w-1 bg-gray-100' />
-              <DropDown
-                items={[
-                  {
-                    text: '마이페이지',
-                    onClick: () =>
-                      router.push(isMobile ? '/mypage' : '/mypage/info'),
-                  },
-                  {
-                    text: '로그아웃',
-                    danger: true,
-                    onClick: () => {
-                      clearUser();
-                      router.push('/');
-                    },
-                  },
-                ]}
-                position='bottom'
-                trigger={
-                  <div className='flex items-center gap-10'>
-                    <Image
-                      alt='profile image'
-                      className='size-30 rounded-full object-cover'
-                      height={30}
-                      src={user.profileImageUrl ?? imgDefaultProfile}
-                      width={30}
-                    />
-                    {user.nickname}
-                  </div>
-                }
-              />
-            </>
-          ) : (
-            <>
-              <div className='w-60 text-center md:w-70'>
-                <Link href='/login'>로그인</Link>
-              </div>
-              <div className='w-60 text-center md:w-70'>
-                <Link href='/signup'>회원가입</Link>
-              </div>
-            </>
-          )}
+          {user ? <LoggedinButtons user={user} /> : <LoggedoutButtons />}
         </div>
       </div>
     </nav>
+  );
+}
+
+function LoggedinButtons({ user }: { user: UserProfile }) {
+  const router = useRouter();
+  const isMobile = useMediaQuery('mobile');
+  const [isOpen, setIsOpen] = useState(false);
+  const clearUser = useUserStore((s) => s.clearUser);
+  const {
+    data: notifications,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useMyNotifyQuery();
+
+  const totalCount = notifications?.pages?.[0]?.totalCount || 0;
+
+  return (
+    <>
+      <div className='relative'>
+        <button type='button' onClick={() => setIsOpen((prev) => !prev)}>
+          {totalCount === 0 ? (
+            <AlarmInActive
+              className={cn(
+                'size-24',
+                isOpen ? 'text-primary-500' : 'text-gray-600',
+              )}
+            />
+          ) : (
+            <AlarmActive
+              className={cn(
+                'size-24',
+                isOpen ? 'text-primary-500' : 'text-gray-600',
+              )}
+            />
+          )}
+        </button>
+        <NotificationPanel
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          list={
+            notifications?.pages.flatMap((page) => page.notifications) || []
+          }
+          open={isOpen}
+          totalCount={totalCount}
+          onClose={() => setIsOpen(false)}
+        />
+      </div>
+      <div className='h-14 w-1 bg-gray-100' />
+      <DropDown
+        items={[
+          {
+            text: '마이페이지',
+            onClick: () => router.push(isMobile ? '/mypage' : '/mypage/info'),
+          },
+          {
+            text: '로그아웃',
+            danger: true,
+            onClick: () => {
+              clearUser();
+              router.push('/');
+            },
+          },
+        ]}
+        position='bottom'
+        trigger={
+          <div className='flex items-center gap-10'>
+            <Image
+              alt='profile image'
+              className='size-30 rounded-full object-cover'
+              height={30}
+              src={user.profileImageUrl ?? imgDefaultProfile}
+              width={30}
+            />
+            {user.nickname}
+          </div>
+        }
+      />
+    </>
+  );
+}
+
+function LoggedoutButtons() {
+  return (
+    <>
+      <div className='w-60 text-center md:w-70'>
+        <Link href='/login'>로그인</Link>
+      </div>
+      <div className='w-60 text-center md:w-70'>
+        <Link href='/signup'>회원가입</Link>
+      </div>
+    </>
   );
 }
